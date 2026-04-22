@@ -15,3 +15,8 @@ externalPort = 80
 [[ports]]
 localPort = 21597
 externalPort = 3000
+
+[nix]
+channel = "stable-25_05"
+
+[workflows]
