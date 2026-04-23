@@ -15,35 +15,74 @@ const COLORS = {
 export function RiskDistributionPie({ analyses }: RiskChartsProps) {
   const safe = analyses.filter(a => a.overallRisk === "safe").length;
   const risk = analyses.filter(a => a.overallRisk === "risk").length;
+  const total = safe + risk;
 
   const data = [
     { name: "Safe", value: safe, color: COLORS.safe },
     { name: "Risk", value: risk, color: COLORS.risk },
   ];
 
+  const pct = (n: number) => total > 0 ? Math.round((n / total) * 100) : 0;
+
   return (
     <div className="bg-card border border-card-border rounded-xl p-4 shadow-sm">
       <div className="font-semibold text-sm mb-3">Overall Risk Distribution</div>
-      <ResponsiveContainer width="100%" height={180}>
-        <PieChart>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius={45}
-            outerRadius={70}
-            paddingAngle={2}
-            dataKey="value"
-            label={({ name, value }) => value > 0 ? `${name}: ${value}` : ""}
-            labelLine={true}
-          >
-            {data.map((entry, i) => (
-              <Cell key={i} fill={entry.color} />
-            ))}
-          </Pie>
-          <Tooltip formatter={(value) => [`${value} sites`]} />
-        </PieChart>
-      </ResponsiveContainer>
+
+      <div className="flex flex-col items-center gap-3">
+        <div className="relative" style={{ width: 160, height: 160 }}>
+          <svg width="160" height="160">
+            {(() => {
+              const r = 60, cx = 80, cy = 80, strokeW = 22;
+              const C = 2 * Math.PI * r;
+              const gap = 4;
+              let accumulated = 0;
+              return data.map((entry) => {
+                const arc = (entry.value / total) * C - gap;
+                const offset = -accumulated;
+                accumulated += arc + gap;
+                return (
+                  <circle
+                    key={entry.name}
+                    cx={cx} cy={cy} r={r}
+                    fill="none"
+                    stroke={entry.color}
+                    strokeWidth={strokeW}
+                    strokeDasharray={`${arc} ${C}`}
+                    strokeDashoffset={offset}
+                    strokeLinecap="butt"
+                    style={{ transform: "rotate(-90deg)", transformOrigin: `${cx}px ${cy}px` }}
+                  />
+                );
+              });
+            })()}
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+            <span className="text-3xl font-bold leading-none">{total}</span>
+            <span className="text-xs text-muted-foreground mt-1">surveyed</span>
+          </div>
+        </div>
+
+        <div className="w-full flex flex-col gap-2">
+          {data.map((entry) => (
+            <div key={entry.name} className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div
+                  className="rounded-sm flex-shrink-0"
+                  style={{ width: 12, height: 12, backgroundColor: entry.color }}
+                />
+                <span className="text-sm font-medium">{entry.name}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold">{entry.value}</span>
+                <span className="text-xs text-muted-foreground w-8 text-right">{pct(entry.value)}%</span>
+              </div>
+            </div>
+          ))}
+          <div className="border-t border-card-border pt-2 mt-1 text-center">
+            <span className="text-xs text-muted-foreground">63 surveyed · 31 pending survey</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
