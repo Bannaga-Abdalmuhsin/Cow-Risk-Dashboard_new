@@ -1,0 +1,55 @@
+Scenario 1 (SB / DG — S1: Prime SEC · AC1 only · Battery Normal at full Telecom Load)
+•	(a)PowerSupply = prime_sec_net_power_kw − ac1_net_power_demand_kw − telecom_load_total_kw
+•	(b) Rectifier Supply = rectifier_net_power_kw − telecom_load_total_kw
+•	(c) Battery = Safe (rectifier supplying)
+•	(d) Cooling = ac1_net_cooling_kbtuh − telecom_heat_dissipation_kbtuh
+Scenario 2 (SB / DG — S2: Prime SEC · AC1+AC2 · Battery Normal)
+•	(a)Power Supply = prime_sec_net_power_kw − ac1_net_power_demand_kw − ac2_net_power_demand_kw − telecom_load_total_kw
+•	(b) Rectifier Supply = rectifier_net_power_kw − telecom_load_total_kw
+•	(c) Battery = Safe (rectifier supplying)
+•	(d) Cooling = (ac1_net_cooling_kbtuh + ac2_net_cooling_kbtuh) − telecom_heat_dissipation_kbtuh
+Scenario 3 (SB / DG — S3: Prime SEC · AC1 only · Battery Charging)
+•	(a) Power Supply = prime_sec_net_power_kw − ac1_net_power_demand_kw − telecom_load_total_kw − batteries_max_charging_power_kw
+•	(b) Rectifier Supply = rectifier_net_power_kw − telecom_load_total_kw − batteries_max_charging_power_kw
+•	(c) Battery = Safe (charging, rectifier supplying)
+•	(d) Cooling = ac1_net_cooling_kbtuh − telecom_heat_dissipation_kbtuh
+Scenario 4 (SB / DG — S4: Prime SEC · AC1+AC2 · Battery Charging)
+•	(a) Power Supply = prime_sec_net_power_kw − ac1_net_power_demand_kw − ac2_net_power_demand_kw − telecom_load_total_kw − batteries_max_charging_power_kw
+•	(b) Rectifier Supply = rectifier_net_power_kw − telecom_load_total_kw − batteries_max_charging_power_kw
+•	(c) Battery = Safe (charging, rectifier supplying)
+•	(d) Cooling = (ac1_net_cooling_kbtuh + ac2_net_cooling_kbtuh) − telecom_heat_dissipation_kbtuh
+Scenario 5 (SAll— S5: Generator · AC1 only · Battery Normal)
+SB/DG → uses backup_gen_net_power_kw · SG → uses prime_gen_net_power_kw
+•	(a) Power Supply = [gen_net_power_kw] − ac1_net_power_demand_kw − telecom_load_total_kw
+•	(b) Rectifier Supply = rectifier_net_power_kw − telecom_load_total_kw
+•	(c) Battery = Safe (rectifier supplying)
+•	(d) Cooling = ac1_net_cooling_kbtuh − telecom_heat_dissipation_kbtuh
+Scenario 6 (All — S6: Generator · AC1+AC2 · Battery Normal)
+SB/DG → uses backup_gen_net_power_kw · SG → uses prime_gen_net_power_kw
+•	(a) Power Supply = [gen_net_power_kw] − ac1_net_power_demand_kw − ac2_net_power_demand_kw − telecom_load_total_kw
+•	(b) Rectifier Supply = rectifier_net_power_kw − telecom_load_total_kw
+•	(c) Battery = Safe (rectifier supplying)
+•	(d) Cooling = (ac1_net_cooling_kbtuh + ac2_net_cooling_kbtuh) − telecom_heat_dissipation_kbtuh
+Scenario 7 (All — S7: Generator · AC1 only · Battery Charging)
+SB/DG → uses backup_gen_net_power_kw · SG → uses prime_gen_net_power_kw
+•	(a) Power Supply = [gen_net_power_kw] − ac1_net_power_demand_kw − telecom_load_total_kw − batteries_max_charging_power_kw
+•	(b) Rectifier Supply = rectifier_net_power_kw − telecom_load_total_kw − batteries_max_charging_power_kw
+•	(c) Battery = Safe (charging, rectifier supplying)
+•	(d) Cooling = ac1_net_cooling_kbtuh − telecom_heat_dissipation_kbtuh
+
+
+Scenario 8 (All — S8: Generator · AC1+AC2 · Battery Charging)
+SB/DG → uses backup_gen_net_power_kw · SG → uses prime_gen_net_power_kw
+•	(a) Power Supply = [gen_net_power_kw] − ac1_net_power_demand_kw − ac2_net_power_demand_kw − telecom_load_total_kw − batteries_max_charging_power_kw
+•	(b) Rectifier Supply = rectifier_net_power_kw − telecom_load_total_kw − batteries_max_charging_power_kw
+•	(c) Battery = Safe (charging, rectifier supplying)
+•	(d) Cooling = (ac1_net_cooling_kbtuh + ac2_net_cooling_kbtuh) − telecom_heat_dissipation_kbtuh
+Scenario 9 (All — S9: Power Outage · No Cooling · Battery Discharging)
+SB/DG → uses backup_gen_net_power_kw · SG → uses prime_gen_net_power_kw
+•	(a) Power Supply = 0 − telecom_load_total_kw → always Risk
+•	(b) Rectifier Supply = 0 − telecom_load_total_kw → always Risk
+•	(c) Battery = batteries_max_useful_time_hours ≥ 1 hr → Safe, < 1 hr → Risk
+•	(d) Cooling = 0 − telecom_heat_dissipation_kbtuh → always Risk
+
+
+For outdoor sites scenarios from 1 to 8 cooling are safe (hardcoded), scenario 9 outdoor cooling risk 
