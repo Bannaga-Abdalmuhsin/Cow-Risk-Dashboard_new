@@ -21,3 +21,6 @@ timeoutMs = 120000
 deploymentTarget = "static"
 build = ["pnpm", "--filter", "@workspace/hajj-dashboard", "run", "build"]
 publicDir = "artifacts/hajj-dashboard/dist/public"
+
+[agent]
+expertMode = true
