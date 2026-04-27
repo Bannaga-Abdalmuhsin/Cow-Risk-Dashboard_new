@@ -74,6 +74,19 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
           <div className="text-xs font-bold text-foreground mb-1 flex items-center gap-2">
             {sc.scenarioName}
           </div>
+          <div className="text-[11px] font-medium text-muted-foreground mb-1.5 flex flex-wrap gap-x-2">
+            <span>
+              {sc.coolingConfig === "none" ? "No Cooling" : sc.coolingConfig === "ac1_only" ? "AC1 Operational only" : "AC1+AC2 Operational"}
+            </span>
+            <span className="text-muted-foreground/40">·</span>
+            <span>
+              {sc.batteryState === "normal" ? "Batteries Fully Charged" : sc.batteryState === "charging" ? "Batteries Charging" : "Batteries Discharging"}
+            </span>
+            <span className="text-muted-foreground/40">·</span>
+            <span>Load at Full Traffic</span>
+            <span className="text-muted-foreground/40">·</span>
+            <span>Temp at 46°C</span>
+          </div>
           <div className="text-[11px] text-muted-foreground mb-3">
             Source: <span className="font-medium capitalize">{sc.powerSource === "outage" ? "Power Outage" : sc.powerSource.replace("_", " ")}</span> ·
             Cooling: <span className="font-medium">{sc.coolingConfig === "none" ? "Off" : sc.coolingConfig === "ac1_only" ? "AC1" : "AC1+AC2"}</span> ·
