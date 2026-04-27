@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup, useMap, Marker } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.heat";
 import type { SiteAnalysis } from "../lib/calculations";
+import { ESCALATION_TEAMS, TRANSPORT_ICON } from "../lib/escalationTeams";
 
 // Fix default leaflet icon paths broken by Vite bundling
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -86,11 +87,19 @@ interface LeafletMapProps {
   analyses: SiteAnalysis[];
   selectedSiteId: string | null;
   onSelectSite: (id: string) => void;
+  showTeamMarkers?: boolean;
 }
 
-export function LeafletMap({ analyses, selectedSiteId, onSelectSite }: LeafletMapProps) {
+export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMarkers = false }: LeafletMapProps) {
   const [showHeatmap, setShowHeatmap] = useState(true);
   const [showMarkers, setShowMarkers] = useState(false);
+
+  const teamIcon = (teamName: string) => L.divIcon({
+    className: "",
+    html: `<div style="background:#4A0E8F;color:white;border:2px solid white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.4);white-space:nowrap;">${teamName.replace("Team ", "T")}</div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+  });
 
   const center: [number, number] = [21.38, 39.93];
 
@@ -108,6 +117,35 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite }: LeafletMa
         />
 
         {showHeatmap && <HeatmapLayer analyses={analyses} />}
+
+        {showTeamMarkers && ESCALATION_TEAMS.map(team => (
+          <Marker
+            key={team.teamName}
+            position={[team.lat, team.lng]}
+            icon={teamIcon(team.teamName)}
+          >
+            <Popup maxWidth={220} minWidth={180}>
+              <div className="p-1">
+                <div className="font-bold text-sm mb-0.5" style={{ color: "#4A0E8F" }}>{team.teamName}</div>
+                <div className="text-xs text-gray-500 mb-1.5">Assigned: <span className="font-semibold text-gray-700">{team.siteId}</span> · {team.location}</div>
+                <div className="flex items-center gap-1.5 mb-1 text-xs">
+                  <span>{TRANSPORT_ICON[team.transport]}</span>
+                  <span className="text-gray-600">{team.transport}</span>
+                </div>
+                <div className="text-xs font-semibold" style={{ color: team.etaMinutes === 15 ? "#059669" : "#d97706" }}>
+                  ⏱ ETA: {team.etaMinutes} min
+                </div>
+                <button
+                  onClick={() => onSelectSite(team.siteId)}
+                  className="mt-2 w-full text-[11px] py-1 rounded text-white font-semibold"
+                  style={{ background: "#4A0E8F" }}
+                >
+                  View Site Analysis
+                </button>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
 
         {showMarkers && analyses.map(a => {
           const isSelected = a.site.id === selectedSiteId;

@@ -12,6 +12,7 @@ import { TechnicianRecommendation } from "../components/TechnicianRecommendation
 import { RiskDistributionPie, PowerSourceDonut, RiskTypeBreakdown, LocationRiskChart } from "../components/RiskCharts";
 import { ScenarioMatrix } from "../components/ScenarioMatrix";
 import { ScenarioRiskSites } from "../components/ScenarioRiskSites";
+import { EscalationTable } from "../components/EscalationTable";
 
 type Tab = "overview" | "scenarios" | "map" | "sites" | "technicians";
 
@@ -246,57 +247,32 @@ export default function Dashboard() {
         )}
 
         {activeTab === "technicians" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            <div className="xl:col-span-1">
-              <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
-            </div>
-            <div className="xl:col-span-2">
-              <div className="bg-card border border-card-border rounded-xl p-4 shadow-sm">
-                <div className="font-semibold text-sm mb-4 flex items-center gap-2">
-                  <span>🚨</span> Risk Sites — Deployment Required
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-96 overflow-auto">
-                  {analyses.filter(a => a.overallRisk === "risk").map(a => {
-                    const worst = a.scenarios.length ? a.scenarios.reduce((acc, s) => s.riskScore > acc.riskScore ? s : acc) : null;
-                    return (
-                      <button
-                        key={a.site.id}
-                        onClick={() => handleSelectSite(a.site.id)}
-                        className={`text-left p-3 rounded-lg border transition-all hover:shadow-md ${
-                          selectedSiteId === a.site.id ? "border-primary bg-primary/5 ring-1 ring-primary" : ""
-                        }`}
-                        style={selectedSiteId !== a.site.id ? {background:"#fce4ed", borderColor:"#E8175D"} : {}}
-                      >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-mono font-bold text-sm">{a.site.id}</span>
-                          <span className="text-xs font-semibold" style={{color:"#E8175D"}}>Score: {a.worstRiskScore}/4</span>
-                        </div>
-                        <div className="text-xs text-muted-foreground">{a.site.location}</div>
-                        <div className="text-xs text-muted-foreground mt-1 capitalize">{a.site.siteType.replace("_", " ")} · {a.site.powerConfig === "commercial_with_backup" ? `SEC ${a.site.secCapacityAmp ?? "—"}A` : `${a.site.generatorKva} kVA`}</div>
-                        {worst && (
-                          <div className="flex gap-1 mt-1.5 flex-wrap">
-                            {(["powerRisk", "coolingRisk", "batteryRisk", "rectifierRisk"] as const).map(r => {
-                              if (worst[r] !== "risk") return null;
-                              const label = r.replace("Risk", "").replace(/([A-Z])/g, " $1").trim();
-                              return (
-                                <span key={r} className="text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase" style={{background:"#fce4ed", color:"#b01040", border:"1px solid #E8175D"}}>
-                                  {label}
-                                </span>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
+          <div className="space-y-4">
+            {/* Top row: summary stats + map */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <div className="space-y-4">
+                <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
+              </div>
+              <div className="lg:col-span-2" style={{ minHeight: 340 }}>
+                <LeafletMap
+                  analyses={analyses}
+                  selectedSiteId={selectedSiteId}
+                  onSelectSite={handleSelectSite}
+                  showTeamMarkers={true}
+                />
               </div>
             </div>
 
+            {/* Escalation table */}
+            <EscalationTable
+              analyses={analyses}
+              onSelectSite={handleSelectSite}
+              selectedSiteId={selectedSiteId}
+            />
+
+            {/* Site detail panel */}
             {selectedAnalysis && (
-              <div className="md:col-span-2 xl:col-span-3">
-                <SiteDetailPanel analysis={selectedAnalysis} onClose={() => setSelectedSiteId(null)} />
-              </div>
+              <SiteDetailPanel analysis={selectedAnalysis} onClose={() => setSelectedSiteId(null)} />
             )}
           </div>
         )}
