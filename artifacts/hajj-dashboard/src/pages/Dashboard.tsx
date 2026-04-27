@@ -278,8 +278,9 @@ export default function Dashboard() {
         )}
       </main>
 
-      <footer className="border-t border-border bg-muted/30 py-3 px-4 text-center text-xs text-muted-foreground">
-        Hajj 1447 · stc Telecom COW Power & Cooling Risk Dashboard · Nokia Infrastructure · {analyses.length} Sites · 46°C Extreme Conditions Analysis
+      <footer className="border-t border-border bg-muted/30 py-3 px-4 flex items-center justify-between text-xs text-muted-foreground flex-wrap gap-2">
+        <span>Hajj 1447 · stc Telecom COW Power & Cooling Risk Dashboard · Nokia Infrastructure · {analyses.length} Sites · 46°C Extreme Conditions Analysis</span>
+        <span className="font-semibold tracking-wide" style={{ color: "#4A0E8F" }}>Powered by ACES MSD</span>
       </footer>
     </div>
   );
