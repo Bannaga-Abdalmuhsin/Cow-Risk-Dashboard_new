@@ -67,7 +67,7 @@ export const ALL_SITES: SiteConfig[] = [
     id: "CWN050", name: "Arafat — CWN050", location: "Arafat",
     lat: 21.38536, lng: 40.00519,
     siteType: "shelter", powerConfig: "single_generator",
-    generatorKva: 35, generatorAge: 3.928,
+    generatorKva: 35, generatorAge: 1.37,
     rectifierCapacityKw: 12.8,
     ac1CapacityBtu: 48000, ac1Age: 0,
     ac2CapacityBtu: 48000, ac2Age: 0,
