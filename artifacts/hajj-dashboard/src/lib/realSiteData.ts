@@ -2920,7 +2920,8 @@ export const ALL_SITES: SiteConfig[] = realSiteData.map((s) => {
     backupGeneratorAge:  isSG ? undefined : 0,
 
     telecomPowerKw:      s.telecomLoadTotalKw || s.telecomLoadAllKw,
-    telecomHeatKBtuH:    s.telecomHeatDissipationKbtuh,
+    // DB column stores Btu/h despite "kbtuh" name; engine expects KBtu/h → divide by 1000
+    telecomHeatKBtuH:    s.telecomHeatDissipationKbtuh / 1000,
 
     ac1CapacityBtu:  s.ac1CapacityBtu,
     ac1Age:          s.ac1AgeYears,
