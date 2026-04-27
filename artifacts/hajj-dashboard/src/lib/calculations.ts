@@ -185,12 +185,12 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
   };
 
   const allDefs: ScenarioDef[] = [
-    { id: 1, name: "S1 — Prime Power / AC1 / Normal",        pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_only", battery: "normal" },
-    { id: 2, name: "S2 — Prime Power / AC1+AC2 / Normal",    pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "normal" },
+    { id: 1, name: "S1 — Prime Power / AC1 / Full Traffic Telecom Load",        pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_only", battery: "normal" },
+    { id: 2, name: "S2 — Prime Power / AC1+AC2 / Full Traffic Telecom Load",    pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "normal" },
     { id: 3, name: "S3 — Prime Power / AC1 / Charging",      pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "charging" },
     { id: 4, name: "S4 — Prime Power / AC1+AC2 / Charging",  pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "charging" },
-    { id: 5, name: "S5 — Generator / AC1 / Normal",          pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_only", battery: "normal" },
-    { id: 6, name: "S6 — Generator / AC1+AC2 / Normal",      pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "normal" },
+    { id: 5, name: "S5 — Generator / AC1 / Full Traffic Telecom Load",          pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_only", battery: "normal" },
+    { id: 6, name: "S6 — Generator / AC1+AC2 / Full Traffic Telecom Load",      pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "normal" },
     { id: 7, name: "S7 — Generator / AC1 / Charging",        pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "charging" },
     { id: 8, name: "S8 — Generator / AC1+AC2 / Charging",    pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "charging" },
     { id: 9, name: "S9 — Power Outage / Battery Discharge",  pwSrc: "outage",                         cooling: "none",     battery: "discharging" },
