@@ -29,6 +29,15 @@ export default function Dashboard() {
   const riskCount    = analyses.filter(a => a.overallRisk === "risk").length;
   const surveyedCount = analyses.length;
   const pendingCount  = TOTAL_FLEET - surveyedCount;
+  const totalRiskFlags = analyses.reduce((sum, a) =>
+    sum + a.scenarios.reduce((s2, sc) =>
+      s2 +
+      (sc.powerRisk     === "risk" ? 1 : 0) +
+      (sc.coolingRisk   === "risk" ? 1 : 0) +
+      (sc.batteryRisk   === "risk" ? 1 : 0) +
+      (sc.rectifierRisk === "risk" ? 1 : 0)
+    , 0)
+  , 0);
 
   const selectedAnalysis = selectedSiteId ? analyses.find(a => a.site.id === selectedSiteId) ?? null : null;
 
@@ -115,6 +124,7 @@ export default function Dashboard() {
               <MetricCard title="Risk Sites" value={riskCount} icon={<AlertCircle size={16} />} color="red" subtitle={`Of ${surveyedCount} surveyed sites`} />
               <MetricCard title="Field Technicians" value={PLANNED_TECHS} icon={<Users size={16} />} color="blue" subtitle={`Planned · ${TOTAL_FLEET} total sites`} />
               <MetricCard title="Operating Temp" value="46°C" icon={<Thermometer size={16} />} color="red" subtitle="Extreme Hajj conditions" />
+              <MetricCard title="Total Risk Flags" value={totalRiskFlags} icon={<AlertCircle size={16} />} color="red" subtitle="Across all sites & scenarios" />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <RiskDistributionPie analyses={analyses} />
