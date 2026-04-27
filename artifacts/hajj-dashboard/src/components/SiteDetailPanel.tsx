@@ -77,7 +77,8 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
           <div className="text-[11px] text-muted-foreground mb-3">
             Source: <span className="font-medium capitalize">{sc.powerSource.replace("_", " ")}</span> ·
             Cooling: <span className="font-medium">{sc.coolingConfig === "none" ? "Off" : sc.coolingConfig === "ac1_only" ? "AC1" : "AC1+AC2"}</span> ·
-            Battery: <span className="font-medium">{sc.batteryState === "normal" ? "Fully Charged" : sc.batteryState === "charging" ? "Charging" : "Discharging"}</span>
+            Battery: <span className="font-medium">{sc.batteryState === "normal" ? "Fully Charged" : sc.batteryState === "charging" ? "Charging" : "Discharging"}</span> ·
+            Telecom Load at Full Traffic: <span className="font-medium">{sc.telecomPowerKw.toFixed(2)} kW</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-4">
