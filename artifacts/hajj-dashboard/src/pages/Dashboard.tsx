@@ -9,7 +9,7 @@ import { LeafletMap } from "../components/LeafletMap";
 import { SiteDetailPanel } from "../components/SiteDetailPanel";
 import { SiteTable } from "../components/SiteTable";
 import { TechnicianRecommendation } from "../components/TechnicianRecommendation";
-import { RiskDistributionPie, RiskTypeBreakdown, LocationRiskChart } from "../components/RiskCharts";
+import { RiskDistributionPie, PowerSourceDonut, RiskTypeBreakdown, LocationRiskChart } from "../components/RiskCharts";
 import { ScenarioMatrix } from "../components/ScenarioMatrix";
 import { ScenarioRiskSites } from "../components/ScenarioRiskSites";
 
@@ -116,8 +116,9 @@ export default function Dashboard() {
               <MetricCard title="Field Technicians" value={PLANNED_TECHS} icon={<Users size={16} />} color="blue" subtitle={`Planned · ${TOTAL_FLEET} total sites`} />
               <MetricCard title="Operating Temp" value="46°C" icon={<Thermometer size={16} />} color="red" subtitle="Extreme Hajj conditions" />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <RiskDistributionPie analyses={analyses} />
+              <PowerSourceDonut analyses={analyses} />
               <RiskTypeBreakdown analyses={analyses} />
               <LocationRiskChart analyses={analyses} />
             </div>

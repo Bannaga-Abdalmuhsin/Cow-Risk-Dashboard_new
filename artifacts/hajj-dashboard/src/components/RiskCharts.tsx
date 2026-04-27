@@ -87,6 +87,78 @@ export function RiskDistributionPie({ analyses }: RiskChartsProps) {
   );
 }
 
+export function PowerSourceDonut({ analyses }: RiskChartsProps) {
+  const withBackup  = analyses.filter(a => a.site.powerConfig === "commercial_with_backup").length;
+  const withoutBackup = analyses.filter(a => a.site.powerConfig === "single_generator").length;
+  const total = withBackup + withoutBackup;
+
+  const data = [
+    { name: "Prime + Backup",   value: withBackup,    color: "#6B21A8" },
+    { name: "Prime Only",       value: withoutBackup, color: "#F59E0B" },
+  ];
+
+  const pct = (n: number) => total > 0 ? Math.round((n / total) * 100) : 0;
+
+  return (
+    <div className="bg-card border border-card-border rounded-xl p-4 shadow-sm">
+      <div className="font-semibold text-sm mb-3">Power Source Distribution</div>
+
+      <div className="flex flex-col items-center gap-3">
+        <div className="relative" style={{ width: 160, height: 160 }}>
+          <svg width="160" height="160">
+            {(() => {
+              const r = 60, cx = 80, cy = 80, strokeW = 22;
+              const C = 2 * Math.PI * r;
+              const gap = 4;
+              let accumulated = 0;
+              return data.map((entry) => {
+                const arc = (entry.value / total) * C - gap;
+                const offset = -accumulated;
+                accumulated += arc + gap;
+                return (
+                  <circle
+                    key={entry.name}
+                    cx={cx} cy={cy} r={r}
+                    fill="none"
+                    stroke={entry.color}
+                    strokeWidth={strokeW}
+                    strokeDasharray={`${arc} ${C}`}
+                    strokeDashoffset={offset}
+                    strokeLinecap="butt"
+                    style={{ transform: "rotate(-90deg)", transformOrigin: `${cx}px ${cy}px` }}
+                  />
+                );
+              });
+            })()}
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+            <span className="text-3xl font-bold leading-none">{total}</span>
+            <span className="text-xs text-muted-foreground mt-1">surveyed</span>
+          </div>
+        </div>
+
+        <div className="w-full flex flex-col gap-2">
+          {data.map((entry) => (
+            <div key={entry.name} className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="rounded-sm flex-shrink-0" style={{ width: 12, height: 12, backgroundColor: entry.color }} />
+                <span className="text-sm font-medium">{entry.name}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold">{entry.value}</span>
+                <span className="text-xs text-muted-foreground w-8 text-right">{pct(entry.value)}%</span>
+              </div>
+            </div>
+          ))}
+          <div className="border-t border-card-border pt-2 mt-1 text-center">
+            <span className="text-xs text-muted-foreground">SEC+Gen vs Single Gen sites</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function RiskTypeBreakdown({ analyses }: RiskChartsProps) {
   const byType: Record<"safe" | "risk", number> = { safe: 0, risk: 0 };
 
