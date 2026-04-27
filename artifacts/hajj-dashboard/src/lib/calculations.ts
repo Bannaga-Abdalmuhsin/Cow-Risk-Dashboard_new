@@ -26,8 +26,9 @@ export interface SiteConfig {
   lng: number;
   siteType: "shelter" | "outdoor_cabinet";
 
-  // SB = SEC + Backup Generator (runs S1–S9)
-  // SG = Single Generator only   (runs S5–S9)
+  // SB = SEC + Backup Generator (S1-S4: prime SEC; S5-S8: backup gen)
+  // SG = Single Generator only   (S1-S8: prime gen; backup = 0)
+  // All types run S1–S9
   powerConfig: "single_generator" | "commercial_with_backup";
   placeholderSafe?: boolean;
 
@@ -171,7 +172,10 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
   const isSB = site.powerConfig === "commercial_with_backup";
 
   // ── Scenario definitions ────────────────────────────────────────────────────
-  // SB: runs S1–S9  |  SG: runs S5–S9 only (S1–S4 omitted, no SEC)
+  // SB/DG: S1-S4 use prime SEC; S5-S8 use backup gen
+  // SG:    S1-S4 use prime gen (single gen IS the prime source, backup=0)
+  //        S5-S8 also use prime gen (same source)
+  // All sites run S1–S9
   type ScenarioDef = {
     id: number;
     name: string;
@@ -181,18 +185,18 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
   };
 
   const allDefs: ScenarioDef[] = [
-    { id: 1, name: "S1 — Prime SEC / AC1 / Normal",        pwSrc: "prime_sec",  cooling: "ac1_only", battery: "normal" },
-    { id: 2, name: "S2 — Prime SEC / AC1+AC2 / Normal",    pwSrc: "prime_sec",  cooling: "ac1_ac2",  battery: "normal" },
-    { id: 3, name: "S3 — Prime SEC / AC1 / Charging",      pwSrc: "prime_sec",  cooling: "ac1_ac2",  battery: "charging" },
-    { id: 4, name: "S4 — Prime SEC / AC1+AC2 / Charging",  pwSrc: "prime_sec",  cooling: "ac1_ac2",  battery: "charging" },
-    { id: 5, name: "S5 — Generator / AC1 / Normal",        pwSrc: isSB ? "backup" : "prime_gen", cooling: "ac1_only", battery: "normal" },
-    { id: 6, name: "S6 — Generator / AC1+AC2 / Normal",    pwSrc: isSB ? "backup" : "prime_gen", cooling: "ac1_ac2",  battery: "normal" },
-    { id: 7, name: "S7 — Generator / AC1 / Charging",      pwSrc: isSB ? "backup" : "prime_gen", cooling: "ac1_ac2",  battery: "charging" },
-    { id: 8, name: "S8 — Generator / AC1+AC2 / Charging",  pwSrc: isSB ? "backup" : "prime_gen", cooling: "ac1_ac2",  battery: "charging" },
-    { id: 9, name: "S9 — Power Outage / Battery Discharge", pwSrc: "outage",     cooling: "none",     battery: "discharging" },
+    { id: 1, name: "S1 — Prime Power / AC1 / Normal",        pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_only", battery: "normal" },
+    { id: 2, name: "S2 — Prime Power / AC1+AC2 / Normal",    pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "normal" },
+    { id: 3, name: "S3 — Prime Power / AC1 / Charging",      pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "charging" },
+    { id: 4, name: "S4 — Prime Power / AC1+AC2 / Charging",  pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "charging" },
+    { id: 5, name: "S5 — Generator / AC1 / Normal",          pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_only", battery: "normal" },
+    { id: 6, name: "S6 — Generator / AC1+AC2 / Normal",      pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "normal" },
+    { id: 7, name: "S7 — Generator / AC1 / Charging",        pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "charging" },
+    { id: 8, name: "S8 — Generator / AC1+AC2 / Charging",    pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "charging" },
+    { id: 9, name: "S9 — Power Outage / Battery Discharge",  pwSrc: "outage",                         cooling: "none",     battery: "discharging" },
   ];
 
-  const activeDefs = isSB ? allDefs : allDefs.filter(d => d.id >= 5);
+  const activeDefs = allDefs; // all sites run S1–S9
 
   return activeDefs.map((s): ScenarioResult => {
     // Determine available generator power for this scenario
@@ -260,10 +264,10 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
       isOutage ? "risk" : riskFromMargin(powerMargin, 0, 3);
     const rectifierRisk: "safe" | "risk" =
       isOutage ? "risk" : riskFromMargin(rectifierMargin, 0, 2);
-    // Outdoor cabinet cooling risk hard-coded safe until new formula is provided
+    // Outdoor cabinet: S9 (outage) = Risk, S1–S8 = always Safe
     const coolingRisk: "safe" | "risk" =
-      site.siteType === "outdoor_cabinet" ? "safe"
-      : isOutage ? "risk"
+      isOutage ? "risk"
+      : site.siteType === "outdoor_cabinet" ? "safe"
       : riskFromMargin(coolingMargin, 0, 5000);
 
     const riskMap = { safe: 0, risk: 1 };
