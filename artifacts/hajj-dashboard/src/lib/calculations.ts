@@ -199,8 +199,12 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
   const activeDefs = allDefs; // all sites run S1–S9
 
   return activeDefs.map((s): ScenarioResult => {
+    // SG sites have no backup source → S5-S8 use 0 kW available power
+    const isSgBackupScenario = !isSB && s.id >= 5 && s.id <= 8;
+
     // Determine available generator power for this scenario
     const genKw =
+      isSgBackupScenario      ? 0 :          // SG: no backup → 0
       s.pwSrc === "prime_sec" ? primePowerKw :
       s.pwSrc === "prime_gen" ? primePowerKw :
       s.pwSrc === "backup"    ? backupPowerKw :
