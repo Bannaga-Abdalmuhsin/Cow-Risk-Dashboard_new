@@ -6,25 +6,28 @@
   --color-bg: var(--slide-bg);
   --color-text: var(--slide-text);
   --color-muted: var(--slide-muted);
+  --color-danger: var(--slide-danger);
+  --color-safe: var(--slide-safe);
+  --color-surface: var(--slide-surface);
   --font-display: var(--font-display-family);
   --font-body: var(--font-body-family);
 }
 
 :root {
-  /* Replace these with brand colors */
-  --slide-primary: #4f46e5;
-  --slide-accent: #06b6d4;
-  --slide-bg: #f8fafc;
-  --slide-text: #0f172a;
-  --slide-muted: #64748b;
-  --font-display-family: "Inter", system-ui, sans-serif;
-  --font-body-family: "Inter", system-ui, sans-serif;
+  --slide-primary: #6b21c8;
+  --slide-accent: #9333ea;
+  --slide-bg: #f8f6fb;
+  --slide-text: #1a0a2e;
+  --slide-muted: #6b7280;
+  --slide-danger: #dc2626;
+  --slide-safe: #0d9488;
+  --slide-surface: #ffffff;
+  --font-display-family: "Verdana", Geneva, Tahoma, sans-serif;
+  --font-body-family: "Verdana", Geneva, Tahoma, sans-serif;
   color-scheme: light;
 }
 
-html,
-body,
-#root {
+html, body, #root {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -33,6 +36,7 @@ body,
 body {
   background: var(--slide-bg);
   color: var(--slide-text);
+  font-family: var(--font-body-family);
 }
 
 .slide {

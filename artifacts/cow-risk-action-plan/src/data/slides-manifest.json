@@ -1,1 +1,122 @@
-[]
+[
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000001",
+    "position": 1,
+    "filepath": "src/pages/slides/Slide01Title.tsx",
+    "title": "Title — COW Risk Mitigation Action Plan",
+    "description": "Cover slide with fleet risk summary statistics",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0002-4000-8000-000000000002",
+    "position": 2,
+    "filepath": "src/pages/slides/Slide02Summary.tsx",
+    "title": "Executive Summary — Risk Overview",
+    "description": "Overview of all 4 risk categories with counts and key actions",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0003-4000-8000-000000000003",
+    "position": 3,
+    "filepath": "src/pages/slides/Slide03PrimePowerIntro.tsx",
+    "title": "Prime Power Risk — Introduction",
+    "description": "Formula, breakdown by site type, and action statement for power risk",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0004-4000-8000-000000000004",
+    "position": 4,
+    "filepath": "src/pages/slides/Slide04PrimePowerSites.tsx",
+    "title": "Prime Power Risk — 8 Sites (Page 1)",
+    "description": "Detailed table of first 8 sites with power margin and required actions",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0005-4000-8000-000000000005",
+    "position": 5,
+    "filepath": "src/pages/slides/Slide05PrimePowerSites2.tsx",
+    "title": "Prime Power Risk — 7 Sites (Page 2)",
+    "description": "Detailed table of remaining 7 sites with power margin and required actions",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0006-4000-8000-000000000006",
+    "position": 6,
+    "filepath": "src/pages/slides/Slide06RectifierIntro.tsx",
+    "title": "Rectifier Risk — Introduction",
+    "description": "Formula, risk profile breakdown, and action statement for rectifier risk",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0007-4000-8000-000000000007",
+    "position": 7,
+    "filepath": "src/pages/slides/Slide07RectifierSites.tsx",
+    "title": "Rectifier Risk — 12 Sites Detail",
+    "description": "Full table of all 12 sites with rectifier margin and upgrade actions",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0008-4000-8000-000000000008",
+    "position": 8,
+    "filepath": "src/pages/slides/Slide08BatteryIntro.tsx",
+    "title": "Battery Backup — Introduction",
+    "description": "Formula, current state, and priority grouping for battery backup time",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0009-4000-8000-000000000009",
+    "position": 9,
+    "filepath": "src/pages/slides/Slide09BatterySites1.tsx",
+    "title": "Battery Backup — Arafat Sites (Page 1 of 3)",
+    "description": "Battery table for 12 Arafat shelter sites with deficit hours and string additions",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0010-4000-8000-000000000010",
+    "position": 10,
+    "filepath": "src/pages/slides/Slide10BatterySites2.tsx",
+    "title": "Battery Backup — Arafat Outdoor and Muzdalifah (Page 2 of 3)",
+    "description": "Battery table for 22 Arafat outdoor and Muzdalifah sites",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0011-4000-8000-000000000011",
+    "position": 11,
+    "filepath": "src/pages/slides/Slide11BatterySites3.tsx",
+    "title": "Battery Backup — Muzdalifah Outdoor, Mina, Makkah Remote (Page 3 of 3)",
+    "description": "Battery table for remaining 19 sites across Muzdalifah, Mina, and Makkah Remote",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0012-4000-8000-000000000012",
+    "position": 12,
+    "filepath": "src/pages/slides/Slide12MakkahRemote.tsx",
+    "title": "Makkah Remote Sites — Combined Risk",
+    "description": "Detailed risk profile for 3 isolated remote sites with combined actions",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0013-4000-8000-000000000013",
+    "position": 13,
+    "filepath": "src/pages/slides/Slide13ActionPriority.tsx",
+    "title": "Consolidated Action Register — Priority Order",
+    "description": "P1–P5 prioritized action table covering all risk categories",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0014-4000-8000-000000000014",
+    "position": 14,
+    "filepath": "src/pages/slides/Slide14ResourcePlan.tsx",
+    "title": "Resource and Logistics Plan",
+    "description": "Equipment procurement summary and field team deployment sequence",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0015-4000-8000-000000000015",
+    "position": 15,
+    "filepath": "src/pages/slides/Slide15Closing.tsx",
+    "title": "Closing — Action Summary",
+    "description": "Closing slide with total action counts and contact information",
+    "speakerNotes": ""
+  }
+]
