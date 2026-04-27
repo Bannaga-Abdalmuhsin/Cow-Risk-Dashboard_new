@@ -117,11 +117,12 @@ export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario 
                     </span>
                   </td>
                   <td className="px-4 py-4">
-                    {SCENARIO_DESCRIPTIONS[row.sId].map((line, li) => (
-                      <div key={li} className={li === 0 ? "font-semibold text-gray-800 text-xs" : "text-gray-500 text-xs"}>
-                        {line}
-                      </div>
-                    ))}
+                    <div className="font-semibold text-gray-800 text-xs mb-0.5">
+                      {SCENARIO_DESCRIPTIONS[row.sId][0]}
+                    </div>
+                    <div className="text-gray-500 text-[11px]">
+                      {SCENARIO_DESCRIPTIONS[row.sId].slice(1).join(" · ")}
+                    </div>
                   </td>
                   <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstPower} /></div></td>
                   <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstRect} /></div></td>
