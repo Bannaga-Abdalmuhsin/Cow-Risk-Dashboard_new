@@ -12,6 +12,7 @@ externalPort = 3000
 channel = "stable-25_05"
 
 [workflows]
+runButton = "Project"
 
 [postMerge]
 path = "scripts/post-merge.sh"

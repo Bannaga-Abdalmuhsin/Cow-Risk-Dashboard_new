@@ -1,0 +1,31 @@
+kind = "slides"
+previewPath = "/cow-risk-action-plan/"
+title = "COW Risk Mitigation Action Plan"
+version = "1.0.0"
+id = "artifacts/cow-risk-action-plan"
+router = "path"
+
+[[integratedSkills]]
+name = "slides"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/cow-risk-action-plan/" ]
+localPort = 24781
+
+[services.development]
+run = "pnpm --filter @workspace/cow-risk-action-plan run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cow-risk-action-plan", "run", "build" ]
+publicDir = "artifacts/cow-risk-action-plan/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24781"
+BASE_PATH = "/cow-risk-action-plan/"
