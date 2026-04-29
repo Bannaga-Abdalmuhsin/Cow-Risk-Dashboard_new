@@ -75,10 +75,10 @@ export default function Login({ onLogin }: LoginProps) {
         {/* ACES logo */}
         <div className="flex justify-center mb-5">
           <img
-            src={`${base}aces-logo-nobg.png`}
+            src={`${base}aces-logo-login.png`}
             alt="ACES Managed Services"
             className="h-24 w-auto object-contain"
-            style={{ filter: "drop-shadow(0 0 14px rgba(220,38,38,0.45))" }}
+            style={{ filter: "drop-shadow(0 0 20px rgba(220,38,38,0.5))" }}
           />
         </div>
 
