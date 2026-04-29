@@ -32,7 +32,7 @@ export default function Login({ onLogin }: LoginProps) {
   }
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-center">
+    <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-start pl-16 md:pl-24">
 
       {/* Background — real Hajj photo */}
       <div
@@ -64,7 +64,7 @@ export default function Login({ onLogin }: LoginProps) {
 
       {/* Centered login card */}
       <div
-        className="login-card relative z-10 w-full max-w-sm mx-4 rounded-2xl p-8 flex flex-col"
+        className="login-card relative z-10 w-full max-w-sm rounded-2xl p-8 flex flex-col"
         style={{
           background: "rgba(10,4,28,0.80)",
           border: "1px solid rgba(167,139,250,0.28)",
@@ -77,7 +77,7 @@ export default function Login({ onLogin }: LoginProps) {
           <img
             src={`${base}aces-logo-nobg.png`}
             alt="ACES Managed Services"
-            className="h-16 w-auto object-contain"
+            className="h-24 w-auto object-contain"
             style={{ filter: "drop-shadow(0 0 14px rgba(220,38,38,0.45))" }}
           />
         </div>
