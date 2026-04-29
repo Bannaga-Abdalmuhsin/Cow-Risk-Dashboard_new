@@ -9,19 +9,15 @@ import Login from "@/pages/Login";
 
 const queryClient = new QueryClient();
 
-function Router() {
-  return (
-    <Switch>
-      <Route path="/" component={Dashboard} />
-      <Route component={NotFound} />
-    </Switch>
-  );
-}
-
 function App() {
   const [authed, setAuthed] = useState<boolean>(() => {
     return localStorage.getItem("cowms_auth") === "1";
   });
+
+  function handleLogout() {
+    localStorage.removeItem("cowms_auth");
+    setAuthed(false);
+  }
 
   if (!authed) {
     return <Login onLogin={() => setAuthed(true)} />;
@@ -31,7 +27,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
+          <Switch>
+            <Route path="/" component={() => <Dashboard onLogout={handleLogout} />} />
+            <Route component={NotFound} />
+          </Switch>
         </WouterRouter>
         <Toaster />
       </TooltipProvider>

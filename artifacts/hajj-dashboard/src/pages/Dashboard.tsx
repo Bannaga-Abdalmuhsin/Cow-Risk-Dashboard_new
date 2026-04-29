@@ -16,7 +16,11 @@ import { EscalationTable } from "../components/EscalationTable";
 
 type Tab = "overview" | "scenarios" | "map" | "sites" | "technicians";
 
-export default function Dashboard() {
+interface DashboardProps {
+  onLogout?: () => void;
+}
+
+export default function Dashboard({ onLogout }: DashboardProps) {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const [selectedSiteId, setSelectedSiteId] = useState<string | null>(null);
   const [selectedScenarioId, setSelectedScenarioId] = useState<number | null>(null);
@@ -92,6 +96,34 @@ export default function Dashboard() {
                   <div className="text-[10px] text-emerald-300 uppercase">Safe</div>
                 </div>
               </div>
+
+              {onLogout && (
+                <button
+                  onClick={onLogout}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
+                  style={{
+                    background: "rgba(220,38,38,0.18)",
+                    border: "1px solid rgba(220,38,38,0.35)",
+                    color: "#fca5a5",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(220,38,38,0.35)";
+                    (e.currentTarget as HTMLButtonElement).style.color = "#fff";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(220,38,38,0.18)";
+                    (e.currentTarget as HTMLButtonElement).style.color = "#fca5a5";
+                  }}
+                  title="Sign out"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                  </svg>
+                  Logout
+                </button>
+              )}
             </div>
           </div>
         </div>
