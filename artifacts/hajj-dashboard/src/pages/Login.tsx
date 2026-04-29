@@ -32,81 +32,61 @@ export default function Login({ onLogin }: LoginProps) {
   }
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden flex flex-col items-center justify-center">
-      {/* Background image */}
+    <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-center">
+
+      {/* Background — real Hajj photo */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${base}login-bg.png)` }}
       />
-      {/* Gradient overlay */}
+
+      {/* Gradient overlay — heavier on top and bottom, light in centre */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(135deg, rgba(10,4,22,0.80) 0%, rgba(27,4,60,0.72) 40%, rgba(60,10,100,0.62) 70%, rgba(10,4,22,0.82) 100%)",
+            "linear-gradient(180deg, rgba(10,4,30,0.72) 0%, rgba(10,4,30,0.45) 40%, rgba(10,4,30,0.55) 70%, rgba(10,4,30,0.88) 100%)",
         }}
       />
 
-      {/* Animated signal rings */}
+      {/* CSS keyframes */}
       <style>{`
-        @keyframes pulse-ring {
-          0%  { opacity: 0.85; transform: scale(0.82); }
-          70% { opacity: 0.15; }
-          100%{ opacity: 0; transform: scale(1.35); }
-        }
         @keyframes glow-pulse {
           0%,100% { box-shadow: 0 0 14px rgba(147,51,234,0.35); }
-          50%      { box-shadow: 0 0 32px rgba(147,51,234,0.7), 0 0 60px rgba(107,33,200,0.28); }
+          50%      { box-shadow: 0 0 32px rgba(147,51,234,0.65), 0 0 60px rgba(107,33,200,0.25); }
         }
         @keyframes fade-in-up {
           from { opacity: 0; transform: translateY(20px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        .login-card { animation: fade-in-up 0.5s ease-out both; }
+        .login-card { animation: fade-in-up 0.5s ease-out both, glow-pulse 3.2s ease-in-out infinite; }
       `}</style>
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute" style={{ right: "12%", bottom: "20%" }}>
-          {[1,2,3,4].map((i) => (
-            <div key={i} className="absolute rounded-full border" style={{
-              width: `${i * 90}px`,
-              height: `${i * 50}px`,
-              top: `${-i * 25}px`,
-              left: `${-i * 45}px`,
-              borderColor: `rgba(147,51,234,${0.55 - i * 0.1})`,
-              borderWidth: "1.5px",
-              animation: `pulse-ring ${1.9 + i * 0.4}s ease-out infinite`,
-              animationDelay: `${i * 0.38}s`,
-            }} />
-          ))}
-        </div>
-      </div>
 
       {/* Centered login card */}
       <div
         className="login-card relative z-10 w-full max-w-sm mx-4 rounded-2xl p-8 flex flex-col"
         style={{
-          background: "rgba(10,4,28,0.82)",
+          background: "rgba(10,4,28,0.80)",
           border: "1px solid rgba(167,139,250,0.28)",
-          backdropFilter: "blur(22px)",
-          WebkitBackdropFilter: "blur(22px)",
-          animation: "glow-pulse 3.2s ease-in-out infinite",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
         }}
       >
         {/* ACES logo */}
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-5">
           <img
             src={`${base}aces-logo-nobg.png`}
             alt="ACES Managed Services"
             className="h-16 w-auto object-contain"
-            style={{ filter: "drop-shadow(0 0 12px rgba(220,38,38,0.4))" }}
+            style={{ filter: "drop-shadow(0 0 14px rgba(220,38,38,0.45))" }}
           />
         </div>
 
-        {/* Card subtitle */}
+        {/* Subtitle */}
         <div className="text-center mb-6">
           <div
             className="text-sm font-bold"
-            style={{ color: "rgba(209,196,233,0.7)", fontFamily: "Verdana, sans-serif", letterSpacing: "0.04em" }}
+            style={{ color: "rgba(209,196,233,0.72)", fontFamily: "Verdana, sans-serif", letterSpacing: "0.04em" }}
           >
             COW Risk Dashboard · Hajj 1447
           </div>
@@ -220,17 +200,20 @@ export default function Login({ onLogin }: LoginProps) {
         </form>
       </div>
 
-      {/* Bottom "Powered by ACES MSD" */}
-      <div className="relative z-10 mt-5 flex items-center gap-2">
+      {/* Powered by ACES MSD — fixed at very bottom */}
+      <div
+        className="absolute bottom-0 left-0 right-0 py-3 flex items-center justify-center gap-2"
+        style={{ background: "rgba(10,4,28,0.75)", borderTop: "1px solid rgba(107,33,200,0.2)" }}
+      >
         <span
-          className="text-xs font-bold tracking-widest uppercase"
+          className="text-sm font-black uppercase tracking-widest"
           style={{ color: "#dc2626", fontFamily: "Verdana, sans-serif" }}
         >
           Powered by
         </span>
         <span
-          className="text-xs font-bold tracking-widest uppercase"
-          style={{ color: "#1e3a8a", fontFamily: "Verdana, sans-serif", textShadow: "0 0 8px rgba(255,255,255,0.3)" }}
+          className="text-sm font-black uppercase tracking-widest"
+          style={{ color: "#1e3a8a", fontFamily: "Verdana, sans-serif", textShadow: "0 0 10px rgba(255,255,255,0.35)" }}
         >
           ACES MSD
         </span>
