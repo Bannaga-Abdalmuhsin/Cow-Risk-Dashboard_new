@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "e5W06XB6b2TieHocUNgyo"
+uri = "file://.local/outputs/Cow-Risk-Dashboard.pptx"
+type = "slides"
+title = "Cow Risk Dashboard.pptx"

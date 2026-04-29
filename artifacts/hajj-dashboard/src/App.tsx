@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/Dashboard";
+import Login from "@/pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +19,14 @@ function Router() {
 }
 
 function App() {
+  const [authed, setAuthed] = useState<boolean>(() => {
+    return localStorage.getItem("cowms_auth") === "1";
+  });
+
+  if (!authed) {
+    return <Login onLogin={() => setAuthed(true)} />;
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
