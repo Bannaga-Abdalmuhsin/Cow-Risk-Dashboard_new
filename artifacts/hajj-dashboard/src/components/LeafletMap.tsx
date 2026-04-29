@@ -187,8 +187,8 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
                   <div className="text-xs text-gray-600 space-y-0.5">
                     <div>Power: <span className="font-semibold">
                       {a.site.powerConfig === "commercial_with_backup"
-                        ? `SEC ${a.site.secCapacityAmp ?? "—"}A / Gen ${a.site.backupGeneratorKva ?? "—"}kVA`
-                        : `${a.site.generatorKva} kVA`}
+                        ? `SEC ${a.site.secCapacityAmp ?? "—"}A / Gen ${a.site.backupGeneratorKva?.toFixed(1) ?? "—"}kVA`
+                        : `${a.site.generatorKva.toFixed(1)} kVA`}
                     </span></div>
                     <div>Battery: <span className="font-semibold">{a.site.batteryCapacityAh} Ah {a.site.batteryType.replace("_", "-")}</span></div>
                     <div>AC1: <span className="font-semibold">{(a.site.ac1CapacityBtu / 1000).toFixed(0)}k BTU/h</span></div>
