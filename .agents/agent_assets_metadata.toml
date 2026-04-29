@@ -1,5 +1,10 @@
 uploads = []
-generated = []
+
+[[generated]]
+id = "Is5sa9xT2lvz1_XXQi9Qc"
+uri = "file://artifacts/hajj-dashboard/public/login-bg.png"
+type = "image"
+title = "hajj mosque cow tower login background"
 
 [[outputs]]
 id = "e5W06XB6b2TieHocUNgyo"
