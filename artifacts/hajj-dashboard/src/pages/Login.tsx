@@ -85,10 +85,10 @@ export default function Login({ onLogin }: LoginProps) {
         {/* Subtitle */}
         <div className="text-center mb-6">
           <div
-            className="text-sm font-bold"
-            style={{ color: "rgba(209,196,233,0.72)", fontFamily: "Verdana, sans-serif", letterSpacing: "0.04em" }}
+            className="text-sm font-bold text-center leading-relaxed"
+            style={{ color: "rgba(209,196,233,0.85)", fontFamily: "Verdana, sans-serif", letterSpacing: "0.04em" }}
           >
-            COW Risk Dashboard · Hajj 1447
+            COW Energy &amp; Environmental Risk Scenarios<br />Dashboard
           </div>
         </div>
 
