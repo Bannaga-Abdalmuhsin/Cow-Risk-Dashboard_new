@@ -8,6 +8,28 @@ const rawPort = process.env.PORT ?? "21597";
 const port = Number(rawPort);
 const basePath = process.env.BASE_PATH ?? "/";
 
+const securityHeaders = {
+  "X-Frame-Options": "DENY",
+  "X-Content-Type-Options": "nosniff",
+  "X-XSS-Protection": "1; mode=block",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  "Content-Security-Policy": [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    "img-src 'self' data: blob: https:",
+    "connect-src 'self' https:",
+    "worker-src blob:",
+    "frame-ancestors 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join("; "),
+  "Cache-Control": "no-store, no-cache, must-revalidate",
+};
+
 export default defineConfig({
   base: basePath,
   plugins: [
@@ -44,6 +66,7 @@ export default defineConfig({
     port,
     host: "0.0.0.0",
     allowedHosts: true,
+    headers: securityHeaders,
     fs: {
       strict: true,
       deny: ["**/.*"],
@@ -53,5 +76,6 @@ export default defineConfig({
     port,
     host: "0.0.0.0",
     allowedHosts: true,
+    headers: securityHeaders,
   },
 });

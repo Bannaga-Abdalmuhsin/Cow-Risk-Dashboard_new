@@ -5,17 +5,15 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/Dashboard";
-import Login from "@/pages/Login";
+import Login, { checkSession, clearSession } from "@/pages/Login";
 
 const queryClient = new QueryClient();
 
 function App() {
-  const [authed, setAuthed] = useState<boolean>(() => {
-    return localStorage.getItem("cowms_auth") === "1";
-  });
+  const [authed, setAuthed] = useState<boolean>(() => checkSession());
 
   function handleLogout() {
-    localStorage.removeItem("cowms_auth");
+    clearSession();
     setAuthed(false);
   }
 
