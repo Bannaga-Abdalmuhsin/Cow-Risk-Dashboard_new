@@ -169,7 +169,7 @@ export default function Slide01PrimePlusBackup() {
           </span>
           <span style={{ fontFamily: V, fontSize: "1.1vw", color: "#9ca3af" }}>· Load = Telecom + AC1 + AC2 + Battery Charging · Temp 46°C</span>
         </div>
-        <div style={{ fontFamily: V, fontSize: "1.1vw", fontWeight: "bold", color: "#6b21c8" }}>Slide 1 / 3</div>
+        <div style={{ fontFamily: V, fontSize: "1.1vw", fontWeight: "bold", color: "#6b21c8" }}>Slide 2 / 4</div>
       </div>
     </div>
   );

@@ -195,7 +195,7 @@ export default function Slide02PrimeOnly() {
         <div style={{ fontFamily: V, fontSize: "1.1vw", color: "#6b7280" }}>
           Load = Telecom + AC1 + AC2 + Battery Charging (S4 worst-case) · 46°C
         </div>
-        <div style={{ fontFamily: V, fontSize: "1.1vw", fontWeight: "bold", color: "#6b21c8" }}>Slide 2 / 3</div>
+        <div style={{ fontFamily: V, fontSize: "1.1vw", fontWeight: "bold", color: "#6b21c8" }}>Slide 3 / 4</div>
       </div>
     </div>
   );

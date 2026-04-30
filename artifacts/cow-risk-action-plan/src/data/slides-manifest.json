@@ -1,7 +1,15 @@
 [
   {
-    "id": "risk-summary-0001-4000-8000-000000000001",
+    "id": "risk-summary-0000-4000-8000-000000000000",
     "position": 1,
+    "filepath": "src/pages/slides/Slide00DashboardIdea.tsx",
+    "title": "Dashboard Overview — COW Power & Cooling Risk Intelligence",
+    "description": "Intro slide explaining the dashboard concept: 79 sites, 9 scenarios, 4 risk pillars, 2-tier Safe/Risk classification",
+    "speakerNotes": ""
+  },
+  {
+    "id": "risk-summary-0001-4000-8000-000000000001",
+    "position": 2,
     "filepath": "src/pages/slides/Slide01PrimePlusBackup.tsx",
     "title": "Power Supply Risk — Prime + Backup (SB Sites, S1–S8)",
     "description": "Risk summary for 55 SB sites: S1-S4 prime SEC all safe, S5-S8 backup 3 sites at risk",
@@ -9,7 +17,7 @@
   },
   {
     "id": "risk-summary-0002-4000-8000-000000000002",
-    "position": 2,
+    "position": 3,
     "filepath": "src/pages/slides/Slide02PrimeOnly.tsx",
     "title": "Power Supply Risk — Prime Only (SG/DG Sites, S1–S8)",
     "description": "Risk summary for 24 SG/DG sites: S1-S4 2 sites at risk, S5-S8 all 24 at risk (no backup)",
@@ -17,7 +25,7 @@
   },
   {
     "id": "risk-summary-0003-4000-8000-000000000003",
-    "position": 3,
+    "position": 4,
     "filepath": "src/pages/slides/Slide03ScenarioS9.tsx",
     "title": "Scenario S9 — Power Outage · Battery Discharge",
     "description": "Full S9 explanation: battery endurance by location, 1h/2h/3h breakdown, all 79 sites currently safe",
