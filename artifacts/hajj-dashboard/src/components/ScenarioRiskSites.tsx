@@ -92,6 +92,7 @@ export function ScenarioRiskSites({ analyses, scenarioId, onClose }: Props) {
               ))}
               <th className="text-right px-4 py-2.5 font-bold text-gray-600 uppercase tracking-wide">Pwr Margin<br/>(kW)</th>
               <th className="text-right px-4 py-2.5 font-bold text-gray-600 uppercase tracking-wide">Rect Margin<br/>(kW)</th>
+              <th className="text-center px-3 py-2.5 font-bold text-gray-600 uppercase tracking-wide whitespace-nowrap">Batt. Backup<br/>(hrs)</th>
               <th className="text-center px-3 py-2.5 font-bold text-gray-600 uppercase tracking-wide">Score</th>
             </tr>
           </thead>
@@ -128,6 +129,20 @@ export function ScenarioRiskSites({ analyses, scenarioId, onClose }: Props) {
                   </td>
                   <td className="px-3 py-2.5 text-center">
                     <span
+                      className="inline-flex items-center justify-center text-white font-bold text-[10px] rounded px-2 py-0.5 min-w-[40px]"
+                      style={{
+                        background: scenario.batteryUsefulHours < 1
+                          ? "#E8175D"
+                          : scenario.batteryUsefulHours < 2
+                          ? "#f59e0b"
+                          : "#00BFB3"
+                      }}
+                    >
+                      {scenario.batteryUsefulHours.toFixed(2)}h
+                    </span>
+                  </td>
+                  <td className="px-3 py-2.5 text-center">
+                    <span
                       className="inline-flex items-center justify-center w-6 h-6 rounded-full text-white text-xs font-bold"
                       style={{ background: scenario.riskScore === 0 ? "#00BFB3" : "#E8175D" }}
                     >
@@ -144,6 +159,16 @@ export function ScenarioRiskSites({ analyses, scenarioId, onClose }: Props) {
       <div className="px-5 py-2.5 border-t border-border bg-gray-50 flex items-center gap-6 flex-wrap text-[10px] text-gray-500">
         <span className="font-semibold uppercase tracking-wide">Score</span>
         <span>0 = all safe · 1–4 = number of risk dimensions</span>
+        <span className="font-semibold uppercase tracking-wide ml-2">Backup Time:</span>
+        <span className="inline-flex items-center gap-1">
+          <span className="w-3 h-3 rounded inline-block" style={{ background: "#00BFB3" }} /> ≥ 2h
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="w-3 h-3 rounded inline-block" style={{ background: "#f59e0b" }} /> 1–2h
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="w-3 h-3 rounded inline-block" style={{ background: "#E8175D" }} /> &lt; 1h
+        </span>
         <span className="ml-auto flex items-center gap-3">
           <span className="inline-flex items-center gap-1">
             <span className="w-3 h-3 rounded inline-block" style={{ background: "#E8175D" }} /> Risk
