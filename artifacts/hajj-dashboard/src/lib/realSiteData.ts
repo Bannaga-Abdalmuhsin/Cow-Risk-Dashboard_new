@@ -1,55 +1,55 @@
 // AUTO-GENERATED from PostgreSQL cow_sites table — do not edit manually
-    // Last updated: 2026-04-30T13:12:18.169Z
-    import type { SiteConfig } from "./calculations";
+  // Last updated: 2026-04-30T13:21:31.502Z
+  import type { SiteConfig } from "./calculations";
 
-    export interface RealSiteData {
-      cowId: string;
-      powerSource: string;
-      shelterType: string;
-      location: string;
-      latitude: number;
-      longitude: number;
-      singleGenCapacityKva: number;
-      singleGenWorkingHours: number;
-      secMeterCapacityAmp: number;
-      backupGenCapacityKva: number;
-      backupGenWorkingHours: number;
-      rectifierCapacityKw: number;
-      ac1CapacityBtu: number;
-      ac1AgeYears: number;
-      ac2CapacityBtu: number;
-      ac2AgeYears: number;
-      batteriesCapacityAh: number;
-      numStrings: number;
-      batteriesAgeYears: number;
-      leadAcidChargeRate: number;
-      lithiumDischargeRate: number;
-      telecomLoadAllKw: number;
-      telecomLoadIndoorKw: number;
-      telecomLoadTotalKw: number;
-      telecomHeatDissipationKbtuh: number;
-      primeGenNetPowerKw: number;
-      primeSecNetPowerKw: number;
-      backupGenNetPowerKw: number;
-      rectifierNetPowerKw: number;
-      ac1NetCoolingKbtuh: number;
-      ac1NetPowerDemandKw: number;
-      ac2NetCoolingKbtuh: number;
-      ac2NetPowerDemandKw: number;
-      batteriesMaxCapacityAh: number;
-      batteriesMaxCapacityKwh: number;
-      batteriesMaxUsefulTimeHours: number;
-      batteriesMaxChargingCurrent: number;
-      batteriesMaxChargingPowerKw: number;
-      batteriesMinChargingTimeHrs: number;
-      batteriesMaxDischargeCurrentAmp: number;
-      batteriesMaxDischargePowerKw: number;
-      batteriesMinDischargeTimeHrs: number;
-      calculatedDischargeCurrent: number;
-      connectedTechnology: string;
-    }
+  export interface RealSiteData {
+    cowId: string;
+    powerSource: string;
+    shelterType: string;
+    location: string;
+    latitude: number;
+    longitude: number;
+    singleGenCapacityKva: number;
+    singleGenWorkingHours: number;
+    secMeterCapacityAmp: number;
+    backupGenCapacityKva: number;
+    backupGenWorkingHours: number;
+    rectifierCapacityKw: number;
+    ac1CapacityBtu: number;
+    ac1AgeYears: number;
+    ac2CapacityBtu: number;
+    ac2AgeYears: number;
+    batteriesCapacityAh: number;
+    numStrings: number;
+    batteriesAgeYears: number;
+    leadAcidChargeRate: number;
+    lithiumDischargeRate: number;
+    telecomLoadAllKw: number;
+    telecomLoadIndoorKw: number;
+    telecomLoadTotalKw: number;
+    telecomHeatDissipationKbtuh: number;
+    primeGenNetPowerKw: number;
+    primeSecNetPowerKw: number;
+    backupGenNetPowerKw: number;
+    rectifierNetPowerKw: number;
+    ac1NetCoolingKbtuh: number;
+    ac1NetPowerDemandKw: number;
+    ac2NetCoolingKbtuh: number;
+    ac2NetPowerDemandKw: number;
+    batteriesMaxCapacityAh: number;
+    batteriesMaxCapacityKwh: number;
+    batteriesMaxUsefulTimeHours: number;
+    batteriesMaxChargingCurrent: number;
+    batteriesMaxChargingPowerKw: number;
+    batteriesMinChargingTimeHrs: number;
+    batteriesMaxDischargeCurrentAmp: number;
+    batteriesMaxDischargePowerKw: number;
+    batteriesMinDischargeTimeHrs: number;
+    calculatedDischargeCurrent: number;
+    connectedTechnology: string;
+  }
 
-    export const realSiteData: RealSiteData[] = [
+  export const realSiteData: RealSiteData[] = [
       {
       "cowId": "CWN001",
       "powerSource": "SG",
@@ -2241,7 +2241,7 @@
       "primeGenNetPowerKw": 13.92,
       "primeSecNetPowerKw": 0,
       "backupGenNetPowerKw": 0,
-      "rectifierNetPowerKw": 17,
+      "rectifierNetPowerKw": 19,
       "ac1NetCoolingKbtuh": 8466,
       "ac1NetPowerDemandKw": 0.7089,
       "ac2NetCoolingKbtuh": 0,
@@ -3409,52 +3409,6 @@
       "connectedTechnology": "2G/4G/5G"
     },
     {
-      "cowId": "CWN318",
-      "powerSource": "SB",
-      "shelterType": "Outdoor",
-      "location": "Muzdalifah",
-      "latitude": 21.3813332,
-      "longitude": 39.9025838,
-      "singleGenCapacityKva": 0,
-      "singleGenWorkingHours": 0,
-      "secMeterCapacityAmp": 70,
-      "backupGenCapacityKva": 35,
-      "backupGenWorkingHours": 0,
-      "rectifierCapacityKw": 18,
-      "ac1CapacityBtu": 10200,
-      "ac1AgeYears": 0,
-      "ac2CapacityBtu": 0,
-      "ac2AgeYears": 0,
-      "batteriesCapacityAh": 200,
-      "numStrings": 4,
-      "batteriesAgeYears": 0,
-      "leadAcidChargeRate": 0.5,
-      "lithiumDischargeRate": 0.8,
-      "telecomLoadAllKw": 14.96,
-      "telecomLoadIndoorKw": 2.04,
-      "telecomLoadTotalKw": 17,
-      "telecomHeatDissipationKbtuh": 6960.48,
-      "primeGenNetPowerKw": 0,
-      "primeSecNetPowerKw": 21.896,
-      "backupGenNetPowerKw": 24.36,
-      "rectifierNetPowerKw": 18,
-      "ac1NetCoolingKbtuh": 8466,
-      "ac1NetPowerDemandKw": 0.7089,
-      "ac2NetCoolingKbtuh": 0,
-      "ac2NetPowerDemandKw": 0,
-      "batteriesMaxCapacityAh": 400,
-      "batteriesMaxCapacityKwh": 20,
-      "batteriesMaxUsefulTimeHours": 1.1765,
-      "batteriesMaxChargingCurrent": 225,
-      "batteriesMaxChargingPowerKw": 1.44,
-      "batteriesMinChargingTimeHrs": 1.7778,
-      "batteriesMaxDischargeCurrentAmp": 80,
-      "batteriesMaxDischargePowerKw": 4,
-      "batteriesMinDischargeTimeHrs": 5,
-      "calculatedDischargeCurrent": 340,
-      "connectedTechnology": "2G/4G"
-    },
-    {
       "cowId": "CWN915",
       "powerSource": "SG",
       "shelterType": "Shelter",
@@ -3730,51 +3684,51 @@
       "calculatedDischargeCurrent": 340,
       "connectedTechnology": "2G/4G/5G"
     }
-    ];
+  ];
 
-    export const totalSurveyed = realSiteData.length;
+  export const totalSurveyed = realSiteData.length;
 
-    // ─── Map raw DB rows → SiteConfig for the calculation engine ─────────────────
-    const GEN_FACTOR = 0.8 * 0.87 * 0.9; // 0.6264
+  // ─── Map raw DB rows → SiteConfig for the calculation engine ─────────────────
+  const GEN_FACTOR = 0.8 * 0.87 * 0.9; // 0.6264
 
-    export const ALL_SITES: SiteConfig[] = realSiteData.map((s) => {
-      const isSG = s.powerSource === "SG";
-      const isDG = s.powerSource === "DG";
-      const isOutdoor = s.shelterType.toLowerCase() === "outdoor";
+  export const ALL_SITES: SiteConfig[] = realSiteData.map((s) => {
+    const isSG = s.powerSource === "SG";
+    const isDG = s.powerSource === "DG";
+    const isOutdoor = s.shelterType.toLowerCase() === "outdoor";
 
-      const primeNetKw  = (isSG || isDG) ? s.primeGenNetPowerKw : s.primeSecNetPowerKw;
-      const backupNetKw = s.backupGenNetPowerKw;
+    const primeNetKw  = (isSG || isDG) ? s.primeGenNetPowerKw : s.primeSecNetPowerKw;
+    const backupNetKw = s.backupGenNetPowerKw;
 
-      return {
-        id:        s.cowId,
-        name:      s.cowId,
-        location:  s.location,
-        lat:       s.latitude,
-        lng:       s.longitude,
-        siteType:  isOutdoor ? "outdoor_cabinet" : "shelter",
-        powerConfig: (isSG || isDG) ? "single_generator" : "commercial_with_backup",
+    return {
+      id:        s.cowId,
+      name:      s.cowId,
+      location:  s.location,
+      lat:       s.latitude,
+      lng:       s.longitude,
+      siteType:  isOutdoor ? "outdoor_cabinet" : "shelter",
+      powerConfig: (isSG || isDG) ? "single_generator" : "commercial_with_backup",
 
-        generatorKva:      primeNetKw  / GEN_FACTOR,
-        generatorAge:      0,
-        secCapacityAmp:    s.secMeterCapacityAmp,
+      generatorKva:      primeNetKw  / GEN_FACTOR,
+      generatorAge:      0,
+      secCapacityAmp:    s.secMeterCapacityAmp,
 
-        backupGeneratorKva:  (isSG || isDG) ? undefined : backupNetKw / GEN_FACTOR,
-        backupGeneratorAge:  (isSG || isDG) ? undefined : 0,
+      backupGeneratorKva:  (isSG || isDG) ? undefined : backupNetKw / GEN_FACTOR,
+      backupGeneratorAge:  (isSG || isDG) ? undefined : 0,
 
-        telecomPowerKw:      s.telecomLoadTotalKw || s.telecomLoadAllKw,
-        telecomHeatKBtuH:    s.telecomHeatDissipationKbtuh / 1000,
+      telecomPowerKw:      s.telecomLoadTotalKw || s.telecomLoadAllKw,
+      telecomHeatKBtuH:    s.telecomHeatDissipationKbtuh / 1000,
 
-        ac1CapacityBtu:  s.ac1CapacityBtu,
-        ac1Age:          s.ac1AgeYears,
-        ac2CapacityBtu:  s.ac2CapacityBtu > 0 ? s.ac2CapacityBtu : undefined,
-        ac2Age:          s.ac2CapacityBtu > 0 ? s.ac2AgeYears    : undefined,
+      ac1CapacityBtu:  s.ac1CapacityBtu,
+      ac1Age:          s.ac1AgeYears,
+      ac2CapacityBtu:  s.ac2CapacityBtu > 0 ? s.ac2CapacityBtu : undefined,
+      ac2Age:          s.ac2CapacityBtu > 0 ? s.ac2AgeYears    : undefined,
 
-        batteryCapacityAh: s.batteriesCapacityAh * s.numStrings,
-        batteryType:       "lead_acid",
-        batteryAge:        s.batteriesAgeYears,
+      batteryCapacityAh: s.batteriesCapacityAh * s.numStrings,
+      batteryType:       "lead_acid",
+      batteryAge:        s.batteriesAgeYears,
 
-        rectifierCapacityKw: s.rectifierCapacityKw,
-        connectedTechnology: s.connectedTechnology,
-      };
-    });
-    
+      rectifierCapacityKw: s.rectifierCapacityKw,
+      connectedTechnology: s.connectedTechnology,
+    };
+  });
+  
