@@ -19,19 +19,46 @@ const colorMap = {
 
 export function MetricCard({ title, value, subtitle, icon, color = "default", large = false }: MetricCardProps) {
   return (
-    <div className="bg-card border border-card-border rounded-xl p-4 flex flex-col gap-2 shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-muted-foreground font-medium">{title}</span>
-        {icon && (
-          <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${colorMap[color]} flex items-center justify-center text-white`}>
-            {icon}
-          </div>
-        )}
+    <div
+      className="bg-card border border-card-border rounded-xl flex flex-col shadow-sm hover:shadow-md transition-shadow relative overflow-hidden"
+      style={{
+        boxShadow:
+          "0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)",
+      }}
+    >
+      {/* 3-D purple top bar */}
+      <div
+        style={{
+          height: "3px",
+          background: "linear-gradient(90deg, #4c1d95, #7c3aed, #c084fc, #a855f7, #6d28d9)",
+          boxShadow: "0 2px 8px rgba(147,51,234,0.55), 0 1px 0 rgba(192,132,252,0.4)",
+          borderRadius: "12px 12px 0 0",
+        }}
+      />
+      {/* shine highlight just below the bar */}
+      <div
+        style={{
+          height: "1px",
+          background:
+            "linear-gradient(90deg, transparent 5%, rgba(192,132,252,0.25) 30%, rgba(255,255,255,0.18) 50%, rgba(192,132,252,0.25) 70%, transparent 95%)",
+        }}
+      />
+
+      {/* card body */}
+      <div className="p-4 flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <span className="text-sm text-muted-foreground font-medium">{title}</span>
+          {icon && (
+            <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${colorMap[color]} flex items-center justify-center text-white`}>
+              {icon}
+            </div>
+          )}
+        </div>
+        <div className={`font-bold text-foreground ${large ? "text-4xl" : "text-2xl"}`}>
+          {value}
+        </div>
+        {subtitle && <div className="text-xs text-muted-foreground">{subtitle}</div>}
       </div>
-      <div className={`font-bold text-foreground ${large ? "text-4xl" : "text-2xl"}`}>
-        {value}
-      </div>
-      {subtitle && <div className="text-xs text-muted-foreground">{subtitle}</div>}
     </div>
   );
 }
