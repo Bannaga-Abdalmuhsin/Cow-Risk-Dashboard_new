@@ -62,7 +62,14 @@ export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario 
 
     const overallWorst = worstRisk([worstPower, worstRect, worstBatt, worstCool]);
 
-    return { sId, worstPower, worstRect, worstBatt, worstCool, atRiskCount, overallWorst };
+    const minBackupHrs = scenarioResults.length
+      ? Math.min(...scenarioResults.map(s => s.batteryUsefulHours))
+      : 0;
+    const avgBackupHrs = scenarioResults.length
+      ? scenarioResults.reduce((sum, s) => sum + s.batteryUsefulHours, 0) / scenarioResults.length
+      : 0;
+
+    return { sId, worstPower, worstRect, worstBatt, worstCool, atRiskCount, overallWorst, minBackupHrs, avgBackupHrs };
   });
 
   return (
@@ -84,6 +91,7 @@ export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario 
               <th className="text-center px-3 py-3 text-xs font-bold text-gray-600 uppercase tracking-wide">Rectifier<br/>Supply Risk</th>
               <th className="text-center px-3 py-3 text-xs font-bold text-gray-600 uppercase tracking-wide">Batteries<br/>Supply Risk</th>
               <th className="text-center px-3 py-3 text-xs font-bold text-gray-600 uppercase tracking-wide">Cooling<br/>Supply Risk</th>
+              <th className="text-center px-3 py-3 text-xs font-bold text-gray-600 uppercase tracking-wide">Battery<br/>Backup Time</th>
               <th className="text-center px-3 py-3 text-xs font-bold text-gray-600 uppercase tracking-wide w-28">Sites at<br/>Risk</th>
             </tr>
           </thead>
@@ -129,6 +137,23 @@ export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario 
                   <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstBatt} /></div></td>
                   <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstCool} /></div></td>
                   <td className="px-3 py-4 text-center">
+                    <div className="flex flex-col items-center gap-0.5">
+                      <span
+                        className="inline-flex items-center justify-center text-white font-bold text-sm rounded-lg px-2.5 py-1 min-w-[52px]"
+                        style={{
+                          background: row.minBackupHrs < 1
+                            ? "#E8175D"
+                            : row.minBackupHrs < 2
+                            ? "#f59e0b"
+                            : "#00BFB3"
+                        }}
+                      >
+                        {row.minBackupHrs.toFixed(1)}h
+                      </span>
+                      <span className="text-[10px] text-gray-400">min · avg {row.avgBackupHrs.toFixed(1)}h</span>
+                    </div>
+                  </td>
+                  <td className="px-3 py-4 text-center">
                     <div className="flex flex-col items-center gap-1">
                       <span
                         className="inline-flex items-center justify-center text-white font-bold text-sm rounded-lg px-3 py-1 min-w-[48px]"
@@ -154,6 +179,20 @@ export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario 
             <span className="text-xs text-gray-600 capitalize font-medium">{r === "risk" ? "Risk" : "Safe"}</span>
           </div>
         ))}
+        <span className="text-xs text-gray-400">·</span>
+        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Backup Time:</span>
+        <div className="flex items-center gap-1.5">
+          <span className="w-3.5 h-3.5 rounded inline-block" style={{ background: "#00BFB3" }} />
+          <span className="text-xs text-gray-600 font-medium">≥ 2h</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="w-3.5 h-3.5 rounded inline-block" style={{ background: "#f59e0b" }} />
+          <span className="text-xs text-gray-600 font-medium">1–2h</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="w-3.5 h-3.5 rounded inline-block" style={{ background: "#E8175D" }} />
+          <span className="text-xs text-gray-600 font-medium">&lt; 1h</span>
+        </div>
         <span className="text-xs text-gray-400 ml-auto">Worst-case across all {analyses.length} sites per scenario</span>
       </div>
     </div>
