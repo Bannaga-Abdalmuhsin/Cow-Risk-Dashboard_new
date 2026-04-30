@@ -268,17 +268,20 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
       isOutage ? "risk" : riskFromMargin(powerMargin, 0, 3);
     const rectifierRisk: "safe" | "risk" =
       isOutage ? "risk" : riskFromMargin(rectifierMargin, 0, 2);
-    // S9 (outage): cooling not assessed — battery discharge scenario only
+    // S9 (outage): cooling is displayed as risk (no AC during outage) but
+    // excluded from the risk score — only battery duration matters in S9.
     // Outdoor cabinet: always Safe (open-air, no cooling needed)
     const coolingRisk: "safe" | "risk" =
-      isOutage ? "safe"
+      isOutage ? "risk"
       : site.siteType === "outdoor_cabinet" ? "safe"
       : riskFromMargin(coolingMargin, 0, 5000);
 
     const riskMap = { safe: 0, risk: 1 };
     const riskScore =
       riskMap[powerRisk] + riskMap[rectifierRisk] +
-      riskMap[batteryRisk] + riskMap[coolingRisk];
+      riskMap[batteryRisk] +
+      // S9 cooling shown as risk visually but not counted in score
+      (isOutage ? 0 : riskMap[coolingRisk]);
 
     return {
       scenarioId:       s.id,

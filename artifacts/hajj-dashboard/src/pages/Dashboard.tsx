@@ -38,7 +38,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     sum + a.scenarios.reduce((s2, sc) =>
       s2 +
       (sc.powerRisk     === "risk" ? 1 : 0) +
-      (sc.coolingRisk   === "risk" ? 1 : 0) +
+      (sc.coolingRisk   === "risk" && sc.scenarioId !== 9 ? 1 : 0) +
       (sc.batteryRisk   === "risk" ? 1 : 0) +
       (sc.rectifierRisk === "risk" ? 1 : 0)
     , 0)
