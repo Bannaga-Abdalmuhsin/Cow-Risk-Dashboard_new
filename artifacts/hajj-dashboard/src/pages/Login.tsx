@@ -297,7 +297,7 @@ export default function Login({ onLogin }: LoginProps) {
         </span>
         <span
           className="text-sm font-black uppercase tracking-widest"
-          style={{ color: "#1e3a8a", fontFamily: "Verdana, sans-serif" }}
+          style={{ color: "#001f5b", fontFamily: "Verdana, sans-serif" }}
         >
           ACES MSD
         </span>
