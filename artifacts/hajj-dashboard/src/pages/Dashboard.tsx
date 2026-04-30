@@ -321,7 +321,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       </main>
 
       <footer className="border-t border-border bg-muted/30 py-3 px-4 flex items-center justify-between text-xs text-muted-foreground flex-wrap gap-2">
-        <span>Hajj 1447 · stc Telecom COW Power & Cooling Risk Dashboard · Nokia Infrastructure · {analyses.length} Sites · 46°C Extreme Conditions Analysis</span>
+        <span>Hajj 1447 · stc COW Power & Cooling Risk Dashboard · {analyses.length} Sites · 46°C Extreme Conditions Analysis</span>
         <span className="font-semibold tracking-wide">
           <span style={{ color: "#7f1d1d" }}>Powered by</span>{" "}
           <span style={{ color: "#1e3a8a" }}>ACES MSD</span>

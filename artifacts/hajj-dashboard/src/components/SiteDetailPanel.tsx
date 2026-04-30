@@ -40,7 +40,7 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
         <div><span className="text-muted-foreground">AC1:</span> <span className="font-semibold">{(site.ac1CapacityBtu / 1000).toFixed(0)}k BTU/h</span></div>
         <div><span className="text-muted-foreground">AC2:</span> <span className="font-semibold">{site.ac2CapacityBtu ? `${(site.ac2CapacityBtu / 1000).toFixed(0)}k BTU/h` : "—"}</span></div>
         <div><span className="text-muted-foreground">Rectifier:</span> <span className="font-semibold">{site.rectifierCapacityKw} kW</span></div>
-        <div><span className="text-muted-foreground">Telecom Load:</span> <span className="font-semibold">{site.telecomPowerKw.toFixed(1)} KW</span></div>
+        <div><span className="text-muted-foreground">Site Load:</span> <span className="font-semibold">{site.telecomPowerKw.toFixed(1)} KW</span></div>
         <div><span className="text-muted-foreground">Shelter Heat Load:</span> <span className="font-semibold">{site.telecomHeatKBtuH.toFixed(2)} KBtu/h</span></div>
         {site.connectedTechnology && (
           <div><span className="text-muted-foreground">Technology:</span> <span className="font-semibold">{site.connectedTechnology}</span></div>
@@ -94,7 +94,7 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
             Source: <span className="font-medium capitalize">{sc.powerSource === "outage" ? "Power Outage" : sc.powerSource.replace("_", " ")}</span> ·
             Cooling: <span className="font-medium">{sc.coolingConfig === "none" ? "Off" : sc.coolingConfig === "ac1_only" ? "AC1" : "AC1+AC2"}</span> ·
             Battery: <span className="font-medium">{sc.batteryState === "normal" ? "Fully Charged" : sc.batteryState === "charging" ? "Charging" : "Discharging"}</span> ·
-            Telecom Load at Full Traffic: <span className="font-medium">{sc.telecomPowerKw.toFixed(2)} kW</span>
+            Site Load at Full Traffic: <span className="font-medium">{sc.telecomPowerKw.toFixed(2)} kW</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-4">
@@ -164,7 +164,7 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
               </div>
             )}
             <div className="flex justify-between py-0.5">
-              <span className="text-muted-foreground">Telecom Load (total)</span>
+              <span className="text-muted-foreground">Site Load (total)</span>
               <span className="font-semibold">{formatNum(sc.telecomPowerKw)} kW</span>
             </div>
             <div className="flex justify-between py-0.5">
