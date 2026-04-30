@@ -60,6 +60,7 @@ export interface SiteConfig {
 
   // Rectifier
   rectifierCapacityKw: number;
+  connectedTechnology?: string;
 }
 
 // ─── Result Types ─────────────────────────────────────────────────────────────

@@ -72,6 +72,7 @@ export function SiteTable({ analyses, selectedSiteId, onSelectSite }: SiteTableP
               <th className="text-left px-3 py-2 font-semibold text-muted-foreground">Location</th>
               <th className="text-left px-3 py-2 font-semibold text-muted-foreground">Type</th>
               <th className="text-left px-3 py-2 font-semibold text-muted-foreground">Power</th>
+              <th className="text-left px-3 py-2 font-semibold text-muted-foreground">Technology</th>
               <th className="text-left px-3 py-2 font-semibold text-muted-foreground">Risk Score</th>
               <th className="text-left px-3 py-2 font-semibold text-muted-foreground">Status</th>
             </tr>
@@ -95,6 +96,11 @@ export function SiteTable({ analyses, selectedSiteId, onSelectSite }: SiteTableP
                     {a.site.powerConfig === "commercial_with_backup"
                       ? `SEC ${a.site.secCapacityAmp ?? "—"}A / Gen ${a.site.backupGeneratorKva?.toFixed(1) ?? "—"}kVA`
                       : `${a.site.generatorKva.toFixed(1)} kVA`}
+                  </td>
+                  <td className="px-3 py-2">
+                    {a.site.connectedTechnology
+                      ? <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 whitespace-nowrap">{a.site.connectedTechnology}</span>
+                      : <span className="text-muted-foreground">—</span>}
                   </td>
                   <td className="px-3 py-2">
                     <div className="flex gap-0.5">

@@ -42,6 +42,9 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
         <div><span className="text-muted-foreground">Rectifier:</span> <span className="font-semibold">{site.rectifierCapacityKw} kW</span></div>
         <div><span className="text-muted-foreground">Telecom Load:</span> <span className="font-semibold">{site.telecomPowerKw.toFixed(1)} KW</span></div>
         <div><span className="text-muted-foreground">Shelter Heat Load:</span> <span className="font-semibold">{site.telecomHeatKBtuH.toFixed(2)} KBtu/h</span></div>
+        {site.connectedTechnology && (
+          <div><span className="text-muted-foreground">Technology:</span> <span className="font-semibold">{site.connectedTechnology}</span></div>
+        )}
       </div>
 
       <div className="px-4 py-2 border-b border-border">
