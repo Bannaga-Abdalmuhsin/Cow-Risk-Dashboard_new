@@ -81,7 +81,6 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <div className="w-px h-8 bg-white/30" />
               <div>
                 <h1 className="text-lg font-bold tracking-tight">Hajj 1447 COW Risk Dashboard</h1>
-                <p className="text-purple-200 text-[11px] leading-tight">{TOTAL_FLEET} sites · {surveyedCount} surveyed · {pendingCount} pending survey · {PLANNED_TECHS} techs planned</p>
               </div>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
