@@ -268,9 +268,10 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
       isOutage ? "risk" : riskFromMargin(powerMargin, 0, 3);
     const rectifierRisk: "safe" | "risk" =
       isOutage ? "risk" : riskFromMargin(rectifierMargin, 0, 2);
-    // Outdoor cabinet: S9 (outage) = Risk, S1–S8 = always Safe
+    // S9 (outage): cooling not assessed — battery discharge scenario only
+    // Outdoor cabinet: always Safe (open-air, no cooling needed)
     const coolingRisk: "safe" | "risk" =
-      isOutage ? "risk"
+      isOutage ? "safe"
       : site.siteType === "outdoor_cabinet" ? "safe"
       : riskFromMargin(coolingMargin, 0, 5000);
 
