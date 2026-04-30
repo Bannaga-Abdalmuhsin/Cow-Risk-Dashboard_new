@@ -2373,7 +2373,7 @@
       "connectedTechnology": "2G/4G"
     },
     {
-      "cowId": "CWH318",
+      "cowId": "CWN318",
       "powerSource": "SB",
       "shelterType": "Outdoor",
       "location": "Muzdalifah",
