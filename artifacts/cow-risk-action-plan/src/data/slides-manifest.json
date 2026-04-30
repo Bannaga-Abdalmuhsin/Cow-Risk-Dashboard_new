@@ -28,7 +28,15 @@
     "position": 4,
     "filepath": "src/pages/slides/Slide03ScenarioS9.tsx",
     "title": "Recommendations — 4 Actions Required Before Hajj Peak",
-    "description": "Management action plan: 2 critical and 2 high priority actions with owners and impact statement",
+    "description": "Management action plan: 2 critical and 2 high priority actions with owners and overall status",
+    "speakerNotes": ""
+  },
+  {
+    "id": "risk-summary-0004-4000-8000-000000000004",
+    "position": 5,
+    "filepath": "src/pages/slides/Slide04DashboardSnaps.tsx",
+    "title": "Dashboard Preview — Login & Main Overview Screen",
+    "description": "Application screenshots: secure login page and main dashboard overview with live metric cards and site risk table",
     "speakerNotes": ""
   }
 ]
