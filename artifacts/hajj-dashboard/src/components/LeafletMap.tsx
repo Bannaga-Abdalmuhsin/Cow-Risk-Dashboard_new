@@ -254,7 +254,7 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
           <div className="font-bold text-gray-700 mb-1.5 uppercase tracking-wide text-[10px]">Risk Intensity</div>
           <div
             className="w-28 h-2.5 rounded-full mb-1"
-            style={{ background: "linear-gradient(to right, #00BFB3, #FF9AAD, #E8175D, #4A0E8F)" }}
+            style={{ background: "linear-gradient(to right, #00D4C4, #00BFB3, rgba(220,40,90,0.6), rgba(160,0,50,0.75))" }}
           />
           <div className="flex justify-between text-[9px] text-gray-400">
             <span>Low</span>
