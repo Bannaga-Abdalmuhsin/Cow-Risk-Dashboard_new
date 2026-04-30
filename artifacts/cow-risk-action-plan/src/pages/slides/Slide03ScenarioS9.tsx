@@ -155,11 +155,10 @@ export default function Slide03ScenarioS9() {
         </div>
       </div>
 
-      <div className="absolute bottom-[2.5vh] left-[4vw] right-[3vw] flex items-center justify-between">
+      <div className="absolute bottom-[2.5vh] left-[4vw] right-[3vw]">
         <div style={{ fontFamily: V, fontSize: "1.1vw", color: "#7c3aed" }}>
           Source: DB col "Batteries Strings MAX useful Time Hours" · All sites ≥ 1h currently SAFE
         </div>
-        <div style={{ fontFamily: V, fontSize: "1.1vw", fontWeight: "bold", color: "#9333ea" }}>Slide 4 / 4</div>
       </div>
     </div>
   );

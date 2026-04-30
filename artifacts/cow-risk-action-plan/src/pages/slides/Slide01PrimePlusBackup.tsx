@@ -157,19 +157,16 @@ export default function Slide01PrimePlusBackup() {
         </div>
       </div>
 
-      <div className="absolute bottom-[3vh] left-[4vw] right-[3vw] flex items-center justify-between">
-        <div className="flex items-center gap-[2vw]">
-          <span className="flex items-center gap-[0.5vw]">
-            <span className="w-[0.8vw] h-[0.8vw] rounded-full inline-block" style={{ background: "#00BFB3" }} />
-            <span style={{ fontFamily: V, fontSize: "1.1vw", color: "#6b7280" }}>Safe (52 sites)</span>
-          </span>
-          <span className="flex items-center gap-[0.5vw]">
-            <span className="w-[0.8vw] h-[0.8vw] rounded-full inline-block" style={{ background: "#E8175D" }} />
-            <span style={{ fontFamily: V, fontSize: "1.1vw", color: "#6b7280" }}>At Risk (3 sites)</span>
-          </span>
-          <span style={{ fontFamily: V, fontSize: "1.1vw", color: "#9ca3af" }}>· Load = Telecom + AC1 + AC2 + Battery Charging · Temp 46°C</span>
-        </div>
-        <div style={{ fontFamily: V, fontSize: "1.1vw", fontWeight: "bold", color: "#6b21c8" }}>Slide 2 / 4</div>
+      <div className="absolute bottom-[3vh] left-[4vw] right-[3vw] flex items-center gap-[2vw]">
+        <span className="flex items-center gap-[0.5vw]">
+          <span className="w-[0.8vw] h-[0.8vw] rounded-full inline-block" style={{ background: "#00BFB3" }} />
+          <span style={{ fontFamily: V, fontSize: "1.1vw", color: "#6b7280" }}>Safe (52 sites)</span>
+        </span>
+        <span className="flex items-center gap-[0.5vw]">
+          <span className="w-[0.8vw] h-[0.8vw] rounded-full inline-block" style={{ background: "#E8175D" }} />
+          <span style={{ fontFamily: V, fontSize: "1.1vw", color: "#6b7280" }}>At Risk (3 sites)</span>
+        </span>
+        <span style={{ fontFamily: V, fontSize: "1.1vw", color: "#9ca3af" }}>· Load = Telecom + AC1 + AC2 + Battery Charging · Temp 46°C</span>
       </div>
     </div>
   );

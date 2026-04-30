@@ -187,11 +187,10 @@ export default function Slide00DashboardIdea() {
         </div>
       </div>
 
-      <div className="absolute bottom-[2.5vh] left-[4vw] right-[3vw] flex items-center justify-between">
+      <div className="absolute bottom-[2.5vh] left-[4vw] right-[3vw]">
         <div style={{ fontFamily: V, fontSize: "1.1vw", color: "#9ca3af" }}>
           stc · ACES MSD Division · COW Power Risk Dashboard · Hajj 1447
         </div>
-        <div style={{ fontFamily: V, fontSize: "1.1vw", fontWeight: "bold", color: "#6b21c8" }}>Slide 1 / 4</div>
       </div>
     </div>
   );

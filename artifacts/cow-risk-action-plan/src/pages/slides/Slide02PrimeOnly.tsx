@@ -31,17 +31,17 @@ export default function Slide02PrimeOnly() {
   const atRiskPrime = sgSites.filter(s => s.margin_s4 < 0);
 
   const TH: React.CSSProperties = {
-    fontFamily: V, fontSize: "1.1vw", fontWeight: "bold",
+    fontFamily: V, fontSize: "1.0vw", fontWeight: "bold", lineHeight: 1.2,
     textTransform: "uppercase", letterSpacing: "0.04em",
-    paddingBottom: "0.6vh", borderBottom: "2px solid #d1d5db",
+    paddingBottom: "0.4vh", borderBottom: "2px solid #d1d5db",
     color: "#6b7280", textAlign: "left",
   };
   const TH_R: React.CSSProperties = { ...TH, textAlign: "right" };
   const TH_C: React.CSSProperties = { ...TH, textAlign: "center" };
 
   const TD: React.CSSProperties = {
-    fontFamily: V, fontSize: "1.1vw",
-    paddingTop: "0.45vh", paddingBottom: "0.45vh",
+    fontFamily: V, fontSize: "1.0vw", lineHeight: 1.2,
+    paddingTop: "0.15vh", paddingBottom: "0.15vh",
     borderBottom: "1px solid #f3f4f6", color: "#374151",
   };
   const TD_R: React.CSSProperties = { ...TD, textAlign: "right" };
@@ -78,7 +78,7 @@ export default function Slide02PrimeOnly() {
         </div>
       </div>
 
-      <div className="absolute top-[18vh] left-[4vw] right-[3vw] flex gap-[2vw]">
+      <div className="absolute top-[18vh] bottom-[5vh] left-[4vw] right-[3vw] flex gap-[2vw]">
 
         <div style={{ width: "42%" }}>
           <div className="rounded-xl overflow-hidden border-2" style={{ borderColor: "#6b21c8" }}>
@@ -149,22 +149,22 @@ export default function Slide02PrimeOnly() {
         </div>
 
         <div style={{ width: "58%" }}>
-          <div className="rounded-xl overflow-hidden border" style={{ borderColor: "#e5e7eb" }}>
-            <div className="px-[1.5vw] py-[1vh]" style={{ background: "#f5f3ff" }}>
+          <div className="rounded-xl border overflow-hidden" style={{ borderColor: "#e5e7eb" }}>
+            <div style={{ background: "#f5f3ff", padding: "0.8vh 1.5vw" }}>
               <div style={{ fontFamily: V, fontSize: "1.2vw", fontWeight: "bold", color: "#4a0e8f" }}>
                 All 24 SG/DG Sites — Prime Power Margin (S4 Worst-Case)
               </div>
             </div>
-            <div className="bg-white px-[1.5vw] py-[0.5vh] overflow-hidden">
-              <table className="w-full">
+            <div style={{ background: "white", padding: "0.4vh 1.5vw", maxHeight: "72vh", overflow: "hidden" }}>
+              <table className="w-full" style={{ tableLayout: "fixed", borderCollapse: "collapse" }}>
                 <thead>
                   <tr>
-                    <th style={TH}>Site</th>
-                    <th style={TH}>Location</th>
-                    <th style={TH_C}>Type</th>
-                    <th style={TH_R}>Prime (kW)</th>
-                    <th style={TH_R}>Load (kW)</th>
-                    <th style={TH_R}>Margin</th>
+                    <th style={{ ...TH, width: "22%" }}>Site</th>
+                    <th style={{ ...TH, width: "26%" }}>Location</th>
+                    <th style={{ ...TH_C, width: "12%" }}>Type</th>
+                    <th style={{ ...TH_R, width: "14%" }}>Prime (kW)</th>
+                    <th style={{ ...TH_R, width: "14%" }}>Load (kW)</th>
+                    <th style={{ ...TH_R, width: "12%" }}>Margin</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -173,7 +173,7 @@ export default function Slide02PrimeOnly() {
                       <td style={{ ...TD, fontWeight: "bold", color: "#6b21c8" }}>{s.id}</td>
                       <td style={TD}>{s.loc}</td>
                       <td style={TD_C}>
-                        <span style={{ fontFamily: V, fontSize: "1.0vw", fontWeight: "bold", background: s.type === "DG" ? "#fef9c3" : "#f5f3ff", color: "#4a0e8f", borderRadius: "4px", padding: "0.1vh 0.5vw" }}>
+                        <span style={{ fontFamily: V, fontSize: "1.05vw", fontWeight: "bold", background: s.type === "DG" ? "#fef9c3" : "#f5f3ff", color: "#4a0e8f", borderRadius: "4px", padding: "0 0.4vw" }}>
                           {s.type}
                         </span>
                       </td>
@@ -191,11 +191,10 @@ export default function Slide02PrimeOnly() {
         </div>
       </div>
 
-      <div className="absolute bottom-[2.5vh] left-[4vw] right-[3vw] flex items-center justify-between">
+      <div className="absolute bottom-[1.5vh] left-[4vw] right-[3vw]">
         <div style={{ fontFamily: V, fontSize: "1.1vw", color: "#6b7280" }}>
           Load = Telecom + AC1 + AC2 + Battery Charging (S4 worst-case) · 46°C
         </div>
-        <div style={{ fontFamily: V, fontSize: "1.1vw", fontWeight: "bold", color: "#6b21c8" }}>Slide 3 / 4</div>
       </div>
     </div>
   );
