@@ -1,5 +1,5 @@
 // AUTO-GENERATED from PostgreSQL cow_sites table — do not edit manually
-    // Last updated: 2026-04-30T09:17:15.313Z
+    // Last updated: 2026-04-30T09:59:19.129Z
     import type { SiteConfig } from "./calculations";
 
     export interface RealSiteData {
@@ -657,7 +657,7 @@
       "longitude": 39.990098,
       "singleGenCapacityKva": 35,
       "singleGenWorkingHours": 0,
-      "secMeterCapacityAmp": 0,
+      "secMeterCapacityAmp": 100,
       "backupGenCapacityKva": 35,
       "backupGenWorkingHours": 0,
       "rectifierCapacityKw": 21.6,
@@ -3735,18 +3735,14 @@
     export const totalSurveyed = realSiteData.length;
 
     // ─── Map raw DB rows → SiteConfig for the calculation engine ─────────────────
-    // The engine uses calcGeneratorNetPower(kva, age) = kva * 0.8 * 0.87 * 0.9 * (1 − 0.03*age)
-    // Net factor at age=0: 0.6264. To reproduce the pre-calculated Excel values we
-    // reverse-engineer kva = primeNetKw / 0.6264 so the engine emits the correct KW.
     const GEN_FACTOR = 0.8 * 0.87 * 0.9; // 0.6264
 
     export const ALL_SITES: SiteConfig[] = realSiteData.map((s) => {
       const isSG = s.powerSource === "SG";
+      const isDG = s.powerSource === "DG";
       const isOutdoor = s.shelterType.toLowerCase() === "outdoor";
 
-      // Use pre-calculated net power values from Excel/DB, reverse-engineered
-      // through the engine's net factor so calculations.ts returns the same numbers.
-      const primeNetKw  = isSG ? s.primeGenNetPowerKw  : s.primeSecNetPowerKw;
+      const primeNetKw  = (isSG || isDG) ? s.primeGenNetPowerKw : s.primeSecNetPowerKw;
       const backupNetKw = s.backupGenNetPowerKw;
 
       return {
@@ -3756,17 +3752,16 @@
         lat:       s.latitude,
         lng:       s.longitude,
         siteType:  isOutdoor ? "outdoor_cabinet" : "shelter",
-        powerConfig: isSG ? "single_generator" : "commercial_with_backup",
+        powerConfig: (isSG || isDG) ? "single_generator" : "commercial_with_backup",
 
         generatorKva:      primeNetKw  / GEN_FACTOR,
         generatorAge:      0,
         secCapacityAmp:    s.secMeterCapacityAmp,
 
-        backupGeneratorKva:  isSG ? undefined : backupNetKw / GEN_FACTOR,
-        backupGeneratorAge:  isSG ? undefined : 0,
+        backupGeneratorKva:  (isSG || isDG) ? undefined : backupNetKw / GEN_FACTOR,
+        backupGeneratorAge:  (isSG || isDG) ? undefined : 0,
 
         telecomPowerKw:      s.telecomLoadTotalKw || s.telecomLoadAllKw,
-        // DB column stores Btu/h despite "kbtuh" name; engine expects KBtu/h → divide by 1000
         telecomHeatKBtuH:    s.telecomHeatDissipationKbtuh / 1000,
 
         ac1CapacityBtu:  s.ac1CapacityBtu,
