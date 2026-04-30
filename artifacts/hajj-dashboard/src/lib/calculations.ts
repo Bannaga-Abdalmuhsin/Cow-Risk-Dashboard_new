@@ -57,6 +57,7 @@ export interface SiteConfig {
   batteryCapacityAh: number;    // total = Ah_per_string × strings
   batteryType: "lead_acid" | "lithium";
   batteryAge: number;           // years
+  batteryMaxUsefulTimeHours: number; // from DB "Batteries Strings MAX useful Time Hours"
 
   // Rectifier
   rectifierCapacityKw: number;
@@ -163,9 +164,7 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
   const ac2NetPwKw   = site.ac2CapacityBtu ? calcAcPowerKw(ac2NetBtu) : 0;
 
   const battChgKw    = calcBatteryChargingKw(site.batteryCapacityAh);
-  const battHours    = calcBatteryUsefulHours(
-    site.batteryCapacityAh, site.batteryType, site.batteryAge
-  );
+  const battHours    = site.batteryMaxUsefulTimeHours;
 
   const telecomPwKw  = site.telecomPowerKw;
   const telecomHeatBtu = site.telecomHeatKBtuH * 1000;   // KBtu/h → Btu/h
