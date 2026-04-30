@@ -3,32 +3,32 @@
     "id": "risk-summary-0000-4000-8000-000000000000",
     "position": 1,
     "filepath": "src/pages/slides/Slide00DashboardIdea.tsx",
-    "title": "Dashboard Overview — COW Power & Cooling Risk Intelligence",
-    "description": "Intro slide explaining the dashboard concept: 79 sites, 9 scenarios, 4 risk pillars, 2-tier Safe/Risk classification",
+    "title": "The Challenge — 79 COW Sites · 46°C · Zero Margin for Error",
+    "description": "Executive problem statement: infrastructure at stake, three key risk categories, key stats",
     "speakerNotes": ""
   },
   {
     "id": "risk-summary-0001-4000-8000-000000000001",
     "position": 2,
     "filepath": "src/pages/slides/Slide01PrimePlusBackup.tsx",
-    "title": "Power Supply Risk — Prime + Backup (SB Sites, S1–S8)",
-    "description": "Risk summary for 55 SB sites: S1-S4 prime SEC all safe, S5-S8 backup 3 sites at risk",
+    "title": "The Solution — Real-Time Risk Intelligence for All 79 Sites",
+    "description": "Dashboard overview: 4 risk dimensions, 9 scenarios at a glance, key platform stats",
     "speakerNotes": ""
   },
   {
     "id": "risk-summary-0002-4000-8000-000000000002",
     "position": 3,
     "filepath": "src/pages/slides/Slide02PrimeOnly.tsx",
-    "title": "Power Supply Risk — Prime Only (SG/DG Sites, S1–S8)",
-    "description": "Risk summary for 24 SG/DG sites: S1-S4 2 sites at risk, S5-S8 all 24 at risk (no backup)",
+    "title": "Key Findings — Risk Assessment Summary Across All 9 Scenarios",
+    "description": "Executive summary: Safe vs At Risk counts per scenario group, severity ratings, key finding per group",
     "speakerNotes": ""
   },
   {
     "id": "risk-summary-0003-4000-8000-000000000003",
     "position": 4,
     "filepath": "src/pages/slides/Slide03ScenarioS9.tsx",
-    "title": "Scenario S9 — Power Outage · Battery Discharge",
-    "description": "Full S9 explanation: battery endurance by location, 1h/2h/3h breakdown, all 79 sites currently safe",
+    "title": "Recommendations — 4 Actions Required Before Hajj Peak",
+    "description": "Management action plan: 2 critical and 2 high priority actions with owners and impact statement",
     "speakerNotes": ""
   }
 ]
