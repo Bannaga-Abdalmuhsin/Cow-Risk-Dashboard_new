@@ -135,11 +135,21 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             <button
               key={t.key}
               onClick={() => setActiveTab(t.key)}
-              className={`px-4 py-2.5 text-xs font-medium transition-colors flex items-center gap-1.5 border-b-2 -mb-px ${
+              className="px-4 py-2.5 text-xs font-medium transition-all flex items-center gap-1.5 border-b-2 -mb-px rounded-t"
+              style={
                 activeTab === t.key
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-              }`}
+                  ? {
+                      borderBottomColor: "#9333ea",
+                      color: "#ffffff",
+                      background: "linear-gradient(180deg, rgba(107,33,200,0.22) 0%, rgba(147,51,234,0.10) 100%)",
+                      boxShadow: "inset 0 1px 0 rgba(192,132,252,0.25), 0 0 12px rgba(147,51,234,0.15)",
+                    }
+                  : {
+                      borderBottomColor: "transparent",
+                      color: "var(--muted-foreground)",
+                      background: "transparent",
+                    }
+              }
             >
               <span>{t.icon}</span>
               <span>{t.label}</span>
