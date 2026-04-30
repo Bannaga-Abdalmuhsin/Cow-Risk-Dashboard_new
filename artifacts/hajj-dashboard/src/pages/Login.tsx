@@ -291,13 +291,13 @@ export default function Login({ onLogin }: LoginProps) {
       >
         <span
           className="text-sm font-black uppercase tracking-widest"
-          style={{ color: "#dc2626", fontFamily: "Verdana, sans-serif" }}
+          style={{ color: "#7f1d1d", fontFamily: "Verdana, sans-serif" }}
         >
           Powered by
         </span>
         <span
           className="text-sm font-black uppercase tracking-widest"
-          style={{ color: "#ffffff", fontFamily: "Verdana, sans-serif" }}
+          style={{ color: "#1e3a8a", fontFamily: "Verdana, sans-serif" }}
         >
           ACES MSD
         </span>
