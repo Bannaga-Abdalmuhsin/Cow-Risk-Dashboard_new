@@ -25,15 +25,15 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   const [selectedSiteId, setSelectedSiteId] = useState<string | null>(null);
   const [selectedScenarioId, setSelectedScenarioId] = useState<number | null>(null);
 
-  const TOTAL_FLEET    = 94;   // full Hajj 1447 COW deployment
+  const TOTAL_FLEET    = 79;   // full Hajj 1447 COW deployment (1 additional site pending verification)
   const PLANNED_TECHS  = 16;   // technicians allocated for operations
 
   const analyses = useMemo(() => ALL_SITES.map(analyzeSite), []);
 
   const safeCount    = analyses.filter(a => a.overallRisk === "safe").length;
   const riskCount    = analyses.filter(a => a.overallRisk === "risk").length;
-  const surveyedCount = analyses.length;
-  const pendingCount  = TOTAL_FLEET - surveyedCount;
+  const surveyedCount = Math.min(analyses.length, TOTAL_FLEET);
+  const pendingCount  = Math.max(0, TOTAL_FLEET - analyses.length);
   const totalRiskFlags = analyses.reduce((sum, a) =>
     sum + a.scenarios.reduce((s2, sc) =>
       s2 +
