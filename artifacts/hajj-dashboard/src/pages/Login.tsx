@@ -290,10 +290,10 @@ export default function Login({ onLogin }: LoginProps) {
         style={{ background: "rgba(10,4,28,0.75)", borderTop: "1px solid rgba(107,33,200,0.2)" }}
       >
         <span
-          className="text-sm font-black uppercase tracking-widest"
+          className="text-sm font-black tracking-widest"
           style={{ color: "#7f1d1d", fontFamily: "Verdana, sans-serif" }}
         >
-          Powered by
+          Powered By
         </span>
         <span
           className="text-sm font-black uppercase tracking-widest"
