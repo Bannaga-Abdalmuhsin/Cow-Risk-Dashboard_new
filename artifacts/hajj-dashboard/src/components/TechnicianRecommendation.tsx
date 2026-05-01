@@ -38,30 +38,15 @@ export function TechnicianRecommendation({ analyses, plannedTechs, totalFleet }:
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div className="text-center p-3 rounded-lg border" style={{background:"#fce4ed", borderColor:"#E8175D"}}>
-          <div className="text-2xl font-bold" style={{color:"#E8175D"}}>{techForRisk}</div>
-          <div className="text-xs font-medium mt-0.5" style={{color:"#b01040"}}>Risk Site Techs</div>
-          <div className="text-[10px] mt-1" style={{color:"#E8175D"}}>1 per 3 risk sites</div>
+      <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-100">
+        <div className="text-2xl font-bold text-blue-600">{totalTech}</div>
+        <div className="text-xs text-blue-700 font-medium mt-0.5">
+          {plannedTechs ? "Planned Techs" : "Total Techs"}
         </div>
-        <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-100">
-          <div className="text-2xl font-bold text-blue-600">{totalTech}</div>
-          <div className="text-xs text-blue-700 font-medium mt-0.5">
-            {plannedTechs ? "Planned Techs" : "Total Techs"}
-          </div>
-          <div className="text-[10px] text-blue-500 mt-1">
-            {plannedTechs ? `For ${fleetTotal} total sites` : `${safe.length} sites remote`}
-          </div>
+        <div className="text-[10px] text-blue-500 mt-1">
+          {plannedTechs ? `For ${fleetTotal} total sites` : `${safe.length} sites remote`}
         </div>
       </div>
-
-      {plannedTechs && (
-        <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-[11px] text-amber-800">
-          <span className="font-semibold">Coverage: </span>
-          {analyses.length} of {fleetTotal} sites surveyed ·{" "}
-          {fleetTotal - analyses.length} pending · ~{(plannedTechs / fleetTotal).toFixed(2)} tech/site
-        </div>
-      )}
 
       <div>
         <div className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">By Location</div>
