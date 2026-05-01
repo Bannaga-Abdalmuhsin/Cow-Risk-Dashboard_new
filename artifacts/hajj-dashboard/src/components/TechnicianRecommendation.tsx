@@ -15,6 +15,10 @@ export function TechnicianRecommendation({ analyses, plannedTechs, totalFleet }:
   const totalTech = plannedTechs ?? techForRisk;
   const fleetTotal = totalFleet ?? analyses.length;
 
+  const LOCATION_TECH_MIN: Record<string, number> = {
+    "Makkah Remote": 2,
+  };
+
   const byLocation: Record<string, { risk: number; safe: number }> = {};
   for (const a of analyses) {
     const loc = a.site.location;
@@ -64,7 +68,7 @@ export function TechnicianRecommendation({ analyses, plannedTechs, totalFleet }:
         <div className="space-y-1.5">
           {Object.entries(byLocation).map(([loc, counts]) => {
             const total = counts.risk + counts.safe;
-            const techNeeded = Math.ceil(counts.risk / 3);
+            const techNeeded = Math.max(Math.ceil(counts.risk / 3), LOCATION_TECH_MIN[loc] ?? 0);
             return (
               <div key={loc} className="flex items-center gap-2">
                 <div className="text-xs text-muted-foreground w-36 truncate">{loc}</div>
