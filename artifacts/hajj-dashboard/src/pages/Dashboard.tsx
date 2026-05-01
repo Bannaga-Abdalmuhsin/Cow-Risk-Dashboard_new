@@ -45,16 +45,6 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     , 0)
   , 0);
 
-  const zoneRisk = useMemo(() => {
-    const zones: Record<string, { risk: number; safe: number }> = {};
-    for (const a of analyses) {
-      const z = a.site.location;
-      if (!zones[z]) zones[z] = { risk: 0, safe: 0 };
-      zones[z][a.overallRisk]++;
-    }
-    return zones;
-  }, [analyses]);
-
   const selectedAnalysis = selectedSiteId ? analyses.find(a => a.site.id === selectedSiteId) ?? null : null;
 
   const handleSelectSite = (id: string) => {
@@ -95,38 +85,6 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               </div>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
-
-              {/* Zone risk pills */}
-              <div className="flex gap-1.5 items-center">
-                {[
-                  { loc: "Makkah Remote", abbr: "MKK", icon: "/icon-makkah.png", invert: false },
-                  { loc: "Mina",          abbr: "MNA", icon: "/icon-mina.png",   invert: true  },
-                  { loc: "Arafat",        abbr: "ARF", icon: "/icon-arafat.png", invert: true  },
-                  { loc: "Muzdalifah",    abbr: "MZD", icon: null,               invert: false },
-                ].map(({ loc, abbr, icon, invert }) => {
-                  const z = zoneRisk[loc] ?? { risk: 0, safe: 0 };
-                  const hasRisk = z.risk > 0;
-                  return (
-                    <div key={loc}
-                      className="flex items-center gap-1 rounded-lg px-2 py-1 border"
-                      style={{
-                        background: hasRisk ? "rgba(239,68,68,0.2)" : "rgba(16,185,129,0.15)",
-                        borderColor: hasRisk ? "rgba(239,68,68,0.35)" : "rgba(16,185,129,0.3)",
-                      }}
-                      title={`${loc}: ${z.risk} risk, ${z.safe} safe`}
-                    >
-                      {icon
-                        ? <img src={icon} alt={abbr} className="h-5 w-5 object-contain"
-                            style={invert ? { filter: "brightness(0) invert(1)" } : undefined} />
-                        : <span className="text-[10px] font-bold text-white/80">{abbr}</span>
-                      }
-                      <span className="text-xs font-bold" style={{ color: hasRisk ? "#fca5a5" : "#6ee7b7" }}>
-                        {z.risk}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
 
               <div className="flex gap-2">
                 <div className="bg-red-500/30 border border-red-400/30 rounded-lg px-3 py-1.5 text-center">
