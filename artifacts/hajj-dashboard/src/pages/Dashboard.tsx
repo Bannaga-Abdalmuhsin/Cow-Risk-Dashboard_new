@@ -62,7 +62,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="stc-gradient text-white shadow-lg">
-        <div className="max-w-screen-2xl mx-auto px-4 py-3">
+        <div className="w-full px-2 py-3">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-4">
               <img
@@ -129,7 +129,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       </header>
 
       <nav className="bg-card border-b border-border shadow-sm">
-        <div className="max-w-screen-2xl mx-auto px-4 flex gap-1">
+        <div className="w-full px-2 flex gap-1">
           {tabs.map(t => (
             <button
               key={t.key}
@@ -157,7 +157,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         </div>
       </nav>
 
-      <main className="flex-1 max-w-screen-2xl mx-auto w-full px-4 py-4">
+      <main className="flex-1 w-full px-2 py-4">
         {activeTab === "overview" && (
           <div className="space-y-4">
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -319,7 +319,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         )}
       </main>
 
-      <footer className="border-t border-border bg-muted/30 py-3 px-4 flex items-center justify-between text-xs text-muted-foreground flex-wrap gap-2">
+      <footer className="border-t border-border bg-muted/30 py-3 px-2 flex items-center justify-between text-xs text-muted-foreground flex-wrap gap-2">
         <span>Hajj 1447 · stc COW Power & Cooling Risk Dashboard · {analyses.length} Sites · 46°C Extreme Conditions Analysis</span>
         {activeTab === "overview" && (
           <span className="font-semibold tracking-wide">
