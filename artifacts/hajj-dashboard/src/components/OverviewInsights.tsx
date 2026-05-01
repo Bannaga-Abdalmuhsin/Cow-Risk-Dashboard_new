@@ -128,7 +128,7 @@ export function ActionSitesCard({ analyses }: Props) {
           <div key={label} className="rounded-lg border px-3 py-2"
             style={{ background: bg, borderColor: border }}>
             <div className="flex items-center justify-between mb-1.5">
-              <div className="flex items-center gap-1.5 text-xs font-semibold" style={{ color }}>
+              <div className="flex items-center gap-1.5 text-sm font-bold" style={{ color }}>
                 <span style={{ color }}>{icon}</span>
                 {label}
               </div>
