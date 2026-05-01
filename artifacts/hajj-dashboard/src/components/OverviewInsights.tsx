@@ -138,7 +138,7 @@ export function ActionSitesCard({ analyses }: Props) {
               <div className="flex flex-wrap gap-1">
                 {sites.slice(0, 8).map(a => (
                   <span key={a.site.id}
-                    className="text-[9px] font-mono px-1 py-0.5 rounded border"
+                    className="text-xs font-bold font-mono px-1.5 py-0.5 rounded border"
                     style={{ background: "white", borderColor: dot, color }}>
                     {a.site.id}
                   </span>
