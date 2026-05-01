@@ -175,12 +175,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <LocationRiskChart analyses={analyses} />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-              <div className="lg:col-span-2">
-                <SiteTable analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
-              </div>
-              <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
-            </div>
+            <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
 
             <div className="bg-card border border-card-border rounded-xl p-4 text-xs space-y-3">
               <div className="font-semibold text-sm flex items-center gap-2">
