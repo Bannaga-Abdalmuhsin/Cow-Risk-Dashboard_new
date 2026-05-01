@@ -12,6 +12,7 @@ import { TechnicianRecommendation } from "../components/TechnicianRecommendation
 import { RiskDistributionPie, PowerSourceDonut, RiskTypeBreakdown, LocationRiskChart } from "../components/RiskCharts";
 import { ScenarioMatrix } from "../components/ScenarioMatrix";
 import { ScenarioRiskSites } from "../components/ScenarioRiskSites";
+import { RiskByAreaCard, ActionSitesCard } from "../components/OverviewInsights";
 import { EscalationTable } from "../components/EscalationTable";
 
 type Tab = "overview" | "scenarios" | "map" | "sites" | "technicians";
@@ -175,7 +176,11 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <LocationRiskChart analyses={analyses} />
             </div>
 
-            <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+              <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
+              <RiskByAreaCard analyses={analyses} />
+              <ActionSitesCard analyses={analyses} />
+            </div>
 
             <div className="bg-card border border-card-border rounded-xl p-4 text-xs space-y-3">
               <div className="font-semibold text-sm flex items-center gap-2">

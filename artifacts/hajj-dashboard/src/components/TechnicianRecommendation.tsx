@@ -48,25 +48,6 @@ export function TechnicianRecommendation({ analyses, plannedTechs, totalFleet }:
         </div>
       </div>
 
-      <div>
-        <div className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">By Location</div>
-        <div className="space-y-1.5">
-          {Object.entries(byLocation).map(([loc, counts]) => {
-            const total = counts.risk + counts.safe;
-            const techNeeded = Math.max(Math.ceil(counts.risk / 3), LOCATION_TECH_MIN[loc] ?? 0);
-            return (
-              <div key={loc} className="flex items-center gap-2">
-                <div className="text-xs text-muted-foreground w-36 truncate">{loc}</div>
-                <div className="flex-1 h-4 bg-muted rounded-full overflow-hidden flex">
-                  <div className="h-full" style={{ width: `${(counts.risk / total) * 100}%`, background:"#E8175D" }} />
-                  <div className="h-full" style={{ width: `${(counts.safe / total) * 100}%`, background:"#00BFB3" }} />
-                </div>
-                <div className="text-xs font-semibold w-12 text-right">{techNeeded > 0 ? `${techNeeded} tech` : "Remote"}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }
