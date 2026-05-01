@@ -91,9 +91,39 @@ interface LeafletMapProps {
   showTeamMarkers?: boolean;
 }
 
+type TileMode = "street" | "satellite" | "terrain" | "dark";
+
+const TILE_LAYERS: Record<TileMode, { url: string; attribution: string; label: string; icon: string }> = {
+  street: {
+    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    label: "Street",
+    icon: "🗺️",
+  },
+  satellite: {
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attribution: "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+    label: "Satellite",
+    icon: "🛰️",
+  },
+  terrain: {
+    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>',
+    label: "Terrain",
+    icon: "🏔️",
+  },
+  dark: {
+    url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    label: "Dark",
+    icon: "🌑",
+  },
+};
+
 export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMarkers = false }: LeafletMapProps) {
   const [showHeatmap, setShowHeatmap] = useState(true);
   const [showMarkers, setShowMarkers] = useState(false);
+  const [tileMode, setTileMode] = useState<TileMode>("street");
 
   const teamIcon = (teamName: string) => L.divIcon({
     className: "",
@@ -113,8 +143,9 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
         zoomControl={true}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          key={tileMode}
+          attribution={TILE_LAYERS[tileMode].attribution}
+          url={TILE_LAYERS[tileMode].url}
         />
 
         {showHeatmap && <HeatmapLayer analyses={analyses} />}
@@ -207,6 +238,26 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
           );
         })}
       </MapContainer>
+
+      {/* Map mode switcher — top left */}
+      <div className="absolute top-3 left-3 z-[1000] flex gap-1">
+        {(Object.keys(TILE_LAYERS) as TileMode[]).map(mode => (
+          <button
+            key={mode}
+            onClick={() => setTileMode(mode)}
+            title={TILE_LAYERS[mode].label}
+            className="px-2 py-1 text-[11px] font-semibold rounded-lg shadow-md border transition-all flex items-center gap-1"
+            style={{
+              background: tileMode === mode ? "#4A0E8F" : "white",
+              color: tileMode === mode ? "white" : "#4A0E8F",
+              borderColor: tileMode === mode ? "#4A0E8F" : "#d1d5db",
+            }}
+          >
+            <span>{TILE_LAYERS[mode].icon}</span>
+            <span>{TILE_LAYERS[mode].label}</span>
+          </button>
+        ))}
+      </div>
 
       {/* Map controls overlay */}
       <div className="absolute top-3 right-3 z-[1000] flex flex-col gap-1.5">
