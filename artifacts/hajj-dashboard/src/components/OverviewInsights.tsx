@@ -94,7 +94,7 @@ export function ActionSitesCard({ analyses }: Props) {
     {
       label: "Undersized Backup Generator",
       sites: backupFail,
-      icon: <Battery size={13} />,
+      icon: null,
       bg: "#fce4ed",
       border: "#E8175D",
       color: "#b01040",
@@ -129,7 +129,7 @@ export function ActionSitesCard({ analyses }: Props) {
             style={{ background: bg, borderColor: border }}>
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-center gap-1.5 text-sm font-bold" style={{ color }}>
-                <span style={{ color }}>{icon}</span>
+                {icon && <span style={{ color }}>{icon}</span>}
                 {label}
               </div>
               <span className="text-lg font-bold" style={{ color }}>{sites.length}</span>
