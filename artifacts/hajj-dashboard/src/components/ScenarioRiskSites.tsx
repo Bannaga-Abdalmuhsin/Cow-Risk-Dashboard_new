@@ -106,9 +106,9 @@ export function ScenarioRiskSites({ analyses, scenarioId, onClose }: Props) {
               const powerLabel =
                 analysis.site.powerConfig === "commercial_with_backup"
                   ? analysis.site.secCapacityAmp
-                    ? `SEC ${analysis.site.secCapacityAmp}A / Gen ${analysis.site.backupGeneratorKva?.toFixed(1) ?? "—"}kVA`
-                    : `Gen ${analysis.site.backupGeneratorKva?.toFixed(1) ?? "—"}kVA`
-                  : `${analysis.site.generatorKva.toFixed(1)} kVA`;
+                    ? `SEC ${analysis.site.secCapacityAmp}A | Backup: ${analysis.site.backupGeneratorKva ?? "—"}kVA`
+                    : `Gen1: ${analysis.site.generatorKva}kVA | Gen2: ${analysis.site.backupGeneratorKva ?? "—"}kVA`
+                  : `Single Gen: ${analysis.site.generatorKva}kVA`;
 
               return (
                 <tr key={analysis.site.id}
