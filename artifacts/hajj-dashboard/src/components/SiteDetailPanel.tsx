@@ -34,9 +34,9 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
         <div><span className="text-muted-foreground">Power Source:</span> <span className="font-semibold">
           {site.powerConfig === "commercial_with_backup"
             ? site.secCapacityAmp
-              ? `SEC ${site.secCapacityAmp}A  |  Backup Gen: ${site.backupGeneratorKva ?? "—"}kVA`
-              : `Gen1: ${site.generatorKva}kVA  |  Gen2: ${site.backupGeneratorKva ?? "—"}kVA`
-            : `Single Gen: ${site.generatorKva}kVA`}
+              ? `SEC ${site.secCapacityAmp}A  |  Backup Gen: ${site.rawBackupGenKva ?? "—"}kVA`
+              : `Gen1: ${site.rawGenKva ?? "—"}kVA  |  Gen2: ${site.rawBackupGenKva ?? "—"}kVA`
+            : `Single Gen: ${site.rawGenKva ?? "—"}kVA`}
         </span></div>
         <div><span className="text-muted-foreground">Battery:</span> <span className="font-semibold">{site.batteryCapacityAh} Ah {site.batteryType.replace("_", "-")}</span></div>
         <div><span className="text-muted-foreground">AC1:</span> <span className="font-semibold">{(site.ac1CapacityBtu / 1000).toFixed(0)}k BTU/h</span></div>

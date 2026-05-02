@@ -41,6 +41,10 @@ export interface SiteConfig {
   backupGeneratorKva?: number;
   backupGeneratorAge?: number;
 
+  // Raw nameplate capacity from the data sheet — for display only, not used in calculations
+  rawGenKva?: number;        // singleGenCapacityKva  (SG/DG sites)
+  rawBackupGenKva?: number;  // backupGenCapacityKva  (SB/DG backup)
+
   // Telecom loads
   telecomPowerKw: number;     // Total telecom KW — used for ALL power margin formulas
   telecomHeatKBtuH: number;   // Heat dissipation inside cooled space — directly from spreadsheet

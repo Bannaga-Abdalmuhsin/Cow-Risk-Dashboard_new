@@ -3697,6 +3697,8 @@
       batteryMaxUsefulTimeHours: s.batteriesMaxUsefulTimeHours,
       rectifierCapacityKw: s.rectifierCapacityKw,
       connectedTechnology: s.connectedTechnology,
+      rawGenKva:       (isSG || isDG) ? s.singleGenCapacityKva : undefined,
+      rawBackupGenKva: !isSG ? s.backupGenCapacityKva || undefined : undefined,
     };
   });
   
