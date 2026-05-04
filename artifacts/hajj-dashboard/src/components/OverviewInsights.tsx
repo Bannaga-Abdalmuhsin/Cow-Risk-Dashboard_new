@@ -83,7 +83,7 @@ export function ActionSitesCard({ analyses }: Props) {
 
   const sections = [
     {
-      label: "Undersized Prime Generator",
+      label: "Inadequate Prime Generator",
       sites: primeFail,
       icon: <Zap size={13} />,
       bg: "#fff3cd",
@@ -92,7 +92,7 @@ export function ActionSitesCard({ analyses }: Props) {
       dot: "#f59e0b",
     },
     {
-      label: "Undersized Backup Generator",
+      label: "Inadequate Backup Generator",
       sites: backupFail,
       icon: null,
       bg: "#fce4ed",
