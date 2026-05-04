@@ -2195,7 +2195,7 @@
       "location": "Makkah Remote",
       "latitude": 21.631015,
       "longitude": 40.427249,
-      "singleGenCapacityKva": 25,
+      "singleGenCapacityKva": 20,
       "singleGenWorkingHours": 0,
       "secMeterCapacityAmp": 0,
       "backupGenCapacityKva": 0,
@@ -2214,7 +2214,7 @@
       "telecomLoadIndoorKw": 1.4399999999999995,
       "telecomLoadTotalKw": 15,
       "telecomHeatDissipationKbtuh": 4913.279999999998,
-      "primeGenNetPowerKw": 17.4,
+      "primeGenNetPowerKw": 13.92,
       "primeSecNetPowerKw": 0,
       "backupGenNetPowerKw": 0,
       "rectifierNetPowerKw": 33,
@@ -3431,7 +3431,7 @@
       "connectedTechnology": "2G/4G"
     },
     {
-      "cowId": "CWH318",
+      "cowId": "CWN318",
       "powerSource": "SB",
       "shelterType": "Outdoor",
       "location": "Muzdalifah",
