@@ -94,8 +94,8 @@ export function SiteTable({ analyses, selectedSiteId, onSelectSite }: SiteTableP
                   <td className="px-3 py-2 capitalize">{a.site.siteType.replace("_", " ")}</td>
                   <td className="px-3 py-2">
                     {a.site.powerConfig === "commercial_with_backup"
-                      ? `SEC ${a.site.secCapacityAmp ?? "—"}A / Gen ${a.site.backupGeneratorKva?.toFixed(1) ?? "—"}kVA`
-                      : `${a.site.generatorKva.toFixed(1)} kVA`}
+                      ? `SEC ${a.site.secCapacityAmp ?? "—"}A / Gen ${a.site.rawBackupGenKva ?? "—"}kVA`
+                      : `${a.site.rawGenKva ?? "—"} kVA`}
                   </td>
                   <td className="px-3 py-2">
                     {a.site.connectedTechnology
