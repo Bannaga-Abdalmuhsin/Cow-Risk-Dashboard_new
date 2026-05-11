@@ -108,7 +108,9 @@ export function ScenarioRiskSites({ analyses, scenarioId, onClose }: Props) {
                   ? analysis.site.secCapacityAmp
                     ? `SEC ${analysis.site.secCapacityAmp}A | Backup: ${analysis.site.rawBackupGenKva ?? "—"}kVA`
                     : `Gen1: ${analysis.site.rawGenKva ?? "—"}kVA | Gen2: ${analysis.site.rawBackupGenKva ?? "—"}kVA`
-                  : `Single Gen: ${analysis.site.rawGenKva ?? "—"}kVA`;
+                  : analysis.site.primeGenNetPowerKw != null
+                    ? `Gen1: ${analysis.site.rawGenKva ?? "—"}kVA | Gen2: ${analysis.site.rawBackupGenKva ?? "—"}kVA`
+                    : `Single Gen: ${analysis.site.rawGenKva ?? "—"}kVA`;
 
               return (
                 <tr key={analysis.site.id}

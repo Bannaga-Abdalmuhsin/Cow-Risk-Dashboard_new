@@ -30,13 +30,20 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
 
       <div className="px-4 py-3 border-b border-border bg-muted/40 grid grid-cols-2 gap-2 text-xs">
         <div><span className="text-muted-foreground">Type:</span> <span className="font-semibold capitalize">{site.siteType.replace("_", " ")}</span></div>
-        <div><span className="text-muted-foreground">Power:</span> <span className="font-semibold capitalize">{site.powerConfig.replace(/_/g, " ")}</span></div>
+        <div><span className="text-muted-foreground">Power:</span> <span className="font-semibold">
+          {site.powerConfig === "commercial_with_backup"
+            ? "Commercial with Backup"
+            : site.primeGenNetPowerKw != null
+              ? "Dual Generator"
+              : "Single Generator"}</span></div>
         <div><span className="text-muted-foreground">Power Source:</span> <span className="font-semibold">
           {site.powerConfig === "commercial_with_backup"
             ? site.secCapacityAmp
               ? `SEC ${site.secCapacityAmp}A  |  Backup Gen: ${site.rawBackupGenKva ?? "—"}kVA`
               : `Gen1: ${site.rawGenKva ?? "—"}kVA  |  Gen2: ${site.rawBackupGenKva ?? "—"}kVA`
-            : `Single Gen: ${site.rawGenKva ?? "—"}kVA`}
+            : site.primeGenNetPowerKw != null
+              ? `Gen1: ${site.rawGenKva ?? "—"}kVA  |  Gen2: ${site.rawBackupGenKva ?? "—"}kVA`
+              : `Single Gen: ${site.rawGenKva ?? "—"}kVA`}
         </span></div>
         <div><span className="text-muted-foreground">Battery:</span> <span className="font-semibold">{site.batteryCapacityAh} Ah {site.batteryType.replace("_", "-")}</span></div>
         <div><span className="text-muted-foreground">AC1:</span> <span className="font-semibold">{(site.ac1CapacityBtu / 1000).toFixed(0)}k BTU/h</span></div>

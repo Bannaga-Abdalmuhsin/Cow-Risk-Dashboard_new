@@ -96,7 +96,7 @@ export function SiteTable({ analyses, selectedSiteId, onSelectSite }: SiteTableP
                     {a.site.powerConfig === "commercial_with_backup"
                       ? `SEC ${a.site.secCapacityAmp ?? "—"}A / Gen ${a.site.rawBackupGenKva ?? "—"}kVA`
                       : a.site.primeGenNetPowerKw != null
-                        ? `Gen1: ${a.site.primeGenNetPowerKw.toFixed(2)}kW | Gen2: ${(a.site.backupGenNetPowerKw ?? 0).toFixed(2)}kW`
+                        ? `Gen1: ${a.site.rawGenKva ?? "—"}kVA | Gen2: ${a.site.rawBackupGenKva ?? "—"}kVA`
                         : `${a.site.rawGenKva ?? "—"} kVA`}
                   </td>
                   <td className="px-3 py-2">
