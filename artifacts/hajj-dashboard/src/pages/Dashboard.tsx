@@ -1,7 +1,7 @@
 import { useState, useMemo, type ReactNode } from "react";
 import acesLogo from "@assets/ChatGPT_Image_Oct_14,_2025,_10_29_41_PM_1776566555155.png";
 import stcLogo from "@assets/7010.SR.D-9f4e531b_(1)_1776566577166.png";
-import { LayoutDashboard, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer } from "lucide-react";
+import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer } from "lucide-react";
 import { analyzeSite } from "../lib/calculations";
 import { ALL_SITES } from "../lib/siteData";
 import { MetricCard } from "../components/MetricCard";
@@ -12,10 +12,10 @@ import { TechnicianRecommendation } from "../components/TechnicianRecommendation
 import { RiskDistributionPie, PowerSourceDonut, RiskTypeBreakdown, LocationRiskChart } from "../components/RiskCharts";
 import { ScenarioMatrix } from "../components/ScenarioMatrix";
 import { ScenarioRiskSites } from "../components/ScenarioRiskSites";
-import { ActionSitesCard } from "../components/OverviewInsights";
+import { RiskByAreaCard, ActionSitesCard } from "../components/OverviewInsights";
 import { EscalationTable } from "../components/EscalationTable";
 
-type Tab = "overview" | "scenarios" | "sites" | "technicians";
+type Tab = "overview" | "scenarios" | "map" | "sites" | "technicians";
 
 interface DashboardProps {
   onLogout?: () => void;
@@ -49,14 +49,15 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
   const handleSelectSite = (id: string) => {
     setSelectedSiteId(prev => prev === id ? null : id);
-    if (activeTab !== "overview" && activeTab !== "sites") setActiveTab("overview");
+    if (activeTab !== "map" && activeTab !== "sites") setActiveTab("map");
   };
 
   const tabs: Array<{ key: Tab; label: string; icon: ReactNode }> = [
-    { key: "overview",    label: "Overview",  icon: <LayoutDashboard size={14} /> },
-    { key: "scenarios",   label: "Scenarios", icon: <span className="font-bold text-sm leading-none">!</span> },
-    { key: "sites",       label: "Site List", icon: <ClipboardList   size={14} /> },
-    { key: "technicians", label: "Field Ops", icon: <HardHat         size={14} /> },
+    { key: "overview",     label: "Overview",   icon: <LayoutDashboard size={14} /> },
+    { key: "scenarios",    label: "Scenarios",  icon: <span className="font-bold text-sm leading-none">!</span> },
+    { key: "map",          label: "Heat Map",   icon: <Map             size={14} /> },
+    { key: "sites",        label: "Site List",  icon: <ClipboardList   size={14} /> },
+    { key: "technicians",  label: "Field Ops",  icon: <HardHat         size={14} /> },
   ];
 
   return (
@@ -159,53 +160,26 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
       <main className="flex-1 w-full px-2 py-4">
         {activeTab === "overview" && (
-          <div className="flex flex-col gap-2" style={{ height: "calc(100vh - 175px)" }}>
-
-            {/* Compact metric cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 shrink-0">
-              <MetricCard compact title="Total COW Sites" value={TOTAL_FLEET} icon={<Radio size={12} />} color="blue" />
-              <MetricCard compact title="Safe Sites" value={safeCount} icon={<CheckCircle2 size={12} />} color="green" />
-              <MetricCard compact title="Risk Sites" value={riskCount} icon={<AlertCircle size={12} />} color="red" />
-              <MetricCard compact title="Field Technicians" value={PLANNED_TECHS} icon={<Users size={12} />} color="blue" />
-              <MetricCard compact title="Operating Temp" value="46°C" icon={<Thermometer size={12} />} color="red" />
-              <MetricCard compact title="Risk Flags" value={totalRiskFlags} icon={<AlertCircle size={12} />} color="red" />
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+              <MetricCard title="Total COW Sites" value={TOTAL_FLEET} icon={<Radio size={16} />} color="blue" subtitle="Full Hajj 1447 deployment" />
+              <MetricCard title="Safe Sites" value={safeCount} icon={<CheckCircle2 size={16} />} color="green" subtitle={`Of ${surveyedCount} deployed sites`} />
+              <MetricCard title="Risk Sites" value={riskCount} icon={<AlertCircle size={16} />} color="red" subtitle={`Of ${surveyedCount} deployed sites`} />
+              <MetricCard title="Field Technicians" value={PLANNED_TECHS} icon={<Users size={16} />} color="blue" subtitle={`Planned · ${TOTAL_FLEET} total sites`} />
+              <MetricCard title="Operating Temp" value="46°C" icon={<Thermometer size={16} />} color="red" subtitle="Extreme Hajj conditions" />
+              <MetricCard title="Total Risk Flags" value={totalRiskFlags} icon={<AlertCircle size={16} />} color="red" subtitle="Across all sites & scenarios" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <RiskDistributionPie analyses={analyses} />
+              <PowerSourceDonut analyses={analyses} />
+              <RiskTypeBreakdown analyses={analyses} />
+              <LocationRiskChart analyses={analyses} />
             </div>
 
-            {/* Full-height map with all panels overlaid inside */}
-            <div className="flex-1 min-h-0 relative rounded-xl overflow-hidden border border-card-border">
-              <div className="absolute inset-0">
-                <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
-              </div>
-
-              {/* Top-left: Overall Risk Distribution */}
-              <div className="absolute top-3 left-3 w-44" style={{ zIndex: 900 }}>
-                <RiskDistributionPie analyses={analyses} glass compact />
-              </div>
-
-              {/* Top-right: Power Source Distribution */}
-              <div className="absolute top-3 right-3 w-44" style={{ zIndex: 900 }}>
-                <PowerSourceDonut analyses={analyses} glass compact />
-              </div>
-
-              {/* Bottom-left: Risk Type Breakdown */}
-              <div className="absolute bottom-3 left-3 w-52" style={{ zIndex: 900 }}>
-                <RiskTypeBreakdown analyses={analyses} glass compact />
-              </div>
-
-              {/* Bottom-right: Risk by Location */}
-              <div className="absolute bottom-3 right-3 w-52" style={{ zIndex: 900 }}>
-                <LocationRiskChart analyses={analyses} glass compact />
-              </div>
-
-              {/* Bottom-center: Technician plan + Sites needing action */}
-              <div className="absolute bottom-3 flex gap-2" style={{ zIndex: 900, left: 228, right: 228 }}>
-                <div className="flex-1 min-w-0">
-                  <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} glass />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <ActionSitesCard analyses={analyses} glass />
-                </div>
-              </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+              <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
+              <RiskByAreaCard analyses={analyses} />
+              <ActionSitesCard analyses={analyses} />
             </div>
 
           </div>
@@ -228,6 +202,35 @@ export default function Dashboard({ onLogout }: DashboardProps) {
           </div>
         )}
 
+        {activeTab === "map" && (
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-[calc(100vh-148px)]">
+            <div className="lg:col-span-3 flex flex-col gap-3 h-full min-h-0">
+              <div className="flex-1 min-h-0">
+                <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
+              </div>
+              <div className="grid grid-cols-2 gap-3 shrink-0">
+                <RiskDistributionPie analyses={analyses} />
+                <LocationRiskChart analyses={analyses} />
+              </div>
+            </div>
+            <div className="lg:col-span-1 flex flex-col gap-3">
+              {selectedAnalysis ? (
+                <div className="flex-1 overflow-auto">
+                  <SiteDetailPanel analysis={selectedAnalysis} onClose={() => setSelectedSiteId(null)} />
+                </div>
+              ) : (
+                <div className="bg-card border border-card-border rounded-xl p-4 text-center text-sm text-muted-foreground flex-1 flex flex-col items-center justify-center gap-2">
+                  <div className="text-4xl opacity-30">📍</div>
+                  <p>Click a site marker on the map to view detailed risk analysis</p>
+                  <p className="text-xs">
+                    <span className="text-red-500 font-semibold">{riskCount} risk</span> ·{" "}
+                    <span className="text-emerald-500 font-semibold">{safeCount} safe</span>
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {activeTab === "sites" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

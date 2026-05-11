@@ -1,21 +1,70 @@
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, MapPin } from "lucide-react";
 import type { SiteAnalysis } from "../lib/calculations";
 
-interface Props {
-  analyses: SiteAnalysis[];
-  glass?: boolean;
+interface Props { analyses: SiteAnalysis[] }
+
+// ── Risk by Area ──────────────────────────────────────────────────────────────
+export function RiskByAreaCard({ analyses }: Props) {
+  const byLoc: Record<string, { risk: number; total: number }> = {};
+  for (const a of analyses) {
+    const loc = a.site.location;
+    if (!byLoc[loc]) byLoc[loc] = { risk: 0, total: 0 };
+    byLoc[loc].total++;
+    if (a.overallRisk === "risk") byLoc[loc].risk++;
+  }
+
+  const entries = Object.entries(byLoc).sort((a, b) => b[1].risk - a[1].risk);
+
+  return (
+    <div className="bg-card border border-card-border rounded-xl shadow-sm p-4 space-y-3">
+      <div className="flex items-center gap-2">
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center text-white">
+          <MapPin size={16} />
+        </div>
+        <div>
+          <div className="font-semibold text-sm">Risk by Area</div>
+          <div className="text-xs text-muted-foreground">At-risk sites per zone</div>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        {entries.map(([loc, { risk, total }]) => {
+          const pct = total > 0 ? (risk / total) * 100 : 0;
+          const safePct = 100 - pct;
+          return (
+            <div key={loc}>
+              <div className="flex justify-between items-center mb-0.5">
+                <span className="text-xs text-muted-foreground truncate max-w-[120px]">{loc}</span>
+                <div className="flex items-center gap-1.5">
+                  {risk > 0 && (
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded"
+                      style={{ background: "#fce4ed", color: "#b01040" }}>
+                      {risk} risk
+                    </span>
+                  )}
+                  <span className="text-[10px] text-muted-foreground">{total} total</span>
+                </div>
+              </div>
+              <div className="h-2.5 bg-muted rounded-full overflow-hidden flex">
+                <div className="h-full transition-all" style={{ width: `${pct}%`, background: "#E8175D" }} />
+                <div className="h-full transition-all" style={{ width: `${safePct}%`, background: "#00BFB3" }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex gap-3 pt-1 text-[10px] text-muted-foreground">
+        <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: "#E8175D" }} /> At Risk</span>
+        <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: "#00BFB3" }} /> Safe</span>
+      </div>
+    </div>
+  );
 }
 
-const GLASS_STYLE: React.CSSProperties = {
-  background: "rgba(255,255,255,0.80)",
-  backdropFilter: "blur(10px)",
-  WebkitBackdropFilter: "blur(10px)",
-  border: "1px solid rgba(107,33,200,0.30)",
-  boxShadow: "0 4px 16px rgba(0,0,0,0.18)",
-};
-
 // ── Sites Needing Action ──────────────────────────────────────────────────────
-export function ActionSitesCard({ analyses, glass }: Props) {
+export function ActionSitesCard({ analyses }: Props) {
+  // SG sites with overall power risk (no commercial backup)
   const noBackup = analyses.filter(a =>
     a.site.powerConfig === "single_generator" &&
     a.overallRisk === "risk"
@@ -25,7 +74,7 @@ export function ActionSitesCard({ analyses, glass }: Props) {
     {
       label: "No Backup (Single-Gen at Risk)",
       sites: noBackup,
-      icon: <AlertTriangle size={11} />,
+      icon: <AlertTriangle size={13} />,
       bg: "#fce4ed",
       border: "#E8175D",
       color: "#b01040",
@@ -34,54 +83,49 @@ export function ActionSitesCard({ analyses, glass }: Props) {
   ];
 
   return (
-    <div
-      className="rounded-xl overflow-hidden"
-      style={glass ? GLASS_STYLE : undefined}
-    >
-      <div className={`${!glass ? "bg-card border border-card-border rounded-xl shadow-sm" : ""} p-3 space-y-2`}>
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white shrink-0">
-            <AlertTriangle size={13} />
-          </div>
-          <div>
-            <div className="font-semibold text-xs">Sites Needing Action</div>
-            <div className="text-[10px] text-muted-foreground">SG sites requiring intervention</div>
-          </div>
+    <div className="bg-card border border-card-border rounded-xl shadow-sm p-4 space-y-3">
+      <div className="flex items-center gap-2">
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white">
+          <AlertTriangle size={16} />
         </div>
+        <div>
+          <div className="font-semibold text-sm">Sites Needing Action</div>
+          <div className="text-xs text-muted-foreground">SG sites requiring intervention</div>
+        </div>
+      </div>
 
-        <div className="space-y-1.5">
-          {sections.map(({ label, sites, icon, bg, border, color, dot }) => (
-            <div key={label} className="rounded-lg border px-2.5 py-1.5"
-              style={{ background: bg, borderColor: border }}>
-              <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center gap-1 text-xs font-bold" style={{ color }}>
-                  {icon && <span style={{ color }}>{icon}</span>}
-                  <span className="text-[10px]">{label}</span>
-                </div>
-                <span className="text-sm font-bold" style={{ color }}>{sites.length}</span>
+      <div className="space-y-2">
+        {sections.map(({ label, sites, icon, bg, border, color, dot }) => (
+          <div key={label} className="rounded-lg border px-3 py-2"
+            style={{ background: bg, borderColor: border }}>
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="flex items-center gap-1.5 text-sm font-bold" style={{ color }}>
+                {icon && <span style={{ color }}>{icon}</span>}
+                {label}
               </div>
-              {sites.length > 0 && (
-                <div className="flex flex-wrap gap-0.5">
-                  {sites.slice(0, 6).map(a => (
-                    <span key={a.site.id}
-                      className="text-[9px] font-bold font-mono px-1 py-0.5 rounded border"
-                      style={{ background: "white", borderColor: dot, color }}>
-                      {a.site.id}
-                    </span>
-                  ))}
-                  {sites.length > 6 && (
-                    <span className="text-[8px] px-1 py-0.5 rounded" style={{ color }}>
-                      +{sites.length - 6} more
-                    </span>
-                  )}
-                </div>
-              )}
-              {sites.length === 0 && (
-                <div className="text-[9px]" style={{ color }}>✓ No issues detected</div>
-              )}
+              <span className="text-lg font-bold" style={{ color }}>{sites.length}</span>
             </div>
-          ))}
-        </div>
+            {sites.length > 0 && (
+              <div className="flex flex-wrap gap-1">
+                {sites.slice(0, 8).map(a => (
+                  <span key={a.site.id}
+                    className="text-xs font-bold font-mono px-1.5 py-0.5 rounded border"
+                    style={{ background: "white", borderColor: dot, color }}>
+                    {a.site.id}
+                  </span>
+                ))}
+                {sites.length > 8 && (
+                  <span className="text-[9px] px-1 py-0.5 rounded" style={{ color }}>
+                    +{sites.length - 8} more
+                  </span>
+                )}
+              </div>
+            )}
+            {sites.length === 0 && (
+              <div className="text-[10px]" style={{ color }}>✓ No issues detected</div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
