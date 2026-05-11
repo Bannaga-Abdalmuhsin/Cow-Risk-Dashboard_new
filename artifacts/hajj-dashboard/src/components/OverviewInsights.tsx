@@ -1,4 +1,4 @@
-import { AlertTriangle, MapPin, Zap, Battery } from "lucide-react";
+import { AlertTriangle, MapPin, Battery } from "lucide-react";
 import type { SiteAnalysis } from "../lib/calculations";
 
 interface Props { analyses: SiteAnalysis[] }
@@ -64,18 +64,13 @@ export function RiskByAreaCard({ analyses }: Props) {
 
 // ── Sites Needing Action ──────────────────────────────────────────────────────
 export function ActionSitesCard({ analyses }: Props) {
-  // Prime undersized: at risk in any of S1–S4 (prime power scenarios, idx 0-3)
-  const primeFail = analyses.filter(a =>
-    a.scenarios.slice(0, 4).some(s => s.powerRisk === "risk")
+  // SG sites with battery backup time ≤ 1 hour — need STB upgrade
+  const sgNeedStb = analyses.filter(a =>
+    a.site.powerConfig === "single_generator" &&
+    a.site.batteryMaxUsefulTimeHours <= 1
   );
 
-  // Backup undersized: SB sites at risk in any of S5–S8 (backup scenarios, idx 4-7)
-  const backupFail = analyses.filter(a =>
-    a.site.powerConfig === "commercial_with_backup" &&
-    a.scenarios.slice(4, 8).some(s => s.powerRisk === "risk")
-  );
-
-  // SG sites flagged in S5-S8 (no backup at all)
+  // SG sites with overall power risk (no commercial backup)
   const noBackup = analyses.filter(a =>
     a.site.powerConfig === "single_generator" &&
     a.overallRisk === "risk"
@@ -83,31 +78,22 @@ export function ActionSitesCard({ analyses }: Props) {
 
   const sections = [
     {
-      label: "Inadequate Prime Generator",
-      sites: primeFail,
-      icon: <Zap size={13} />,
+      label: "SG Sites — Needs STB (Backup ≤ 1 hr)",
+      sites: sgNeedStb,
+      icon: <Battery size={13} />,
       bg: "#fff3cd",
       border: "#f59e0b",
       color: "#92400e",
       dot: "#f59e0b",
     },
     {
-      label: "Inadequate Backup Generator",
-      sites: backupFail,
-      icon: null,
+      label: "No Backup (Single-Gen at Risk)",
+      sites: noBackup,
+      icon: <AlertTriangle size={13} />,
       bg: "#fce4ed",
       border: "#E8175D",
       color: "#b01040",
       dot: "#E8175D",
-    },
-    {
-      label: "No Backup (Single-Gen Sites)",
-      sites: noBackup,
-      icon: <AlertTriangle size={13} />,
-      bg: "#f3f4f6",
-      border: "#6b7280",
-      color: "#374151",
-      dot: "#6b7280",
     },
   ];
 
@@ -119,7 +105,7 @@ export function ActionSitesCard({ analyses }: Props) {
         </div>
         <div>
           <div className="font-semibold text-sm">Sites Needing Action</div>
-          <div className="text-xs text-muted-foreground">Generator capacity issues</div>
+          <div className="text-xs text-muted-foreground">SG sites requiring intervention</div>
         </div>
       </div>
 
