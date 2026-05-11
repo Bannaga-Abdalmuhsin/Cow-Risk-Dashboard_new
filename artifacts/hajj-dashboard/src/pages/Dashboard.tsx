@@ -1,7 +1,7 @@
 import { useState, useMemo, type ReactNode } from "react";
 import acesLogo from "@assets/ChatGPT_Image_Oct_14,_2025,_10_29_41_PM_1776566555155.png";
 import stcLogo from "@assets/7010.SR.D-9f4e531b_(1)_1776566577166.png";
-import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer, Settings } from "lucide-react";
+import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer } from "lucide-react";
 import { analyzeSite } from "../lib/calculations";
 import { ALL_SITES } from "../lib/siteData";
 import { MetricCard } from "../components/MetricCard";
@@ -182,42 +182,6 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <ActionSitesCard analyses={analyses} />
             </div>
 
-            <div className="bg-card border border-card-border rounded-xl p-4 text-xs space-y-3">
-              <div className="font-semibold text-sm flex items-center gap-2">
-                <span className="w-5 h-5 rounded bg-amber-100 text-amber-700 flex items-center justify-center"><Settings size={12} /></span>
-                Engineering Assumptions (46°C Extreme Conditions)
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div>
-                  <div className="font-semibold text-muted-foreground mb-1 uppercase tracking-wide text-[10px]">Generator</div>
-                  <div>Power Factor: 0.80</div>
-                  <div>Alt. Efficiency: 87%</div>
-                  <div>Risk Factor: 90%</div>
-                  <div>Degradation: 3%/yr</div>
-                </div>
-                <div>
-                  <div className="font-semibold text-muted-foreground mb-1 uppercase tracking-wide text-[10px]">Cooling</div>
-                  <div>Climate Factor: T3=46°C</div>
-                  <div>Derating: 0.833</div>
-                  <div>COP: 3.5</div>
-                  <div>Degradation: 1.5%/yr</div>
-                </div>
-                <div>
-                  <div className="font-semibold text-muted-foreground mb-1 uppercase tracking-wide text-[10px]">Battery</div>
-                  <div>Voltage: 50V DC</div>
-                  <div>Lead-Acid DoD: 50%</div>
-                  <div>Lithium DoD: 85%</div>
-                  <div>LA Discharge: 0.85C</div>
-                </div>
-                <div>
-                  <div className="font-semibold text-muted-foreground mb-1 uppercase tracking-wide text-[10px]">Scenarios</div>
-                  <div>9 operational scenarios</div>
-                  <div>Prime / Backup / Outage</div>
-                  <div>AC1 / AC1+AC2 / Off</div>
-                  <div>Charged / Charging / Discharge</div>
-                </div>
-              </div>
-            </div>
           </div>
         )}
 
