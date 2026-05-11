@@ -168,16 +168,16 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <MetricCard title="Operating Temp" value="46°C" icon={<Thermometer size={16} />} color="red" subtitle="Extreme Hajj conditions" />
               <MetricCard title="Total Risk Flags" value={totalRiskFlags} icon={<AlertCircle size={16} />} color="red" subtitle="Across all sites & scenarios" />
             </div>
+            {/* Heat Map — directly under metric cards */}
+            <div className="rounded-xl overflow-hidden border border-card-border" style={{ height: 380 }}>
+              <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <RiskDistributionPie analyses={analyses} />
               <PowerSourceDonut analyses={analyses} />
               <RiskTypeBreakdown analyses={analyses} />
               <LocationRiskChart analyses={analyses} />
-            </div>
-
-            {/* Heat Map — center of overview */}
-            <div className="rounded-xl overflow-hidden border border-card-border" style={{ height: 380 }}>
-              <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
