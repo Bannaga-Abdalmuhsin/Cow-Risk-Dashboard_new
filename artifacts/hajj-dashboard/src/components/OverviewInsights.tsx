@@ -1,4 +1,4 @@
-import { AlertTriangle, MapPin, Battery } from "lucide-react";
+import { AlertTriangle, MapPin } from "lucide-react";
 import type { SiteAnalysis } from "../lib/calculations";
 
 interface Props { analyses: SiteAnalysis[] }
@@ -64,12 +64,6 @@ export function RiskByAreaCard({ analyses }: Props) {
 
 // ── Sites Needing Action ──────────────────────────────────────────────────────
 export function ActionSitesCard({ analyses }: Props) {
-  // SG sites with battery backup time ≤ 1 hour — need STB upgrade
-  const sgNeedStb = analyses.filter(a =>
-    a.site.powerConfig === "single_generator" &&
-    a.site.batteryMaxUsefulTimeHours <= 1
-  );
-
   // SG sites with overall power risk (no commercial backup)
   const noBackup = analyses.filter(a =>
     a.site.powerConfig === "single_generator" &&
@@ -77,15 +71,6 @@ export function ActionSitesCard({ analyses }: Props) {
   );
 
   const sections = [
-    {
-      label: "SG Sites — Needs STB (Backup ≤ 1 hr)",
-      sites: sgNeedStb,
-      icon: <Battery size={13} />,
-      bg: "#fff3cd",
-      border: "#f59e0b",
-      color: "#92400e",
-      dot: "#f59e0b",
-    },
     {
       label: "No Backup (Single-Gen at Risk)",
       sites: noBackup,
