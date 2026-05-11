@@ -45,6 +45,10 @@ export interface SiteConfig {
   rawGenKva?: number;        // singleGenCapacityKva  (SG/DG sites)
   rawBackupGenKva?: number;  // backupGenCapacityKva  (SB/DG backup)
 
+  // Net power KW from spreadsheet — for display on DG sites
+  primeGenNetPowerKw?: number;   // "Prime Generator Net Power output KW"
+  backupGenNetPowerKw?: number;  // "Backup Generator Net Power Output KW"
+
   // Telecom loads
   telecomPowerKw: number;     // Total telecom KW — used for ALL power margin formulas
   telecomHeatKBtuH: number;   // Heat dissipation inside cooled space — directly from spreadsheet
