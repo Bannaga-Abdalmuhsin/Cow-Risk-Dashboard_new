@@ -159,30 +159,53 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
       <main className="flex-1 w-full px-2 py-4">
         {activeTab === "overview" && (
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-              <MetricCard title="Total COW Sites" value={TOTAL_FLEET} icon={<Radio size={16} />} color="blue" subtitle="Full Hajj 1447 deployment" />
-              <MetricCard title="Safe Sites" value={safeCount} icon={<CheckCircle2 size={16} />} color="green" subtitle={`Of ${surveyedCount} deployed sites`} />
-              <MetricCard title="Risk Sites" value={riskCount} icon={<AlertCircle size={16} />} color="red" subtitle={`Of ${surveyedCount} deployed sites`} />
-              <MetricCard title="Field Technicians" value={PLANNED_TECHS} icon={<Users size={16} />} color="blue" subtitle={`Planned · ${TOTAL_FLEET} total sites`} />
-              <MetricCard title="Operating Temp" value="46°C" icon={<Thermometer size={16} />} color="red" subtitle="Extreme Hajj conditions" />
-              <MetricCard title="Total Risk Flags" value={totalRiskFlags} icon={<AlertCircle size={16} />} color="red" subtitle="Across all sites & scenarios" />
-            </div>
-            {/* Heat Map — directly under metric cards */}
-            <div className="rounded-xl overflow-hidden border border-card-border" style={{ height: 380 }}>
-              <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
+          <div className="flex flex-col gap-2" style={{ height: "calc(100vh - 175px)" }}>
+
+            {/* Compact metric cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 shrink-0">
+              <MetricCard compact title="Total COW Sites" value={TOTAL_FLEET} icon={<Radio size={12} />} color="blue" />
+              <MetricCard compact title="Safe Sites" value={safeCount} icon={<CheckCircle2 size={12} />} color="green" />
+              <MetricCard compact title="Risk Sites" value={riskCount} icon={<AlertCircle size={12} />} color="red" />
+              <MetricCard compact title="Field Technicians" value={PLANNED_TECHS} icon={<Users size={12} />} color="blue" />
+              <MetricCard compact title="Operating Temp" value="46°C" icon={<Thermometer size={12} />} color="red" />
+              <MetricCard compact title="Risk Flags" value={totalRiskFlags} icon={<AlertCircle size={12} />} color="red" />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              <RiskDistributionPie analyses={analyses} />
-              <PowerSourceDonut analyses={analyses} />
-              <RiskTypeBreakdown analyses={analyses} />
-              <LocationRiskChart analyses={analyses} />
-            </div>
+            {/* Full-height map with all panels overlaid inside */}
+            <div className="flex-1 min-h-0 relative rounded-xl overflow-hidden border border-card-border">
+              <div className="absolute inset-0">
+                <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
+              </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
-              <ActionSitesCard analyses={analyses} />
+              {/* Top-left: Overall Risk Distribution */}
+              <div className="absolute top-3 left-3 w-52" style={{ zIndex: 900 }}>
+                <RiskDistributionPie analyses={analyses} />
+              </div>
+
+              {/* Top-right: Power Source Distribution */}
+              <div className="absolute top-3 right-3 w-52" style={{ zIndex: 900 }}>
+                <PowerSourceDonut analyses={analyses} />
+              </div>
+
+              {/* Bottom-left: Risk Type Breakdown */}
+              <div className="absolute bottom-3 left-3 w-64" style={{ zIndex: 900 }}>
+                <RiskTypeBreakdown analyses={analyses} />
+              </div>
+
+              {/* Bottom-right: Risk by Location */}
+              <div className="absolute bottom-3 right-3 w-64" style={{ zIndex: 900 }}>
+                <LocationRiskChart analyses={analyses} />
+              </div>
+
+              {/* Bottom-center: Technician plan + Sites needing action */}
+              <div className="absolute bottom-3 flex gap-2" style={{ zIndex: 900, left: 276, right: 276 }}>
+                <div className="flex-1 min-w-0">
+                  <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <ActionSitesCard analyses={analyses} />
+                </div>
+              </div>
             </div>
 
           </div>
