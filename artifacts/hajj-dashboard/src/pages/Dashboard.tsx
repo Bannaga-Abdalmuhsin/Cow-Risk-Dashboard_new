@@ -178,32 +178,32 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               </div>
 
               {/* Top-left: Overall Risk Distribution */}
-              <div className="absolute top-3 left-3 w-52" style={{ zIndex: 900 }}>
-                <RiskDistributionPie analyses={analyses} />
+              <div className="absolute top-3 left-3 w-44" style={{ zIndex: 900 }}>
+                <RiskDistributionPie analyses={analyses} glass compact />
               </div>
 
               {/* Top-right: Power Source Distribution */}
-              <div className="absolute top-3 right-3 w-52" style={{ zIndex: 900 }}>
-                <PowerSourceDonut analyses={analyses} />
+              <div className="absolute top-3 right-3 w-44" style={{ zIndex: 900 }}>
+                <PowerSourceDonut analyses={analyses} glass compact />
               </div>
 
               {/* Bottom-left: Risk Type Breakdown */}
-              <div className="absolute bottom-3 left-3 w-64" style={{ zIndex: 900 }}>
-                <RiskTypeBreakdown analyses={analyses} />
+              <div className="absolute bottom-3 left-3 w-52" style={{ zIndex: 900 }}>
+                <RiskTypeBreakdown analyses={analyses} glass compact />
               </div>
 
               {/* Bottom-right: Risk by Location */}
-              <div className="absolute bottom-3 right-3 w-64" style={{ zIndex: 900 }}>
-                <LocationRiskChart analyses={analyses} />
+              <div className="absolute bottom-3 right-3 w-52" style={{ zIndex: 900 }}>
+                <LocationRiskChart analyses={analyses} glass compact />
               </div>
 
               {/* Bottom-center: Technician plan + Sites needing action */}
-              <div className="absolute bottom-3 flex gap-2" style={{ zIndex: 900, left: 276, right: 276 }}>
+              <div className="absolute bottom-3 flex gap-2" style={{ zIndex: 900, left: 228, right: 228 }}>
                 <div className="flex-1 min-w-0">
-                  <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
+                  <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} glass />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <ActionSitesCard analyses={analyses} />
+                  <ActionSitesCard analyses={analyses} glass />
                 </div>
               </div>
             </div>
