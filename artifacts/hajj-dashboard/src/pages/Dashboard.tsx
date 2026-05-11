@@ -176,24 +176,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             </div>
 
             {/* Heat Map — center of overview */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3" style={{ height: 380 }}>
-              <div className="lg:col-span-3 h-full min-h-0 rounded-xl overflow-hidden border border-card-border">
-                <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
-              </div>
-              <div className="lg:col-span-1 overflow-auto">
-                {selectedAnalysis ? (
-                  <SiteDetailPanel analysis={selectedAnalysis} onClose={() => setSelectedSiteId(null)} />
-                ) : (
-                  <div className="bg-card border border-card-border rounded-xl p-4 h-full flex flex-col items-center justify-center gap-2 text-center text-sm text-muted-foreground">
-                    <div className="text-4xl opacity-30">📍</div>
-                    <p>Click a site on the map to view its risk details</p>
-                    <p className="text-xs">
-                      <span className="text-red-500 font-semibold">{riskCount} risk</span>{" · "}
-                      <span className="text-emerald-500 font-semibold">{safeCount} safe</span>
-                    </p>
-                  </div>
-                )}
-              </div>
+            <div className="rounded-xl overflow-hidden border border-card-border" style={{ height: 380 }}>
+              <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
