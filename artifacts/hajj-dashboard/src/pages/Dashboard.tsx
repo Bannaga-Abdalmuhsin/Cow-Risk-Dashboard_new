@@ -1,7 +1,7 @@
 import { useState, useMemo, type ReactNode } from "react";
 import acesLogo from "@assets/ChatGPT_Image_Oct_14,_2025,_10_29_41_PM_1776566555155.png";
 import stcLogo from "@assets/7010.SR.D-9f4e531b_(1)_1776566577166.png";
-import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer } from "lucide-react";
+import { LayoutDashboard, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer } from "lucide-react";
 import { analyzeSite } from "../lib/calculations";
 import { ALL_SITES } from "../lib/siteData";
 import { MetricCard } from "../components/MetricCard";
@@ -15,7 +15,7 @@ import { ScenarioRiskSites } from "../components/ScenarioRiskSites";
 import { ActionSitesCard } from "../components/OverviewInsights";
 import { EscalationTable } from "../components/EscalationTable";
 
-type Tab = "overview" | "scenarios" | "map" | "sites" | "technicians";
+type Tab = "overview" | "scenarios" | "sites" | "technicians";
 
 interface DashboardProps {
   onLogout?: () => void;
@@ -49,15 +49,14 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
   const handleSelectSite = (id: string) => {
     setSelectedSiteId(prev => prev === id ? null : id);
-    if (activeTab !== "map" && activeTab !== "sites") setActiveTab("map");
+    if (activeTab !== "overview" && activeTab !== "sites") setActiveTab("overview");
   };
 
   const tabs: Array<{ key: Tab; label: string; icon: ReactNode }> = [
-    { key: "overview",     label: "Overview",   icon: <LayoutDashboard size={14} /> },
-    { key: "scenarios",    label: "Scenarios",  icon: <span className="font-bold text-sm leading-none">!</span> },
-    { key: "map",          label: "Heat Map",   icon: <Map             size={14} /> },
-    { key: "sites",        label: "Site List",  icon: <ClipboardList   size={14} /> },
-    { key: "technicians",  label: "Field Ops",  icon: <HardHat         size={14} /> },
+    { key: "overview",    label: "Overview",  icon: <LayoutDashboard size={14} /> },
+    { key: "scenarios",   label: "Scenarios", icon: <span className="font-bold text-sm leading-none">!</span> },
+    { key: "sites",       label: "Site List", icon: <ClipboardList   size={14} /> },
+    { key: "technicians", label: "Field Ops", icon: <HardHat         size={14} /> },
   ];
 
   return (
@@ -176,6 +175,27 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <LocationRiskChart analyses={analyses} />
             </div>
 
+            {/* Heat Map — center of overview */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3" style={{ height: 380 }}>
+              <div className="lg:col-span-3 h-full min-h-0 rounded-xl overflow-hidden border border-card-border">
+                <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
+              </div>
+              <div className="lg:col-span-1 overflow-auto">
+                {selectedAnalysis ? (
+                  <SiteDetailPanel analysis={selectedAnalysis} onClose={() => setSelectedSiteId(null)} />
+                ) : (
+                  <div className="bg-card border border-card-border rounded-xl p-4 h-full flex flex-col items-center justify-center gap-2 text-center text-sm text-muted-foreground">
+                    <div className="text-4xl opacity-30">📍</div>
+                    <p>Click a site on the map to view its risk details</p>
+                    <p className="text-xs">
+                      <span className="text-red-500 font-semibold">{riskCount} risk</span>{" · "}
+                      <span className="text-emerald-500 font-semibold">{safeCount} safe</span>
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
               <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
               <ActionSitesCard analyses={analyses} />
@@ -201,35 +221,6 @@ export default function Dashboard({ onLogout }: DashboardProps) {
           </div>
         )}
 
-        {activeTab === "map" && (
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-[calc(100vh-148px)]">
-            <div className="lg:col-span-3 flex flex-col gap-3 h-full min-h-0">
-              <div className="flex-1 min-h-0">
-                <LeafletMap analyses={analyses} selectedSiteId={selectedSiteId} onSelectSite={handleSelectSite} />
-              </div>
-              <div className="grid grid-cols-2 gap-3 shrink-0">
-                <RiskDistributionPie analyses={analyses} />
-                <LocationRiskChart analyses={analyses} />
-              </div>
-            </div>
-            <div className="lg:col-span-1 flex flex-col gap-3">
-              {selectedAnalysis ? (
-                <div className="flex-1 overflow-auto">
-                  <SiteDetailPanel analysis={selectedAnalysis} onClose={() => setSelectedSiteId(null)} />
-                </div>
-              ) : (
-                <div className="bg-card border border-card-border rounded-xl p-4 text-center text-sm text-muted-foreground flex-1 flex flex-col items-center justify-center gap-2">
-                  <div className="text-4xl opacity-30">📍</div>
-                  <p>Click a site marker on the map to view detailed risk analysis</p>
-                  <p className="text-xs">
-                    <span className="text-red-500 font-semibold">{riskCount} risk</span> ·{" "}
-                    <span className="text-emerald-500 font-semibold">{safeCount} safe</span>
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
 
         {activeTab === "sites" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
