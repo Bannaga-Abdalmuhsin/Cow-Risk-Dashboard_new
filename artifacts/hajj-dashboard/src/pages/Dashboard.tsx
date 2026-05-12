@@ -158,30 +158,33 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         </div>
       </nav>
 
-      <main className="flex-1 w-full px-2 py-4">
+      <main className="flex-1 w-full px-2 py-3 flex flex-col">
         {activeTab === "overview" && (
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-              <MetricCard title="Total COW Sites" value={TOTAL_FLEET} icon={<Radio size={16} />} color="blue" subtitle="Full Hajj 1447 deployment" />
-              <MetricCard title="Safe Sites" value={safeCount} icon={<CheckCircle2 size={16} />} color="green" subtitle={`Of ${surveyedCount} deployed sites`} />
-              <MetricCard title="Risk Sites" value={riskCount} icon={<AlertCircle size={16} />} color="red" subtitle={`Of ${surveyedCount} deployed sites`} />
-              <MetricCard title="Field Technicians" value={PLANNED_TECHS} icon={<Users size={16} />} color="blue" subtitle={`Planned · ${TOTAL_FLEET} total sites`} />
-              <MetricCard title="Operating Temp" value="46°C" icon={<Thermometer size={16} />} color="red" subtitle="Extreme Hajj conditions" />
-              <MetricCard title="Total Risk Flags" value={totalRiskFlags} icon={<AlertCircle size={16} />} color="red" subtitle="Across all sites & scenarios" />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              <RiskDistributionPie analyses={analyses} />
-              <PowerSourceDonut analyses={analyses} />
-              <RiskTypeBreakdown analyses={analyses} />
-              <LocationRiskChart analyses={analyses} />
+          <div className="flex flex-col gap-3 flex-1 min-h-0" style={{ height: "calc(100vh - 130px)" }}>
+            {/* Row 1 — Metric cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 shrink-0">
+              <MetricCard title="Total COW Sites"    value={TOTAL_FLEET}     icon={<Radio       size={16} />} color="purple" subtitle="Full Hajj 1447 deployment" />
+              <MetricCard title="Safe Sites"         value={safeCount}       icon={<CheckCircle2 size={16} />} color="green"  subtitle={`Of ${surveyedCount} deployed sites`} />
+              <MetricCard title="Risk Sites"         value={riskCount}       icon={<AlertCircle  size={16} />} color="red"    subtitle={`Of ${surveyedCount} deployed sites`} />
+              <MetricCard title="Field Technicians"  value={PLANNED_TECHS}   icon={<Users        size={16} />} color="blue"   subtitle={`Planned · ${TOTAL_FLEET} total sites`} />
+              <MetricCard title="Operating Temp"     value="46°C"            icon={<Thermometer  size={16} />} color="red"    subtitle="Extreme Hajj conditions" />
+              <MetricCard title="Total Risk Flags"   value={totalRiskFlags}  icon={<AlertCircle  size={16} />} color="yellow" subtitle="Across all sites & scenarios" />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            {/* Row 2 — Chart cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 flex-1 min-h-0">
+              <RiskDistributionPie analyses={analyses} />
+              <PowerSourceDonut    analyses={analyses} />
+              <RiskTypeBreakdown   analyses={analyses} />
+              <LocationRiskChart   analyses={analyses} />
+            </div>
+
+            {/* Row 3 — Insight cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 shrink-0">
               <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
-              <RiskByAreaCard analyses={analyses} />
+              <RiskByAreaCard  analyses={analyses} />
               <ActionSitesCard analyses={analyses} />
             </div>
-
           </div>
         )}
 
