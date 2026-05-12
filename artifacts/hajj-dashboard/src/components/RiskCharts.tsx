@@ -178,7 +178,7 @@ export function RiskTypeBreakdown({ analyses }: RiskChartsProps) {
 
   return (
     <ChartFrame title="Risk Type Breakdown" icon="🔥" accent="#E8175D">
-      <div className="pt-1 flex-1">
+      <div className="pt-1">
         <ResponsiveContainer width="100%" height={190}>
           <BarChart data={data} margin={{ top: 4, right: 4, left: -22, bottom: 0 }}>
             <defs>
@@ -222,7 +222,7 @@ export function LocationRiskChart({ analyses }: RiskChartsProps) {
 
   return (
     <ChartFrame title="Risk by Location" icon="📍" accent="#6B21A8">
-      <div className="pt-1 flex-1">
+      <div className="pt-1">
         <ResponsiveContainer width="100%" height={190}>
           <BarChart data={data} margin={{ top: 4, right: 4, left: -22, bottom: 30 }}>
             <defs>
