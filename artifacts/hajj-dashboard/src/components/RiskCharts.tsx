@@ -34,7 +34,7 @@ function ChartFrame({ title, icon, accent = "#9333ea", children }: {
         <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{title}</span>
       </div>
 
-      <div className="px-4 pb-4 flex-1 flex flex-col">
+      <div className="px-4 pb-4 flex-1 flex flex-col justify-center">
         {children}
       </div>
     </div>
