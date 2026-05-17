@@ -42,16 +42,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = useCallback(async (name: string, pin: string) => {
-    const res = await fetch(`${getBaseUrl()}/api/team/login`, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ name, pin }),
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({})) as { error?: string };
-      throw new Error(err.error ?? "Login failed");
+    const url = `${getBaseUrl()}/api/team/login`;
+    let res: Response;
+    try {
+      res = await fetch(url, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ name, pin }),
+      });
+    } catch (networkErr) {
+      throw new Error(`Network error reaching ${url}: ${String(networkErr)}`);
     }
-    const data = await res.json() as { user: AuthUser; token: string };
+    const raw = await res.text();
+    let body: { user?: AuthUser; token?: string; error?: string };
+    try {
+      body = JSON.parse(raw) as typeof body;
+    } catch {
+      const preview = raw.slice(0, 120).replace(/\s+/g, " ");
+      throw new Error(`Non-JSON from ${url} (HTTP ${res.status}): ${preview}`);
+    }
+    if (!res.ok) {
+      throw new Error(body.error ?? `Login failed (HTTP ${res.status})`);
+    }
+    if (!body.user || !body.token) {
+      throw new Error("Login response missing user/token");
+    }
+    const data = { user: body.user, token: body.token };
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     setUser(data.user);
     setToken(data.token);

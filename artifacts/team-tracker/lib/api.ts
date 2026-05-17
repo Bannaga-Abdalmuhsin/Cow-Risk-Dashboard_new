@@ -1,23 +1,40 @@
+import Constants from "expo-constants";
+
 /**
- * Returns the base origin for API calls.
- * - EXPO_PUBLIC_DOMAIN is written to .env.local by the dev script and baked
- *   into the bundle by Metro. It always resolves to the main picard.replit.dev
- *   domain, which routes /api → the API server (confirmed accessible publicly).
- * - The Expo dev domain (*.expo.picard.replit.dev) must NOT be used because
- *   it serves Metro's SPA shell for unknown paths, returning HTML for /api.
+ * Derives the picard API base URL using multiple strategies in priority order.
+ *
+ * Strategy 3 is the most reliable for native iOS/Android in Expo Go because
+ * Constants.linkingUri is set at runtime by Expo Go itself — it never depends
+ * on Metro env-var baking succeeding.
+ *
+ * expo domain  →  *.expo.picard.replit.dev  (Metro, returns HTML for /api)
+ * picard domain → *.picard.replit.dev        (API server, returns JSON)
  */
 export function getBaseUrl(): string {
-  // 1. EXPO_PUBLIC_API_URL — the full https:// URL baked into the bundle.
-  //    Set as both a process-env prefix AND in .env.local so Metro picks it up
-  //    whichever way it resolves the environment.
+  // 1. EXPO_PUBLIC_API_URL — full https:// URL written by dev script to .env.local
+  //    and injected as a process-env prefix. Most explicit source.
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
   if (apiUrl) return apiUrl;
 
-  // 2. EXPO_PUBLIC_DOMAIN — fallback using just the hostname.
+  // 2. EXPO_PUBLIC_DOMAIN — just the hostname, baked by Metro.
   const domain = process.env.EXPO_PUBLIC_DOMAIN;
   if (domain) return `https://${domain}`;
 
-  // 3. Web fallback: strip ".expo." to get the API (picard) domain.
+  // 3. Runtime: derive from Constants.linkingUri which Expo Go always sets.
+  //    Format: "exp://UUID.expo.picard.replit.dev:PORT/--/"
+  //    Strip exp://, remove port, replace ".expo.picard." → ".picard."
+  try {
+    const linking = Constants.linkingUri ?? "";
+    if (linking) {
+      const withoutScheme = linking.replace(/^exp?:\/\//, "");
+      const host = withoutScheme.split(":")[0].split("/")[0];
+      if (host.includes(".expo.picard.replit.dev")) {
+        return `https://${host.replace(".expo.picard.replit.dev", ".picard.replit.dev")}`;
+      }
+    }
+  } catch {}
+
+  // 4. Web fallback: strip ".expo." from window.location.hostname.
   if (typeof window !== "undefined" && window.location?.hostname) {
     const host = window.location.hostname;
     const apiHost = host.replace(".expo.picard.replit.dev", ".picard.replit.dev");
@@ -29,7 +46,11 @@ export function getBaseUrl(): string {
 
 /** Debug helper — returns what getBaseUrl() resolves to (never empty in prod). */
 export function debugBaseUrl(): string {
-  return getBaseUrl() || "(empty — env vars not baked in)";
+  const url = getBaseUrl();
+  const linking = (() => { try { return Constants.linkingUri ?? ""; } catch { return ""; } })();
+  return url
+    ? `API: ${url}`
+    : `(empty) linkingUri=${linking} API_URL=${process.env.EXPO_PUBLIC_API_URL ?? "–"} DOMAIN=${process.env.EXPO_PUBLIC_DOMAIN ?? "–"}`;
 }
 
 /** Kept for backwards-compat */
