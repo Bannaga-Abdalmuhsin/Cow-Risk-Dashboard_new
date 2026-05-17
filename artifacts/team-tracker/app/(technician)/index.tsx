@@ -3,6 +3,7 @@ import {
   ActivityIndicator, Platform, StyleSheet, Text,
   TouchableOpacity, View,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
   useAnimatedStyle, useSharedValue, withSpring, withRepeat, withTiming,
 } from "react-native-reanimated";
@@ -47,7 +48,7 @@ export default function TechnicianDutyScreen() {
 
   const scale  = useSharedValue(1);
   const pulse  = useSharedValue(1);
-  const btnStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+  const btnStyle  = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
   const ringStyle = useAnimatedStyle(() => ({ transform: [{ scale: pulse.value }], opacity: (2 - pulse.value) * 0.4 }));
 
   useEffect(() => {
@@ -90,12 +91,12 @@ export default function TechnicianDutyScreen() {
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, []);
 
-  const dutyColor   = isOnDuty ? colors.onDuty  : colors.offDuty;
-  const topPad      = insets.top + (Platform.OS === "web" ? 67 : 0);
-  const bottomPad   = insets.bottom + (Platform.OS === "web" ? 34 : 80);
+  const dutyColor = isOnDuty ? colors.onDuty : colors.offDuty;
+  const topPad    = insets.top + (Platform.OS === "web" ? 67 : 0);
+  const bottomPad = insets.bottom + (Platform.OS === "web" ? 34 : 80);
 
   return (
-    <View style={[styles.root, { backgroundColor: colors.background }]}>
+    <LinearGradient colors={[colors.background, colors.backgroundEnd]} style={styles.root}>
       {/* Header */}
       <View style={[styles.header, { paddingTop: topPad + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View>
@@ -112,7 +113,6 @@ export default function TechnicianDutyScreen() {
 
         {/* Duty toggle */}
         <View style={styles.toggleArea}>
-          {/* Pulse ring */}
           <Animated.View style={[styles.ring, { borderColor: dutyColor }, ringStyle]} />
           <Animated.View style={btnStyle}>
             <TouchableOpacity
@@ -125,11 +125,7 @@ export default function TechnicianDutyScreen() {
                 ? <ActivityIndicator color="#fff" size="large" />
                 : (
                   <>
-                    <Feather
-                      name={isOnDuty ? "radio" : "power"}
-                      size={40}
-                      color="#fff"
-                    />
+                    <Feather name={isOnDuty ? "radio" : "power"} size={40} color="#fff" />
                     <Text style={styles.dutyLabel}>
                       {isOnDuty ? "ON DUTY" : "OFF DUTY"}
                     </Text>
@@ -162,24 +158,38 @@ export default function TechnicianDutyScreen() {
             : "Tap the button to start sharing your location"}
         </Text>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  root:        { flex: 1 },
-  header:      { paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1, flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between" },
-  name:        { fontSize: 20, fontWeight: "700" as const },
-  role:        { fontSize: 12, marginTop: 2 },
-  iconBtn:     { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" },
-  main:        { flex: 1, alignItems: "center", justifyContent: "center", gap: 32, paddingHorizontal: 24 },
-  toggleArea:  { width: 200, height: 200, alignItems: "center", justifyContent: "center" },
-  ring:        { position: "absolute", width: 200, height: 200, borderRadius: 100, borderWidth: 2 },
-  dutyBtn:     { width: 160, height: 160, borderRadius: 80, alignItems: "center", justifyContent: "center", gap: 8, shadowColor: "#000", shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.4, shadowRadius: 20, elevation: 12 },
-  dutyLabel:   { color: "#fff", fontWeight: "800" as const, fontSize: 14, letterSpacing: 1 },
-  cards:       { flexDirection: "row", gap: 12, width: "100%" },
-  card:        { flex: 1, padding: 16, borderRadius: 14, borderWidth: 1, gap: 4, alignItems: "center" },
-  cardLabel:   { fontSize: 10, fontWeight: "600" as const, letterSpacing: 1 },
-  cardValue:   { fontSize: 16, fontWeight: "700" as const },
-  hint:        { fontSize: 12, textAlign: "center", lineHeight: 18 },
+  root:       { flex: 1 },
+  header:     {
+    paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1,
+    flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between",
+    shadowColor: "#000", shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2, shadowRadius: 8, elevation: 6,
+  },
+  name:       { fontSize: 20, fontWeight: "700" as const },
+  role:       { fontSize: 12, marginTop: 2 },
+  iconBtn:    { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" },
+  main:       { flex: 1, alignItems: "center", justifyContent: "center", gap: 32, paddingHorizontal: 24 },
+  toggleArea: { width: 200, height: 200, alignItems: "center", justifyContent: "center" },
+  ring:       { position: "absolute", width: 200, height: 200, borderRadius: 100, borderWidth: 2 },
+  dutyBtn:    {
+    width: 160, height: 160, borderRadius: 80,
+    alignItems: "center", justifyContent: "center", gap: 8,
+    shadowColor: "#000", shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.4, shadowRadius: 20, elevation: 12,
+  },
+  dutyLabel:  { color: "#fff", fontWeight: "800" as const, fontSize: 14, letterSpacing: 1 },
+  cards:      { flexDirection: "row", gap: 12, width: "100%" },
+  card:       {
+    flex: 1, padding: 16, borderRadius: 22, borderWidth: 1, gap: 4, alignItems: "center",
+    shadowColor: "#000", shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25, shadowRadius: 20, elevation: 12,
+  },
+  cardLabel:  { fontSize: 10, fontWeight: "600" as const, letterSpacing: 1 },
+  cardValue:  { fontSize: 16, fontWeight: "700" as const },
+  hint:       { fontSize: 12, textAlign: "center", lineHeight: 18 },
 });

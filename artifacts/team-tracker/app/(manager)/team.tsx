@@ -3,6 +3,7 @@ import {
   ActivityIndicator, FlatList, Platform, RefreshControl,
   StyleSheet, Text, TouchableOpacity, View,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "@/context/AuthContext";
@@ -62,7 +63,7 @@ export default function ManagerTeamScreen() {
   const topPad      = insets.top + (Platform.OS === "web" ? 67 : 0);
 
   return (
-    <View style={[styles.root, { backgroundColor: colors.background }]}>
+    <LinearGradient colors={[colors.background, colors.backgroundEnd]} style={styles.root}>
       <View style={[styles.header, { paddingTop: topPad + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View>
           <Text style={[styles.headerTitle, { color: colors.foreground }]}>Team</Text>
@@ -97,18 +98,28 @@ export default function ManagerTeamScreen() {
           }
         />
       )}
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   root:        { flex: 1 },
-  header:      { paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1, flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between" },
+  header:      {
+    paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1,
+    flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between",
+    shadowColor: "#000", shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2, shadowRadius: 8, elevation: 6,
+  },
   headerTitle: { fontSize: 22, fontWeight: "700" as const },
   headerSub:   { fontSize: 12, marginTop: 2 },
   iconBtn:     { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" },
   center:      { flex: 1, alignItems: "center", justifyContent: "center" },
-  row:         { flexDirection: "row", alignItems: "center", gap: 12, padding: 14, borderRadius: 12, borderWidth: 1 },
+  row:         {
+    flexDirection: "row", alignItems: "center", gap: 12,
+    padding: 14, borderRadius: 22, borderWidth: 1,
+    shadowColor: "#000", shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25, shadowRadius: 20, elevation: 12,
+  },
   dot:         { width: 10, height: 10, borderRadius: 5 },
   rowInfo:     { flex: 1 },
   rowName:     { fontSize: 15, fontWeight: "600" as const },

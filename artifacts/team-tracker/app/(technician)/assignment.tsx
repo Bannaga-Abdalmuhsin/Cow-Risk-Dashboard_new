@@ -3,6 +3,7 @@ import {
   ActivityIndicator, Platform, RefreshControl, ScrollView,
   StyleSheet, Text, TouchableOpacity, View,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import * as Haptics from "expo-haptics";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -58,12 +59,14 @@ export default function AssignmentScreen() {
   };
 
   return (
-    <View style={[styles.root, { backgroundColor: colors.background }]}>
+    <LinearGradient colors={[colors.background, colors.backgroundEnd]} style={styles.root}>
       <View style={[styles.header, { paddingTop: topPad + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <Text style={[styles.headerTitle, { color: colors.foreground }]}>Task</Text>
-        {isNew && <View style={[styles.badge, { backgroundColor: colors.primary }]}>
-          <Text style={styles.badgeText}>NEW</Text>
-        </View>}
+        {isNew && (
+          <View style={[styles.badge, { backgroundColor: colors.primary }]}>
+            <Text style={styles.badgeText}>NEW</Text>
+          </View>
+        )}
       </View>
 
       <ScrollView
@@ -86,7 +89,6 @@ export default function AssignmentScreen() {
           </View>
         ) : (
           <View style={styles.assignBlock}>
-            {/* From badge */}
             <View style={styles.fromRow}>
               <View style={[styles.managerDot, { backgroundColor: colors.primary }]} />
               <Text style={[styles.fromText, { color: colors.mutedForeground }]}>
@@ -95,12 +97,13 @@ export default function AssignmentScreen() {
               </Text>
             </View>
 
-            {/* Message card */}
-            <View style={[styles.msgCard, { backgroundColor: colors.card, borderColor: isNew ? colors.primary : colors.border, borderLeftWidth: isNew ? 4 : 1 }]}>
+            <View style={[
+              styles.msgCard,
+              { backgroundColor: colors.card, borderColor: isNew ? colors.primary : colors.border, borderLeftWidth: isNew ? 4 : 1 },
+            ]}>
               <Text style={[styles.msgText, { color: colors.foreground }]}>{assignment.message}</Text>
             </View>
 
-            {/* Read status + action */}
             {assignment.readAt ? (
               <View style={styles.readRow}>
                 <MaterialCommunityIcons name="check-circle" size={16} color={colors.onDuty} />
@@ -123,13 +126,18 @@ export default function AssignmentScreen() {
           </View>
         )}
       </ScrollView>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   root:        { flex: 1 },
-  header:      { paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1, flexDirection: "row", alignItems: "flex-end", gap: 10 },
+  header:      {
+    paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1,
+    flexDirection: "row", alignItems: "flex-end", gap: 10,
+    shadowColor: "#000", shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2, shadowRadius: 8, elevation: 6,
+  },
   headerTitle: { fontSize: 22, fontWeight: "700" as const },
   badge:       { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
   badgeText:   { color: "#fff", fontSize: 10, fontWeight: "800" as const, letterSpacing: 1 },
@@ -142,7 +150,11 @@ const styles = StyleSheet.create({
   managerDot:  { width: 8, height: 8, borderRadius: 4 },
   fromText:    { fontSize: 13 },
   fromName:    { fontWeight: "600" as const },
-  msgCard:     { borderRadius: 14, borderWidth: 1, padding: 18 },
+  msgCard:     {
+    borderRadius: 22, borderWidth: 1, padding: 18,
+    shadowColor: "#000", shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25, shadowRadius: 20, elevation: 12,
+  },
   msgText:     { fontSize: 16, lineHeight: 24 },
   readRow:     { flexDirection: "row", alignItems: "center", gap: 6 },
   readText:    { fontSize: 12 },

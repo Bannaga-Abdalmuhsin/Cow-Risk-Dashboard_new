@@ -3,6 +3,7 @@ import {
   ActivityIndicator, Alert, Modal, Platform, StyleSheet,
   Text, TextInput, TouchableOpacity, View,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import * as Haptics from "expo-haptics";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -68,7 +69,7 @@ export default function ManagerMapScreen() {
   const bottomPad   = insets.bottom + (Platform.OS === "web" ? 34 : 16);
 
   return (
-    <View style={[styles.root, { backgroundColor: colors.background }]}>
+    <LinearGradient colors={[colors.background, colors.backgroundEnd]} style={styles.root}>
       {/* Header */}
       <View style={[styles.header, { paddingTop: topPad + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View>
@@ -138,13 +139,18 @@ export default function ManagerMapScreen() {
           </View>
         </View>
       </Modal>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   root:         { flex: 1 },
-  header:       { paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1, flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between" },
+  header:       {
+    paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1,
+    flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between",
+    shadowColor: "#000", shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2, shadowRadius: 8, elevation: 6,
+  },
   headerTitle:  { fontSize: 22, fontWeight: "700" as const },
   headerSub:    { fontSize: 12, marginTop: 2 },
   iconBtn:      { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" },
@@ -152,7 +158,12 @@ const styles = StyleSheet.create({
   loadText:     { fontSize: 14 },
   mapArea:      { flex: 1, position: "relative" },
   modalOverlay: { flex: 1 },
-  modalSheet:   { borderTopLeftRadius: 20, borderTopRightRadius: 20, borderTopWidth: 1, padding: 20, gap: 12 },
+  modalSheet:   {
+    borderTopLeftRadius: 22, borderTopRightRadius: 22, borderTopWidth: 1,
+    padding: 20, gap: 12,
+    shadowColor: "#000", shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.3, shadowRadius: 16, elevation: 16,
+  },
   modalTitle:   { fontSize: 18, fontWeight: "700" as const },
   modalSub:     { fontSize: 13, marginTop: -4 },
   msgInput:     { borderWidth: 1, borderRadius: 12, padding: 12, fontSize: 15, minHeight: 80, textAlignVertical: "top" },
