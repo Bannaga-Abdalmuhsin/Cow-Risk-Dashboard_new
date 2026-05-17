@@ -14,6 +14,7 @@ import {
 } from "@/lib/api";
 
 const ROLES = ["technician", "manager"] as const;
+const ALL_LOCATIONS = [...LOCATIONS, "All Regions"] as const;
 
 interface UserForm {
   name:         string;
@@ -100,7 +101,9 @@ export default function ManageScreen() {
       username:     user.name,
       password:     "",
       role:         user.role as "technician" | "manager",
-      location:     (user.defaultArea as HajjLocation) ?? "",
+      location:     user.role === "manager"
+        ? ("All Regions" as HajjLocation)
+        : ((user.defaultArea as HajjLocation) ?? ""),
     });
     setFormError("");
     setShowForm(true);
@@ -266,7 +269,11 @@ export default function ManageScreen() {
                   {ROLES.map(r => (
                     <TouchableOpacity
                       key={r}
-                      onPress={() => setForm(prev => ({ ...prev, role: r }))}
+                      onPress={() => setForm(prev => ({
+                        ...prev,
+                        role: r,
+                        location: r === "manager" ? ("All Regions" as HajjLocation) : prev.location,
+                      }))}
                       style={[styles.chip, {
                         borderColor:     form.role === r ? colors.primary : colors.border,
                         backgroundColor: form.role === r ? colors.primary + "30" : "transparent",
@@ -285,20 +292,26 @@ export default function ManageScreen() {
             <Text style={[styles.fieldLabel, { color: colors.mutedForeground }]}>ASSIGNED LOCATION</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.chips}>
-                {LOCATIONS.map(loc => (
-                  <TouchableOpacity
-                    key={loc}
-                    onPress={() => setForm(prev => ({ ...prev, location: loc }))}
-                    style={[styles.chip, {
-                      borderColor:     form.location === loc ? colors.onDuty : colors.border,
-                      backgroundColor: form.location === loc ? colors.onDuty + "20" : "transparent",
-                    }]}
-                  >
-                    <Text style={[styles.chipText, { color: form.location === loc ? colors.onDuty : colors.mutedForeground }]}>
-                      {loc}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
+                {ALL_LOCATIONS.map(loc => {
+                  const isAllRegions = loc === "All Regions";
+                  const active = form.location === loc ||
+                    (isAllRegions && form.role === "manager");
+                  const activeColor = isAllRegions ? colors.primary : colors.onDuty;
+                  return (
+                    <TouchableOpacity
+                      key={loc}
+                      onPress={() => setForm(prev => ({ ...prev, location: loc as HajjLocation }))}
+                      style={[styles.chip, {
+                        borderColor:     active ? activeColor : colors.border,
+                        backgroundColor: active ? activeColor + "20" : "transparent",
+                      }]}
+                    >
+                      <Text style={[styles.chipText, { color: active ? activeColor : colors.mutedForeground }]}>
+                        {loc}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             </ScrollView>
 

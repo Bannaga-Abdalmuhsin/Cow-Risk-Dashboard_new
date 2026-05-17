@@ -1,5 +1,14 @@
-const DOMAIN = process.env.EXPO_PUBLIC_DOMAIN;
-export const BASE_URL = DOMAIN ? `https://${DOMAIN}` : "";
+function resolveBaseUrl(): string {
+  const domain = process.env.EXPO_PUBLIC_DOMAIN;
+  if (domain) return `https://${domain}`;
+  if (typeof window !== "undefined" && window.location?.hostname) {
+    const host = window.location.hostname;
+    const apiHost = host.replace(".expo.picard.replit.dev", ".picard.replit.dev");
+    if (apiHost !== host) return `https://${apiHost}`;
+  }
+  return "";
+}
+export const BASE_URL = resolveBaseUrl();
 
 export const LOCATIONS = ["Arafat", "Mina", "Muzdalifa", "Makkah", "Makkah Remote"] as const;
 export type HajjLocation = typeof LOCATIONS[number];

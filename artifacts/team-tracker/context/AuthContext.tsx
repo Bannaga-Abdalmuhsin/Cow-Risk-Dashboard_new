@@ -41,8 +41,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = useCallback(async (name: string, pin: string) => {
-    const domain = process.env.EXPO_PUBLIC_DOMAIN;
-    const base   = domain ? `https://${domain}` : "";
+    let base = process.env.EXPO_PUBLIC_DOMAIN
+      ? `https://${process.env.EXPO_PUBLIC_DOMAIN}`
+      : "";
+    if (!base && typeof window !== "undefined" && window.location?.hostname) {
+      const h = window.location.hostname;
+      const apiHost = h.replace(".expo.picard.replit.dev", ".picard.replit.dev");
+      if (apiHost !== h) base = `https://${apiHost}`;
+    }
     const res = await fetch(`${base}/api/team/login`, {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
