@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useRef, type ReactNode } from "react";
 import type { LiveTechLocation } from "../components/LeafletMap";
+import { TeamGoogleMap } from "../components/TeamGoogleMap";
 import acesLogo from "@assets/ChatGPT_Image_Oct_14,_2025,_10_29_41_PM_1776566555155.png";
 import stcLogo from "@assets/7010.SR.D-9f4e531b_(1)_1776566577166.png";
 import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer, UsersRound } from "lucide-react";
@@ -321,14 +322,13 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
             {/* Main content: map + roster */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 flex-1 min-h-0">
-              {/* Full-height map */}
-              <div className="lg:col-span-3 min-h-0 flex flex-col gap-0">
-                <LeafletMap
+              {/* Full-height Google Map */}
+              <div className="lg:col-span-3 min-h-0 flex flex-col gap-0" style={{ minHeight: 480 }}>
+                <TeamGoogleMap
                   analyses={analyses}
+                  techLocations={techLocations}
                   selectedSiteId={selectedSiteId}
                   onSelectSite={handleSelectSite}
-                  showTeamMarkers={true}
-                  techLocations={techLocations}
                 />
               </div>
 

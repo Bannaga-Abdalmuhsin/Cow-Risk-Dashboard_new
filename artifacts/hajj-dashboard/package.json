@@ -78,6 +78,7 @@
     "zod": "catalog:"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.3",
     "leaflet": "^1.9.4",
     "leaflet.heat": "^0.2.0",
     "react-leaflet": "^5.0.0"
