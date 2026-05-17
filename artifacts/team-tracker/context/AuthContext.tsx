@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { getBaseUrl } from "@/lib/api";
 
 export interface AuthUser {
   id: number;
@@ -41,15 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = useCallback(async (name: string, pin: string) => {
-    let base = process.env.EXPO_PUBLIC_DOMAIN
-      ? `https://${process.env.EXPO_PUBLIC_DOMAIN}`
-      : "";
-    if (!base && typeof window !== "undefined" && window.location?.hostname) {
-      const h = window.location.hostname;
-      const apiHost = h.replace(".expo.picard.replit.dev", ".picard.replit.dev");
-      if (apiHost !== h) base = `https://${apiHost}`;
-    }
-    const res = await fetch(`${base}/api/team/login`, {
+    const res = await fetch(`${getBaseUrl()}/api/team/login`, {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
       body:    JSON.stringify({ name, pin }),

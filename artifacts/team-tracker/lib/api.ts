@@ -1,14 +1,45 @@
-function resolveBaseUrl(): string {
+import Constants from "expo-constants";
+
+/** Strip the `.expo` subdomain to get the main proxy domain */
+function expoHostToApiHost(raw: string): string {
+  const host = raw.split(":")[0].replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+  return host.replace(".expo.picard.replit.dev", ".picard.replit.dev");
+}
+
+/** Lazy — called on every fetch so Constants is fully initialised */
+export function getBaseUrl(): string {
+  // 1. Explicit EXPO_PUBLIC_* env var baked in by Metro
   const domain = process.env.EXPO_PUBLIC_DOMAIN;
   if (domain) return `https://${domain}`;
+
+  // 2. Web: derive from window.location (expo.picard → picard)
   if (typeof window !== "undefined" && window.location?.hostname) {
-    const host = window.location.hostname;
-    const apiHost = host.replace(".expo.picard.replit.dev", ".picard.replit.dev");
-    if (apiHost !== host) return `https://${apiHost}`;
+    const apiHost = expoHostToApiHost(window.location.hostname);
+    if (!apiHost.includes(".expo.picard")) return `https://${apiHost}`;
   }
+
+  // 3. Native: derive from Constants.linkingUri
+  //    e.g. "exp://uuid.expo.picard.replit.dev:PORT/--/"
+  const linkingUri: string = (Constants as { linkingUri?: string }).linkingUri ?? "";
+  if (linkingUri) {
+    const apiHost = expoHostToApiHost(linkingUri);
+    if (!apiHost.includes(".expo.picard") && apiHost.includes("picard.replit.dev")) {
+      return `https://${apiHost}`;
+    }
+  }
+
+  // 4. Native: Constants.expoConfig.hostUri (dev server injects this)
+  const hostUri: string = (Constants.expoConfig as { hostUri?: string } | null)?.hostUri ?? "";
+  if (hostUri) {
+    const apiHost = expoHostToApiHost(hostUri);
+    if (apiHost.includes("picard.replit.dev")) return `https://${apiHost}`;
+  }
+
   return "";
 }
-export const BASE_URL = resolveBaseUrl();
+
+/** Kept for backwards-compat; evaluates lazily so Constants is ready */
+export const BASE_URL = "";
 
 export const LOCATIONS = ["Arafat", "Mina", "Muzdalifa", "Makkah", "Makkah Remote"] as const;
 export type HajjLocation = typeof LOCATIONS[number];
@@ -64,7 +95,7 @@ export async function apiFetch<T>(
     ...(options.headers as Record<string, string> ?? {}),
   };
   if (token) headers["Authorization"] = `Bearer ${token}`;
-  const res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
+  const res = await fetch(`${getBaseUrl()}${path}`, { ...options, headers });
   if (!res.ok) {
     if (res.status === 401) throw new UnauthorizedError();
     const body = await res.json().catch(() => ({})) as { error?: string };
