@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  ActivityIndicator, Alert, Modal, Platform, StyleSheet,
+  ActivityIndicator, Alert, Modal, Platform, ScrollView, StyleSheet,
   Text, TextInput, TouchableOpacity, View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -12,21 +12,41 @@ import { useColors } from "@/hooks/useColors";
 import { getTeamLocations, sendAssignment, type TechLocationWithUser } from "@/lib/api";
 import MapViewContainer from "@/components/MapViewContainer";
 
+const ZONES = ["Arafat", "Mina", "Muzdalifa", "Makka", "Makka Remote"] as const;
+
 function minutesAgo(iso: string): number {
   return Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
 }
 
+function buildZoneSummary(locations: TechLocationWithUser[]) {
+  const map: Record<string, { on: number; off: number }> = {};
+  for (const zone of ZONES) map[zone] = { on: 0, off: 0 };
+
+  for (const loc of locations) {
+    const zone = ZONES.find(z => loc.area?.toLowerCase().includes(z.toLowerCase()));
+    const key  = zone ?? "Other";
+    if (!map[key]) map[key] = { on: 0, off: 0 };
+    if (loc.isOnDuty) map[key].on++;
+    else              map[key].off++;
+  }
+
+  const totalOn  = locations.filter(l => l.isOnDuty).length;
+  const totalOff = locations.length - totalOn;
+  return { zones: map, totalOn, totalOff };
+}
+
 export default function ManagerMapScreen() {
-  const colors = useColors();
-  const insets = useSafeAreaInsets();
+  const colors  = useColors();
+  const insets  = useSafeAreaInsets();
   const { token, logout } = useAuth();
 
-  const [locations,   setLocations]   = useState<TechLocationWithUser[]>([]);
-  const [loading,     setLoading]     = useState(true);
-  const [selected,    setSelected]    = useState<TechLocationWithUser | null>(null);
-  const [msgVisible,  setMsgVisible]  = useState(false);
-  const [message,     setMessage]     = useState("");
-  const [sending,     setSending]     = useState(false);
+  const [locations,  setLocations]  = useState<TechLocationWithUser[]>([]);
+  const [loading,    setLoading]    = useState(true);
+  const [selected,   setSelected]   = useState<TechLocationWithUser | null>(null);
+  const [msgVisible, setMsgVisible] = useState(false);
+  const [message,    setMessage]    = useState("");
+  const [sending,    setSending]    = useState(false);
+  const [summaryOpen, setSummaryOpen] = useState(true);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const fetchLocations = async () => {
@@ -64,9 +84,9 @@ export default function ManagerMapScreen() {
     }
   };
 
-  const onDutyCount = locations.filter(l => l.isOnDuty).length;
-  const topPad      = insets.top + (Platform.OS === "web" ? 67 : 0);
-  const bottomPad   = insets.bottom + (Platform.OS === "web" ? 34 : 16);
+  const { zones, totalOn, totalOff } = buildZoneSummary(locations);
+  const topPad    = insets.top + (Platform.OS === "web" ? 67 : 0);
+  const bottomPad = insets.bottom + (Platform.OS === "web" ? 34 : 16);
 
   return (
     <LinearGradient colors={[colors.background, colors.backgroundEnd]} style={styles.root}>
@@ -74,8 +94,8 @@ export default function ManagerMapScreen() {
       <View style={[styles.header, { paddingTop: topPad + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View>
           <Text style={[styles.headerTitle, { color: colors.foreground }]}>Live Map</Text>
-          <Text style={[styles.headerSub,   { color: colors.mutedForeground }]}>
-            {onDutyCount}/{locations.length} on duty · refreshes every 10s
+          <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>
+            {totalOn}/{locations.length} on duty · refreshes every 10s
           </Text>
         </View>
         <TouchableOpacity onPress={logout} style={[styles.iconBtn, { backgroundColor: colors.secondary }]}>
@@ -96,6 +116,76 @@ export default function ManagerMapScreen() {
             offDutyColor={colors.offDuty}
             onMarkerPress={onMarkerPress}
           />
+
+          {/* Zone Summary Overlay */}
+          <View style={[styles.summaryCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            {/* Toggle header */}
+            <TouchableOpacity
+              style={styles.summaryHeader}
+              onPress={() => setSummaryOpen(v => !v)}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.summaryTitle, { color: colors.foreground }]}>Zone Summary</Text>
+              <View style={styles.summaryBadges}>
+                <View style={[styles.badge, { backgroundColor: "#16a34a22" }]}>
+                  <Text style={[styles.badgeText, { color: "#16a34a" }]}>
+                    {totalOn} on
+                  </Text>
+                </View>
+                <View style={[styles.badge, { backgroundColor: colors.secondary }]}>
+                  <Text style={[styles.badgeText, { color: colors.mutedForeground }]}>
+                    {totalOff} off
+                  </Text>
+                </View>
+                <Feather
+                  name={summaryOpen ? "chevron-down" : "chevron-up"}
+                  size={14}
+                  color={colors.mutedForeground}
+                />
+              </View>
+            </TouchableOpacity>
+
+            {summaryOpen && (
+              <>
+                {/* Zone rows */}
+                <ScrollView
+                  style={styles.zoneList}
+                  showsVerticalScrollIndicator={false}
+                  nestedScrollEnabled
+                >
+                  {ZONES.map(zone => {
+                    const { on, off } = zones[zone] ?? { on: 0, off: 0 };
+                    const total = on + off;
+                    return (
+                      <View key={zone} style={[styles.zoneRow, { borderTopColor: colors.border }]}>
+                        <Text style={[styles.zoneName, { color: colors.foreground }]} numberOfLines={1}>
+                          {zone}
+                        </Text>
+                        <View style={styles.zoneCounts}>
+                          <Text style={[styles.zoneOn, { color: "#16a34a" }]}>{on} on</Text>
+                          <Text style={[styles.zoneSep, { color: colors.border }]}>·</Text>
+                          <Text style={[styles.zoneOff, { color: colors.mutedForeground }]}>{off} off</Text>
+                          <Text style={[styles.zoneTotal, { color: colors.mutedForeground }]}>
+                            / {total}
+                          </Text>
+                        </View>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+
+                {/* Totals footer */}
+                <View style={[styles.totalRow, { borderTopColor: colors.border, backgroundColor: colors.secondary }]}>
+                  <Text style={[styles.totalLabel, { color: colors.foreground }]}>Total</Text>
+                  <View style={styles.zoneCounts}>
+                    <Text style={[styles.zoneOn, { color: "#16a34a", fontWeight: "700" }]}>{totalOn} on duty</Text>
+                    <Text style={[styles.zoneSep, { color: colors.border }]}>·</Text>
+                    <Text style={[styles.zoneOff, { color: colors.mutedForeground, fontWeight: "700" }]}>{totalOff} off duty</Text>
+                  </View>
+                </View>
+              </>
+            )}
+          </View>
         </View>
       )}
 
@@ -144,32 +234,67 @@ export default function ManagerMapScreen() {
 }
 
 const styles = StyleSheet.create({
-  root:         { flex: 1 },
-  header:       {
+  root:          { flex: 1 },
+  header:        {
     paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1,
     flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between",
     shadowColor: "#000", shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2, shadowRadius: 8, elevation: 6,
   },
-  headerTitle:  { fontSize: 22, fontWeight: "700" as const },
-  headerSub:    { fontSize: 12, marginTop: 2 },
-  iconBtn:      { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" },
-  center:       { flex: 1, alignItems: "center", justifyContent: "center", gap: 12 },
-  loadText:     { fontSize: 14 },
-  mapArea:      { flex: 1, position: "relative" },
-  modalOverlay: { flex: 1 },
-  modalSheet:   {
+  headerTitle:   { fontSize: 22, fontWeight: "700" as const },
+  headerSub:     { fontSize: 12, marginTop: 2 },
+  iconBtn:       { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" },
+  center:        { flex: 1, alignItems: "center", justifyContent: "center", gap: 12 },
+  loadText:      { fontSize: 14 },
+  mapArea:       { flex: 1, position: "relative" },
+
+  summaryCard:   {
+    position: "absolute", bottom: 16, left: 12, right: 12,
+    borderRadius: 16, borderWidth: 1,
+    shadowColor: "#000", shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.18, shadowRadius: 12, elevation: 10,
+    overflow: "hidden",
+  },
+  summaryHeader: {
+    flexDirection: "row", alignItems: "center", justifyContent: "space-between",
+    paddingHorizontal: 14, paddingVertical: 10,
+  },
+  summaryTitle:  { fontSize: 13, fontWeight: "700" as const, letterSpacing: 0.3 },
+  summaryBadges: { flexDirection: "row", alignItems: "center", gap: 6 },
+  badge:         { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 10 },
+  badgeText:     { fontSize: 11, fontWeight: "600" as const },
+
+  zoneList:      { maxHeight: 160 },
+  zoneRow:       {
+    flexDirection: "row", alignItems: "center", justifyContent: "space-between",
+    paddingHorizontal: 14, paddingVertical: 7, borderTopWidth: 1,
+  },
+  zoneName:      { fontSize: 12, fontWeight: "600" as const, flex: 1 },
+  zoneCounts:    { flexDirection: "row", alignItems: "center", gap: 4 },
+  zoneOn:        { fontSize: 12, fontWeight: "600" as const },
+  zoneSep:       { fontSize: 12 },
+  zoneOff:       { fontSize: 12 },
+  zoneTotal:     { fontSize: 11 },
+
+  totalRow:      {
+    flexDirection: "row", alignItems: "center", justifyContent: "space-between",
+    paddingHorizontal: 14, paddingVertical: 9, borderTopWidth: 1,
+  },
+  totalLabel:    { fontSize: 13, fontWeight: "700" as const },
+
+  modalOverlay:  { flex: 1 },
+  modalSheet:    {
     borderTopLeftRadius: 22, borderTopRightRadius: 22, borderTopWidth: 1,
     padding: 20, gap: 12,
     shadowColor: "#000", shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.3, shadowRadius: 16, elevation: 16,
   },
-  modalTitle:   { fontSize: 18, fontWeight: "700" as const },
-  modalSub:     { fontSize: 13, marginTop: -4 },
-  msgInput:     { borderWidth: 1, borderRadius: 12, padding: 12, fontSize: 15, minHeight: 80, textAlignVertical: "top" },
-  modalRow:     { flexDirection: "row", gap: 10 },
-  cancelBtn:    { flex: 1, borderWidth: 1, borderRadius: 12, paddingVertical: 12, alignItems: "center" },
-  cancelText:   { fontWeight: "600" as const },
-  sendBtn:      { flex: 1, borderRadius: 12, paddingVertical: 12, alignItems: "center" },
-  sendText:     { color: "#fff", fontWeight: "700" as const, fontSize: 15 },
+  modalTitle:    { fontSize: 18, fontWeight: "700" as const },
+  modalSub:      { fontSize: 13, marginTop: -4 },
+  msgInput:      { borderWidth: 1, borderRadius: 12, padding: 12, fontSize: 15, minHeight: 80, textAlignVertical: "top" },
+  modalRow:      { flexDirection: "row", gap: 10 },
+  cancelBtn:     { flex: 1, borderWidth: 1, borderRadius: 12, paddingVertical: 12, alignItems: "center" },
+  cancelText:    { fontWeight: "600" as const },
+  sendBtn:       { flex: 1, borderRadius: 12, paddingVertical: 12, alignItems: "center" },
+  sendText:      { color: "#fff", fontWeight: "700" as const, fontSize: 15 },
 });
