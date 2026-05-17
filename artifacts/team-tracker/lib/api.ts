@@ -11,34 +11,30 @@ import Constants from "expo-constants";
  * picard domain → *.picard.replit.dev        (API server, returns JSON)
  */
 export function getBaseUrl(): string {
-  // 1. EXPO_PUBLIC_API_URL — full https:// URL written by dev script to .env.local
-  //    and injected as a process-env prefix. Most explicit source.
+  // 1. EXPO_PUBLIC_API_URL — full https:// URL written by dev script to .env.local.
+  //    Now set to the expo domain (https://UUID.expo.picard.replit.dev) because
+  //    the dev-proxy.js intercepts /api on that port and forwards to the API server.
+  //    The expo domain is publicly accessible; the picard domain requires Replit auth.
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
   if (apiUrl) return apiUrl;
 
-  // 2. EXPO_PUBLIC_DOMAIN — just the hostname, baked by Metro.
-  const domain = process.env.EXPO_PUBLIC_DOMAIN;
-  if (domain) return `https://${domain}`;
-
-  // 3. Runtime: derive from Constants.linkingUri which Expo Go always sets.
+  // 2. Runtime: derive from Constants.linkingUri which Expo Go always sets.
   //    Format: "exp://UUID.expo.picard.replit.dev:PORT/--/"
-  //    Strip exp://, remove port, replace ".expo.picard." → ".picard."
+  //    Keep the expo hostname as-is — the proxy runs there.
   try {
     const linking = Constants.linkingUri ?? "";
     if (linking) {
       const withoutScheme = linking.replace(/^exp?:\/\//, "");
       const host = withoutScheme.split(":")[0].split("/")[0];
       if (host.includes(".expo.picard.replit.dev")) {
-        return `https://${host.replace(".expo.picard.replit.dev", ".picard.replit.dev")}`;
+        return `https://${host}`;
       }
     }
   } catch {}
 
-  // 4. Web fallback: strip ".expo." from window.location.hostname.
-  if (typeof window !== "undefined" && window.location?.hostname) {
-    const host = window.location.hostname;
-    const apiHost = host.replace(".expo.picard.replit.dev", ".picard.replit.dev");
-    if (apiHost !== host) return `https://${apiHost}`;
+  // 3. Web fallback: use window.location.origin (same host that served the web bundle).
+  if (typeof window !== "undefined" && window.location?.origin) {
+    return window.location.origin;
   }
 
   return "";
