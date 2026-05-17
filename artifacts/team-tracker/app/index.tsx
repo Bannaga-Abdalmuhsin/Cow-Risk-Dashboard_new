@@ -68,13 +68,11 @@ export default function LoginScreen() {
 
           {/* Logo */}
           <View style={styles.logoBlock}>
-            <View style={[styles.logoBadge, { backgroundColor: colors.card }]}>
-              <Image
-                source={require("../assets/images/aces-logo.png")}
-                style={styles.logoImage}
-                resizeMode="contain"
-              />
-            </View>
+            <Image
+              source={require("../assets/images/aces-logo.png")}
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
             <Text style={[styles.logoSub, { color: colors.mutedForeground }]}>
               Field Team Tracker
             </Text>
@@ -169,11 +167,6 @@ const styles = StyleSheet.create({
   inner:         { flex: 1, paddingHorizontal: 24, justifyContent: "center", gap: 24 },
 
   logoBlock:     { alignItems: "center", gap: 10 },
-  logoBadge:     {
-    borderRadius: 20, padding: 16,
-    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.06, shadowRadius: 12, elevation: 4,
-  },
   logoImage:     { width: 340, height: 132 },
   logoSub:       { fontSize: 13, letterSpacing: 0.5 },
 
