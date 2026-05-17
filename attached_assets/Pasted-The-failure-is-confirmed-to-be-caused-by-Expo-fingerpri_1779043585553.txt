@@ -1,0 +1,126 @@
+The failure is confirmed to be caused by Expo fingerprint generation conflicting with the Replit pnpm workspace setup and the `brace-expansion` dependency.
+
+Apply the following exact fix sequence.
+
+# STEP 1 — Create/update eas.json
+
+Replace your current `eas.json` completely with:
+
+```json id="ghcvdg"
+{
+  "cli": {
+    "version": ">= 10.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EAS_SKIP_AUTO_FINGERPRINT": "1"
+      }
+    },
+    "production": {
+      "env": {
+        "EAS_SKIP_AUTO_FINGERPRINT": "1"
+      }
+    }
+  }
+}
+```
+
+# STEP 2 — Create .easignore
+
+Create file `.easignore`
+
+Paste:
+
+```bash id="9z1wqa"
+node_modules
+.git
+.cache
+dist
+build
+coverage
+.expo
+.next
+tmp
+logs
+*.log
+```
+
+This reduces upload size from 329MB and avoids fingerprint scanning issues.
+
+# STEP 3 — Force fix dependency conflict
+
+Run EXACTLY:
+
+```bash id="fr3v4t"
+rm -rf node_modules
+rm -f pnpm-lock.yaml
+
+pnpm add brace-expansion@2 minimatch@9 glob@10
+
+pnpm install --no-frozen-lockfile
+```
+
+# STEP 4 — Clear Expo cache
+
+Run:
+
+```bash id="n66y3l"
+npx expo install --fix
+```
+
+# STEP 5 — Build from INSIDE mobile app folder only
+
+IMPORTANT:
+
+Do NOT build from Replit root workspace.
+
+Run:
+
+```bash id="u5m4tr"
+cd artifacts/team-tracker
+eas build -p android --profile preview
+```
+
+# STEP 6 — If issue still happens
+
+Disable pnpm completely because Expo EAS + Replit workspace has compatibility issues.
+
+Run:
+
+```bash id="4s8zks"
+rm -rf node_modules
+rm pnpm-lock.yaml
+
+npm install
+```
+
+Then update `package.json`:
+
+REMOVE:
+
+```json id="fhjlwm"
+"packageManager": "pnpm@..."
+```
+
+Then update `eas.json`:
+
+```json id="15w94h"
+{
+  "cli": {
+    "packageManager": "npm"
+  }
+}
+```
+
+Then retry:
+
+```bash id="d3j6mb"
+eas build -p android
+```
+
+This usually resolves the `brace_expansion_1.expand is not a function` error permanently in Replit-hosted Expo apps.
