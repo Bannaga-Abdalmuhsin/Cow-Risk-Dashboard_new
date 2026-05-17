@@ -16,6 +16,7 @@ const palette = {
   accentForeground:   "#FFFFFF",
   destructive:        "#E8175D",
   destructiveForeground: "#FFFFFF",
+  signIn:             "#B91C1C",
   safe:               "#00BFB3",
   onDuty:             "#00BFB3",
   offDuty:            "#2E4A63",

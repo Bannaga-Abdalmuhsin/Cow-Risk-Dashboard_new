@@ -20,12 +20,20 @@ function NativeTabLayout() {
         <Icon sf={{ default: "person.3", selected: "person.3.fill" }} />
         <Label>Team</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="chat">
+        <Icon sf={{ default: "bubble.left.and.bubble.right", selected: "bubble.left.and.bubble.right.fill" }} />
+        <Label>Chat</Label>
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="manage">
+        <Icon sf={{ default: "person.badge.plus", selected: "person.badge.plus" }} />
+        <Label>Manage</Label>
+      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }
 
 function ClassicTabLayout() {
-  const colors     = useColors();
+  const colors      = useColors();
   const colorScheme = useColorScheme();
   const isDark      = colorScheme === "dark";
   const isIOS       = Platform.OS === "ios";
@@ -71,6 +79,26 @@ function ClassicTabLayout() {
             isIOS
               ? <SymbolView name="person.3.fill" tintColor={color} size={22} />
               : <Feather name="users" size={22} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: "Chat",
+          tabBarIcon: ({ color }) =>
+            isIOS
+              ? <SymbolView name="bubble.left.and.bubble.right.fill" tintColor={color} size={22} />
+              : <MaterialCommunityIcons name="message-text-outline" size={22} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="manage"
+        options={{
+          title: "Manage",
+          tabBarIcon: ({ color }) =>
+            isIOS
+              ? <SymbolView name="person.badge.plus" tintColor={color} size={22} />
+              : <MaterialCommunityIcons name="account-plus-outline" size={22} color={color} />,
         }}
       />
     </Tabs>
