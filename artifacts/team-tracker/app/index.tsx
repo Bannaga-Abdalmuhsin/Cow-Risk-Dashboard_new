@@ -80,16 +80,16 @@ export default function LoginScreen() {
             autoCorrect={false}
           />
 
-          <Text style={[styles.label, { color: colors.mutedForeground, marginTop: 16 }]}>PIN</Text>
+          <Text style={[styles.label, { color: colors.mutedForeground, marginTop: 16 }]}>PASSWORD</Text>
           <TextInput
             style={[styles.input, { backgroundColor: colors.input, borderColor: colors.border, color: colors.foreground }]}
-            placeholder="4-digit PIN"
+            placeholder="Password"
             placeholderTextColor={colors.mutedForeground}
             value={pin}
             onChangeText={setPin}
-            keyboardType="numeric"
             secureTextEntry
-            maxLength={4}
+            autoCapitalize="none"
+            autoCorrect={false}
           />
 
           {!!error && (
