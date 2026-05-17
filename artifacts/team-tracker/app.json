@@ -4,26 +4,32 @@
     "slug": "team-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/app-icon.png",
     "scheme": "team-tracker",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/icon.png",
+      "image": "./assets/images/app-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0D0A1A"
+      "backgroundColor": "#081120"
     },
     "ios": {
       "supportsTablet": false,
+      "icon": "./assets/images/app-icon.png",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours."
       }
     },
     "android": {
+      "icon": "./assets/images/app-icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/app-icon.png",
+        "backgroundColor": "#081120"
+      },
       "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
     },
     "web": {
-      "favicon": "./assets/images/icon.png"
+      "favicon": "./assets/images/app-icon.png"
     },
     "plugins": [
       [
