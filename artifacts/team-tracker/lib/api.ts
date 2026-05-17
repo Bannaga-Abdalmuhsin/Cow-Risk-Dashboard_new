@@ -36,7 +36,9 @@ export interface TeamUser {
   id: number;
   name: string;
   role: string;
-  defaultArea: string | null;
+  defaultArea:  string | null;
+  mcName:       string | null;
+  mobileNumber: string | null;
 }
 
 export async function apiFetch<T>(
@@ -110,10 +112,23 @@ export async function createTeamUser(
   pin: string,
   role: string,
   defaultArea: string | null,
+  mcName?: string,
+  mobileNumber?: string,
 ): Promise<TeamUser> {
   return apiFetch<TeamUser>("/api/team/users", token, {
     method: "POST",
-    body:   JSON.stringify({ name, pin, role, defaultArea }),
+    body:   JSON.stringify({ name, pin, role, defaultArea, mcName, mobileNumber }),
+  });
+}
+
+export async function updateTeamUser(
+  token: string,
+  id: number,
+  fields: { name?: string; pin?: string; defaultArea?: string; mcName?: string; mobileNumber?: string },
+): Promise<TeamUser> {
+  return apiFetch<TeamUser>(`/api/team/users/${id}`, token, {
+    method: "PATCH",
+    body:   JSON.stringify(fields),
   });
 }
 

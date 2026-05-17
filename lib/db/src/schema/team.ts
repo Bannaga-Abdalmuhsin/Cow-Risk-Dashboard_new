@@ -8,8 +8,10 @@ export const teamUsersTable = pgTable("team_users", {
   role:        text("role").notNull(),
   pin:         text("pin").notNull(),
   token:       text("token"),
-  defaultArea: text("default_area"),
-  createdAt:   timestamp("created_at").defaultNow().notNull(),
+  defaultArea:  text("default_area"),
+  mcName:       text("mc_name"),
+  mobileNumber: text("mobile_number"),
+  createdAt:    timestamp("created_at").defaultNow().notNull(),
 });
 
 export const techLocationsTable = pgTable("tech_locations", {

@@ -111,10 +111,12 @@ router.get("/locations", async (_req: Request, res: Response): Promise<void> => 
 router.get("/users", async (_req: Request, res: Response): Promise<void> => {
   const users = await db
     .select({
-      id:          teamUsersTable.id,
-      name:        teamUsersTable.name,
-      role:        teamUsersTable.role,
-      defaultArea: teamUsersTable.defaultArea,
+      id:           teamUsersTable.id,
+      name:         teamUsersTable.name,
+      role:         teamUsersTable.role,
+      defaultArea:  teamUsersTable.defaultArea,
+      mcName:       teamUsersTable.mcName,
+      mobileNumber: teamUsersTable.mobileNumber,
     })
     .from(teamUsersTable);
   res.json(users);
@@ -123,8 +125,9 @@ router.get("/users", async (_req: Request, res: Response): Promise<void> => {
 /* ─── POST /api/team/users ────────────────────────────────────────────────── */
 
 router.post("/users", requireManager, async (req: Request, res: Response): Promise<void> => {
-  const { name, pin, role, defaultArea } = req.body as {
+  const { name, pin, role, defaultArea, mcName, mobileNumber } = req.body as {
     name?: string; pin?: string; role?: string; defaultArea?: string;
+    mcName?: string; mobileNumber?: string;
   };
   if (!name || !pin) { res.status(400).json({ error: "name and pin required" }); return; }
 
@@ -139,12 +142,58 @@ router.post("/users", requireManager, async (req: Request, res: Response): Promi
     .values({
       name,
       pin,
-      role:        role ?? "technician",
-      defaultArea: defaultArea ?? null,
+      role:         role ?? "technician",
+      defaultArea:  defaultArea ?? null,
+      mcName:       mcName ?? null,
+      mobileNumber: mobileNumber ?? null,
     })
-    .returning({ id: teamUsersTable.id, name: teamUsersTable.name, role: teamUsersTable.role, defaultArea: teamUsersTable.defaultArea });
+    .returning({
+      id: teamUsersTable.id, name: teamUsersTable.name, role: teamUsersTable.role,
+      defaultArea: teamUsersTable.defaultArea, mcName: teamUsersTable.mcName,
+      mobileNumber: teamUsersTable.mobileNumber,
+    });
 
   res.status(201).json(user);
+});
+
+/* ─── PATCH /api/team/users/:id ───────────────────────────────────────────── */
+
+router.patch("/users/:id", requireManager, async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(req.params.id as string, 10);
+  if (isNaN(id)) { res.status(400).json({ error: "invalid id" }); return; }
+
+  const { name, pin, defaultArea, mcName, mobileNumber } = req.body as {
+    name?: string; pin?: string; defaultArea?: string;
+    mcName?: string; mobileNumber?: string;
+  };
+
+  if (name) {
+    const existing = await db.select().from(teamUsersTable).where(eq(teamUsersTable.name, name));
+    if (existing.length > 0 && existing[0].id !== id) {
+      res.status(409).json({ error: "Username already taken" });
+      return;
+    }
+  }
+
+  const updates: Record<string, unknown> = {};
+  if (name         !== undefined) updates.name         = name;
+  if (pin          !== undefined) updates.pin          = pin;
+  if (defaultArea  !== undefined) updates.defaultArea  = defaultArea || null;
+  if (mcName       !== undefined) updates.mcName       = mcName || null;
+  if (mobileNumber !== undefined) updates.mobileNumber = mobileNumber || null;
+
+  const [user] = await db
+    .update(teamUsersTable)
+    .set(updates)
+    .where(eq(teamUsersTable.id, id))
+    .returning({
+      id: teamUsersTable.id, name: teamUsersTable.name, role: teamUsersTable.role,
+      defaultArea: teamUsersTable.defaultArea, mcName: teamUsersTable.mcName,
+      mobileNumber: teamUsersTable.mobileNumber,
+    });
+
+  if (!user) { res.status(404).json({ error: "User not found" }); return; }
+  res.json(user);
 });
 
 /* ─── DELETE /api/team/users/:id ──────────────────────────────────────────── */
