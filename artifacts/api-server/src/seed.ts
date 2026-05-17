@@ -2,7 +2,7 @@ import { db, teamUsersTable } from "@workspace/db";
 import { logger } from "./lib/logger.js";
 
 const SEED_USERS = [
-  { name: "ACES Admin", role: "manager",     pin: "1234" },
+  { name: "Bannaga",    role: "manager",     pin: "1234@MSD" },
   { name: "Tech-01",    role: "technician",  pin: "0001" },
   { name: "Tech-02",    role: "technician",  pin: "0002" },
   { name: "Tech-03",    role: "technician",  pin: "0003" },
