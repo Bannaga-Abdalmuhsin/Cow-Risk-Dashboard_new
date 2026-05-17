@@ -11,7 +11,7 @@
       "pnpm": "10.26.1",
       "env": {
         "EAS_SKIP_AUTO_FINGERPRINT": "1",
-        "EXPO_PUBLIC_API_URL": "https://YOUR_REPLIT_DOMAIN/api"
+        "EXPO_PUBLIC_API_URL": "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev"
       }
     },
     "preview": {
@@ -26,7 +26,7 @@
       },
       "env": {
         "EAS_SKIP_AUTO_FINGERPRINT": "1",
-        "EXPO_PUBLIC_API_URL": "https://YOUR_REPLIT_DOMAIN/api"
+        "EXPO_PUBLIC_API_URL": "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev"
       }
     },
     "preview-ios-device": {
@@ -38,7 +38,7 @@
       },
       "env": {
         "EAS_SKIP_AUTO_FINGERPRINT": "1",
-        "EXPO_PUBLIC_API_URL": "https://YOUR_REPLIT_DOMAIN/api"
+        "EXPO_PUBLIC_API_URL": "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev"
       }
     },
     "production": {
@@ -52,7 +52,7 @@
       },
       "env": {
         "EAS_SKIP_AUTO_FINGERPRINT": "1",
-        "EXPO_PUBLIC_API_URL": "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev/api"
+        "EXPO_PUBLIC_API_URL": "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev"
       }
     }
   },
