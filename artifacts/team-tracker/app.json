@@ -20,7 +20,11 @@
       "icon": "./assets/images/app-icon.png",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours."
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyBimHwfRUw7XWVE4QjFKUbIjm6PaPsEX4M"
       }
     },
     "android": {
