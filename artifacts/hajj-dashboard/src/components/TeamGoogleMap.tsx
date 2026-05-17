@@ -47,10 +47,9 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
   const onLoad = useCallback((map: google.maps.Map) => { mapRef.current = map; }, []);
   const onUnmount = useCallback(() => { mapRef.current = null; }, []);
 
-  const riskSites    = useMemo(() => analyses.filter(a => a.overallRisk === "risk"),    [analyses]);
-  const safeSites    = useMemo(() => analyses.filter(a => a.overallRisk === "safe"),    [analyses]);
-  const onDutyTechs  = useMemo(() => techLocations.filter(t => t.isOnDuty),             [techLocations]);
-  const offDutyTechs = useMemo(() => techLocations.filter(t => !t.isOnDuty),            [techLocations]);
+  const riskSites   = useMemo(() => analyses.filter(a => a.overallRisk === "risk"), [analyses]);
+  const safeSites   = useMemo(() => analyses.filter(a => a.overallRisk === "safe"), [analyses]);
+  const onDutyTechs = useMemo(() => techLocations.filter(t => t.isOnDuty),          [techLocations]);
 
   if (loadError) {
     return (
@@ -176,46 +175,6 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
         );
       })}
 
-      {/* Live technician markers — off duty */}
-      {offDutyTechs.map(t => (
-        <OverlayView
-          key={`tech-off-${t.userId}`}
-          position={{ lat: t.lat, lng: t.lng }}
-          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-        >
-          <div
-            title={`${t.userName} — ${t.area ?? "unknown"} (off duty)`}
-            style={{ transform: "translate(-50%,-100%)", pointerEvents: "auto", cursor: "default" }}
-          >
-            <div style={{
-              background: "#4b5563",
-              color: "#fff",
-              borderRadius: 8,
-              border: "2px solid rgba(255,255,255,0.4)",
-              padding: "3px 7px",
-              fontSize: 10,
-              fontWeight: 700,
-              lineHeight: 1.3,
-              textAlign: "center",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
-              position: "relative",
-              whiteSpace: "nowrap",
-              minWidth: 52,
-              opacity: 0.75,
-            }}>
-              <div>{t.userName}</div>
-              <div style={{ fontSize: 9, fontWeight: 500, opacity: 0.8 }}>{t.area ?? "—"}</div>
-              <div style={{
-                position: "absolute", bottom: -6, left: "50%", transform: "translateX(-50%)",
-                width: 0, height: 0,
-                borderLeft: "5px solid transparent",
-                borderRight: "5px solid transparent",
-                borderTop: "6px solid #4b5563",
-              }} />
-            </div>
-          </div>
-        </OverlayView>
-      ))}
     </GoogleMap>
   );
 }
