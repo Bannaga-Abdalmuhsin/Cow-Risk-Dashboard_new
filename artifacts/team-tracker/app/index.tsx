@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  ActivityIndicator, KeyboardAvoidingView, Platform,
+  ActivityIndicator, Image, KeyboardAvoidingView, Platform,
   StyleSheet, Text, TextInput, TouchableOpacity, View,
 } from "react-native";
 import { Redirect } from "expo-router";
@@ -57,11 +57,12 @@ export default function LoginScreen() {
 
         {/* Logo */}
         <View style={styles.logoBlock}>
-          <View style={[styles.logoRing, { borderColor: colors.primary }]}>
-            <View style={[styles.logoDot, { backgroundColor: colors.primary }]} />
-          </View>
-          <Text style={[styles.logoTitle, { color: colors.foreground }]}>ACES MSD</Text>
-          <Text style={[styles.logoSub,   { color: colors.mutedForeground }]}>
+          <Image
+            source={require("../assets/images/aces-logo.png")}
+            style={styles.logoImage}
+            resizeMode="contain"
+          />
+          <Text style={[styles.logoSub, { color: colors.mutedForeground }]}>
             Field Team Tracker
           </Text>
         </View>
@@ -120,10 +121,8 @@ const styles = StyleSheet.create({
   root:       { flex: 1 },
   center:     { flex: 1, alignItems: "center", justifyContent: "center" },
   inner:      { flex: 1, paddingHorizontal: 24, justifyContent: "center", gap: 24 },
-  logoBlock:  { alignItems: "center", gap: 8 },
-  logoRing:   { width: 72, height: 72, borderRadius: 36, borderWidth: 3, alignItems: "center", justifyContent: "center" },
-  logoDot:    { width: 36, height: 36, borderRadius: 18 },
-  logoTitle:  { fontSize: 28, fontWeight: "700" as const, letterSpacing: 1 },
+  logoBlock:  { alignItems: "center", gap: 6 },
+  logoImage:  { width: 260, height: 100 },
   logoSub:    { fontSize: 13, letterSpacing: 0.5 },
   card:       { borderRadius: 16, borderWidth: 1, padding: 20 },
   label:      { fontSize: 11, fontWeight: "600" as const, letterSpacing: 1, marginBottom: 6 },
