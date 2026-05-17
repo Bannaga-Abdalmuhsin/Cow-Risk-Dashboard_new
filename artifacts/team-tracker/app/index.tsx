@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   center:    { flex: 1, alignItems: "center", justifyContent: "center" },
   inner:     { flex: 1, paddingHorizontal: 24, justifyContent: "center", gap: 24 },
   logoBlock: { alignItems: "center", gap: 6 },
-  logoImage: { width: 260, height: 100 },
+  logoImage: { width: 320, height: 124 },
   logoSub:   { fontSize: 13, letterSpacing: 0.5 },
   card:      {
     borderRadius: 22,
