@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, StyleSheet, View, useColorScheme } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { BlurView } from "expo-blur";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Redirect, Tabs } from "expo-router";
@@ -25,11 +25,9 @@ function NativeTabLayout() {
 }
 
 function ClassicTabLayout() {
-  const colors      = useColors();
-  const colorScheme = useColorScheme();
-  const isDark      = colorScheme === "dark";
-  const isIOS       = Platform.OS === "ios";
-  const isWeb       = Platform.OS === "web";
+  const colors = useColors();
+  const isIOS  = Platform.OS === "ios";
+  const isWeb  = Platform.OS === "web";
 
   return (
     <Tabs
@@ -47,7 +45,7 @@ function ClassicTabLayout() {
         },
         tabBarBackground: () =>
           isIOS ? (
-            <BlurView intensity={80} tint={isDark ? "dark" : "dark"} style={StyleSheet.absoluteFill} />
+            <BlurView intensity={60} tint="light" style={StyleSheet.absoluteFill} />
           ) : isWeb ? (
             <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.card }]} />
           ) : null,

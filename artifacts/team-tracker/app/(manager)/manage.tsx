@@ -169,6 +169,7 @@ export default function ManageScreen() {
     <LinearGradient colors={[colors.background, colors.backgroundEnd]} style={styles.root}>
       {/* Header */}
       <View style={[styles.header, { paddingTop: topPad + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+        <View style={[styles.headerAccent, { backgroundColor: colors.primary }]} />
         <View>
           <Text style={[styles.headerTitle, { color: colors.foreground }]}>Manage Team</Text>
           <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>
@@ -176,7 +177,7 @@ export default function ManageScreen() {
           </Text>
         </View>
         <TouchableOpacity onPress={openAdd} style={[styles.addBtn, { backgroundColor: colors.primary }]}>
-          <Feather name="user-plus" size={16} color="#fff" />
+          <Feather name="user-plus" size={15} color="#fff" />
           <Text style={styles.addBtnText}>Add</Text>
         </TouchableOpacity>
       </View>
@@ -188,47 +189,58 @@ export default function ManageScreen() {
           data={users}
           keyExtractor={item => String(item.id)}
           contentContainerStyle={{ padding: 16, gap: 8, paddingBottom: bottomPad }}
-          renderItem={({ item }) => (
-            <View style={[styles.row, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <View style={[styles.avatar, { backgroundColor: item.role === "manager" ? colors.primary : colors.secondary }]}>
-                <MaterialCommunityIcons
-                  name={item.role === "manager" ? "shield-account" : "account-hard-hat"}
-                  size={20} color="#fff"
-                />
-              </View>
-              <View style={styles.rowInfo}>
-                <Text style={[styles.rowName, { color: colors.foreground }]}>{item.name}</Text>
-                <Text style={[styles.rowMeta, { color: colors.mutedForeground }]}>
-                  {item.role === "manager" ? "Manager" : "Technician"}
-                  {item.defaultArea   ? `  ·  ${item.defaultArea}`   : ""}
-                </Text>
-                {(item.mcName || item.mobileNumber) ? (
-                  <Text style={[styles.rowDetail, { color: colors.mutedForeground }]}>
-                    {item.mcName ? `MC: ${item.mcName}` : ""}
-                    {item.mcName && item.mobileNumber ? "  ·  " : ""}
-                    {item.mobileNumber ? `📞 ${item.mobileNumber}` : ""}
+          renderItem={({ item }) => {
+            const isManager = item.role === "manager";
+            return (
+              <View style={[styles.row, {
+                backgroundColor: colors.card,
+                borderColor:     colors.border,
+                borderLeftColor: isManager ? colors.primary : colors.accent,
+              }]}>
+                <View style={[styles.avatar, {
+                  backgroundColor: isManager ? colors.primary : colors.accent,
+                }]}>
+                  <MaterialCommunityIcons
+                    name={isManager ? "shield-account" : "account-hard-hat"}
+                    size={20} color="#fff"
+                  />
+                </View>
+                <View style={styles.rowInfo}>
+                  <Text style={[styles.rowName, { color: colors.foreground }]}>{item.name}</Text>
+                  <Text style={[styles.rowMeta, { color: colors.mutedForeground }]}>
+                    {isManager ? "Manager" : "Technician"}
+                    {item.defaultArea ? `  ·  ${item.defaultArea}` : ""}
                   </Text>
-                ) : null}
+                  {(item.mcName || item.mobileNumber) ? (
+                    <Text style={[styles.rowDetail, { color: colors.mutedForeground }]}>
+                      {item.mcName ? `MC: ${item.mcName}` : ""}
+                      {item.mcName && item.mobileNumber ? "  ·  " : ""}
+                      {item.mobileNumber ? `📞 ${item.mobileNumber}` : ""}
+                    </Text>
+                  ) : null}
+                </View>
+                <View style={styles.rowActions}>
+                  <TouchableOpacity
+                    onPress={() => openEdit(item)}
+                    style={[styles.iconBtn, { borderColor: colors.border, backgroundColor: colors.muted }]}
+                  >
+                    <Feather name="edit-2" size={14} color={colors.accent} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handleDelete(item)}
+                    style={[styles.iconBtn, { borderColor: colors.destructive + "30", backgroundColor: colors.destructive + "10" }]}
+                  >
+                    <Feather name="trash-2" size={14} color={colors.destructive} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.rowActions}>
-                <TouchableOpacity
-                  onPress={() => openEdit(item)}
-                  style={[styles.iconBtn, { borderColor: colors.border }]}
-                >
-                  <Feather name="edit-2" size={15} color={colors.primary} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => handleDelete(item)}
-                  style={[styles.iconBtn, { borderColor: colors.destructive }]}
-                >
-                  <Feather name="trash-2" size={15} color={colors.destructive} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
+            );
+          }}
           ListEmptyComponent={
             <View style={styles.empty}>
-              <MaterialCommunityIcons name="account-group-outline" size={40} color={colors.mutedForeground} />
+              <View style={[styles.emptyIconWrap, { backgroundColor: colors.muted }]}>
+                <MaterialCommunityIcons name="account-group-outline" size={36} color={colors.mutedForeground} />
+              </View>
               <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>No team members yet</Text>
             </View>
           }
@@ -238,11 +250,16 @@ export default function ManageScreen() {
       {/* Add / Edit Modal */}
       <Modal visible={showForm} transparent animationType="slide" onRequestClose={() => setShowForm(false)}>
         <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={() => setShowForm(false)} />
-        <View style={[styles.sheet, { backgroundColor: "#0D1E30", borderColor: colors.border, paddingBottom: bottomPad }]}>
-          <View style={styles.sheetHandle} />
-          <Text style={[styles.sheetTitle, { color: colors.foreground }]}>
-            {editTarget ? `Edit — ${editTarget.name}` : "Add Team Member"}
-          </Text>
+        <View style={[styles.sheet, { backgroundColor: colors.card, borderTopColor: colors.border, paddingBottom: bottomPad }]}>
+          <View style={[styles.sheetHandle, { backgroundColor: "rgba(15,30,58,0.18)" }]} />
+
+          {/* Sheet accent bar */}
+          <View style={[styles.sheetAccentRow]}>
+            <View style={[styles.sheetAccentDot, { backgroundColor: colors.primary }]} />
+            <Text style={[styles.sheetTitle, { color: colors.foreground }]}>
+              {editTarget ? `Edit — ${editTarget.name}` : "Add Team Member"}
+            </Text>
+          </View>
 
           <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
 
@@ -264,7 +281,6 @@ export default function ManageScreen() {
               placeholder="Password" secureTextEntry autoCapitalize="none" colors={colors}
             />
 
-            {/* Role — hide for edit (can't change own role) */}
             {!editTarget && (
               <>
                 <Text style={[styles.fieldLabel, { color: colors.mutedForeground }]}>ROLE</Text>
@@ -279,7 +295,7 @@ export default function ManageScreen() {
                       }))}
                       style={[styles.chip, {
                         borderColor:     form.role === r ? colors.primary : colors.border,
-                        backgroundColor: form.role === r ? colors.primary + "30" : "transparent",
+                        backgroundColor: form.role === r ? colors.primary + "15" : colors.muted,
                       }]}
                     >
                       <Text style={[styles.chipText, { color: form.role === r ? colors.primary : colors.mutedForeground }]}>
@@ -291,7 +307,6 @@ export default function ManageScreen() {
               </>
             )}
 
-            {/* Location */}
             <Text style={[styles.fieldLabel, { color: colors.mutedForeground }]}>ASSIGNED LOCATION</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.chips}>
@@ -299,14 +314,14 @@ export default function ManageScreen() {
                   const isAllRegions = loc === "All Regions";
                   const active = form.location === loc ||
                     (isAllRegions && form.role === "manager");
-                  const activeColor = isAllRegions ? colors.primary : colors.onDuty;
+                  const activeColor = isAllRegions ? colors.primary : colors.accent;
                   return (
                     <TouchableOpacity
                       key={loc}
                       onPress={() => setForm(prev => ({ ...prev, location: loc as HajjLocation }))}
                       style={[styles.chip, {
                         borderColor:     active ? activeColor : colors.border,
-                        backgroundColor: active ? activeColor + "20" : "transparent",
+                        backgroundColor: active ? activeColor + "15" : colors.muted,
                       }]}
                     >
                       <Text style={[styles.chipText, { color: active ? activeColor : colors.mutedForeground }]}>
@@ -318,11 +333,15 @@ export default function ManageScreen() {
               </View>
             </ScrollView>
 
-            {!!formError && <Text style={[styles.formError, { color: colors.destructive }]}>{formError}</Text>}
+            {!!formError && (
+              <View style={[styles.errorRow, { backgroundColor: colors.destructive + "10", borderColor: colors.destructive + "25" }]}>
+                <Text style={[styles.formError, { color: colors.destructive }]}>{formError}</Text>
+              </View>
+            )}
 
             <View style={[styles.formRow, { marginTop: 16 }]}>
               <TouchableOpacity
-                style={[styles.cancelBtn, { borderColor: colors.border }]}
+                style={[styles.cancelBtn, { borderColor: colors.border, backgroundColor: colors.muted }]}
                 onPress={() => setShowForm(false)}
               >
                 <Text style={[styles.cancelText, { color: colors.mutedForeground }]}>Cancel</Text>
@@ -346,46 +365,56 @@ export default function ManageScreen() {
 }
 
 const styles = StyleSheet.create({
-  root:        { flex: 1 },
-  header:      {
+  root:           { flex: 1 },
+  header:         {
     paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1,
     flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between",
-    shadowColor: "#000", shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2, shadowRadius: 8, elevation: 6,
+    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.06, shadowRadius: 8, elevation: 4,
   },
-  headerTitle: { fontSize: 22, fontWeight: "700" as const },
-  headerSub:   { fontSize: 12, marginTop: 2 },
-  addBtn:      { flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20 },
-  addBtnText:  { color: "#fff", fontWeight: "700" as const, fontSize: 13 },
-  center:      { flex: 1, alignItems: "center", justifyContent: "center" },
-  row:         {
+  headerAccent:   { position: "absolute", left: 0, top: 0, bottom: 0, width: 4 },
+  headerTitle:    { fontSize: 22, fontWeight: "700" as const },
+  headerSub:      { fontSize: 12, marginTop: 2 },
+  addBtn:         { flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 14, paddingVertical: 9, borderRadius: 20 },
+  addBtnText:     { color: "#fff", fontWeight: "700" as const, fontSize: 13 },
+  center:         { flex: 1, alignItems: "center", justifyContent: "center" },
+  row:            {
     flexDirection: "row", alignItems: "center", gap: 12,
-    padding: 14, borderRadius: 22, borderWidth: 1,
-    shadowColor: "#000", shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25, shadowRadius: 20, elevation: 12,
+    padding: 14, borderRadius: 14, borderWidth: 1, borderLeftWidth: 4,
+    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05, shadowRadius: 6, elevation: 2,
   },
-  avatar:      { width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center" },
-  rowInfo:     { flex: 1 },
-  rowName:     { fontSize: 15, fontWeight: "600" as const },
-  rowMeta:     { fontSize: 12, marginTop: 2 },
-  rowDetail:   { fontSize: 11, marginTop: 2 },
-  rowActions:  { flexDirection: "row", gap: 6 },
-  iconBtn:     { padding: 7, borderWidth: 1, borderRadius: 8 },
-  empty:       { alignItems: "center", gap: 10, marginTop: 60 },
-  emptyText:   { fontSize: 14 },
-  overlay:     { flex: 1 },
-  sheet:       { borderTopLeftRadius: 22, borderTopRightRadius: 22, borderTopWidth: 1, padding: 20, maxHeight: "90%" },
-  sheetHandle: { width: 36, height: 4, borderRadius: 2, backgroundColor: "#3A5470", alignSelf: "center", marginBottom: 8 },
-  sheetTitle:  { fontSize: 18, fontWeight: "700" as const, marginBottom: 8 },
-  fieldLabel:  { fontSize: 10, fontWeight: "600" as const, letterSpacing: 1, marginTop: 12, marginBottom: 4 },
-  fieldInput:  { borderWidth: 1, borderRadius: 10, paddingHorizontal: 14, paddingVertical: 11, fontSize: 15 },
-  chips:       { flexDirection: "row", gap: 8, flexWrap: "wrap" },
-  chip:        { paddingHorizontal: 14, paddingVertical: 7, borderRadius: 20, borderWidth: 1 },
-  chipText:    { fontSize: 13, fontWeight: "600" as const },
-  formError:   { fontSize: 13, marginTop: 8 },
-  formRow:     { flexDirection: "row", gap: 10 },
-  cancelBtn:   { flex: 1, borderWidth: 1, borderRadius: 12, paddingVertical: 12, alignItems: "center" },
-  cancelText:  { fontWeight: "600" as const },
-  saveBtn:     { flex: 1, borderRadius: 12, paddingVertical: 12, alignItems: "center" },
-  saveBtnText: { color: "#fff", fontWeight: "700" as const, fontSize: 15 },
+  avatar:         { width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center" },
+  rowInfo:        { flex: 1 },
+  rowName:        { fontSize: 15, fontWeight: "600" as const },
+  rowMeta:        { fontSize: 12, marginTop: 2 },
+  rowDetail:      { fontSize: 11, marginTop: 2 },
+  rowActions:     { flexDirection: "row", gap: 6 },
+  iconBtn:        { padding: 8, borderWidth: 1, borderRadius: 10 },
+  empty:          { alignItems: "center", gap: 12, marginTop: 60 },
+  emptyIconWrap:  { width: 72, height: 72, borderRadius: 36, alignItems: "center", justifyContent: "center" },
+  emptyText:      { fontSize: 14 },
+  overlay:        { flex: 1 },
+  sheet:          {
+    borderTopLeftRadius: 24, borderTopRightRadius: 24,
+    borderTopWidth: 1, padding: 20, maxHeight: "90%",
+    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.08, shadowRadius: 16, elevation: 12,
+  },
+  sheetHandle:    { width: 36, height: 4, borderRadius: 2, alignSelf: "center", marginBottom: 14 },
+  sheetAccentRow: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 },
+  sheetAccentDot: { width: 4, height: 22, borderRadius: 2 },
+  sheetTitle:     { fontSize: 18, fontWeight: "700" as const },
+  fieldLabel:     { fontSize: 10, fontWeight: "600" as const, letterSpacing: 1, marginTop: 14, marginBottom: 5 },
+  fieldInput:     { borderWidth: 1, borderRadius: 10, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15 },
+  chips:          { flexDirection: "row", gap: 8, flexWrap: "wrap" },
+  chip:           { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, borderWidth: 1 },
+  chipText:       { fontSize: 13, fontWeight: "600" as const },
+  errorRow:       { borderWidth: 1, borderRadius: 8, padding: 10, marginTop: 8 },
+  formError:      { fontSize: 13, textAlign: "center" },
+  formRow:        { flexDirection: "row", gap: 10 },
+  cancelBtn:      { flex: 1, borderWidth: 1, borderRadius: 12, paddingVertical: 13, alignItems: "center" },
+  cancelText:     { fontWeight: "600" as const },
+  saveBtn:        { flex: 1, borderRadius: 12, paddingVertical: 13, alignItems: "center" },
+  saveBtnText:    { color: "#fff", fontWeight: "700" as const, fontSize: 15 },
 });

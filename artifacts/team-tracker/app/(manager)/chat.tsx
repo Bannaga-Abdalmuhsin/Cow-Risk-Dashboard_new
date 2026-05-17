@@ -124,7 +124,6 @@ export default function ChatScreen() {
             {users.length} technicians
           </Text>
         </View>
-        {/* Broadcast quick button */}
         <TouchableOpacity
           onPress={() => {
             Alert.prompt
@@ -145,7 +144,7 @@ export default function ChatScreen() {
       ) : (
         <>
           {/* Quick location broadcast bar */}
-          <View style={[styles.locBar, { backgroundColor: colors.card + "CC", borderBottomColor: colors.border }]}>
+          <View style={[styles.locBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
             <Text style={[styles.locBarLabel, { color: colors.mutedForeground }]}>MOVE ALL TO →</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.locChips}>
@@ -153,9 +152,9 @@ export default function ChatScreen() {
                   <TouchableOpacity
                     key={loc}
                     onPress={() => handleBroadcast(`Please move to ${loc} immediately`)}
-                    style={[styles.locChip, { borderColor: colors.onDuty + "60", backgroundColor: colors.onDuty + "15" }]}
+                    style={[styles.locChip, { borderColor: colors.primary + "50", backgroundColor: colors.primary + "10" }]}
                   >
-                    <Text style={[styles.locChipText, { color: colors.onDuty }]}>{loc}</Text>
+                    <Text style={[styles.locChipText, { color: colors.primary }]}>{loc}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -168,13 +167,17 @@ export default function ChatScreen() {
             keyExtractor={item => String(item.id)}
             contentContainerStyle={{ padding: 16, gap: 8, paddingBottom: bottomPad }}
             renderItem={({ item }) => {
-              const loc  = locationOf(item.id);
+              const loc    = locationOf(item.id);
               const online = loc?.isOnDuty ?? false;
               return (
                 <TouchableOpacity
                   onPress={() => openChat(item)}
                   activeOpacity={0.8}
-                  style={[styles.techRow, { backgroundColor: colors.card, borderColor: colors.border }]}
+                  style={[styles.techRow, {
+                    backgroundColor: colors.card,
+                    borderColor:     colors.border,
+                    borderLeftColor: online ? colors.onDuty : colors.border,
+                  }]}
                 >
                   <View style={[styles.dot, { backgroundColor: online ? colors.onDuty : colors.offDuty }]} />
                   <View style={styles.techInfo}>
@@ -183,7 +186,9 @@ export default function ChatScreen() {
                       {online ? `On duty · ${loc?.area ?? "Unknown area"}` : (item.defaultArea ? `Assigned: ${item.defaultArea}` : "Offline")}
                     </Text>
                   </View>
-                  <Feather name="message-circle" size={20} color={colors.primary} />
+                  <View style={[styles.chatIcon, { backgroundColor: colors.primary + "12" }]}>
+                    <Feather name="message-circle" size={18} color={colors.primary} />
+                  </View>
                 </TouchableOpacity>
               );
             }}
@@ -199,9 +204,16 @@ export default function ChatScreen() {
 
       {/* Individual Chat Modal */}
       <Modal visible={!!selected} transparent animationType="slide" onRequestClose={closeChat}>
-        <View style={styles.chatModal}>
+        <View style={[styles.chatModal, { backgroundColor: colors.background }]}>
+
           {/* Chat header */}
-          <View style={[styles.chatHeader, { backgroundColor: "#0A1829", borderBottomColor: colors.border, paddingTop: topPad + 12 }]}>
+          <View style={[styles.chatHeader, {
+            backgroundColor:  colors.card,
+            borderBottomColor: colors.border,
+            borderBottomWidth: 1,
+            paddingTop: topPad + 12,
+          }]}>
+            <View style={[styles.chatHeaderAccent, { backgroundColor: colors.accent }]} />
             <TouchableOpacity onPress={closeChat} style={styles.backBtn}>
               <Feather name="arrow-left" size={22} color={colors.foreground} />
             </TouchableOpacity>
@@ -216,7 +228,7 @@ export default function ChatScreen() {
           </View>
 
           {/* Quick location buttons */}
-          <View style={[styles.quickBar, { backgroundColor: "#061218", borderBottomColor: colors.border }]}>
+          <View style={[styles.quickBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
             <Text style={[styles.quickLabel, { color: colors.mutedForeground }]}>Move to:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.quickChips}>
@@ -224,9 +236,9 @@ export default function ChatScreen() {
                   <TouchableOpacity
                     key={loc}
                     onPress={() => handleSend(`Please move to ${loc} immediately`)}
-                    style={[styles.quickChip, { borderColor: colors.primary + "60", backgroundColor: colors.primary + "15" }]}
+                    style={[styles.quickChip, { borderColor: colors.accent + "50", backgroundColor: colors.accent + "10" }]}
                   >
-                    <Text style={[styles.quickChipText, { color: colors.primary }]}>{loc}</Text>
+                    <Text style={[styles.quickChipText, { color: colors.accent }]}>{loc}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -234,7 +246,7 @@ export default function ChatScreen() {
           </View>
 
           {/* Messages */}
-          <LinearGradient colors={["#061218", "#0A1829"]} style={styles.chatMessages}>
+          <LinearGradient colors={[colors.background, colors.backgroundEnd]} style={styles.chatMessages}>
             {histLoad ? (
               <View style={styles.center}>
                 <ActivityIndicator color={colors.primary} />
@@ -248,7 +260,7 @@ export default function ChatScreen() {
                 onContentSizeChange={() => flatRef.current?.scrollToEnd({ animated: false })}
                 renderItem={({ item }) => (
                   <View style={styles.msgThread}>
-                    {/* Outgoing manager bubble */}
+                    {/* Outgoing manager bubble (right, dark red) */}
                     <View style={styles.msgBubble}>
                       <View style={[styles.bubble, { backgroundColor: colors.primary }]}>
                         <Text style={styles.bubbleText}>{item.message}</Text>
@@ -257,10 +269,10 @@ export default function ChatScreen() {
                         {timeLabel(item.sentAt)}{item.readAt ? "  ✓ Read" : ""}
                       </Text>
                     </View>
-                    {/* Incoming tech reply */}
+                    {/* Incoming tech reply (left, navy) */}
                     {item.reply ? (
                       <View style={styles.replyBubbleRow}>
-                        <View style={[styles.replyBubble, { backgroundColor: colors.card, borderColor: colors.onDuty + "50" }]}>
+                        <View style={[styles.replyBubble, { backgroundColor: colors.accent + "12", borderColor: colors.accent + "40" }]}>
                           <Text style={[styles.replyBubbleText, { color: colors.foreground }]}>{item.reply}</Text>
                         </View>
                         <Text style={[styles.bubbleTime, { color: colors.mutedForeground }]}>
@@ -280,7 +292,7 @@ export default function ChatScreen() {
           </LinearGradient>
 
           {/* Compose */}
-          <View style={[styles.compose, { backgroundColor: "#0A1829", borderTopColor: colors.border, paddingBottom: bottomPad }]}>
+          <View style={[styles.compose, { backgroundColor: colors.card, borderTopColor: colors.border, paddingBottom: bottomPad }]}>
             <TextInput
               style={[styles.composeInput, { backgroundColor: colors.input, borderColor: colors.border, color: colors.foreground }]}
               placeholder="Type a message or task..."
@@ -293,7 +305,7 @@ export default function ChatScreen() {
             <TouchableOpacity
               onPress={() => handleSend()}
               disabled={sending || !message.trim()}
-              style={[styles.sendBtn, { backgroundColor: colors.primary, opacity: sending || !message.trim() ? 0.5 : 1 }]}
+              style={[styles.sendBtn, { backgroundColor: colors.primary, opacity: sending || !message.trim() ? 0.45 : 1 }]}
             >
               {sending
                 ? <ActivityIndicator color="#fff" size="small" />
@@ -308,56 +320,59 @@ export default function ChatScreen() {
 }
 
 const styles = StyleSheet.create({
-  root:            { flex: 1 },
-  header:          {
+  root:             { flex: 1 },
+  header:           {
     paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1,
     flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between",
-    shadowColor: "#000", shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2, shadowRadius: 8, elevation: 6,
+    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.06, shadowRadius: 8, elevation: 4,
   },
-  headerTitle:     { fontSize: 22, fontWeight: "700" as const },
-  headerSub:       { fontSize: 12, marginTop: 2 },
-  broadcastBtn:    { flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20 },
-  broadcastBtnText:{ color: "#fff", fontWeight: "700" as const, fontSize: 13 },
-  locBar:          { paddingHorizontal: 16, paddingVertical: 10, borderBottomWidth: 1, gap: 6 },
-  locBarLabel:     { fontSize: 10, fontWeight: "600" as const, letterSpacing: 1 },
-  locChips:        { flexDirection: "row", gap: 8 },
-  locChip:         { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, borderWidth: 1 },
-  locChipText:     { fontSize: 12, fontWeight: "600" as const },
-  center:          { flex: 1, alignItems: "center", justifyContent: "center", gap: 10 },
-  emptyText:       { fontSize: 14 },
-  techRow:         {
+  headerTitle:      { fontSize: 22, fontWeight: "700" as const },
+  headerSub:        { fontSize: 12, marginTop: 2 },
+  broadcastBtn:     { flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20 },
+  broadcastBtnText: { color: "#fff", fontWeight: "700" as const, fontSize: 13 },
+  locBar:           { paddingHorizontal: 16, paddingVertical: 10, borderBottomWidth: 1, gap: 6 },
+  locBarLabel:      { fontSize: 10, fontWeight: "600" as const, letterSpacing: 1 },
+  locChips:         { flexDirection: "row", gap: 8 },
+  locChip:          { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, borderWidth: 1 },
+  locChipText:      { fontSize: 12, fontWeight: "600" as const },
+  center:           { flex: 1, alignItems: "center", justifyContent: "center", gap: 10 },
+  emptyText:        { fontSize: 14 },
+  techRow:          {
     flexDirection: "row", alignItems: "center", gap: 12,
-    padding: 14, borderRadius: 22, borderWidth: 1,
-    shadowColor: "#000", shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25, shadowRadius: 20, elevation: 12,
+    padding: 14, borderRadius: 16, borderWidth: 1, borderLeftWidth: 3,
+    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05, shadowRadius: 6, elevation: 2,
   },
-  dot:             { width: 10, height: 10, borderRadius: 5 },
-  techInfo:        { flex: 1 },
-  techName:        { fontSize: 15, fontWeight: "600" as const },
-  techMeta:        { fontSize: 12, marginTop: 2 },
-  chatModal:       { flex: 1, backgroundColor: "#061218" },
-  chatHeader:      { paddingHorizontal: 16, paddingBottom: 12, borderBottomWidth: 1, flexDirection: "row", alignItems: "flex-end", gap: 12 },
-  backBtn:         { padding: 4 },
-  chatHeaderInfo:  { flex: 1 },
-  chatHeaderName:  { fontSize: 18, fontWeight: "700" as const },
-  chatHeaderSub:   { fontSize: 12, marginTop: 2 },
-  quickBar:        { paddingHorizontal: 16, paddingVertical: 10, borderBottomWidth: 1, flexDirection: "row", alignItems: "center", gap: 10 },
-  quickLabel:      { fontSize: 10, fontWeight: "600" as const, letterSpacing: 1 },
-  quickChips:      { flexDirection: "row", gap: 8 },
-  quickChip:       { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, borderWidth: 1 },
-  quickChipText:   { fontSize: 12, fontWeight: "600" as const },
-  chatMessages:    { flex: 1 },
-  msgThread:       { gap: 6 },
-  msgBubble:       { alignItems: "flex-end" },
-  bubble:          { maxWidth: "85%", paddingHorizontal: 14, paddingVertical: 10, borderRadius: 18, borderBottomRightRadius: 4 },
-  bubbleText:      { color: "#fff", fontSize: 14, lineHeight: 20 },
-  bubbleTime:      { fontSize: 10, marginTop: 4, marginRight: 2 },
-  replyBubbleRow:  { alignItems: "flex-start" },
-  replyBubble:     { maxWidth: "85%", paddingHorizontal: 14, paddingVertical: 10, borderRadius: 18, borderBottomLeftRadius: 4, borderWidth: 1 },
-  replyBubbleText: { fontSize: 14, lineHeight: 20 },
-  emptyChat:       { textAlign: "center", marginTop: 40, fontSize: 14 },
-  compose:         { flexDirection: "row", alignItems: "flex-end", gap: 10, padding: 12, borderTopWidth: 1 },
-  composeInput:    { flex: 1, borderWidth: 1, borderRadius: 20, paddingHorizontal: 14, paddingVertical: 10, fontSize: 15, maxHeight: 100 },
-  sendBtn:         { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" },
+  dot:              { width: 9, height: 9, borderRadius: 5 },
+  techInfo:         { flex: 1 },
+  techName:         { fontSize: 15, fontWeight: "600" as const },
+  techMeta:         { fontSize: 12, marginTop: 2 },
+  chatIcon:         { width: 36, height: 36, borderRadius: 18, alignItems: "center", justifyContent: "center" },
+
+  chatModal:        { flex: 1 },
+  chatHeaderAccent: { position: "absolute", left: 0, top: 0, bottom: 0, width: 4 },
+  chatHeader:       { paddingHorizontal: 16, paddingBottom: 12, flexDirection: "row", alignItems: "flex-end", gap: 12 },
+  backBtn:          { padding: 4 },
+  chatHeaderInfo:   { flex: 1 },
+  chatHeaderName:   { fontSize: 18, fontWeight: "700" as const },
+  chatHeaderSub:    { fontSize: 12, marginTop: 2 },
+  quickBar:         { paddingHorizontal: 16, paddingVertical: 10, borderBottomWidth: 1, flexDirection: "row", alignItems: "center", gap: 10 },
+  quickLabel:       { fontSize: 10, fontWeight: "600" as const, letterSpacing: 1 },
+  quickChips:       { flexDirection: "row", gap: 8 },
+  quickChip:        { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, borderWidth: 1 },
+  quickChipText:    { fontSize: 12, fontWeight: "600" as const },
+  chatMessages:     { flex: 1 },
+  msgThread:        { gap: 6 },
+  msgBubble:        { alignItems: "flex-end" },
+  bubble:           { maxWidth: "85%", paddingHorizontal: 14, paddingVertical: 10, borderRadius: 18, borderBottomRightRadius: 4 },
+  bubbleText:       { color: "#fff", fontSize: 14, lineHeight: 20 },
+  bubbleTime:       { fontSize: 10, marginTop: 4, marginRight: 2 },
+  replyBubbleRow:   { alignItems: "flex-start" },
+  replyBubble:      { maxWidth: "85%", paddingHorizontal: 14, paddingVertical: 10, borderRadius: 18, borderBottomLeftRadius: 4, borderWidth: 1 },
+  replyBubbleText:  { fontSize: 14, lineHeight: 20 },
+  emptyChat:        { textAlign: "center", marginTop: 40, fontSize: 14 },
+  compose:          { flexDirection: "row", alignItems: "flex-end", gap: 10, padding: 12, borderTopWidth: 1 },
+  composeInput:     { flex: 1, borderWidth: 1, borderRadius: 16, paddingHorizontal: 14, paddingVertical: 10, fontSize: 15, maxHeight: 100 },
+  sendBtn:          { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" },
 });

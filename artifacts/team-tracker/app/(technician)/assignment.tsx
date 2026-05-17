@@ -16,13 +16,12 @@ export default function AssignmentScreen() {
   const insets = useSafeAreaInsets();
   const { token } = useAuth();
 
-  const [assignment,  setAssignment]  = useState<Assignment | null>(null);
-  const [loading,     setLoading]     = useState(true);
-  const [refreshing,  setRefreshing]  = useState(false);
-  const [marking,     setMarking]     = useState(false);
-  const [replyText,   setReplyText]   = useState("");
-  const [replySent,   setReplySent]   = useState(false);
-  const [sendingReply,setSendingReply]= useState(false);
+  const [assignment,   setAssignment]   = useState<Assignment | null>(null);
+  const [loading,      setLoading]      = useState(true);
+  const [refreshing,   setRefreshing]   = useState(false);
+  const [marking,      setMarking]      = useState(false);
+  const [replyText,    setReplyText]    = useState("");
+  const [sendingReply, setSendingReply] = useState(false);
 
   const inputRef = useRef<TextInput>(null);
 
@@ -30,7 +29,6 @@ export default function AssignmentScreen() {
     try {
       const data = await getMyAssignment(token!);
       setAssignment(data);
-      if (data?.reply) setReplySent(true);
     } catch {}
     setLoading(false);
     setRefreshing(false);
@@ -64,7 +62,6 @@ export default function AssignmentScreen() {
         ? { ...prev, reply: replyText.trim(), repliedAt: new Date().toISOString() }
         : null,
       );
-      setReplySent(true);
       setReplyText("");
     } catch {}
     setSendingReply(false);
@@ -83,8 +80,10 @@ export default function AssignmentScreen() {
 
   return (
     <LinearGradient colors={[colors.background, colors.backgroundEnd]} style={styles.root}>
+      {/* Header */}
       <View style={[styles.header, { paddingTop: topPad + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <Text style={[styles.headerTitle, { color: colors.foreground }]}>Task</Text>
+        <View style={[styles.headerAccent, { backgroundColor: colors.primary }]} />
+        <Text style={[styles.headerTitle, { color: colors.foreground }]}>My Task</Text>
         {isNew && (
           <View style={[styles.badge, { backgroundColor: colors.primary }]}>
             <Text style={styles.badgeText}>NEW</Text>
@@ -105,7 +104,9 @@ export default function AssignmentScreen() {
           </View>
         ) : !assignment ? (
           <View style={styles.emptyBlock}>
-            <MaterialCommunityIcons name="bell-sleep-outline" size={56} color={colors.mutedForeground} />
+            <View style={[styles.emptyIconWrap, { backgroundColor: colors.muted }]}>
+              <MaterialCommunityIcons name="bell-sleep-outline" size={40} color={colors.mutedForeground} />
+            </View>
             <Text style={[styles.emptyTitle, { color: colors.foreground }]}>No tasks yet</Text>
             <Text style={[styles.emptySub, { color: colors.mutedForeground }]}>
               Your manager will send you deployment instructions here.
@@ -113,27 +114,34 @@ export default function AssignmentScreen() {
           </View>
         ) : (
           <View style={styles.assignBlock}>
-            {/* Manager message */}
-            <View style={styles.fromRow}>
-              <View style={[styles.managerDot, { backgroundColor: colors.primary }]} />
-              <Text style={[styles.fromText, { color: colors.mutedForeground }]}>
-                From <Text style={[styles.fromName, { color: colors.foreground }]}>{assignment.managerName}</Text>
-                {" · "}{timeAgo(assignment.sentAt)}
+
+            {/* From section */}
+            <View style={[styles.fromBadge, { backgroundColor: colors.accent + "12", borderColor: colors.accent + "30" }]}>
+              <View style={[styles.fromDot, { backgroundColor: colors.accent }]} />
+              <Text style={[styles.fromText, { color: colors.accent }]}>
+                From <Text style={styles.fromName}>{assignment.managerName}</Text>
+                {"  ·  "}{timeAgo(assignment.sentAt)}
               </Text>
             </View>
 
+            {/* Message card */}
             <View style={[
               styles.msgCard,
-              { backgroundColor: colors.card, borderColor: isNew ? colors.primary : colors.border, borderLeftWidth: isNew ? 4 : 1 },
+              {
+                backgroundColor: colors.card,
+                borderColor:     isNew ? colors.primary : colors.border,
+                borderLeftColor: isNew ? colors.primary : colors.accent,
+                borderLeftWidth: 4,
+              },
             ]}>
               <Text style={[styles.msgText, { color: colors.foreground }]}>{assignment.message}</Text>
             </View>
 
-            {/* Acknowledge button */}
+            {/* Acknowledge / read status */}
             {assignment.readAt ? (
-              <View style={styles.readRow}>
+              <View style={[styles.readRow, { backgroundColor: colors.onDuty + "12", borderRadius: 10, padding: 10 }]}>
                 <MaterialCommunityIcons name="check-circle" size={16} color={colors.onDuty} />
-                <Text style={[styles.readText, { color: colors.mutedForeground }]}>
+                <Text style={[styles.readText, { color: colors.onDuty }]}>
                   Acknowledged · {timeAgo(assignment.readAt)}
                 </Text>
               </View>
@@ -145,7 +153,10 @@ export default function AssignmentScreen() {
               >
                 {marking
                   ? <ActivityIndicator color="#fff" size="small" />
-                  : <Text style={styles.ackText}>Acknowledge</Text>
+                  : <>
+                      <MaterialCommunityIcons name="check-circle-outline" size={18} color="#fff" />
+                      <Text style={styles.ackText}>Acknowledge Task</Text>
+                    </>
                 }
               </TouchableOpacity>
             )}
@@ -157,21 +168,24 @@ export default function AssignmentScreen() {
             {assignment.reply ? (
               <View style={styles.replySection}>
                 <View style={styles.replyHeader}>
-                  <Feather name="corner-up-right" size={14} color={colors.onDuty} />
-                  <Text style={[styles.replyLabel, { color: colors.onDuty }]}>Your reply</Text>
+                  <Feather name="corner-up-right" size={14} color={colors.accent} />
+                  <Text style={[styles.replyLabel, { color: colors.accent }]}>Your reply</Text>
                   {assignment.repliedAt && (
                     <Text style={[styles.replyTime, { color: colors.mutedForeground }]}>
                       · {timeAgo(assignment.repliedAt)}
                     </Text>
                   )}
                 </View>
-                <View style={[styles.replyCard, { backgroundColor: colors.onDuty + "18", borderColor: colors.onDuty + "40" }]}>
+                <View style={[styles.replyCard, { backgroundColor: colors.accent + "10", borderColor: colors.accent + "35" }]}>
                   <Text style={[styles.replyCardText, { color: colors.foreground }]}>{assignment.reply}</Text>
                 </View>
               </View>
             ) : (
               <View style={styles.replySection}>
-                <Text style={[styles.replyLabel, { color: colors.mutedForeground }]}>Reply to manager</Text>
+                <View style={styles.replyHeader}>
+                  <Feather name="corner-up-right" size={14} color={colors.mutedForeground} />
+                  <Text style={[styles.replyLabel, { color: colors.mutedForeground }]}>Reply to manager</Text>
+                </View>
                 <View style={[styles.composeRow, { borderColor: colors.border, backgroundColor: colors.card }]}>
                   <TextInput
                     ref={inputRef}
@@ -185,7 +199,10 @@ export default function AssignmentScreen() {
                     returnKeyType="send"
                   />
                   <TouchableOpacity
-                    style={[styles.sendBtn, { backgroundColor: colors.primary, opacity: (!replyText.trim() || sendingReply) ? 0.4 : 1 }]}
+                    style={[styles.sendBtn, {
+                      backgroundColor: colors.accent,
+                      opacity: (!replyText.trim() || sendingReply) ? 0.4 : 1,
+                    }]}
                     onPress={handleSendReply}
                     disabled={!replyText.trim() || sendingReply}
                   >
@@ -209,41 +226,46 @@ const styles = StyleSheet.create({
   header:        {
     paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1,
     flexDirection: "row", alignItems: "flex-end", gap: 10,
-    shadowColor: "#000", shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2, shadowRadius: 8, elevation: 6,
+    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.06, shadowRadius: 8, elevation: 4,
   },
+  headerAccent:  { position: "absolute", left: 0, top: 0, bottom: 0, width: 4 },
   headerTitle:   { fontSize: 22, fontWeight: "700" as const },
   badge:         { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
   badgeText:     { color: "#fff", fontSize: 10, fontWeight: "800" as const, letterSpacing: 1 },
   center:        { flex: 1, alignItems: "center", justifyContent: "center" },
-  emptyBlock:    { flex: 1, alignItems: "center", justifyContent: "center", gap: 12, paddingTop: 60 },
+  emptyBlock:    { flex: 1, alignItems: "center", justifyContent: "center", gap: 14, paddingTop: 60 },
+  emptyIconWrap: { width: 80, height: 80, borderRadius: 40, alignItems: "center", justifyContent: "center" },
   emptyTitle:    { fontSize: 18, fontWeight: "700" as const },
   emptySub:      { fontSize: 14, textAlign: "center", lineHeight: 20 },
-  assignBlock:   { gap: 16 },
-  fromRow:       { flexDirection: "row", alignItems: "center", gap: 8 },
-  managerDot:    { width: 8, height: 8, borderRadius: 4 },
+  assignBlock:   { gap: 14 },
+  fromBadge:     {
+    flexDirection: "row", alignItems: "center", gap: 8,
+    borderWidth: 1, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 8,
+  },
+  fromDot:       { width: 7, height: 7, borderRadius: 4 },
   fromText:      { fontSize: 13 },
-  fromName:      { fontWeight: "600" as const },
+  fromName:      { fontWeight: "700" as const },
   msgCard:       {
-    borderRadius: 22, borderWidth: 1, padding: 18,
-    shadowColor: "#000", shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25, shadowRadius: 20, elevation: 12,
+    borderRadius: 16, borderWidth: 1, padding: 18,
+    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05, shadowRadius: 8, elevation: 3,
   },
   msgText:       { fontSize: 16, lineHeight: 24 },
-  readRow:       { flexDirection: "row", alignItems: "center", gap: 6 },
-  readText:      { fontSize: 12 },
-  ackBtn:        { borderRadius: 12, paddingVertical: 14, alignItems: "center" },
+  readRow:       { flexDirection: "row", alignItems: "center", gap: 8 },
+  readText:      { fontSize: 13, fontWeight: "600" as const },
+  ackBtn:        { borderRadius: 12, paddingVertical: 14, alignItems: "center", flexDirection: "row", justifyContent: "center", gap: 8 },
   ackText:       { color: "#fff", fontWeight: "700" as const, fontSize: 15 },
   divider:       { height: 1 },
   replySection:  { gap: 10 },
   replyHeader:   { flexDirection: "row", alignItems: "center", gap: 6 },
   replyLabel:    { fontSize: 13, fontWeight: "600" as const },
   replyTime:     { fontSize: 12 },
-  replyCard:     { borderRadius: 16, borderWidth: 1, padding: 14 },
+  replyCard:     { borderRadius: 14, borderWidth: 1, padding: 14 },
   replyCardText: { fontSize: 15, lineHeight: 22 },
   composeRow:    {
     flexDirection: "row", alignItems: "flex-end", gap: 10,
-    borderWidth: 1, borderRadius: 16, paddingHorizontal: 14, paddingVertical: 10,
+    borderWidth: 1, borderRadius: 14, paddingHorizontal: 14, paddingVertical: 10,
   },
   composeInput:  { flex: 1, fontSize: 15, maxHeight: 100, lineHeight: 22 },
   sendBtn:       { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" },
