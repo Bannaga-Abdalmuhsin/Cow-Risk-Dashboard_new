@@ -1,0 +1,28 @@
+# Monorepo root — exclude everything outside this package
+../../node_modules
+../../artifacts/hajj-dashboard
+../../artifacts/cow-risk-action-plan
+../../artifacts/api-server
+../../lib
+../../scripts
+../../.local
+
+# Local build artifacts
+node_modules
+android/
+ios/
+.expo/
+dist/
+web-build/
+
+# Keys and secrets (already in .gitignore but be explicit)
+*.p8
+*.p12
+*.jks
+google-service-account.json
+
+# Dev files
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.DS_Store
