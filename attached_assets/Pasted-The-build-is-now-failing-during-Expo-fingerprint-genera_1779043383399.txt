@@ -1,0 +1,141 @@
+The build is now failing during Expo fingerprint generation, not during dependency install.
+
+Current error:
+
+```bash id="mrb42f"
+(0 , brace_expansion_1.expand) is not a function
+```
+
+This is usually caused by:
+
+* corrupted dependency tree
+* incompatible `glob` / `minimatch` / `brace-expansion` versions
+* broken Expo fingerprint dependency resolution
+* workspace dependency conflicts from Replit monorepo structure
+
+Please perform the following exact fixes.
+
+# 1. Force skip Expo fingerprinting
+
+Create/update `.env`:
+
+```env id="0p2i5g"
+EAS_SKIP_AUTO_FINGERPRINT=1
+```
+
+Also ensure this exists inside `eas.json`:
+
+```json id="lzsl13"
+{
+  "build": {
+    "preview": {
+      "env": {
+        "EAS_SKIP_AUTO_FINGERPRINT": "1"
+      }
+    },
+    "production": {
+      "env": {
+        "EAS_SKIP_AUTO_FINGERPRINT": "1"
+      }
+    }
+  }
+}
+```
+
+# 2. Remove problematic dependencies cache completely
+
+Run:
+
+```bash id="b4n6q5"
+rm -rf node_modules
+rm -rf ~/.pnpm-store
+rm -rf /tmp/*
+rm -f pnpm-lock.yaml
+```
+
+# 3. Pin stable versions for Expo ecosystem
+
+Install these exact versions:
+
+```bash id="u8i2om"
+pnpm add -D eas-cli@latest
+pnpm add expo@latest
+pnpm add glob@10
+pnpm add minimatch@9
+pnpm add brace-expansion@2
+```
+
+# 4. Reinstall everything cleanly
+
+```bash id="99bggv"
+pnpm install --no-frozen-lockfile
+```
+
+# 5. VERY IMPORTANT — remove workspace conflicts
+
+Check root `package.json`.
+
+If you see:
+
+```json id="h67w8u"
+"workspaces":
+```
+
+then Expo fingerprinting may break in Replit monorepo mode.
+
+Preferred fix:
+
+* move the mobile app into a standalone Expo project
+  OR
+* ensure `artifacts/team-tracker` has its own local:
+
+  * package.json
+  * node_modules
+  * eas.json
+
+and build from inside that folder only.
+
+# 6. Create .easignore
+
+Create `.easignore`:
+
+```bash id="ivcw88"
+node_modules
+.git
+.cache
+dist
+build
+coverage
+*.log
+```
+
+This reduces upload size and avoids Replit cache corruption.
+
+# 7. Retry build
+
+Run:
+
+```bash id="o6povr"
+eas build -p android --profile preview
+```
+
+# 8. If still failing
+
+Force legacy npm instead of pnpm:
+
+```bash id="gz4pkj"
+rm -rf node_modules pnpm-lock.yaml
+npm install
+```
+
+Then in `eas.json`:
+
+```json id="ol9sxy"
+{
+  "cli": {
+    "packageManager": "npm"
+  }
+}
+```
+
+Expo EAS is sometimes unstable with pnpm workspaces inside Replit monorepos.
