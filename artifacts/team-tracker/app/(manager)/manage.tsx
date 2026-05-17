@@ -10,6 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
 import {
   getTeamUsers, createTeamUser, updateTeamUser, deleteTeamUser,
+  UnauthorizedError,
   LOCATIONS, type TeamUser, type HajjLocation,
 } from "@/lib/api";
 
@@ -62,7 +63,7 @@ function Field({
 export default function ManageScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { token } = useAuth();
+  const { token, logout } = useAuth();
 
   const [users,      setUsers]      = useState<TeamUser[]>([]);
   const [loading,    setLoading]    = useState(true);
@@ -136,6 +137,7 @@ export default function ManageScreen() {
       }
       setShowForm(false);
     } catch (err) {
+      if (err instanceof UnauthorizedError) { await logout(); return; }
       setFormError(err instanceof Error ? err.message : "Failed to save");
     } finally {
       setSaving(false);
@@ -152,6 +154,7 @@ export default function ManageScreen() {
             await deleteTeamUser(token!, user.id);
             setUsers(prev => prev.filter(u => u.id !== user.id));
           } catch (err) {
+            if (err instanceof UnauthorizedError) { await logout(); return; }
             Alert.alert("Error", err instanceof Error ? err.message : "Failed");
           }
         },

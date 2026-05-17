@@ -12,7 +12,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
 import {
   getTeamUsers, getChatHistory, sendAssignment, broadcastMessage,
-  getTeamLocations, LOCATIONS,
+  getTeamLocations, UnauthorizedError, LOCATIONS,
   type TeamUser, type ChatMessage, type TechLocationWithUser,
 } from "@/lib/api";
 
@@ -26,7 +26,7 @@ function timeLabel(iso: string): string {
 export default function ChatScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { token } = useAuth();
+  const { token, logout } = useAuth();
 
   const [users,     setUsers]     = useState<TeamUser[]>([]);
   const [locations, setLocations] = useState<TechLocationWithUser[]>([]);
@@ -82,6 +82,7 @@ export default function ChatScreen() {
       setMessage("");
       setTimeout(() => flatRef.current?.scrollToEnd({ animated: true }), 100);
     } catch (err) {
+      if (err instanceof UnauthorizedError) { await logout(); return; }
       Alert.alert("Error", err instanceof Error ? err.message : "Failed");
     } finally {
       setSending(false);
@@ -102,6 +103,7 @@ export default function ChatScreen() {
               await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
               Alert.alert("Sent", `Message delivered to ${r.sent} technicians`);
             } catch (err) {
+              if (err instanceof UnauthorizedError) { await logout(); return; }
               Alert.alert("Error", err instanceof Error ? err.message : "Failed");
             }
           },

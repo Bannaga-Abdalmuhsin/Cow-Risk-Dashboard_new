@@ -50,6 +50,10 @@ export interface TeamUser {
   mobileNumber: string | null;
 }
 
+export class UnauthorizedError extends Error {
+  constructor() { super("Session expired. Please log in again."); }
+}
+
 export async function apiFetch<T>(
   path: string,
   token: string | null,
@@ -62,6 +66,7 @@ export async function apiFetch<T>(
   if (token) headers["Authorization"] = `Bearer ${token}`;
   const res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
   if (!res.ok) {
+    if (res.status === 401) throw new UnauthorizedError();
     const body = await res.json().catch(() => ({})) as { error?: string };
     throw new Error(body.error ?? `HTTP ${res.status}`);
   }

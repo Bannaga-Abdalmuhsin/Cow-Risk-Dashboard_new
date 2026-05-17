@@ -53,8 +53,10 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
     return;
   }
 
-  const token = randomUUID();
-  await db.update(teamUsersTable).set({ token }).where(eq(teamUsersTable.id, user.id));
+  const token = user.token ?? randomUUID();
+  if (!user.token) {
+    await db.update(teamUsersTable).set({ token }).where(eq(teamUsersTable.id, user.id));
+  }
 
   res.json({
     user:  { id: user.id, name: user.name, role: user.role },
