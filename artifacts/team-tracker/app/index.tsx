@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.06, shadowRadius: 12, elevation: 4,
   },
-  logoImage:     { width: 280, height: 108 },
+  logoImage:     { width: 340, height: 132 },
   logoSub:       { fontSize: 13, letterSpacing: 0.5 },
 
   card:          {
