@@ -1,32 +1,41 @@
 {
   "expo": {
     "name": "ACES Field Team Tracker",
-    "slug": "team-tracker",
+    "slug": "aces-field-team-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon.png",
-    "scheme": "team-tracker",
-    "userInterfaceStyle": "dark",
+    "scheme": "acesft",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/app-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#081120"
+      "backgroundColor": "#F7F2EC"
     },
     "ios": {
       "supportsTablet": false,
+      "bundleIdentifier": "com.acesmsd.fieldtracker",
       "icon": "./assets/images/app-icon.png",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours."
+        "NSLocationWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours."
       }
     },
     "android": {
+      "package": "com.acesmsd.fieldtracker",
+      "versionCode": 1,
       "icon": "./assets/images/app-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/app-icon.png",
-        "backgroundColor": "#081120"
+        "backgroundColor": "#F7F2EC"
       },
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ]
     },
     "web": {
       "favicon": "./assets/images/app-icon.png"
@@ -44,6 +53,14 @@
         "expo-location",
         {
           "locationWhenInUsePermission": "ACES Field Tracker shares your location with the operations manager during duty hours."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/app-icon.png",
+          "color": "#8B1A1A",
+          "defaultChannel": "field-ops"
         }
       ]
     ],
