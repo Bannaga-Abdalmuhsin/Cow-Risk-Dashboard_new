@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Users, Shield, HardHat, Phone, MapPin, Building2, RefreshCw } from "lucide-react";
+import type { LiveTechLocation } from "./LeafletMap";
 
 interface TeamMember {
   id: number;
@@ -17,7 +18,12 @@ interface TeamStats {
   areas: string[];
 }
 
-export function TeamRoster() {
+interface TeamRosterProps {
+  compact?: boolean;
+  techLocations?: LiveTechLocation[];
+}
+
+export function TeamRoster({ compact = false, techLocations = [] }: TeamRosterProps) {
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -48,8 +54,122 @@ export function TeamRoster() {
     areas: [...new Set(members.map(m => m.defaultArea).filter(Boolean) as string[])],
   };
 
-  const managers = members.filter(m => m.role === "manager");
+  const onDutyCount  = techLocations.filter(t => t.isOnDuty).length;
+  const offDutyCount = techLocations.filter(t => !t.isOnDuty).length;
+
+  const managers    = members.filter(m => m.role === "manager");
   const technicians = members.filter(m => m.role === "technician");
+
+  if (compact) {
+    return (
+      <div className="flex flex-col gap-3">
+        {/* Live duty summary */}
+        <div className="bg-card border border-card-border rounded-xl p-3">
+          <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
+            Live Duty Status
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="text-center p-2 rounded-lg" style={{ background: "rgba(52,211,153,0.1)", border: "1px solid rgba(52,211,153,0.2)" }}>
+              <div className="text-xl font-bold" style={{ color: "#34d399" }}>{onDutyCount}</div>
+              <div className="text-[10px] text-muted-foreground">On Duty</div>
+            </div>
+            <div className="text-center p-2 rounded-lg" style={{ background: "rgba(107,114,128,0.1)", border: "1px solid rgba(107,114,128,0.2)" }}>
+              <div className="text-xl font-bold text-muted-foreground">{offDutyCount}</div>
+              <div className="text-[10px] text-muted-foreground">Off Duty</div>
+            </div>
+          </div>
+          {techLocations.length === 0 && (
+            <p className="text-[10px] text-muted-foreground text-center mt-2">Waiting for field check-ins…</p>
+          )}
+        </div>
+
+        {/* Registered counts */}
+        <div className="bg-card border border-card-border rounded-xl p-3">
+          <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Registered</div>
+          <div className="flex items-center justify-between text-sm">
+            <span className="flex items-center gap-1.5 text-muted-foreground"><Shield size={12} style={{ color: "#a78bfa" }} /> Managers</span>
+            <span className="font-bold" style={{ color: "#a78bfa" }}>{loading ? "—" : stats.managers}</span>
+          </div>
+          <div className="flex items-center justify-between text-sm mt-1.5">
+            <span className="flex items-center gap-1.5 text-muted-foreground"><HardHat size={12} style={{ color: "#34d399" }} /> Technicians</span>
+            <span className="font-bold" style={{ color: "#34d399" }}>{loading ? "—" : stats.technicians}</span>
+          </div>
+          <div className="flex items-center justify-between text-sm mt-1.5">
+            <span className="flex items-center gap-1.5 text-muted-foreground"><Users size={12} /> Total</span>
+            <span className="font-bold text-foreground">{loading ? "—" : stats.total}</span>
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-semibold text-foreground">Team Members</span>
+          <button
+            onClick={fetchTeam}
+            disabled={loading}
+            className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium border border-border hover:bg-muted/50 transition-colors disabled:opacity-50"
+          >
+            <RefreshCw size={10} className={loading ? "animate-spin" : ""} />
+            Refresh
+          </button>
+        </div>
+
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-2 text-xs text-red-400">
+            {error}
+          </div>
+        )}
+
+        {/* Managers */}
+        <div className="bg-card border border-card-border rounded-xl overflow-hidden">
+          <div className="px-3 py-2 border-b border-border flex items-center gap-1.5">
+            <Shield size={12} style={{ color: "#a78bfa" }} />
+            <span className="text-xs font-semibold text-foreground">Managers</span>
+            <span className="ml-auto text-[10px] text-muted-foreground">{managers.length}</span>
+          </div>
+          {loading ? (
+            <div className="p-3 text-center text-xs text-muted-foreground">Loading...</div>
+          ) : managers.length === 0 ? (
+            <div className="p-3 text-center text-xs text-muted-foreground">No managers registered</div>
+          ) : (
+            <div className="divide-y divide-border">
+              {managers.map(m => {
+                const live = techLocations.find(t => t.userName === m.name);
+                return <MemberRow key={m.id} member={m} liveStatus={live} compact />;
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Technicians */}
+        <div className="bg-card border border-card-border rounded-xl overflow-hidden">
+          <div className="px-3 py-2 border-b border-border flex items-center gap-1.5">
+            <HardHat size={12} style={{ color: "#34d399" }} />
+            <span className="text-xs font-semibold text-foreground">Technicians</span>
+            <span className="ml-auto text-[10px] text-muted-foreground">{technicians.length}</span>
+          </div>
+          {loading ? (
+            <div className="p-3 text-center text-xs text-muted-foreground">Loading...</div>
+          ) : technicians.length === 0 ? (
+            <div className="p-3 text-center text-xs text-muted-foreground">No technicians registered</div>
+          ) : (
+            <div className="divide-y divide-border">
+              {technicians.map(m => {
+                const live = techLocations.find(t => t.userName === m.name);
+                return <MemberRow key={m.id} member={m} liveStatus={live} compact />;
+              })}
+            </div>
+          )}
+        </div>
+
+        {lastUpdated && (
+          <p className="text-[10px] text-muted-foreground text-center">
+            Updated {lastUpdated.toLocaleTimeString()}
+          </p>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -119,7 +239,6 @@ export function TeamRoster() {
 
       {/* Two-column layout: Managers | Technicians */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Managers */}
         <div className="bg-card border border-card-border rounded-xl overflow-hidden">
           <div className="px-4 py-3 border-b border-border flex items-center gap-2">
             <Shield size={14} style={{ color: "#a78bfa" }} />
@@ -132,14 +251,11 @@ export function TeamRoster() {
             <div className="p-6 text-center text-sm text-muted-foreground">No managers registered</div>
           ) : (
             <div className="divide-y divide-border">
-              {managers.map(m => (
-                <MemberRow key={m.id} member={m} />
-              ))}
+              {managers.map(m => <MemberRow key={m.id} member={m} />)}
             </div>
           )}
         </div>
 
-        {/* Technicians */}
         <div className="bg-card border border-card-border rounded-xl overflow-hidden">
           <div className="px-4 py-3 border-b border-border flex items-center gap-2">
             <HardHat size={14} style={{ color: "#34d399" }} />
@@ -152,9 +268,7 @@ export function TeamRoster() {
             <div className="p-6 text-center text-sm text-muted-foreground">No technicians registered</div>
           ) : (
             <div className="divide-y divide-border">
-              {technicians.map(m => (
-                <MemberRow key={m.id} member={m} />
-              ))}
+              {technicians.map(m => <MemberRow key={m.id} member={m} />)}
             </div>
           )}
         </div>
@@ -163,8 +277,46 @@ export function TeamRoster() {
   );
 }
 
-function MemberRow({ member }: { member: TeamMember }) {
+function MemberRow({ member, liveStatus, compact = false }: {
+  member: TeamMember;
+  liveStatus?: LiveTechLocation;
+  compact?: boolean;
+}) {
   const isManager = member.role === "manager";
+  const isOnDuty  = liveStatus?.isOnDuty;
+  const hasLive   = liveStatus !== undefined;
+
+  if (compact) {
+    return (
+      <div className="px-3 py-2 flex items-center gap-2 hover:bg-muted/20 transition-colors">
+        <div className="flex flex-col flex-1 min-w-0">
+          <div className="flex items-center gap-1.5">
+            <span className="font-semibold text-xs text-foreground truncate">{member.name}</span>
+            {hasLive && (
+              <span
+                className="w-1.5 h-1.5 rounded-full shrink-0"
+                style={{ background: isOnDuty ? "#34d399" : "#6b7280" }}
+              />
+            )}
+          </div>
+          <span className="text-[10px] text-muted-foreground truncate">
+            {liveStatus?.area ?? member.defaultArea ?? "—"}
+          </span>
+        </div>
+        <span
+          className="text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0"
+          style={
+            isManager
+              ? { background: "rgba(167,139,250,0.15)", color: "#a78bfa", border: "1px solid rgba(167,139,250,0.3)" }
+              : { background: "rgba(52,211,153,0.12)", color: "#34d399", border: "1px solid rgba(52,211,153,0.25)" }
+          }
+        >
+          {hasLive ? (isOnDuty ? "on" : "off") : member.role === "manager" ? "mgr" : "tech"}
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="px-4 py-3 flex flex-col gap-1.5 hover:bg-muted/20 transition-colors">
       <div className="flex items-center justify-between gap-2">

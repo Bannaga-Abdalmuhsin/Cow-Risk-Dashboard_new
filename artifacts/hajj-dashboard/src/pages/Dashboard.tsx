@@ -53,7 +53,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    if (activeTab !== "technicians") {
+    if (activeTab !== "technicians" && activeTab !== "teams") {
       if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
       return;
     }
@@ -277,8 +277,66 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         )}
 
         {activeTab === "teams" && (
-          <div className="py-2">
-            <TeamRoster />
+          <div className="flex flex-col gap-3 flex-1 min-h-0" style={{ height: "calc(100vh - 148px)" }}>
+            {/* Live status bar */}
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="flex items-center gap-2 text-xs">
+                {techLocations.length > 0 ? (
+                  <>
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                    <span className="text-emerald-400 font-semibold">
+                      {techLocations.filter(t => t.isOnDuty).length} on duty
+                    </span>
+                    <span className="text-muted-foreground">·</span>
+                    <span className="text-muted-foreground">
+                      {techLocations.filter(t => !t.isOnDuty).length} off duty
+                    </span>
+                    <span className="text-muted-foreground">· {techLocations.length} total · refreshes every 10s</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="w-2 h-2 rounded-full bg-muted inline-block" />
+                    <span className="text-muted-foreground">No live locations yet — waiting for field check-ins</span>
+                  </>
+                )}
+              </div>
+              {/* Zone breakdown pills */}
+              {techLocations.length > 0 && (
+                <div className="flex gap-1.5 flex-wrap ml-auto">
+                  {["Arafat","Mina","Muzdalifa","Makkah","Makkah Remote"].map(zone => {
+                    const inZone = techLocations.filter(t => t.area?.toLowerCase().includes(zone.toLowerCase()));
+                    const on = inZone.filter(t => t.isOnDuty).length;
+                    const off = inZone.filter(t => !t.isOnDuty).length;
+                    if (inZone.length === 0) return null;
+                    return (
+                      <span key={zone} className="text-[10px] px-2 py-0.5 rounded-full border font-medium"
+                        style={{ background: "rgba(147,51,234,0.10)", borderColor: "rgba(147,51,234,0.25)", color: "#c4b5fd" }}>
+                        {zone}: <span style={{ color: "#34d399" }}>{on}✓</span>{off > 0 && <span style={{ color: "#9ca3af" }}> {off}✗</span>}
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Main content: map + roster */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 flex-1 min-h-0">
+              {/* Full-height map */}
+              <div className="lg:col-span-3 min-h-0 flex flex-col gap-0">
+                <LeafletMap
+                  analyses={analyses}
+                  selectedSiteId={selectedSiteId}
+                  onSelectSite={handleSelectSite}
+                  showTeamMarkers={true}
+                  techLocations={techLocations}
+                />
+              </div>
+
+              {/* Right sidebar: roster */}
+              <div className="lg:col-span-1 flex flex-col gap-3 min-h-0 overflow-y-auto">
+                <TeamRoster compact techLocations={techLocations} />
+              </div>
+            </div>
           </div>
         )}
 
