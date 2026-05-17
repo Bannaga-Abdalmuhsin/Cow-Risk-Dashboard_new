@@ -20,6 +20,20 @@
       "android": {
         "buildType": "apk"
       },
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://YOUR_REPLIT_DOMAIN/api"
+      }
+    },
+    "preview-ios-device": {
+      "distribution": "internal",
+      "node": "24",
+      "pnpm": "10",
+      "ios": {
+        "simulator": false
+      },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://YOUR_REPLIT_DOMAIN/api"
       }
