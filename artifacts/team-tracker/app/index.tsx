@@ -9,6 +9,7 @@ import * as Haptics from "expo-haptics";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
+import { debugBaseUrl } from "@/lib/api";
 
 export default function LoginScreen() {
   const colors  = useColors();
@@ -116,6 +117,9 @@ export default function LoginScreen() {
           <Text style={[styles.footer, { color: colors.mutedForeground }]}>
             Hajj 1447 · stc COW Operations
           </Text>
+          <Text style={[styles.debugUrl, { color: colors.mutedForeground }]} numberOfLines={2}>
+            {debugBaseUrl()}
+          </Text>
         </View>
       </KeyboardAvoidingView>
     </LinearGradient>
@@ -146,4 +150,5 @@ const styles = StyleSheet.create({
   btn:      { marginTop: 20, borderRadius: 12, paddingVertical: 14, alignItems: "center" },
   btnText:  { color: "#fff", fontWeight: "700" as const, fontSize: 16 },
   footer:   { textAlign: "center", fontSize: 11 },
+  debugUrl: { textAlign: "center", fontSize: 9, opacity: 0.45, marginTop: 2 },
 });

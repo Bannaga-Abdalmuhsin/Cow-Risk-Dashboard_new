@@ -7,13 +7,17 @@
  *   it serves Metro's SPA shell for unknown paths, returning HTML for /api.
  */
 export function getBaseUrl(): string {
-  // 1. EXPO_PUBLIC_DOMAIN — set in .env.local, baked in by Metro, works on
-  //    every platform (web, iOS, Android). This is the primary source.
+  // 1. EXPO_PUBLIC_API_URL — the full https:// URL baked into the bundle.
+  //    Set as both a process-env prefix AND in .env.local so Metro picks it up
+  //    whichever way it resolves the environment.
+  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+  if (apiUrl) return apiUrl;
+
+  // 2. EXPO_PUBLIC_DOMAIN — fallback using just the hostname.
   const domain = process.env.EXPO_PUBLIC_DOMAIN;
   if (domain) return `https://${domain}`;
 
-  // 2. Web fallback: strip ".expo." from hostname to get the API domain.
-  //    e.g. uuid.expo.picard.replit.dev → uuid.picard.replit.dev
+  // 3. Web fallback: strip ".expo." to get the API (picard) domain.
   if (typeof window !== "undefined" && window.location?.hostname) {
     const host = window.location.hostname;
     const apiHost = host.replace(".expo.picard.replit.dev", ".picard.replit.dev");
@@ -21,6 +25,11 @@ export function getBaseUrl(): string {
   }
 
   return "";
+}
+
+/** Debug helper — returns what getBaseUrl() resolves to (never empty in prod). */
+export function debugBaseUrl(): string {
+  return getBaseUrl() || "(empty — env vars not baked in)";
 }
 
 /** Kept for backwards-compat */
