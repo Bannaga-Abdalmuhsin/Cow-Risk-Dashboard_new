@@ -38,7 +38,8 @@ export default function MapViewContainer({ locations, onDutyColor, offDutyColor,
               styles.marker,
               { backgroundColor: online ? onDutyColor : offDutyColor },
             ]}>
-              <Text style={styles.markerText}>{loc.userName.replace("Tech-", "T")}</Text>
+              <Text style={styles.markerName} numberOfLines={1}>{loc.userName}</Text>
+              <Text style={styles.markerArea} numberOfLines={1}>{loc.area ?? "—"}</Text>
               {online && <View style={styles.liveRing} />}
             </View>
             <Callout>
@@ -56,8 +57,9 @@ export default function MapViewContainer({ locations, onDutyColor, offDutyColor,
 }
 
 const styles = StyleSheet.create({
-  marker:      { paddingHorizontal: 7, paddingVertical: 5, borderRadius: 12, borderWidth: 2, borderColor: "#fff", alignItems: "center", justifyContent: "center", minWidth: 38, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.4, shadowRadius: 6, elevation: 8 },
-  markerText:  { color: "#fff", fontSize: 10, fontWeight: "800" as const },
+  marker:      { paddingHorizontal: 8, paddingVertical: 5, borderRadius: 10, borderWidth: 2, borderColor: "#fff", alignItems: "center", justifyContent: "center", minWidth: 56, maxWidth: 90, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.4, shadowRadius: 6, elevation: 8 },
+  markerName:  { color: "#fff", fontSize: 11, fontWeight: "800" as const, textAlign: "center" },
+  markerArea:  { color: "rgba(255,255,255,0.85)", fontSize: 9, fontWeight: "500" as const, textAlign: "center", marginTop: 1 },
   liveRing:    { position: "absolute", top: -3, right: -3, width: 9, height: 9, borderRadius: 5, backgroundColor: "#34D399", borderWidth: 1.5, borderColor: "#fff" },
   callout:     { padding: 8, minWidth: 120 },
   calloutName: { fontWeight: "700" as const, fontSize: 13 },
