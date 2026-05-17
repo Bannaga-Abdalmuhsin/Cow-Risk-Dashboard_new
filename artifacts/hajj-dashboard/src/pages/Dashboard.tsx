@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useRef, type ReactNode } from "react";
 import type { LiveTechLocation } from "../components/LeafletMap";
 import acesLogo from "@assets/ChatGPT_Image_Oct_14,_2025,_10_29_41_PM_1776566555155.png";
 import stcLogo from "@assets/7010.SR.D-9f4e531b_(1)_1776566577166.png";
-import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer } from "lucide-react";
+import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer, UsersRound } from "lucide-react";
 import { analyzeSite } from "../lib/calculations";
 import { ALL_SITES } from "../lib/siteData";
 import { MetricCard } from "../components/MetricCard";
@@ -15,8 +15,9 @@ import { ScenarioMatrix } from "../components/ScenarioMatrix";
 import { ScenarioRiskSites } from "../components/ScenarioRiskSites";
 import { RiskByAreaCard, ActionSitesCard } from "../components/OverviewInsights";
 import { EscalationTable } from "../components/EscalationTable";
+import { TeamRoster } from "../components/TeamRoster";
 
-type Tab = "overview" | "scenarios" | "map" | "sites" | "technicians";
+type Tab = "overview" | "scenarios" | "map" | "sites" | "technicians" | "teams";
 
 interface DashboardProps {
   onLogout?: () => void;
@@ -78,6 +79,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     { key: "map",          label: "Heat Map",   icon: <Map             size={14} /> },
     { key: "sites",        label: "Site List",  icon: <ClipboardList   size={14} /> },
     { key: "technicians",  label: "Field Ops",  icon: <HardHat         size={14} /> },
+    { key: "teams",        label: "Teams",      icon: <UsersRound      size={14} /> },
   ];
 
   return (
@@ -271,6 +273,12 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {activeTab === "teams" && (
+          <div className="py-2">
+            <TeamRoster />
           </div>
         )}
 
