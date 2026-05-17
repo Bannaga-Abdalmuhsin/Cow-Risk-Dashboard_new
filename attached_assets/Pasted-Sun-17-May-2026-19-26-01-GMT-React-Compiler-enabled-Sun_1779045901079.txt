@@ -1,0 +1,101 @@
+Sun, 17 May 2026 19:26:01 GMT
+
+React Compiler enabled
+Sun, 17 May 2026 19:26:01 GMT
+
+Starting Metro Bundler
+Sun, 17 May 2026 19:26:05 GMT
+
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js ▓▓▓░░░░░░░░░░░░░ 21.8% ( 95/259)
+Sun, 17 May 2026 19:26:08 GMT
+
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓░░░░░░░░░ 47.1% (469/684)
+Sun, 17 May 2026 19:26:12 GMT
+
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓░░░░ 78.0% (837/982)
+Sun, 17 May 2026 19:26:15 GMT
+
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 91.6% (1156/1219)
+Sun, 17 May 2026 19:26:16 GMT
+
+Android Bundling failed 13465ms node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js (1361 modules)
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+Error: Unable to resolve module react-compiler-runtime from /home/expo/workingdir/build/artifacts/team-tracker/app/(manager)/_layout.tsx: react-compiler-runtime could not be found within the project or in these directories:
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+  node_modules
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+  ../../node_modules
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+  node_modules
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+  ../../node_modules
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+> 1 | import React from "react";
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+  2 | import { Platform, StyleSheet, View } from "react-native";
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+  3 | import { BlurView } from "expo-blur";
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+  4 | import { Redirect, Tabs } from "expo-router";
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+Import stack:
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+ artifacts/team-tracker/app/(manager)/_layout.tsx
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+ | import "react-compiler-runtime"
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+Sun, 17 May 2026 19:26:16 GMT
+
+[stderr] 
+
+ artifacts/team-tracker/app (require.context)
+Sun, 17 May 2026 19:26:16 GMT
+
+pnpm expo export:embed --eager --platform android --dev false exited with non-zero code: 1
