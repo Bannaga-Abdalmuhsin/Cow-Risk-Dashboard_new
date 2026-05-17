@@ -6,6 +6,19 @@ import { randomUUID } from "crypto";
 
 const router = Router();
 
+/* ─── push helper ─────────────────────────────────────────────────────────── */
+
+async function sendPush(to: string | null | undefined, title: string, body: string): Promise<void> {
+  if (!to || !to.startsWith("ExponentPushToken")) return;
+  try {
+    await fetch("https://exp.host/--/api/v2/push/send", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body:    JSON.stringify({ to, title, body, sound: "default", priority: "high" }),
+    });
+  } catch {}
+}
+
 /* ─── auth middleware ─────────────────────────────────────────────────────── */
 
 declare global {
@@ -62,6 +75,20 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
     user:  { id: user.id, name: user.name, role: user.role },
     token,
   });
+});
+
+/* ─── POST /api/team/push-token ──────────────────────────────────────────── */
+
+router.post("/push-token", requireAuth, async (req: Request, res: Response): Promise<void> => {
+  const { pushToken } = req.body as { pushToken?: string };
+  if (!pushToken) { res.status(400).json({ error: "pushToken required" }); return; }
+
+  await db
+    .update(teamUsersTable)
+    .set({ pushToken })
+    .where(eq(teamUsersTable.id, req.teamUser!.id));
+
+  res.json({ ok: true });
 });
 
 /* ─── PUT /api/team/location ─────────────────────────────────────────────── */
@@ -227,6 +254,13 @@ router.post("/assignments", requireAuth, async (req: Request, res: Response): Pr
     .values({ techId, managerId: req.teamUser!.id, message })
     .returning();
 
+  const [tech] = await db
+    .select({ pushToken: teamUsersTable.pushToken })
+    .from(teamUsersTable)
+    .where(eq(teamUsersTable.id, techId));
+
+  sendPush(tech?.pushToken, `Task from ${req.teamUser!.name}`, message);
+
   res.status(201).json(assignment);
 });
 
@@ -237,7 +271,7 @@ router.post("/broadcast", requireManager, async (req: Request, res: Response): P
   if (!message) { res.status(400).json({ error: "message required" }); return; }
 
   const techs = await db
-    .select({ id: teamUsersTable.id })
+    .select({ id: teamUsersTable.id, pushToken: teamUsersTable.pushToken })
     .from(teamUsersTable)
     .where(eq(teamUsersTable.role, "technician"));
 
@@ -245,6 +279,9 @@ router.post("/broadcast", requireManager, async (req: Request, res: Response): P
   const rows = techs.map(t => ({ techId: t.id, managerId, message }));
   if (rows.length > 0) {
     await db.insert(assignmentsTable).values(rows);
+    for (const t of techs) {
+      sendPush(t.pushToken, `Broadcast from ${req.teamUser!.name}`, message);
+    }
   }
 
   res.json({ sent: rows.length });
@@ -259,7 +296,10 @@ router.get("/assignments/my", requireAuth, async (req: Request, res: Response): 
       message:     assignmentsTable.message,
       sentAt:      assignmentsTable.sentAt,
       readAt:      assignmentsTable.readAt,
+      reply:       assignmentsTable.reply,
+      repliedAt:   assignmentsTable.repliedAt,
       managerName: teamUsersTable.name,
+      managerId:   assignmentsTable.managerId,
     })
     .from(assignmentsTable)
     .innerJoin(teamUsersTable, eq(assignmentsTable.managerId, teamUsersTable.id))
@@ -279,10 +319,12 @@ router.get("/assignments/:techId/history", requireAuth, async (req: Request, res
 
   const rows = await db
     .select({
-      id:      assignmentsTable.id,
-      message: assignmentsTable.message,
-      sentAt:  assignmentsTable.sentAt,
-      readAt:  assignmentsTable.readAt,
+      id:        assignmentsTable.id,
+      message:   assignmentsTable.message,
+      sentAt:    assignmentsTable.sentAt,
+      readAt:    assignmentsTable.readAt,
+      reply:     assignmentsTable.reply,
+      repliedAt: assignmentsTable.repliedAt,
     })
     .from(assignmentsTable)
     .where(eq(assignmentsTable.techId, techId))
@@ -320,6 +362,32 @@ router.patch("/assignments/:id/read", requireAuth, async (req: Request, res: Res
     .update(assignmentsTable)
     .set({ readAt: new Date() })
     .where(eq(assignmentsTable.id, id));
+
+  res.json({ ok: true });
+});
+
+/* ─── PATCH /api/team/assignments/:id/reply ──────────────────────────────── */
+
+router.patch("/assignments/:id/reply", requireAuth, async (req: Request, res: Response): Promise<void> => {
+  const rawId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  const id = parseInt(rawId, 10);
+  if (isNaN(id)) { res.status(400).json({ error: "invalid id" }); return; }
+
+  const { reply } = req.body as { reply?: string };
+  if (!reply?.trim()) { res.status(400).json({ error: "reply required" }); return; }
+
+  const [updated] = await db
+    .update(assignmentsTable)
+    .set({ reply: reply.trim(), repliedAt: new Date(), readAt: new Date() })
+    .where(eq(assignmentsTable.id, id))
+    .returning({ managerId: assignmentsTable.managerId, techId: assignmentsTable.techId });
+
+  if (!updated) { res.status(404).json({ error: "Assignment not found" }); return; }
+
+  const [tech]    = await db.select({ name: teamUsersTable.name }).from(teamUsersTable).where(eq(teamUsersTable.id, updated.techId));
+  const [manager] = await db.select({ pushToken: teamUsersTable.pushToken }).from(teamUsersTable).where(eq(teamUsersTable.id, updated.managerId));
+
+  sendPush(manager?.pushToken, `Reply from ${tech?.name ?? "Technician"}`, reply.trim());
 
   res.json({ ok: true });
 });

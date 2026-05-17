@@ -109,5 +109,5 @@ export default function ManagerLayout() {
   const { user, loading } = useAuth();
   if (!loading && !user) return <Redirect href="/" />;
   if (!loading && user?.role !== "manager") return <Redirect href="/(technician)/" />;
-  return isLiquidGlassAvailable() ? <NativeTabLayout /> : <ClassicTabLayout />;
+  return (Platform.OS === "ios" && isLiquidGlassAvailable()) ? <NativeTabLayout /> : <ClassicTabLayout />;
 }

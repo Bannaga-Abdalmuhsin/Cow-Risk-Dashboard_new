@@ -3,14 +3,15 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const teamUsersTable = pgTable("team_users", {
-  id:          serial("id").primaryKey(),
-  name:        text("name").notNull(),
-  role:        text("role").notNull(),
-  pin:         text("pin").notNull(),
-  token:       text("token"),
+  id:           serial("id").primaryKey(),
+  name:         text("name").notNull(),
+  role:         text("role").notNull(),
+  pin:          text("pin").notNull(),
+  token:        text("token"),
   defaultArea:  text("default_area"),
   mcName:       text("mc_name"),
   mobileNumber: text("mobile_number"),
+  pushToken:    text("push_token"),
   createdAt:    timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -25,12 +26,14 @@ export const techLocationsTable = pgTable("tech_locations", {
 });
 
 export const assignmentsTable = pgTable("assignments", {
-  id:        serial("id").primaryKey(),
-  techId:    integer("tech_id").notNull().references(() => teamUsersTable.id),
-  managerId: integer("manager_id").notNull().references(() => teamUsersTable.id),
-  message:   text("message").notNull(),
-  sentAt:    timestamp("sent_at").defaultNow().notNull(),
-  readAt:    timestamp("read_at"),
+  id:          serial("id").primaryKey(),
+  techId:      integer("tech_id").notNull().references(() => teamUsersTable.id),
+  managerId:   integer("manager_id").notNull().references(() => teamUsersTable.id),
+  message:     text("message").notNull(),
+  sentAt:      timestamp("sent_at").defaultNow().notNull(),
+  readAt:      timestamp("read_at"),
+  reply:       text("reply"),
+  repliedAt:   timestamp("replied_at"),
 });
 
 export type TeamUser     = typeof teamUsersTable.$inferSelect;

@@ -22,6 +22,7 @@ export default function MapViewContainer({ locations, onDutyColor, offDutyColor,
       provider={PROVIDER_DEFAULT}
       style={StyleSheet.absoluteFillObject}
       initialRegion={MAKKAH}
+      mapType="satellite"
       userInterfaceStyle="dark"
     >
       {locations.map(loc => {

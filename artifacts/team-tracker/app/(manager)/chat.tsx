@@ -244,16 +244,30 @@ export default function ChatScreen() {
                 ref={flatRef}
                 data={[...history].reverse()}
                 keyExtractor={item => String(item.id)}
-                contentContainerStyle={{ padding: 16, gap: 10 }}
+                contentContainerStyle={{ padding: 16, gap: 14 }}
                 onContentSizeChange={() => flatRef.current?.scrollToEnd({ animated: false })}
                 renderItem={({ item }) => (
-                  <View style={styles.msgBubble}>
-                    <View style={[styles.bubble, { backgroundColor: colors.primary }]}>
-                      <Text style={styles.bubbleText}>{item.message}</Text>
+                  <View style={styles.msgThread}>
+                    {/* Outgoing manager bubble */}
+                    <View style={styles.msgBubble}>
+                      <View style={[styles.bubble, { backgroundColor: colors.primary }]}>
+                        <Text style={styles.bubbleText}>{item.message}</Text>
+                      </View>
+                      <Text style={[styles.bubbleTime, { color: colors.mutedForeground }]}>
+                        {timeLabel(item.sentAt)}{item.readAt ? "  ✓ Read" : ""}
+                      </Text>
                     </View>
-                    <Text style={[styles.bubbleTime, { color: colors.mutedForeground }]}>
-                      {timeLabel(item.sentAt)}{item.readAt ? "  ✓ Read" : ""}
-                    </Text>
+                    {/* Incoming tech reply */}
+                    {item.reply ? (
+                      <View style={styles.replyBubbleRow}>
+                        <View style={[styles.replyBubble, { backgroundColor: colors.card, borderColor: colors.onDuty + "50" }]}>
+                          <Text style={[styles.replyBubbleText, { color: colors.foreground }]}>{item.reply}</Text>
+                        </View>
+                        <Text style={[styles.bubbleTime, { color: colors.mutedForeground }]}>
+                          {item.repliedAt ? timeLabel(item.repliedAt) : ""}{"  ← Reply"}
+                        </Text>
+                      </View>
+                    ) : null}
                   </View>
                 )}
                 ListEmptyComponent={
@@ -334,10 +348,14 @@ const styles = StyleSheet.create({
   quickChip:       { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, borderWidth: 1 },
   quickChipText:   { fontSize: 12, fontWeight: "600" as const },
   chatMessages:    { flex: 1 },
+  msgThread:       { gap: 6 },
   msgBubble:       { alignItems: "flex-end" },
   bubble:          { maxWidth: "85%", paddingHorizontal: 14, paddingVertical: 10, borderRadius: 18, borderBottomRightRadius: 4 },
   bubbleText:      { color: "#fff", fontSize: 14, lineHeight: 20 },
   bubbleTime:      { fontSize: 10, marginTop: 4, marginRight: 2 },
+  replyBubbleRow:  { alignItems: "flex-start" },
+  replyBubble:     { maxWidth: "85%", paddingHorizontal: 14, paddingVertical: 10, borderRadius: 18, borderBottomLeftRadius: 4, borderWidth: 1 },
+  replyBubbleText: { fontSize: 14, lineHeight: 20 },
   emptyChat:       { textAlign: "center", marginTop: 40, fontSize: 14 },
   compose:         { flexDirection: "row", alignItems: "flex-end", gap: 10, padding: 12, borderTopWidth: 1 },
   composeInput:    { flex: 1, borderWidth: 1, borderRadius: 20, paddingHorizontal: 14, paddingVertical: 10, fontSize: 15, maxHeight: 100 },

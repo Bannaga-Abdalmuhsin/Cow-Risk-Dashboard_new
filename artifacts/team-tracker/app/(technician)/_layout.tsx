@@ -81,5 +81,5 @@ export default function TechnicianLayout() {
   const { user, loading } = useAuth();
   if (!loading && !user) return <Redirect href="/" />;
   if (!loading && user?.role !== "technician") return <Redirect href="/(manager)/map" />;
-  return isLiquidGlassAvailable() ? <NativeTabLayout /> : <ClassicTabLayout />;
+  return (Platform.OS === "ios" && isLiquidGlassAvailable()) ? <NativeTabLayout /> : <ClassicTabLayout />;
 }

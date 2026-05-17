@@ -73,7 +73,10 @@ export interface Assignment {
   message: string;
   sentAt: string;
   readAt: string | null;
+  reply: string | null;
+  repliedAt: string | null;
   managerName: string;
+  managerId: number;
 }
 
 export interface ChatMessage {
@@ -81,6 +84,8 @@ export interface ChatMessage {
   message: string;
   sentAt: string;
   readAt: string | null;
+  reply: string | null;
+  repliedAt: string | null;
 }
 
 export interface TeamUser {
@@ -156,6 +161,20 @@ export async function getChatHistory(token: string, techId: number): Promise<Cha
 
 export async function markAssignmentRead(token: string, id: number): Promise<void> {
   await apiFetch(`/api/team/assignments/${id}/read`, token, { method: "PATCH" });
+}
+
+export async function replyToAssignment(token: string, id: number, reply: string): Promise<void> {
+  await apiFetch(`/api/team/assignments/${id}/reply`, token, {
+    method: "PATCH",
+    body:   JSON.stringify({ reply }),
+  });
+}
+
+export async function savePushToken(token: string, pushToken: string): Promise<void> {
+  await apiFetch("/api/team/push-token", token, {
+    method: "POST",
+    body:   JSON.stringify({ pushToken }),
+  });
 }
 
 export async function getTeamUsers(token: string | null): Promise<TeamUser[]> {
