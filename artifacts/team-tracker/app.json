@@ -2,6 +2,7 @@
   "expo": {
     "name": "ACES Field Team Tracker",
     "slug": "aces-field-team-tracker",
+    "owner": "advanced-communications-and-electronics-systems-company",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon.png",
