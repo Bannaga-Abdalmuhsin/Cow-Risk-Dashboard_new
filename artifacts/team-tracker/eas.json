@@ -8,15 +8,16 @@
       "developmentClient": true,
       "distribution": "internal",
       "node": "24.0.0",
-      "pnpm": "10.0.0",
+      "pnpm": "10.26.1",
       "env": {
+        "EAS_SKIP_AUTO_FINGERPRINT": "1",
         "EXPO_PUBLIC_API_URL": "https://YOUR_REPLIT_DOMAIN/api"
       }
     },
     "preview": {
       "distribution": "internal",
       "node": "24.0.0",
-      "pnpm": "10.0.0",
+      "pnpm": "10.26.1",
       "android": {
         "buildType": "apk"
       },
@@ -24,23 +25,25 @@
         "simulator": true
       },
       "env": {
+        "EAS_SKIP_AUTO_FINGERPRINT": "1",
         "EXPO_PUBLIC_API_URL": "https://YOUR_REPLIT_DOMAIN/api"
       }
     },
     "preview-ios-device": {
       "distribution": "internal",
       "node": "24.0.0",
-      "pnpm": "10.0.0",
+      "pnpm": "10.26.1",
       "ios": {
         "simulator": false
       },
       "env": {
+        "EAS_SKIP_AUTO_FINGERPRINT": "1",
         "EXPO_PUBLIC_API_URL": "https://YOUR_REPLIT_DOMAIN/api"
       }
     },
     "production": {
       "node": "24.0.0",
-      "pnpm": "10.0.0",
+      "pnpm": "10.26.1",
       "android": {
         "buildType": "app-bundle"
       },
@@ -48,6 +51,7 @@
         "distribution": "store"
       },
       "env": {
+        "EAS_SKIP_AUTO_FINGERPRINT": "1",
         "EXPO_PUBLIC_API_URL": "https://YOUR_REPLIT_DOMAIN/api"
       }
     }
