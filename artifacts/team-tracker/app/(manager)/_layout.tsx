@@ -1,13 +1,24 @@
 import React from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { BlurView } from "expo-blur";
-import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Redirect, Tabs } from "expo-router";
-import { Icon, Label, NativeTabs } from "expo-router/unstable-native-tabs";
-import { SymbolView } from "expo-symbols";
 import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
+
+const isIOS = Platform.OS === "ios";
+
+const isLiquidGlassAvailable: () => boolean = isIOS
+  ? () => require("expo-glass-effect").isLiquidGlassAvailable()
+  : () => false;
+
+const SymbolView: React.ComponentType<any> = isIOS
+  ? require("expo-symbols").SymbolView
+  : () => null;
+
+const NativeTabs: any  = isIOS ? require("expo-router/unstable-native-tabs").NativeTabs  : null;
+const Icon: any        = isIOS ? require("expo-router/unstable-native-tabs").Icon        : null;
+const Label: any       = isIOS ? require("expo-router/unstable-native-tabs").Label       : null;
 
 function NativeTabLayout() {
   return (
@@ -34,7 +45,6 @@ function NativeTabLayout() {
 
 function ClassicTabLayout() {
   const colors = useColors();
-  const isIOS  = Platform.OS === "ios";
   const isWeb  = Platform.OS === "web";
 
   return (
@@ -107,5 +117,5 @@ export default function ManagerLayout() {
   const { user, loading } = useAuth();
   if (!loading && !user) return <Redirect href="/" />;
   if (!loading && user?.role !== "manager") return <Redirect href="/(technician)" />;
-  return (Platform.OS === "ios" && isLiquidGlassAvailable()) ? <NativeTabLayout /> : <ClassicTabLayout />;
+  return (isIOS && isLiquidGlassAvailable()) ? <NativeTabLayout /> : <ClassicTabLayout />;
 }

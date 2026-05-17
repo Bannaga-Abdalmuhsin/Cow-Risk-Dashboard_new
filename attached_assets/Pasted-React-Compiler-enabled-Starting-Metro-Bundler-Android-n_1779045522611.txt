@@ -1,0 +1,23 @@
+React Compiler enabled
+Starting Metro Bundler
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js ▓▓▓░░░░░░░░░░░░░ 21.8% ( 95/258)
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 66.1% (551/702)
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓░░░░ 79.1% ( 880/1005)
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 91.9% (1289/1346)
+Android Bundling failed 12736ms node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__950497bba3dbc1f6b1863109f86ef06a/node_modules/expo-router/entry.js (1361 modules)
+Error: Unable to resolve module react-compiler-runtime from /home/expo/workingdir/build/artifacts/team-tracker/app/(manager)/_layout.tsx: react-compiler-runtime could not be found within the project or in these directories:
+  node_modules
+  ../../node_modules
+  node_modules
+  ../../node_modules
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m [33mReact[39m [36mfrom[39m [32m"react"[39m[33m;[39m
+ [90m 2 |[39m [36mimport[39m { [33mPlatform[39m[33m,[39m [33mStyleSheet[39m[33m,[39m [33mView[39m } [36mfrom[39m [32m"react-native"[39m[33m;[39m
+ [90m 3 |[39m [36mimport[39m { [33mBlurView[39m } [36mfrom[39m [32m"expo-blur"[39m[33m;[39m
+ [90m 4 |[39m [36mimport[39m { isLiquidGlassAvailable } [36mfrom[39m [32m"expo-glass-effect"[39m[33m;[39m[0m
+
+Import stack:
+
+ artifacts/team-tracker/app/(manager)/_layout.tsx
+ | import "react-compiler-runtime"
+
+ artifacts/team-tracker/app (require.context)
