@@ -1,6 +1,10 @@
 modules = ["nodejs-20", "postgresql-16"]
 
 [[ports]]
+localPort = 8080
+externalPort = 8080
+
+[[ports]]
 localPort = 8081
 externalPort = 80
 
@@ -17,6 +21,10 @@ localPort = 21599
 externalPort = 3001
 
 [[ports]]
+localPort = 22337
+externalPort = 5000
+
+[[ports]]
 localPort = 24781
 externalPort = 3002
 
@@ -25,6 +33,27 @@ channel = "stable-25_05"
 
 [workflows]
 runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "artifacts/api-server: api"
+
+[[workflows.workflow]]
+name = "artifacts/api-server: api"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm --filter @workspace/api-server run dev"
+waitForPort = 8080
+
+[workflows.workflow.metadata]
+outputType = "console"
 
 [postMerge]
 path = "scripts/post-merge.sh"

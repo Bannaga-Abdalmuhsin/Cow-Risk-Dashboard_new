@@ -1,0 +1,35 @@
+import {
+  pgTable, text, serial, real, integer, boolean, timestamp,
+} from "drizzle-orm/pg-core";
+
+export const teamUsersTable = pgTable("team_users", {
+  id:        serial("id").primaryKey(),
+  name:      text("name").notNull(),
+  role:      text("role").notNull(),
+  pin:       text("pin").notNull(),
+  token:     text("token"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const techLocationsTable = pgTable("tech_locations", {
+  id:        serial("id").primaryKey(),
+  userId:    integer("user_id").notNull().unique().references(() => teamUsersTable.id),
+  lat:       real("lat").notNull(),
+  lng:       real("lng").notNull(),
+  area:      text("area"),
+  isOnDuty:  boolean("is_on_duty").default(false).notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const assignmentsTable = pgTable("assignments", {
+  id:        serial("id").primaryKey(),
+  techId:    integer("tech_id").notNull().references(() => teamUsersTable.id),
+  managerId: integer("manager_id").notNull().references(() => teamUsersTable.id),
+  message:   text("message").notNull(),
+  sentAt:    timestamp("sent_at").defaultNow().notNull(),
+  readAt:    timestamp("read_at"),
+});
+
+export type TeamUser     = typeof teamUsersTable.$inferSelect;
+export type TechLocation = typeof techLocationsTable.$inferSelect;
+export type Assignment   = typeof assignmentsTable.$inferSelect;

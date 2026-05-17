@@ -84,11 +84,22 @@ function HeatmapLayer({ analyses }: HeatmapLayerProps) {
   return null;
 }
 
+export interface LiveTechLocation {
+  userId: number;
+  userName: string;
+  lat: number;
+  lng: number;
+  area: string | null;
+  isOnDuty: boolean;
+  updatedAt: string;
+}
+
 interface LeafletMapProps {
   analyses: SiteAnalysis[];
   selectedSiteId: string | null;
   onSelectSite: (id: string) => void;
   showTeamMarkers?: boolean;
+  techLocations?: LiveTechLocation[];
 }
 
 type TileMode = "street" | "satellite" | "terrain" | "dark";
@@ -120,7 +131,17 @@ const TILE_LAYERS: Record<TileMode, { url: string; attribution: string; label: s
   },
 };
 
-export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMarkers = false }: LeafletMapProps) {
+const liveTechIcon = (name: string, isOnDuty: boolean) => L.divIcon({
+  className: "",
+  html: `<div style="background:${isOnDuty ? "#00BFB3" : "#6B7280"};color:white;border:2.5px solid white;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,0.45);white-space:nowrap;position:relative;">
+    ${name.replace("Tech-", "T")}
+    ${isOnDuty ? '<span style="position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#34D399;border-radius:50%;border:1.5px solid white;"></span>' : ""}
+  </div>`,
+  iconSize:   [30, 30],
+  iconAnchor: [15, 15],
+});
+
+export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMarkers = false, techLocations = [] }: LeafletMapProps) {
   const [showHeatmap, setShowHeatmap] = useState(true);
   const [showMarkers, setShowMarkers] = useState(false);
   const [tileMode, setTileMode] = useState<TileMode>("street");
@@ -149,6 +170,27 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
         />
 
         {showHeatmap && <HeatmapLayer analyses={analyses} />}
+
+        {showTeamMarkers && techLocations.map(loc => (
+          <Marker
+            key={`live-${loc.userId}`}
+            position={[loc.lat, loc.lng]}
+            icon={liveTechIcon(loc.userName, loc.isOnDuty)}
+          >
+            <Popup maxWidth={200} minWidth={170}>
+              <div className="p-1">
+                <div className="font-bold text-sm mb-0.5" style={{ color: "#00736b" }}>
+                  {loc.userName}
+                  {loc.isOnDuty && <span className="ml-1.5 text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded font-bold uppercase">Live</span>}
+                </div>
+                <div className="text-xs text-gray-500 mb-1">{loc.area ?? "Unknown area"}</div>
+                <div className="text-xs text-gray-400">
+                  Updated {Math.floor((Date.now() - new Date(loc.updatedAt).getTime()) / 60000)}m ago
+                </div>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
 
         {showTeamMarkers && ESCALATION_TEAMS.map(team => (
           <Marker

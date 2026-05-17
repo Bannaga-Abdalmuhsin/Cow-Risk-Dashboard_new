@@ -6,6 +6,12 @@ uri = "file://artifacts/hajj-dashboard/public/login-bg.png"
 type = "image"
 title = "hajj mosque cow tower login background"
 
+[[generated]]
+id = "fR3WQg_UkoXeUQ4eJdVFI"
+uri = "file://artifacts/team-tracker/assets/images/icon.png"
+type = "image"
+title = "aces-field-ops-icon"
+
 [[outputs]]
 id = "e5W06XB6b2TieHocUNgyo"
 uri = "file://.local/outputs/Cow-Risk-Dashboard.pptx"

@@ -1,4 +1,5 @@
-import { useState, useMemo, type ReactNode } from "react";
+import { useState, useMemo, useEffect, useRef, type ReactNode } from "react";
+import type { LiveTechLocation } from "../components/LeafletMap";
 import acesLogo from "@assets/ChatGPT_Image_Oct_14,_2025,_10_29_41_PM_1776566555155.png";
 import stcLogo from "@assets/7010.SR.D-9f4e531b_(1)_1776566577166.png";
 import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer } from "lucide-react";
@@ -46,6 +47,25 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   , 0);
 
   const selectedAnalysis = selectedSiteId ? analyses.find(a => a.site.id === selectedSiteId) ?? null : null;
+
+  const [techLocations, setTechLocations] = useState<LiveTechLocation[]>([]);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (activeTab !== "technicians") {
+      if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+      return;
+    }
+    const fetchTechs = () => {
+      fetch("/api/team/locations")
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then((data: LiveTechLocation[]) => setTechLocations(data))
+        .catch(() => {});
+    };
+    fetchTechs();
+    pollRef.current = setInterval(fetchTechs, 10000);
+    return () => { if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; } };
+  }, [activeTab]);
 
   const handleSelectSite = (id: string) => {
     setSelectedSiteId(prev => prev === id ? null : id);
@@ -262,11 +282,21 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
               </div>
               <div className="lg:col-span-2" style={{ minHeight: 340 }}>
+                {techLocations.length > 0 && (
+                  <div className="mb-2 flex items-center gap-2 text-xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                    <span className="text-emerald-400 font-semibold">
+                      {techLocations.filter(t => t.isOnDuty).length} technician{techLocations.filter(t => t.isOnDuty).length !== 1 ? "s" : ""} live on map
+                    </span>
+                    <span className="text-muted-foreground">· refreshes every 10s</span>
+                  </div>
+                )}
                 <LeafletMap
                   analyses={analyses}
                   selectedSiteId={selectedSiteId}
                   onSelectSite={handleSelectSite}
                   showTeamMarkers={true}
+                  techLocations={techLocations}
                 />
               </div>
             </div>

@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/team-tracker/"
+title = "ACES Field Team Tracker"
+version = "1.0.0"
+id = "artifacts/team-tracker"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/team-tracker/" ]
+localPort = 22337
+
+[services.development]
+run = "pnpm --filter @workspace/team-tracker run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/team-tracker", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/team-tracker", "run", "serve" ]
+
+[services.env]
+PORT = "22337"
+BASE_PATH = "/team-tracker/"

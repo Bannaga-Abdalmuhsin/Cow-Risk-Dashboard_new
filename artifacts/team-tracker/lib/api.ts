@@ -1,0 +1,92 @@
+const DOMAIN = process.env.EXPO_PUBLIC_DOMAIN;
+export const BASE_URL = DOMAIN ? `https://${DOMAIN}` : "";
+
+export interface TechLocationWithUser {
+  id: number;
+  userId: number;
+  userName: string;
+  role: string;
+  lat: number;
+  lng: number;
+  area: string | null;
+  isOnDuty: boolean;
+  updatedAt: string;
+}
+
+export interface Assignment {
+  id: number;
+  message: string;
+  sentAt: string;
+  readAt: string | null;
+  managerName: string;
+}
+
+export interface TeamUser {
+  id: number;
+  name: string;
+  role: string;
+}
+
+export async function apiFetch<T>(
+  path: string,
+  token: string | null,
+  options: RequestInit = {},
+): Promise<T> {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    ...(options.headers as Record<string, string> ?? {}),
+  };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  const res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({})) as { error?: string };
+    throw new Error(body.error ?? `HTTP ${res.status}`);
+  }
+  return res.json() as Promise<T>;
+}
+
+export async function getTeamLocations(token: string | null): Promise<TechLocationWithUser[]> {
+  return apiFetch<TechLocationWithUser[]>("/api/team/locations", token);
+}
+
+export async function updateLocation(
+  token: string,
+  lat: number,
+  lng: number,
+  area: string | null,
+  isOnDuty: boolean,
+): Promise<void> {
+  await apiFetch("/api/team/location", token, {
+    method: "PUT",
+    body:   JSON.stringify({ lat, lng, area, isOnDuty }),
+  });
+}
+
+export async function getMyAssignment(token: string): Promise<Assignment | null> {
+  return apiFetch<Assignment | null>("/api/team/assignments/my", token);
+}
+
+export async function sendAssignment(token: string, techId: number, message: string): Promise<void> {
+  await apiFetch("/api/team/assignments", token, {
+    method: "POST",
+    body:   JSON.stringify({ techId, message }),
+  });
+}
+
+export async function markAssignmentRead(token: string, id: number): Promise<void> {
+  await apiFetch(`/api/team/assignments/${id}/read`, token, { method: "PATCH" });
+}
+
+export async function getTeamUsers(token: string | null): Promise<TeamUser[]> {
+  return apiFetch<TeamUser[]>("/api/team/users", token);
+}
+
+export function detectArea(lat: number, lng: number): string {
+  if (lat > 21.20 && lat < 21.45 && lng > 39.80 && lng < 39.95) {
+    if (lat > 21.37 && lat < 21.43 && lng > 39.86 && lng < 39.92) return "Mina";
+    if (lat > 21.34 && lat < 21.38 && lng > 39.93 && lng < 39.99) return "Muzdalifah";
+    if (lat > 21.36 && lat < 21.41 && lng > 39.96 && lng < 40.05) return "Arafat";
+    return "Makkah";
+  }
+  return "Holy Sites";
+}
