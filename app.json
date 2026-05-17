@@ -7,6 +7,12 @@
     },
     "android": {
       "package": "com.bannaga.workspace"
+    },
+    "ios": {
+      "bundleIdentifier": "com.bannaga.workspace",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     }
   }
 }
