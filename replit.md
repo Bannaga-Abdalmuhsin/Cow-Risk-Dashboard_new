@@ -28,7 +28,20 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 
 ## EAS Mobile Builds (ACES Field Team Tracker)
 
-To trigger cloud builds from the Replit shell:
+### One-command release
+
+Use the release script to build Android APK + iOS IPA and submit to the stores in a single step:
+
+```bash
+export EXPO_TOKEN="<your-robot-token>"
+bash artifacts/team-tracker/scripts/release.sh
+```
+
+- Runs both builds sequentially and streams all EAS output to the terminal.
+- Saves the full log (including build URLs) to `artifacts/team-tracker/build-logs/release-<timestamp>.log`.
+- Fails fast if `EXPO_TOKEN` is not set.
+
+### Manual commands (individual platforms)
 
 ```bash
 cd ~/workspace/artifacts/team-tracker
