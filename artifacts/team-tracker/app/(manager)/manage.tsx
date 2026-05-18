@@ -13,6 +13,7 @@ import {
   UnauthorizedError,
   LOCATIONS, type TeamUser, type HajjLocation,
 } from "@/lib/api";
+import { OfflineBanner } from "@/components/OfflineBanner";
 
 const ROLES = ["technician", "manager"] as const;
 const ALL_LOCATIONS = [...LOCATIONS, "All Regions"] as const;
@@ -65,21 +66,34 @@ export default function ManageScreen() {
   const insets = useSafeAreaInsets();
   const { token, logout } = useAuth();
 
-  const [users,      setUsers]      = useState<TeamUser[]>([]);
-  const [loading,    setLoading]    = useState(true);
-  const [showForm,   setShowForm]   = useState(false);
-  const [editTarget, setEditTarget] = useState<TeamUser | null>(null);
-  const [form,       setForm]       = useState<UserForm>(EMPTY_FORM);
-  const [saving,     setSaving]     = useState(false);
-  const [formError,  setFormError]  = useState("");
+  const [users,        setUsers]        = useState<TeamUser[]>([]);
+  const [loading,      setLoading]      = useState(true);
+  const [showForm,     setShowForm]     = useState(false);
+  const [editTarget,   setEditTarget]   = useState<TeamUser | null>(null);
+  const [form,         setForm]         = useState<UserForm>(EMPTY_FORM);
+  const [saving,       setSaving]       = useState(false);
+  const [formError,    setFormError]    = useState("");
+  const [networkError, setNetworkError] = useState(false);
+  const [retrying,     setRetrying]     = useState(false);
 
   const topPad    = insets.top + (Platform.OS === "web" ? 67 : 0);
   const bottomPad = insets.bottom + (Platform.OS === "web" ? 34 : 80);
 
   const load = useCallback(async () => {
-    try { setUsers(await getTeamUsers(token)); } catch {}
+    try {
+      setUsers(await getTeamUsers(token));
+      setNetworkError(false);
+    } catch (err) {
+      if (!(err instanceof UnauthorizedError)) setNetworkError(true);
+    }
     setLoading(false);
   }, [token]);
+
+  const handleRetry = async () => {
+    setRetrying(true);
+    await load();
+    setRetrying(false);
+  };
 
   useEffect(() => { load(); }, [load]);
 
@@ -181,6 +195,8 @@ export default function ManageScreen() {
           <Text style={styles.addBtnText}>Add</Text>
         </TouchableOpacity>
       </View>
+
+      {networkError && <OfflineBanner onRetry={handleRetry} retrying={retrying} />}
 
       {loading ? (
         <View style={styles.center}><ActivityIndicator color={colors.primary} size="large" /></View>

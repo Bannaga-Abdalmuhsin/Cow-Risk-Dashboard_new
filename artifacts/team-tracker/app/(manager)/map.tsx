@@ -9,8 +9,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
-import { getTeamLocations, sendAssignment, type TechLocationWithUser } from "@/lib/api";
+import { getTeamLocations, sendAssignment, UnauthorizedError, type TechLocationWithUser } from "@/lib/api";
 import MapViewContainer from "@/components/MapViewContainer";
+import { OfflineBanner } from "@/components/OfflineBanner";
 
 const ZONES = ["Arafat", "Mina", "Muzdalifa", "Makka", "Makka Remote"] as const;
 
@@ -40,21 +41,32 @@ export default function ManagerMapScreen() {
   const insets  = useSafeAreaInsets();
   const { token, logout } = useAuth();
 
-  const [locations,  setLocations]  = useState<TechLocationWithUser[]>([]);
-  const [loading,    setLoading]    = useState(true);
-  const [selected,   setSelected]   = useState<TechLocationWithUser | null>(null);
-  const [msgVisible, setMsgVisible] = useState(false);
-  const [message,    setMessage]    = useState("");
-  const [sending,    setSending]    = useState(false);
-  const [summaryOpen, setSummaryOpen] = useState(true);
+  const [locations,    setLocations]    = useState<TechLocationWithUser[]>([]);
+  const [loading,      setLoading]      = useState(true);
+  const [selected,     setSelected]     = useState<TechLocationWithUser | null>(null);
+  const [msgVisible,   setMsgVisible]   = useState(false);
+  const [message,      setMessage]      = useState("");
+  const [sending,      setSending]      = useState(false);
+  const [summaryOpen,  setSummaryOpen]  = useState(true);
+  const [networkError, setNetworkError] = useState(false);
+  const [retrying,     setRetrying]     = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const fetchLocations = async () => {
     try {
       const data = await getTeamLocations(token);
       setLocations(data);
-    } catch {}
+      setNetworkError(false);
+    } catch (err) {
+      if (!(err instanceof UnauthorizedError)) setNetworkError(true);
+    }
     setLoading(false);
+  };
+
+  const handleRetry = async () => {
+    setRetrying(true);
+    await fetchLocations();
+    setRetrying(false);
   };
 
   useEffect(() => {
@@ -102,6 +114,8 @@ export default function ManagerMapScreen() {
           <Feather name="log-out" size={18} color={colors.mutedForeground} />
         </TouchableOpacity>
       </View>
+
+      {networkError && <OfflineBanner onRetry={handleRetry} retrying={retrying} />}
 
       {loading ? (
         <View style={styles.center}>

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  ActivityIndicator, Keyboard, Platform, RefreshControl, ScrollView,
+  ActivityIndicator, Alert, Keyboard, Platform, RefreshControl, ScrollView,
   StyleSheet, Text, TextInput, TouchableOpacity, View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,7 +9,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
-import { getMyAssignment, markAssignmentRead, replyToAssignment, type Assignment } from "@/lib/api";
+import { getMyAssignment, markAssignmentRead, replyToAssignment, UnauthorizedError, type Assignment } from "@/lib/api";
+import { OfflineBanner } from "@/components/OfflineBanner";
 
 export default function AssignmentScreen() {
   const colors = useColors();
@@ -22,6 +23,8 @@ export default function AssignmentScreen() {
   const [marking,      setMarking]      = useState(false);
   const [replyText,    setReplyText]    = useState("");
   const [sendingReply, setSendingReply] = useState(false);
+  const [networkError, setNetworkError] = useState(false);
+  const [retrying,     setRetrying]     = useState(false);
 
   const inputRef = useRef<TextInput>(null);
 
@@ -29,10 +32,19 @@ export default function AssignmentScreen() {
     try {
       const data = await getMyAssignment(token!);
       setAssignment(data);
-    } catch {}
+      setNetworkError(false);
+    } catch (err) {
+      if (!(err instanceof UnauthorizedError)) setNetworkError(true);
+    }
     setLoading(false);
     setRefreshing(false);
   }, [token]);
+
+  const handleRetry = async () => {
+    setRetrying(true);
+    await fetchAssignment();
+    setRetrying(false);
+  };
 
   useEffect(() => {
     fetchAssignment();
@@ -47,7 +59,11 @@ export default function AssignmentScreen() {
       await markAssignmentRead(token!, assignment.id);
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setAssignment(prev => prev ? { ...prev, readAt: new Date().toISOString() } : null);
-    } catch {}
+    } catch (err) {
+      if (!(err instanceof UnauthorizedError)) {
+        Alert.alert("Could not acknowledge", "Server may be starting up. Please try again.");
+      }
+    }
     setMarking(false);
   };
 
@@ -63,7 +79,11 @@ export default function AssignmentScreen() {
         : null,
       );
       setReplyText("");
-    } catch {}
+    } catch (err) {
+      if (!(err instanceof UnauthorizedError)) {
+        Alert.alert("Could not send reply", "Server may be starting up. Please try again.");
+      }
+    }
     setSendingReply(false);
   };
 
@@ -90,6 +110,8 @@ export default function AssignmentScreen() {
           </View>
         )}
       </View>
+
+      {networkError && <OfflineBanner onRetry={handleRetry} retrying={retrying} />}
 
       <ScrollView
         contentContainerStyle={{ padding: 20, paddingBottom: bottomPad, flexGrow: 1 }}

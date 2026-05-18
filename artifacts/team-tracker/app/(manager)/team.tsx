@@ -8,7 +8,8 @@ import { Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
-import { getTeamLocations, type TechLocationWithUser } from "@/lib/api";
+import { getTeamLocations, UnauthorizedError, type TechLocationWithUser } from "@/lib/api";
+import { OfflineBanner } from "@/components/OfflineBanner";
 
 function minutesAgo(iso: string): number {
   return Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
@@ -42,18 +43,29 @@ export default function ManagerTeamScreen() {
   const insets  = useSafeAreaInsets();
   const { token, logout } = useAuth();
 
-  const [locations,  setLocations]  = useState<TechLocationWithUser[]>([]);
-  const [loading,    setLoading]    = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
+  const [locations,    setLocations]    = useState<TechLocationWithUser[]>([]);
+  const [loading,      setLoading]      = useState(true);
+  const [refreshing,   setRefreshing]   = useState(false);
+  const [networkError, setNetworkError] = useState(false);
+  const [retrying,     setRetrying]     = useState(false);
 
   const fetchLocations = useCallback(async () => {
     try {
       const data = await getTeamLocations(token);
       setLocations(data);
-    } catch {}
+      setNetworkError(false);
+    } catch (err) {
+      if (!(err instanceof UnauthorizedError)) setNetworkError(true);
+    }
     setLoading(false);
     setRefreshing(false);
   }, [token]);
+
+  const handleRetry = async () => {
+    setRetrying(true);
+    await fetchLocations();
+    setRetrying(false);
+  };
 
   useEffect(() => { fetchLocations(); }, [fetchLocations]);
 
@@ -75,6 +87,8 @@ export default function ManagerTeamScreen() {
           <Feather name="log-out" size={18} color={colors.mutedForeground} />
         </TouchableOpacity>
       </View>
+
+      {networkError && <OfflineBanner onRetry={handleRetry} retrying={retrying} />}
 
       {loading ? (
         <View style={styles.center}>
