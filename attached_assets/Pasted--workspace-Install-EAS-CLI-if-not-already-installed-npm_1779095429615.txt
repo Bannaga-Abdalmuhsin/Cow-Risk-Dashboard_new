@@ -1,0 +1,104 @@
+~/workspace$ # Install EAS CLI if not already installed
+npm install -g eas-cli
+
+# Set your robot token
+export EXPO_TOKEN="x_6WRwJLzQiRy-GgORD2rUOOpofT2rM-SUFtfBvH"
+
+# Navigate into the team-tracker folder of your cloned repo
+cd artifacts/team-tracker
+
+# Install dependencies
+npm install --legacy-peer-deps
+
+# Android APK (preview)
+eas build --platform android --profile preview --non-interactive
+
+# iOS IPA (production + auto-submit)
+eas build --platform ios --profile production --non-interactive --auto-submit
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+npm warn deprecated glob@6.0.4: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated rimraf@2.4.5: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated lodash.get@4.4.2: This package is deprecated. Use the optional chaining (?.) operator instead.
+npm warn deprecated uuid@7.0.3: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated uuid@8.3.2: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated uuid@8.3.2: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated uuid@9.0.1: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated tar@7.5.7: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+changed 514 packages in 16s
+
+65 packages are looking for funding
+  run `npm fund` for details
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm error code 127
+npm error path /home/runner/workspace/node_modules/.pnpm/@expo+cli@54.0.23_expo-router@6.0.23_expo@54.0.34_react-native@0.81.5_@babel+core@7.29._305a0d6a5c0c92be939d5c53cc74ae9f/node_modules/@expo/cli
+npm error command failed
+npm error command sh -c taskr release
+npm error sh: line 1: taskr: command not found
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-05-18T09_11_20_191Z-debug-0.log
+Resolved "preview" environment for the build. Learn more: https://docs.expo.dev/eas/environment-variables/#setting-the-environment-for-your-builds
+No environment variables with visibility "Plain text" and "Sensitive" found for the "preview" environment on EAS.
+Environment variables loaded from the "preview" build profile "env" configuration: EAS_SKIP_AUTO_FINGERPRINT, EXPO_PUBLIC_API_URL.
+
+
+
+✔ Using remote Android credentials (Expo server)
+✔ Using Keystore from configuration: Build Credentials nLd-wMlkVP (default)
+
+Compressing project files and uploading to EAS Build. Learn more: https://expo.fyi/eas-build-archive
+✖ Compressing project files
+Failed to upload the project tarball to EAS Build
+
+Reason: Unknown system error -122: Unknown system error -122, copyfile '/home/runner/workspace/.local/share/pnpm/store/v10/files/f2/06f7ad2b6d28978d362f51b4dcb4d2de256a95f701e25e68618414e53a52ffa3e65f980e6b86c86eb0e5fedef3a50e9bae5edf396acb74fa6b4e092ee7d8ad' -> '/tmp/runner/eas-cli-nodejs/9836a926-734c-423c-a278-b1e2a97afae7-shallow-clone/.local/share/pnpm/store/v10/files/f2/06f7ad2b6d28978d362f51b4dcb4d2de256a95f701e25e68618414e53a52ffa3e65f980e6b86c86eb0e5fedef3a50e9bae5edf396acb74fa6b4e092ee7d8ad'
+    Error: build command failed.
+
+⚠️ Detected that your app uses Expo Go for development, this is not recommended when building production apps.
+Learn more: https://expo.fyi/why-not-build-expo-go-for-production
+To suppress this warning, set EAS_BUILD_NO_EXPO_GO_WARNING=true.
+
+Resolved "production" environment for the build. Learn more: https://docs.expo.dev/eas/environment-variables/#setting-the-environment-for-your-builds
+No environment variables with visibility "Plain text" and "Sensitive" found for the "production" environment on EAS.
+Environment variables loaded from the "production" build profile "env" configuration: EAS_SKIP_AUTO_FINGERPRINT, EXPO_PUBLIC_API_URL.
+
+
+
+✔ Using remote iOS credentials (Expo server)
+
+Distribution Certificate is not validated for non-interactive builds.
+Skipping Provisioning Profile validation on Apple Servers because we aren't authenticated.
+
+Project Credentials Configuration
+
+Project                   @advanced-communications-and-electronics-systems-company/aces-field-team-tracker
+Bundle Identifier         com.acesmsd.fieldtracker
+                          
+App Store Configuration   
+                          
+Distribution Certificate  
+Serial Number             981DCEB6D97EE40F74BE500C56541AC
+Expiration Date           Tue, 04 May 2027 11:29:39 UTC
+Apple Team                7V975V396R (ADVANCED COMMUNICATIONS AND ELECTRONIC SYSTEMS COMPANY (Company/Organization))
+Updated                   13 days ago
+                          
+Provisioning Profile      
+Developer Portal ID       2H4F953GT3
+Status                    active
+Expiration                Tue, 04 May 2027 11:29:39 UTC
+Apple Team                7V975V396R (ADVANCED COMMUNICATIONS AND ELECTRONIC SYSTEMS COMPANY (Company/Organization))
+Updated                   13 hours ago
+                          
+All credentials are ready to build @advanced-communications-and-electronics-systems-company/aces-field-team-tracker (com.acesmsd.fieldtracker)
+
+
+Compressing project files and uploading to EAS Build. Learn more: https://expo.fyi/eas-build-archive
+✖ Compressing project files
+Failed to upload the project tarball to EAS Build
+
+Reason: Unknown system error -122: Unknown system error -122, copyfile '/home/runner/workspace/.local/share/pnpm/store/v10/files/f2/06f7ad2b6d28978d362f51b4dcb4d2de256a95f701e25e68618414e53a52ffa3e65f980e6b86c86eb0e5fedef3a50e9bae5edf396acb74fa6b4e092ee7d8ad' -> '/tmp/runner/eas-cli-nodejs/137a8678-4c06-40f9-af10-d9821ee5b96a-shallow-clone/.local/share/pnpm/store/v10/files/f2/06f7ad2b6d28978d362f51b4dcb4d2de256a95f701e25e68618414e53a52ffa3e65f980e6b86c86eb0e5fedef3a50e9bae5edf396acb74fa6b4e092ee7d8ad'
+    Error: build command failed.
+~/.../artifacts/team-tracker$ 
