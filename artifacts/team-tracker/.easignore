@@ -1,19 +1,18 @@
 # Monorepo root — exclude everything outside this package
-../../node_modules
-../../artifacts/hajj-dashboard
-../../artifacts/cow-risk-action-plan
-../../artifacts/api-server
-../../lib
-../../scripts
-../../.local
+artifacts/hajj-dashboard
+artifacts/cow-risk-action-plan
+artifacts/api-server
+lib
+scripts
+.local
 
 # Local build artifacts
 node_modules
-android/
-ios/
-.expo/
-dist/
-web-build/
+artifacts/team-tracker/android/
+artifacts/team-tracker/ios/
+artifacts/team-tracker/.expo/
+artifacts/team-tracker/dist/
+artifacts/team-tracker/web-build/
 
 # Keys and secrets (already in .gitignore but be explicit)
 *.p8
