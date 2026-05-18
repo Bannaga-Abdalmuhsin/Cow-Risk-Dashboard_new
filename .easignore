@@ -1,6 +1,11 @@
 # pnpm content-addressable store (large, not needed by EAS build server)
 .local
 
+# pnpm workspace files — EAS server must NOT see these or it tries to install
+# the entire monorepo instead of just artifacts/team-tracker
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
 # Root-level node_modules (build server installs its own from artifacts/team-tracker/package.json)
 node_modules
 
