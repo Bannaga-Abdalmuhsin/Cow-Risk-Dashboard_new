@@ -1,0 +1,21 @@
+# pnpm content-addressable store
+.local/share/pnpm/store
+
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env.local
+.env.*.local
+
+# Editor
+.DS_Store
+*.swp
+
+# EAS / Expo
+.expo/
+web-build/
