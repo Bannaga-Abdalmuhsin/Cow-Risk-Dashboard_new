@@ -1,0 +1,15 @@
+node_modules/
+.pnpm-store/
+**/.git/
+**/dist/
+**/.turbo/
+**/coverage/
+**/*.log
+.local/
+attached_assets/
+tmp/
+artifacts/hajj-dashboard/
+artifacts/cow-risk-action-plan/
+artifacts/api-server/
+lib/
+scripts/
