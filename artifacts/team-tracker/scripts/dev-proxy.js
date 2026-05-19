@@ -9,16 +9,14 @@
  *
  * Also proxies WebSocket upgrade requests to Metro (needed for hot reload).
  *
- * This lets iOS/Android Expo Go apps call the API via the publicly-accessible
- * expo domain instead of the picard domain (which requires Replit auth for
- * external requests).
+ * Port cleanup is handled by start.js before this process is spawned.
  */
 
 const http = require("http");
 const net  = require("net");
 
-const PORT       = parseInt(process.env.PORT || "22337", 10);
-const METRO_PORT = PORT + 1;
+const PORT       = parseInt(process.env.PORT       || "22337", 10);
+const METRO_PORT = parseInt(process.env.METRO_PORT || String(PORT + 1), 10);
 const API_PORT   = 8080;
 
 function pipe(req, res, targetPort) {
@@ -59,6 +57,11 @@ server.on("upgrade", (req, socket, head) => {
   });
   upstream.on("error", () => socket.destroy());
   socket.on("error",   () => upstream.destroy());
+});
+
+server.on("error", (err) => {
+  console.error(`[dev-proxy] bind :${PORT} failed — ${err.message}`);
+  process.exit(1);
 });
 
 server.listen(PORT, () => {
