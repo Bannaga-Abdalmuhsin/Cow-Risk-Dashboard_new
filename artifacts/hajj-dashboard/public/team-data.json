@@ -1,0 +1,130 @@
+[
+  {
+    "id": 1,
+    "name": "Bannaga",
+    "role": "manager",
+    "defaultArea": null,
+    "mcName": null,
+    "mobileNumber": null
+  },
+  {
+    "id": 353,
+    "name": "Taher",
+    "role": "manager",
+    "defaultArea": "All Regions",
+    "mcName": "All",
+    "mobileNumber": "+966 54 144 0795"
+  },
+  {
+    "id": 20,
+    "name": "Abid",
+    "role": "technician",
+    "defaultArea": "Arafat",
+    "mcName": "CWN076",
+    "mobileNumber": "0557592859"
+  },
+  {
+    "id": 21,
+    "name": "Akhttar",
+    "role": "technician",
+    "defaultArea": "Muzdalifa",
+    "mcName": "CWN062",
+    "mobileNumber": "0575972995"
+  },
+  {
+    "id": 54,
+    "name": "Ali",
+    "role": "technician",
+    "defaultArea": "Arafat",
+    "mcName": "CWN908",
+    "mobileNumber": "0562524483"
+  },
+  {
+    "id": 352,
+    "name": "Arafat",
+    "role": "technician",
+    "defaultArea": "All Regions",
+    "mcName": "All",
+    "mobileNumber": "056 020 5981"
+  },
+  {
+    "id": 87,
+    "name": "Arif",
+    "role": "technician",
+    "defaultArea": "Arafat",
+    "mcName": "CWN108",
+    "mobileNumber": "0564539757"
+  },
+  {
+    "id": 153,
+    "name": "Emad",
+    "role": "technician",
+    "defaultArea": "Arafat",
+    "mcName": "CW073",
+    "mobileNumber": "0561788272"
+  },
+  {
+    "id": 120,
+    "name": "Farooq",
+    "role": "technician",
+    "defaultArea": "Mina",
+    "mcName": "CWN978",
+    "mobileNumber": "0510210327"
+  },
+  {
+    "id": 351,
+    "name": "Hussam",
+    "role": "technician",
+    "defaultArea": "All Regions",
+    "mcName": "All",
+    "mobileNumber": "0504743725"
+  },
+  {
+    "id": 186,
+    "name": "Muath",
+    "role": "technician",
+    "defaultArea": "Arafat",
+    "mcName": "CWN072",
+    "mobileNumber": "0597735283"
+  },
+  {
+    "id": 219,
+    "name": "Nadeem",
+    "role": "technician",
+    "defaultArea": "Arafat",
+    "mcName": "CWN092",
+    "mobileNumber": "0564537452"
+  },
+  {
+    "id": 220,
+    "name": "Nasser",
+    "role": "technician",
+    "defaultArea": "Muzdalifa",
+    "mcName": "CWN066",
+    "mobileNumber": "0564537696"
+  },
+  {
+    "id": 252,
+    "name": "Tasleem",
+    "role": "technician",
+    "defaultArea": "Makkah Remote",
+    "mcName": "CWN998",
+    "mobileNumber": "0530992856"
+  },
+  {
+    "id": 285,
+    "name": "Umair",
+    "role": "technician",
+    "defaultArea": "Makkah",
+    "mcName": "Makka MC",
+    "mobileNumber": "0564538937"
+  },
+  {
+    "id": 318,
+    "name": "Younis",
+    "role": "technician",
+    "defaultArea": "Mina",
+    "mcName": "CWN089",
+    "mobileNumber": "0538105210"
+  }
+]

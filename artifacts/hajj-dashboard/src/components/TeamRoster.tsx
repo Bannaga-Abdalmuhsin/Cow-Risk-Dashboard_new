@@ -33,15 +33,24 @@ export function TeamRoster({ compact = false, techLocations = [] }: TeamRosterPr
     setLoading(true);
     setError(null);
     fetch("/api/team/users")
-      .then(r => r.ok ? r.json() : Promise.reject(`HTTP ${r.status}`))
-      .then((data: TeamMember[]) => {
+      .then(r => r.ok ? r.json() as Promise<TeamMember[]> : Promise.reject(r.status))
+      .then((data) => {
         setMembers(data);
         setLastUpdated(new Date());
         setLoading(false);
       })
-      .catch((e) => {
-        setError(String(e));
-        setLoading(false);
+      .catch(() => {
+        fetch("/team-data.json")
+          .then(r => r.ok ? r.json() as Promise<TeamMember[]> : Promise.reject("static-404"))
+          .then((data) => {
+            setMembers(data);
+            setLastUpdated(new Date());
+            setLoading(false);
+          })
+          .catch(() => {
+            setError("Team data unavailable");
+            setLoading(false);
+          });
       });
   };
 

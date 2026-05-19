@@ -483,6 +483,10 @@ importers:
       zod:
         specifier: 'catalog:'
         version: 3.25.76
+    optionalDependencies:
+      pg:
+        specifier: ^8.20.0
+        version: 8.20.0
 
   artifacts/team-tracker:
     dependencies:

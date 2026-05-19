@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "build": "vite build --config vite.config.ts",
+    "build": "node scripts/fetch-team.mjs && vite build --config vite.config.ts",
     "build:github": "vite build --config vite.github.config.ts",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit"
@@ -76,6 +76,9 @@
     "vite": "catalog:",
     "wouter": "^3.3.5",
     "zod": "catalog:"
+  },
+  "optionalDependencies": {
+    "pg": "^8.20.0"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.3",
