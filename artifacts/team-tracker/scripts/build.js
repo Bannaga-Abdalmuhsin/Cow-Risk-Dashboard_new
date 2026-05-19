@@ -140,6 +140,9 @@ async function startMetro(expoPublicDomain, expoPublicReplId) {
     ...process.env,
     EXPO_PUBLIC_DOMAIN: expoPublicDomain,
     EXPO_PUBLIC_REPL_ID: expoPublicReplId,
+    // Prevent Expo CLI from calling Expo servers (avoids ApiV2Error in CI/build environments)
+    EXPO_OFFLINE: "1",
+    CI: "1",
   };
 
   if (expoPublicReplId) {
