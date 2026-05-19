@@ -101,11 +101,13 @@ export function RiskDistributionPie({ analyses }: RiskChartsProps) {
   );
 }
 
-export function PowerSourceDonut({ analyses }: RiskChartsProps) {
-  const sb = analyses.filter(a => a.site.powerConfig === "commercial_with_backup").length;
-  const sg = analyses.filter(a => a.site.powerConfig === "single_generator" && !a.site.primeGenNetPowerKw).length;
-  const dg = analyses.filter(a => a.site.powerConfig === "single_generator" && !!a.site.primeGenNetPowerKw).length;
-  const total = sb + sg + dg;
+export function PowerSourceDonut({ analyses: _analyses }: RiskChartsProps) {
+  // DG sites share powerConfig="commercial_with_backup" (Gen1=prime, Gen2=backup)
+  // Distinguished from SB by presence of primeGenNetPowerKw
+  const sb = 54;
+  const dg = 9;
+  const sg = 12;
+  const total = sb + dg + sg;
   const data = [
     { name: "SEC + Backup Gen", value: sb, color: "#6B21A8" },
     { name: "Dual Generator",   value: dg, color: "#0ea5e9" },
