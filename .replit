@@ -64,9 +64,8 @@ path = "scripts/post-merge.sh"
 timeoutMs = 120000
 
 [deployment]
-deploymentTarget = "static"
+deploymentTarget = "cloudrun"
 build = ["pnpm", "--filter", "@workspace/hajj-dashboard", "run", "build"]
-publicDir = "artifacts/hajj-dashboard/dist/public"
 
 [agent]
 expertMode = true

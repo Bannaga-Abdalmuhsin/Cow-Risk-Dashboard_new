@@ -359,7 +359,7 @@ app.use(cookieParser());
 app.use("/api", routes_default);
 if (process.env.NODE_ENV === "production" && existsSync(dashboardDist)) {
   app.use(express.static(dashboardDist));
-  app.get("*", (_req, res) => {
+  app.get(/.*/, (_req, res) => {
     res.sendFile(join(dashboardDist, "index.html"));
   });
 }
