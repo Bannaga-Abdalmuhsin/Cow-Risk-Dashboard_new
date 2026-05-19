@@ -3,6 +3,9 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import pinoHttp from "pino-http";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+import { existsSync } from "fs";
 
 // src/lib/logger.ts
 import pino from "pino";
@@ -333,6 +336,8 @@ router3.use("/team", team_default);
 var routes_default = router3;
 
 // src/app.ts
+var __dirnameEsm = dirname(fileURLToPath(import.meta.url));
+var dashboardDist = join(__dirnameEsm, "../../hajj-dashboard/dist/public");
 var app = express();
 app.use(
   pinoHttp({
@@ -352,6 +357,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/api", routes_default);
+if (process.env.NODE_ENV === "production" && existsSync(dashboardDist)) {
+  app.use(express.static(dashboardDist));
+  app.get("*", (_req, res) => {
+    res.sendFile(join(dashboardDist, "index.html"));
+  });
+}
 var app_default = app;
 
 // src/seed.ts
