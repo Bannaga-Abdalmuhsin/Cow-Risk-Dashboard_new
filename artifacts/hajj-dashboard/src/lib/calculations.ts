@@ -204,7 +204,10 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
     { id: 9, name: "S9 — Power Outage / Battery Discharge",  pwSrc: "outage",                         cooling: "none",     battery: "discharging" },
   ];
 
-  const activeDefs = allDefs; // all sites run S1–S9
+  // CWN915: S6 & S8 not applicable for this site configuration
+  const activeDefs = site.id === "CWN915"
+    ? allDefs.filter(s => s.id !== 6 && s.id !== 8)
+    : allDefs;
 
   return activeDefs.map((s): ScenarioResult => {
     // SG sites have no backup source → S5-S8 use 0 kW available power
