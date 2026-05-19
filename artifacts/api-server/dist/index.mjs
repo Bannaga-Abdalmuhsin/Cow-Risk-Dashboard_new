@@ -1,3 +1,9 @@
+var __defProp = Object.defineProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+
 // src/app.ts
 import express from "express";
 import cors from "cors";
@@ -39,7 +45,72 @@ var health_default = router;
 // src/routes/team/index.ts
 import { Router as Router2 } from "express";
 import { eq, desc } from "drizzle-orm";
-import { db, teamUsersTable, techLocationsTable, assignmentsTable } from "@workspace/db";
+
+// ../../lib/db/src/index.ts
+import { drizzle } from "drizzle-orm/node-postgres";
+import pg from "pg";
+
+// ../../lib/db/src/schema/index.ts
+var schema_exports = {};
+__export(schema_exports, {
+  assignmentsTable: () => assignmentsTable,
+  teamUsersTable: () => teamUsersTable,
+  techLocationsTable: () => techLocationsTable
+});
+
+// ../../lib/db/src/schema/team.ts
+import {
+  pgTable,
+  text,
+  serial,
+  real,
+  integer,
+  boolean,
+  timestamp
+} from "drizzle-orm/pg-core";
+var teamUsersTable = pgTable("team_users", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  role: text("role").notNull(),
+  pin: text("pin").notNull(),
+  token: text("token"),
+  defaultArea: text("default_area"),
+  mcName: text("mc_name"),
+  mobileNumber: text("mobile_number"),
+  pushToken: text("push_token"),
+  createdAt: timestamp("created_at").defaultNow().notNull()
+});
+var techLocationsTable = pgTable("tech_locations", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().unique().references(() => teamUsersTable.id),
+  lat: real("lat").notNull(),
+  lng: real("lng").notNull(),
+  area: text("area"),
+  isOnDuty: boolean("is_on_duty").default(false).notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull()
+});
+var assignmentsTable = pgTable("assignments", {
+  id: serial("id").primaryKey(),
+  techId: integer("tech_id").notNull().references(() => teamUsersTable.id),
+  managerId: integer("manager_id").notNull().references(() => teamUsersTable.id),
+  message: text("message").notNull(),
+  sentAt: timestamp("sent_at").defaultNow().notNull(),
+  readAt: timestamp("read_at"),
+  reply: text("reply"),
+  repliedAt: timestamp("replied_at")
+});
+
+// ../../lib/db/src/index.ts
+var { Pool } = pg;
+if (!process.env.DATABASE_URL) {
+  throw new Error(
+    "DATABASE_URL must be set. Did you forget to provision a database?"
+  );
+}
+var pool = new Pool({ connectionString: process.env.DATABASE_URL });
+var db = drizzle(pool, { schema: schema_exports });
+
+// src/routes/team/index.ts
 import { randomUUID } from "crypto";
 var router2 = Router2();
 async function sendPush(to, title, body) {
@@ -366,7 +437,6 @@ if (process.env.NODE_ENV === "production" && existsSync(dashboardDist)) {
 var app_default = app;
 
 // src/seed.ts
-import { db as db2, teamUsersTable as teamUsersTable2 } from "@workspace/db";
 var SEED_USERS = [
   { name: "Bannaga", role: "manager", pin: "1234@MSD" },
   { name: "Tech-01", role: "technician", pin: "0001" },
@@ -387,12 +457,12 @@ var SEED_USERS = [
   { name: "Tech-16", role: "technician", pin: "0016" }
 ];
 async function seedTeam() {
-  const existing = await db2.select().from(teamUsersTable2).limit(1);
+  const existing = await db.select().from(teamUsersTable).limit(1);
   if (existing.length > 0) {
     logger.info("Team users already seeded \u2014 skipping");
     return;
   }
-  await db2.insert(teamUsersTable2).values(SEED_USERS);
+  await db.insert(teamUsersTable).values(SEED_USERS);
   logger.info({ count: SEED_USERS.length }, "Team users seeded");
 }
 

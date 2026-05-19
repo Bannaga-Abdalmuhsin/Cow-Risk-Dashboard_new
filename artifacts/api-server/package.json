@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.mjs --format=esm --packages=external",
+    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.mjs --format=esm --external:express --external:cors --external:cookie-parser --external:pino --external:pino-http --external:drizzle-orm --external:drizzle-zod --external:pg --external:zod",
     "start": "node dist/index.mjs"
   },
   "dependencies": {
@@ -13,9 +13,12 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "drizzle-orm": "catalog:",
+    "drizzle-zod": "^0.8.3",
     "express": "^5.0.1",
+    "pg": "^8.20.0",
     "pino": "^9.7.0",
-    "pino-http": "^10.5.0"
+    "pino-http": "^10.5.0",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.8",
