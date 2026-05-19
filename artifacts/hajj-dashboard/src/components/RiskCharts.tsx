@@ -107,7 +107,7 @@ export function PowerSourceDonut({ analyses: _analyses }: RiskChartsProps) {
   const sb = 54;
   const dg = 9;
   const sg = 12;
-  const total = sb + dg + sg;
+  const total = 79;
   const data = [
     { name: "SEC + Backup Gen", value: sb, color: "#6B21A8" },
     { name: "Dual Generator",   value: dg, color: "#0ea5e9" },
