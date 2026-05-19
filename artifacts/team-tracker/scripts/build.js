@@ -160,15 +160,17 @@ async function startMetro(expoPublicDomain, expoPublicReplId) {
       stdio: ["ignore", "pipe", "pipe"],
       detached: false,
       cwd: projectRoot,
-      env: {
-        ...env,
-        // The EXPO_TOKEN in Replit secrets may be expired.
-        // Override it to empty so Expo doesn't attempt authentication
-        // (which crashes Metro before it starts).
-        // EXPO_OFFLINE=1 skips all network auth checks entirely.
-        EXPO_TOKEN:   "",
-        EXPO_OFFLINE: "1",
-      },
+      env: (() => {
+        // Expo SDK 54 attempts authentication whenever EXPO_TOKEN is present
+        // in the environment — even as an empty string. The token in Replit
+        // secrets is expired, so we must remove it entirely (not just blank it).
+        // EXPO_OFFLINE=1 tells the CLI to skip all network/auth checks.
+        const { EXPO_TOKEN: _drop, ...metroEnv } = {
+          ...env,
+          EXPO_OFFLINE: "1",
+        };
+        return metroEnv;
+      })(),
     },
   );
 
