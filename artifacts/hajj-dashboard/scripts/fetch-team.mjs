@@ -1,5 +1,5 @@
 import pg from "pg";
-import { writeFileSync } from "fs";
+import { writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -8,8 +8,7 @@ const outPath = join(__dirname, "../public/team-data.json");
 
 const DATABASE_URL = process.env.DATABASE_URL;
 if (!DATABASE_URL) {
-  console.log("[fetch-team] No DATABASE_URL — writing empty team-data.json");
-  writeFileSync(outPath, "[]");
+  console.log("[fetch-team] No DATABASE_URL — keeping existing team-data.json");
   process.exit(0);
 }
 
@@ -31,8 +30,7 @@ try {
   writeFileSync(outPath, JSON.stringify(rows, null, 2));
   console.log(`[fetch-team] Wrote ${rows.length} team members to team-data.json`);
 } catch (err) {
-  console.error("[fetch-team] DB error:", err.message);
-  writeFileSync(outPath, "[]");
+  console.error("[fetch-team] DB error — keeping existing team-data.json:", err.message);
 } finally {
   await pool.end();
 }
