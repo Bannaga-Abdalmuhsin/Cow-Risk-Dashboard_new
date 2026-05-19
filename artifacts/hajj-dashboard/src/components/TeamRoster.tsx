@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Users, Shield, HardHat, Phone, MapPin, Building2, RefreshCw } from "lucide-react";
 import type { LiveTechLocation } from "./LeafletMap";
 
@@ -28,9 +28,10 @@ export function TeamRoster({ compact = false, techLocations = [] }: TeamRosterPr
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const retryRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const fetchTeam = () => {
-    setLoading(true);
+  const fetchTeam = (isRetry = false) => {
+    if (!isRetry) setLoading(true);
     setError(null);
     fetch("/api/team/users")
       .then(r => r.ok ? r.json() : Promise.reject(`HTTP ${r.status}`))
@@ -38,14 +39,21 @@ export function TeamRoster({ compact = false, techLocations = [] }: TeamRosterPr
         setMembers(data);
         setLastUpdated(new Date());
         setLoading(false);
+        if (retryRef.current) { clearTimeout(retryRef.current); retryRef.current = null; }
       })
       .catch((e) => {
         setError(String(e));
         setLoading(false);
+        // Auto-retry after 5 s so a transient server restart heals automatically
+        retryRef.current = setTimeout(() => fetchTeam(true), 5000);
       });
   };
 
-  useEffect(() => { fetchTeam(); }, []);
+  useEffect(() => {
+    fetchTeam();
+    return () => { if (retryRef.current) clearTimeout(retryRef.current); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const stats: TeamStats = {
     total: members.length,
