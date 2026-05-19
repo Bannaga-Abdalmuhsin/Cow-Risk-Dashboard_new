@@ -26,8 +26,9 @@ export interface SiteConfig {
   lng: number;
   siteType: "shelter" | "outdoor_cabinet";
 
-  // SB = SEC + Backup Generator (S1-S4: prime SEC; S5-S8: backup gen)
-  // SG = Single Generator only   (S1-S8: prime gen; backup = 0)
+  // SB = SEC + Backup Generator  (S1-S4: prime SEC;  S5-S8: backup gen)
+  // DG = Dual Generator          (S1-S4: prime Gen1; S5-S8: backup Gen2)  ← treated same as SB
+  // SG = Single Generator only   (S1-S8: prime gen;  backup = 0)
   // All types run S1–S9
   powerConfig: "single_generator" | "commercial_with_backup";
   placeholderSafe?: boolean;
@@ -180,7 +181,7 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
   const isSB = site.powerConfig === "commercial_with_backup";
 
   // ── Scenario definitions ────────────────────────────────────────────────────
-  // SB/DG: S1-S4 use prime SEC; S5-S8 use backup gen
+  // SB/DG: S1-S4 use prime source (SEC or Gen1); S5-S8 use backup (gen)
   // SG:    S1-S4 use prime gen (single gen IS the prime source, backup=0)
   //        S5-S8 also use prime gen (same source)
   // All sites run S1–S9
