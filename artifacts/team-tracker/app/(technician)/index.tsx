@@ -12,8 +12,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
-import { updateLocation, detectArea, UnauthorizedError } from "@/lib/api";
-import { OfflineBanner } from "@/components/OfflineBanner";
+import { updateLocation, detectArea } from "@/lib/api";
 
 async function getCurrentPosition(): Promise<{ latitude: number; longitude: number } | null> {
   if (Platform.OS === "web") {
@@ -41,12 +40,10 @@ export default function TechnicianDutyScreen() {
   const insets = useSafeAreaInsets();
   const { user, token, logout } = useAuth();
 
-  const [isOnDuty,     setIsOnDuty]     = useState(false);
-  const [area,         setArea]         = useState<string>("—");
-  const [lastSync,     setLastSync]     = useState<Date | null>(null);
-  const [syncing,      setSyncing]      = useState(false);
-  const [syncError,    setSyncError]    = useState(false);
-  const [retrying,     setRetrying]     = useState(false);
+  const [isOnDuty, setIsOnDuty] = useState(false);
+  const [area,     setArea]     = useState<string>("—");
+  const [lastSync, setLastSync] = useState<Date | null>(null);
+  const [syncing,  setSyncing]  = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const scale     = useSharedValue(1);
@@ -76,18 +73,9 @@ export default function TechnicianDutyScreen() {
       setArea(onDuty ? detectedArea : "—");
       await updateLocation(token, lat, lng, detectedArea, onDuty);
       setLastSync(new Date());
-      setSyncError(false);
-    } catch (err) {
-      if (!(err instanceof UnauthorizedError)) setSyncError(true);
-    }
+    } catch {}
     setSyncing(false);
   }, [token]);
-
-  const handleRetry = async () => {
-    setRetrying(true);
-    await pushLocation(isOnDuty);
-    setRetrying(false);
-  };
 
   const toggleDuty = async () => {
     const next = !isOnDuty;
@@ -125,14 +113,6 @@ export default function TechnicianDutyScreen() {
           <Feather name="log-out" size={17} color={colors.mutedForeground} />
         </TouchableOpacity>
       </View>
-
-      {syncError && (
-        <OfflineBanner
-          onRetry={handleRetry}
-          retrying={retrying}
-          message="Location sync failed. Server may be starting up\u2026"
-        />
-      )}
 
       {/* Main duty area */}
       <View style={[styles.main, { paddingBottom: bottomPad }]}>

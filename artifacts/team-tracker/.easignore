@@ -1,26 +1,28 @@
-# ── Used when EAS runs WITHOUT git (EAS_NO_VCS=1 from this directory) ──
-# All paths are relative to artifacts/team-tracker/
+# Monorepo root — exclude everything outside this package
+../../node_modules
+../../artifacts/hajj-dashboard
+../../artifacts/cow-risk-action-plan
+../../artifacts/api-server
+../../lib
+../../scripts
+../../.local
 
-# Dependency directories (build server installs from package.json)
-node_modules/
-
-# Native build outputs
+# Local build artifacts
+node_modules
 android/
 ios/
-
-# Expo and bundler cache
 .expo/
 dist/
 web-build/
 
-# Keys and secrets (uploaded separately via EAS submit config)
+# Keys and secrets (already in .gitignore but be explicit)
 *.p8
 *.p12
 *.jks
 google-service-account.json
 
-# Dev noise
-.DS_Store
+# Dev files
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+.DS_Store

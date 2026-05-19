@@ -26,39 +26,6 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
 
-## EAS Mobile Builds (ACES Field Team Tracker)
-
-### One-command release
-
-Use the release script to build Android APK + iOS IPA and submit to the stores in a single step:
-
-```bash
-export EXPO_TOKEN="<your-robot-token>"
-bash artifacts/team-tracker/scripts/release.sh
-```
-
-- Runs both builds sequentially and streams all EAS output to the terminal.
-- Saves the full log (including build URLs) to `artifacts/team-tracker/build-logs/release-<timestamp>.log`.
-- Fails fast if `EXPO_TOKEN` is not set.
-
-### Manual commands (individual platforms)
-
-```bash
-cd ~/workspace/artifacts/team-tracker
-export EXPO_TOKEN="<your-robot-token>"
-eas build --platform android --profile preview --non-interactive   # APK
-eas build --platform ios --profile production --non-interactive --auto-submit  # IPA
-```
-
-### Why these non-obvious settings exist
-
-| File | Setting | Reason |
-|------|---------|--------|
-| `.easignore` (root) | excludes `.local`, `pnpm-lock.yaml`, `pnpm-workspace.yaml` | EAS reads `.easignore` from the **git root** (not `artifacts/team-tracker/`). Without this, EAS copies the 805 MB pnpm content store into `/tmp` and hits disk quota (error -122). It also strips the pnpm workspace config so the EAS build server installs only `team-tracker` deps, not the whole monorepo. |
-| `artifacts/team-tracker/eas.json` | no `"node"`/`"pnpm"` version fields | Specifying `"pnpm"` forced the build server to run `pnpm install`, which found the monorepo `pnpm-lock.yaml` and tried to install all workspace packages — failing because other packages were absent. Auto-detection uses npm + `package-lock.json` instead. |
-| `artifacts/team-tracker/package-lock.json` | standalone npm lockfile | Required so EAS build server has a deterministic install. Must be regenerated from a **clean directory** (no `node_modules` present) — regenerating inside the workspace produces 47 `"link": true` pnpm-store entries that break cloud installs. |
-| `artifacts/team-tracker/.npmrc` | `legacy-peer-deps=true` | React Native 0.81 + Expo SDK 54 have peer-dep conflicts that cause `npm install` to fail without this flag. |
-
 ## Artifacts
 
 ### Hajj Telecom COW Risk Dashboard (`artifacts/hajj-dashboard`)

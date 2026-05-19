@@ -84,7 +84,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       body = JSON.parse(raw) as typeof body;
     } catch {
-      throw new Error(`Server unreachable or misconfigured (HTTP ${res.status}). Contact your administrator.`);
+      const preview = raw.slice(0, 120).replace(/\s+/g, " ");
+      throw new Error(`Non-JSON from ${url} (HTTP ${res.status}): ${preview}`);
     }
     if (!res.ok) {
       throw new Error(body.error ?? `Login failed (HTTP ${res.status})`);

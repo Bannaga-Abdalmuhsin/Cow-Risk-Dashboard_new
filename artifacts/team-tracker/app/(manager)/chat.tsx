@@ -15,7 +15,6 @@ import {
   getTeamLocations, UnauthorizedError, LOCATIONS,
   type TeamUser, type ChatMessage, type TechLocationWithUser,
 } from "@/lib/api";
-import { OfflineBanner } from "@/components/OfflineBanner";
 
 function timeLabel(iso: string): string {
   const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
@@ -29,11 +28,9 @@ export default function ChatScreen() {
   const insets = useSafeAreaInsets();
   const { token, logout } = useAuth();
 
-  const [users,        setUsers]        = useState<TeamUser[]>([]);
-  const [locations,    setLocations]    = useState<TechLocationWithUser[]>([]);
-  const [loading,      setLoading]      = useState(true);
-  const [networkError, setNetworkError] = useState(false);
-  const [retrying,     setRetrying]     = useState(false);
+  const [users,     setUsers]     = useState<TeamUser[]>([]);
+  const [locations, setLocations] = useState<TechLocationWithUser[]>([]);
+  const [loading,   setLoading]   = useState(true);
 
   const [selected,  setSelected]  = useState<TeamUser | null>(null);
   const [history,   setHistory]   = useState<ChatMessage[]>([]);
@@ -50,18 +47,9 @@ export default function ChatScreen() {
       const [u, l] = await Promise.all([getTeamUsers(token), getTeamLocations(token)]);
       setUsers(u.filter(x => x.role === "technician"));
       setLocations(l);
-      setNetworkError(false);
-    } catch (err) {
-      if (!(err instanceof UnauthorizedError)) setNetworkError(true);
-    }
+    } catch {}
     setLoading(false);
   }, [token]);
-
-  const handleRetry = async () => {
-    setRetrying(true);
-    await loadData();
-    setRetrying(false);
-  };
 
   useEffect(() => { loadData(); }, [loadData]);
 
@@ -71,10 +59,7 @@ export default function ChatScreen() {
     try {
       const h = await getChatHistory(token!, user.id);
       setHistory(h);
-    } catch (err) {
-      if (err instanceof UnauthorizedError) { await logout(); return; }
-      Alert.alert("Could not load history", "Server may be starting up. Try again in a moment.");
-    }
+    } catch {}
     setHistLoad(false);
   };
 
@@ -151,8 +136,6 @@ export default function ChatScreen() {
           <Text style={styles.broadcastBtnText}>Broadcast</Text>
         </TouchableOpacity>
       </View>
-
-      {networkError && <OfflineBanner onRetry={handleRetry} retrying={retrying} />}
 
       {loading ? (
         <View style={styles.center}>

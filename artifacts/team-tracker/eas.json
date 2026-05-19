@@ -7,13 +7,17 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
+      "node": "24.0.0",
+      "pnpm": "10.26.1",
       "env": {
         "EAS_SKIP_AUTO_FINGERPRINT": "1",
-        "EXPO_PUBLIC_API_URL": "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev"
+        "EXPO_PUBLIC_API_URL": "https://acesmsd.live"
       }
     },
     "preview": {
       "distribution": "internal",
+      "node": "24.0.0",
+      "pnpm": "10.26.1",
       "android": {
         "buildType": "apk"
       },
@@ -22,20 +26,24 @@
       },
       "env": {
         "EAS_SKIP_AUTO_FINGERPRINT": "1",
-        "EXPO_PUBLIC_API_URL": "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev"
+        "EXPO_PUBLIC_API_URL": "https://acesmsd.live"
       }
     },
     "preview-ios-device": {
       "distribution": "internal",
+      "node": "24.0.0",
+      "pnpm": "10.26.1",
       "ios": {
         "simulator": false
       },
       "env": {
         "EAS_SKIP_AUTO_FINGERPRINT": "1",
-        "EXPO_PUBLIC_API_URL": "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev"
+        "EXPO_PUBLIC_API_URL": "https://acesmsd.live"
       }
     },
     "production": {
+      "node": "24.0.0",
+      "pnpm": "10.26.1",
       "android": {
         "buildType": "app-bundle"
       },
@@ -44,7 +52,7 @@
       },
       "env": {
         "EAS_SKIP_AUTO_FINGERPRINT": "1",
-        "EXPO_PUBLIC_API_URL": "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev"
+        "EXPO_PUBLIC_API_URL": "https://acesmsd.live"
       }
     }
   },
