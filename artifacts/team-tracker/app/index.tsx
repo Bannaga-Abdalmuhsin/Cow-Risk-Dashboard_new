@@ -9,7 +9,6 @@ import * as Haptics from "expo-haptics";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
-import { debugBaseUrl } from "@/lib/api";
 
 export default function LoginScreen() {
   const colors  = useColors();
@@ -148,9 +147,6 @@ export default function LoginScreen() {
               <Text style={[styles.footerPowered, { color: colors.primary }]}>Powered by </Text>
               <Text style={[styles.footerAces,    { color: colors.accent }]}>ACES MSD</Text>
             </View>
-            <Text style={[styles.debugUrl, { color: colors.mutedForeground }]} numberOfLines={2}>
-              {debugBaseUrl()}
-            </Text>
           </View>
 
         </View>
