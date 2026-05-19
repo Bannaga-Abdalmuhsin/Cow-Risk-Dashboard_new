@@ -9,7 +9,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
-import { getTeamLocations, sendAssignment, type TechLocationWithUser } from "@/lib/api";
+import { getTeamLocations, getTeamUsers, sendAssignment, type TechLocationWithUser } from "@/lib/api";
 import MapViewContainer from "@/components/MapViewContainer";
 
 const ZONES = ["Arafat", "Mina", "Muzdalifa", "Makka", "Makka Remote"] as const;
@@ -40,12 +40,13 @@ export default function ManagerMapScreen() {
   const insets  = useSafeAreaInsets();
   const { token, logout } = useAuth();
 
-  const [locations,  setLocations]  = useState<TechLocationWithUser[]>([]);
-  const [loading,    setLoading]    = useState(true);
-  const [selected,   setSelected]   = useState<TechLocationWithUser | null>(null);
-  const [msgVisible, setMsgVisible] = useState(false);
-  const [message,    setMessage]    = useState("");
-  const [sending,    setSending]    = useState(false);
+  const [locations,   setLocations]   = useState<TechLocationWithUser[]>([]);
+  const [totalUsers,  setTotalUsers]  = useState(0);
+  const [loading,     setLoading]     = useState(true);
+  const [selected,    setSelected]    = useState<TechLocationWithUser | null>(null);
+  const [msgVisible,  setMsgVisible]  = useState(false);
+  const [message,     setMessage]     = useState("");
+  const [sending,     setSending]     = useState(false);
   const [summaryOpen, setSummaryOpen] = useState(true);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -57,8 +58,16 @@ export default function ManagerMapScreen() {
     setLoading(false);
   };
 
+  const fetchTotalUsers = async () => {
+    try {
+      const users = await getTeamUsers(token);
+      setTotalUsers(users.filter(u => u.role === "technician").length);
+    } catch {}
+  };
+
   useEffect(() => {
     fetchLocations();
+    fetchTotalUsers();
     intervalRef.current = setInterval(fetchLocations, 10000);
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [token]);
@@ -95,7 +104,7 @@ export default function ManagerMapScreen() {
         <View>
           <Text style={[styles.headerTitle, { color: colors.foreground }]}>Live Map</Text>
           <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>
-            {totalOn}/{locations.length} on duty · refreshes every 10s
+            {totalOn} online · {totalUsers} deployed · refreshes every 10s
           </Text>
         </View>
         <TouchableOpacity onPress={logout} style={[styles.iconBtn, { backgroundColor: colors.secondary }]}>
@@ -178,9 +187,9 @@ export default function ManagerMapScreen() {
                 <View style={[styles.totalRow, { borderTopColor: colors.border, backgroundColor: colors.secondary }]}>
                   <Text style={[styles.totalLabel, { color: colors.foreground }]}>Total</Text>
                   <View style={styles.zoneCounts}>
-                    <Text style={[styles.zoneOn, { color: "#16a34a", fontWeight: "700" }]}>{totalOn} on duty</Text>
+                    <Text style={[styles.zoneOn, { color: "#16a34a", fontWeight: "700" }]}>{totalOn} online</Text>
                     <Text style={[styles.zoneSep, { color: colors.border }]}>·</Text>
-                    <Text style={[styles.zoneOff, { color: colors.mutedForeground, fontWeight: "700" }]}>{totalOff} off duty</Text>
+                    <Text style={[styles.zoneOff, { color: colors.mutedForeground, fontWeight: "700" }]}>{totalUsers} deployed</Text>
                   </View>
                 </View>
               </>

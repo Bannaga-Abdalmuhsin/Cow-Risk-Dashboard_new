@@ -398,6 +398,16 @@ router2.patch("/assignments/:id/reply", requireAuth, async (req, res) => {
   sendPush(manager?.pushToken, `Reply from ${tech?.name ?? "Technician"}`, reply.trim());
   res.json({ ok: true });
 });
+router2.post("/admin/cleanup-dupes", requireManager, async (_req, res) => {
+  const { sql } = await import("drizzle-orm");
+  const result = await db.execute(sql`
+    DELETE FROM team_users
+    WHERE id NOT IN (SELECT MIN(id) FROM team_users GROUP BY name)
+    RETURNING id, name
+  `);
+  const rows = result.rows;
+  res.json({ deleted: rows.length, users: rows });
+});
 var team_default = router2;
 
 // src/routes/index.ts

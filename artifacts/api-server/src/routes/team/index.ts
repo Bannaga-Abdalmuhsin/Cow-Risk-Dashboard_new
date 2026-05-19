@@ -392,4 +392,17 @@ router.patch("/assignments/:id/reply", requireAuth, async (req: Request, res: Re
   res.json({ ok: true });
 });
 
+/* ─── POST /api/team/admin/cleanup-dupes ─────────────────────────────────── */
+
+router.post("/admin/cleanup-dupes", requireManager, async (_req: Request, res: Response): Promise<void> => {
+  const { sql } = await import("drizzle-orm");
+  const result = await db.execute(sql`
+    DELETE FROM team_users
+    WHERE id NOT IN (SELECT MIN(id) FROM team_users GROUP BY name)
+    RETURNING id, name
+  `);
+  const rows = result.rows as { id: number; name: string }[];
+  res.json({ deleted: rows.length, users: rows });
+});
+
 export default router;
