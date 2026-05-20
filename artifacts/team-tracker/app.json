@@ -39,6 +39,9 @@
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_LOCATION",
         "RECEIVE_BOOT_COMPLETED",
         "VIBRATE"
       ]
@@ -66,7 +69,10 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "ACES Field Tracker shares your location with the operations manager during duty hours."
+          "locationWhenInUsePermission": "ACES Field Tracker shares your location with the operations manager during duty hours.",
+          "locationAlwaysAndWhenInUsePermission": "ACES Field Tracker needs Always-On location access to keep sharing your position when you switch to another app during duty hours.",
+          "isAndroidBackgroundLocationEnabled": true,
+          "isAndroidForegroundServiceEnabled": true
         }
       ],
       [

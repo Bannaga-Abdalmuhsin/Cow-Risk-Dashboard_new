@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  ActivityIndicator, Platform, StyleSheet, Text,
+  ActivityIndicator, Alert, Platform, StyleSheet, Text,
   TouchableOpacity, View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -13,6 +13,11 @@ import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
 import { updateLocation, detectArea } from "@/lib/api";
+import {
+  startBackgroundLocationTask,
+  stopBackgroundLocationTask,
+  isBackgroundLocationRunning,
+} from "@/lib/backgroundLocation";
 
 async function getCurrentPosition(): Promise<{ latitude: number; longitude: number } | null> {
   if (Platform.OS === "web") {
@@ -62,6 +67,15 @@ export default function TechnicianDutyScreen() {
     }
   }, [isOnDuty]);
 
+  /* Restore isOnDuty state on mount if background task was already running */
+  useEffect(() => {
+    isBackgroundLocationRunning().then(running => {
+      if (running) setIsOnDuty(true);
+    });
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, []);
+
+  /* Foreground push — updates server + "Last Sync" UI when app is open */
   const pushLocation = useCallback(async (onDuty: boolean) => {
     if (!token) return;
     setSyncing(true);
@@ -81,18 +95,29 @@ export default function TechnicianDutyScreen() {
     const next = !isOnDuty;
     scale.value = withSpring(0.9, {}, () => { scale.value = withSpring(1); });
     await Haptics.impactAsync(next ? Haptics.ImpactFeedbackStyle.Heavy : Haptics.ImpactFeedbackStyle.Light);
-    setIsOnDuty(next);
-    await pushLocation(next);
+
     if (next) {
+      /* ── Going On Duty ── */
+      const started = await startBackgroundLocationTask();
+      if (!started) {
+        Alert.alert(
+          "Background Location Required",
+          'Please grant "Always" location permission so ACES can track your position while on duty. Go to Settings → ACES Field Tracker → Location → Always.',
+        );
+        return;
+      }
+      setIsOnDuty(true);
+      await pushLocation(true);
+      /* Foreground interval keeps "Last Sync" timer fresh while app is open */
       intervalRef.current = setInterval(() => pushLocation(true), 10000);
     } else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      /* ── Going Off Duty ── */
+      setIsOnDuty(false);
+      if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+      await stopBackgroundLocationTask();
+      await pushLocation(false);
     }
   };
-
-  useEffect(() => {
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, []);
 
   const dutyBg    = isOnDuty ? colors.primary : colors.offDuty;
   const ringColor = isOnDuty ? colors.primary : colors.offDuty;
@@ -124,7 +149,7 @@ export default function TechnicianDutyScreen() {
         }]}>
           <View style={[styles.statusDot, { backgroundColor: isOnDuty ? colors.primary : colors.offDuty }]} />
           <Text style={[styles.statusText, { color: isOnDuty ? colors.primary : colors.offDuty }]}>
-            {isOnDuty ? "ACTIVE — Sharing Location" : "OFF DUTY"}
+            {isOnDuty ? "ACTIVE — Location tracking ON" : "OFF DUTY"}
           </Text>
         </View>
 
@@ -180,7 +205,7 @@ export default function TechnicianDutyScreen() {
 
         <Text style={[styles.hint, { color: colors.mutedForeground }]}>
           {isOnDuty
-            ? "Location shared every 10 seconds"
+            ? "Location sent every 10s — continues in background"
             : "Tap the button to start your shift"}
         </Text>
       </View>
