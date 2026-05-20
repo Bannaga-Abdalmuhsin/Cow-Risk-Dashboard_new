@@ -9,7 +9,7 @@ const AUTH_KEY = "aces_team_auth";
 function getApiBaseUrl(): string {
   const env = process.env.EXPO_PUBLIC_API_URL;
   if (env) return env;
-  return "https://acesmsd.live";
+  return "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev";
 }
 
 TaskManager.defineTask(
