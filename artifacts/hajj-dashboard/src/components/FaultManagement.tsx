@@ -21,6 +21,9 @@ export interface ActiveFault {
   location: string | null;
   dispatchStatus: string;
   eta: number | null;
+  roadEta: number | null;
+  distanceKm: number | null;
+  routePolyline: { lat: number; lng: number }[] | null;
   receivedAt: string;
   dispatchedAt: string | null;
   assignedTechId: number | null;
@@ -65,15 +68,6 @@ function minutesAgo(iso: string) {
 
 function severityColor(s: string) {
   return SEVERITY_COLORS[s.toLowerCase()] ?? "#a3a3a3";
-}
-
-function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLng = (lng2 - lng1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
 /* ─── map sub-component ────────────────────────────────────────────────────── */
@@ -124,6 +118,7 @@ function FaultMap({
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
+      {/* COW site markers */}
       {faults.map(f => {
         const isSelected = selected?.id === f.id;
         const sColor = severityColor(f.severity);
@@ -169,11 +164,12 @@ function FaultMap({
         );
       })}
 
+      {/* Technician markers */}
       {faults.map(f => {
         if (!f.techLat || !f.techLng) return null;
         const isSelected = selected?.id === f.id;
-        const distKm = haversineKm(f.techLat, f.techLng, f.siteLat, f.siteLng);
-        const etaMins = f.eta ?? Math.round((distKm / 40) * 60);
+        const etaMins = f.roadEta ?? f.eta ?? null;
+        const dist    = f.distanceKm ?? null;
         return (
           <OverlayView
             key={`tech-${f.id}`}
@@ -198,7 +194,11 @@ function FaultMap({
                 textAlign: "center",
               }}>
                 <div>👷 {f.assignedTech ?? "Tech"}</div>
-                <div style={{ fontSize: 8.5, opacity: 0.85 }}>ETA {etaMins}min · {distKm.toFixed(1)}km</div>
+                <div style={{ fontSize: 8.5, opacity: 0.85 }}>
+                  {etaMins != null ? `ETA ${etaMins}min` : "—"}
+                  {dist != null ? ` · ${dist}km` : ""}
+                  {f.routePolyline ? " 🛣️" : ""}
+                </div>
                 <div style={{
                   position: "absolute", bottom: -6, left: "50%", transform: "translateX(-50%)",
                   width: 0, height: 0,
@@ -212,21 +212,39 @@ function FaultMap({
         );
       })}
 
-      {faults.filter(f => f.techLat && f.techLng).map(f => (
-        <Polyline
-          key={`route-${f.id}`}
-          path={[
-            { lat: f.techLat!, lng: f.techLng! },
-            { lat: f.siteLat,  lng: f.siteLng },
-          ]}
-          options={{
-            strokeColor:   selected?.id === f.id ? "#60a5fa" : "#3b82f6",
-            strokeOpacity: selected?.id === f.id ? 1 : 0.55,
-            strokeWeight:  selected?.id === f.id ? 4 : 2,
-            geodesic: true,
-          }}
-        />
-      ))}
+      {/* Road routes — real road polyline from Directions API, or straight line fallback */}
+      {faults.filter(f => f.techLat && f.techLng).map(f => {
+        const isSelected = selected?.id === f.id;
+        const path = f.routePolyline && f.routePolyline.length > 1
+          ? f.routePolyline
+          : [
+              { lat: f.techLat!, lng: f.techLng! },
+              { lat: f.siteLat,  lng: f.siteLng  },
+            ];
+        const hasRealRoute = !!(f.routePolyline && f.routePolyline.length > 1);
+
+        return (
+          <Polyline
+            key={`route-${f.id}`}
+            path={path}
+            options={{
+              strokeColor:   isSelected ? "#60a5fa" : (hasRealRoute ? "#38bdf8" : "#3b82f6"),
+              strokeOpacity: isSelected ? 1 : 0.7,
+              strokeWeight:  isSelected ? 5 : 3,
+              geodesic:      !hasRealRoute,
+              icons: hasRealRoute ? [{
+                icon: {
+                  path: "M 0,-1 0,1",
+                  strokeOpacity: 1,
+                  scale: 3,
+                },
+                offset: "0",
+                repeat: "16px",
+              }] : undefined,
+            }}
+          />
+        );
+      })}
     </GoogleMap>
   );
 }
@@ -378,9 +396,9 @@ export function FaultManagement() {
             const statusColor = STATUS_COLORS[f.dispatchStatus] ?? "#9ca3af";
             const isCritical  = f.severity.toLowerCase() === "critical";
             const age = minutesAgo(f.receivedAt);
-            const distKm = f.techLat && f.techLng
-              ? haversineKm(f.techLat, f.techLng, f.siteLat, f.siteLng).toFixed(1)
-              : null;
+            const etaMins = f.roadEta ?? f.eta;
+            const dist    = f.distanceKm;
+            const hasRealRoute = !!(f.routePolyline && f.routePolyline.length > 1);
 
             return (
               <div
@@ -431,8 +449,13 @@ export function FaultManagement() {
                   {f.assignedTech && (
                     <span className="text-[10px] text-blue-400">
                       👷 {f.assignedTech}
-                      {distKm && <span className="text-muted-foreground"> · {distKm}km</span>}
-                      {f.eta  && <span className="text-amber-400 font-semibold"> · {f.eta}min ETA</span>}
+                      {dist != null && <span className="text-muted-foreground"> · {dist}km</span>}
+                      {etaMins != null && (
+                        <span className="text-amber-400 font-semibold">
+                          {" "}· {etaMins}min ETA
+                          {hasRealRoute && <span className="text-sky-400 ml-0.5">🛣️</span>}
+                        </span>
+                      )}
                     </span>
                   )}
                 </div>
@@ -467,6 +490,11 @@ export function FaultManagement() {
                         style={{ background: "#16a34a22", color: "#16a34a", border: "1px solid #16a34a66" }}>
                         Resolve
                       </button>
+                    )}
+                    {hasRealRoute && (
+                      <span className="text-[9px] text-sky-400 px-1.5 py-0.5 rounded border border-sky-400/30 bg-sky-400/10">
+                        🛣️ Road route active
+                      </span>
                     )}
                   </div>
                 )}

@@ -1,6 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import { eq, and, isNull, sql } from "drizzle-orm";
 import { db, teamUsersTable, techLocationsTable, faultsTable, assignmentsTable } from "@workspace/db";
+import { getDirectionsRoute } from "./directions.js";
 
 const router = Router();
 
@@ -110,12 +111,36 @@ router.get("/active", async (_req: Request, res: Response): Promise<void> => {
       techArea:       techLocationsTable.area,
     })
     .from(faultsTable)
-    .leftJoin(teamUsersTable,    eq(faultsTable.assignedTechId, teamUsersTable.id))
+    .leftJoin(teamUsersTable,     eq(faultsTable.assignedTechId, teamUsersTable.id))
     .leftJoin(techLocationsTable, eq(faultsTable.assignedTechId, techLocationsTable.userId))
     .where(isNull(faultsTable.resolvedAt))
     .orderBy(sql`${faultsTable.receivedAt} DESC`);
 
-  res.json(rows);
+  const enriched = await Promise.all(rows.map(async row => {
+    if (row.techLat == null || row.techLng == null) {
+      return { ...row, routePolyline: null, distanceKm: null, roadEta: row.eta };
+    }
+    const route = await getDirectionsRoute(
+      row.techLat, row.techLng,
+      row.siteLat, row.siteLng,
+    );
+    if (!route) {
+      return { ...row, routePolyline: null, distanceKm: null, roadEta: row.eta };
+    }
+    if (route.etaMinutes !== row.eta) {
+      await db.update(faultsTable)
+        .set({ eta: route.etaMinutes })
+        .where(eq(faultsTable.id, row.id));
+    }
+    return {
+      ...row,
+      routePolyline: route.polyline,
+      distanceKm:    Math.round(route.distanceKm * 10) / 10,
+      roadEta:       route.etaMinutes,
+    };
+  }));
+
+  res.json(enriched);
 });
 
 /* ─── POST /api/faults/:id/dispatch  (manual or re-dispatch) ────────────── */
