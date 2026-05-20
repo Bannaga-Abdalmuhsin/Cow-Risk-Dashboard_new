@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState, useEffect } from "react";
 import {
   GoogleMap,
   OverlayView,
@@ -28,6 +28,38 @@ function minutesAgo(iso: string) {
   return Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
 }
 
+/* ── Helmet SVG marker ─────────────────────────────────────────────────────── */
+function HelmetMarker({ color, pulse }: { color: string; pulse: boolean }) {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"
+      style={{ filter: `drop-shadow(0 2px 4px rgba(0,0,0,0.6))` }}>
+      {/* dome */}
+      <path
+        d="M5 20 C5 9 10 5 15 5 C20 5 25 9 25 20 Z"
+        fill={color}
+      />
+      {/* brim */}
+      <rect x="2" y="19" width="26" height="5" rx="2.5" fill={color} />
+      {/* visor strip */}
+      <rect x="5" y="19.5" width="20" height="1.5" rx="0.75" fill="rgba(0,0,0,0.2)" />
+      {/* highlight */}
+      <path
+        d="M9 13 Q11 7 15 7"
+        stroke="rgba(255,255,255,0.45)"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      {/* pulse ring when online */}
+      {pulse && (
+        <circle cx="15" cy="14" r="13" fill="none" stroke={color} strokeWidth="1.5" opacity="0.4">
+          <animate attributeName="r" from="12" to="16" dur="1.5s" repeatCount="indefinite" />
+          <animate attributeName="opacity" from="0.4" to="0" dur="1.5s" repeatCount="indefinite" />
+        </circle>
+      )}
+    </svg>
+  );
+}
+
 interface Props {
   analyses: SiteAnalysis[];
   techLocations: LiveTechLocation[];
@@ -38,13 +70,32 @@ interface Props {
 export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelectSite }: Props) {
   const { isLoaded, loadError } = useGoogleMaps();
 
+  /* Re-evaluate freshness every 30 s so stale markers turn red / disappear */
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setTick(n => n + 1), 30_000);
+    return () => clearInterval(t);
+  }, []);
+
   const mapRef = useRef<google.maps.Map | null>(null);
-  const onLoad = useCallback((map: google.maps.Map) => { mapRef.current = map; }, []);
+  const onLoad    = useCallback((map: google.maps.Map) => { mapRef.current = map; }, []);
   const onUnmount = useCallback(() => { mapRef.current = null; }, []);
 
-  const riskSites   = useMemo(() => analyses.filter(a => a.overallRisk === "risk"), [analyses]);
-  const safeSites   = useMemo(() => analyses.filter(a => a.overallRisk === "safe"), [analyses]);
-  const onDutyTechs = useMemo(() => techLocations.filter(t => t.isOnDuty),          [techLocations]);
+  const riskSites = useMemo(() => analyses.filter(a => a.overallRisk === "risk"), [analyses]);
+  const safeSites = useMemo(() => analyses.filter(a => a.overallRisk === "safe"), [analyses]);
+
+  /*
+   * Visibility rules:
+   *  < 60 min → show on map
+   *  < 15 min → green helmet  (online)
+   * >= 15 min → red helmet    (stale / offline)
+   * >= 60 min → hidden        (removed)
+   */
+  const visibleTechs = useMemo(
+    () => techLocations.filter(t => minutesAgo(t.updatedAt) < 60),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [techLocations, /* tick dependency handled by state update above */],
+  );
 
   if (loadError) {
     return (
@@ -78,7 +129,7 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      {/* COW site markers — risk (red) */}
+      {/* ── COW site markers — risk (red) ─────────────────────────────── */}
       {riskSites.map(a => (
         <OverlayView
           key={a.site.id}
@@ -100,7 +151,7 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
         </OverlayView>
       ))}
 
-      {/* COW site markers — safe (teal) */}
+      {/* ── COW site markers — safe (teal) ────────────────────────────── */}
       {safeSites.map(a => (
         <OverlayView
           key={a.site.id}
@@ -122,49 +173,62 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
         </OverlayView>
       ))}
 
-      {/* Live technician markers — on duty */}
-      {onDutyTechs.map(t => {
-        const mins = minutesAgo(t.updatedAt);
+      {/* ── Technician helmet markers ──────────────────────────────────── */}
+      {visibleTechs.map(t => {
+        const mins    = minutesAgo(t.updatedAt);
+        const online  = mins < 15;
+        const color   = online ? "#16a34a" : "#dc2626";
+        const label   = t.userName.split(" ")[0];
+
         return (
           <OverlayView
-            key={`tech-on-${t.userId}`}
+            key={`tech-${t.userId}`}
             position={{ lat: t.lat, lng: t.lng }}
             mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
           >
             <div
-              title={`${t.userName} — ${t.area ?? "unknown"} (${mins}m ago)`}
+              title={`${t.userName} · ${t.area ?? "—"} · ${mins}m ago`}
               style={{
-                transform: "translate(-50%,-100%)",
-                pointerEvents: "auto",
+                transform: "translate(-50%, -100%)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
                 cursor: "default",
+                pointerEvents: "auto",
+                gap: 1,
               }}
             >
+              {/* Helmet icon */}
+              <HelmetMarker color={color} pulse={online} />
+
+              {/* Name tag */}
               <div style={{
-                background: "#16a34a",
-                color: "#fff",
-                borderRadius: 8,
-                border: "2px solid #fff",
-                padding: "3px 7px",
-                fontSize: 10,
-                fontWeight: 800,
-                lineHeight: 1.3,
-                textAlign: "center",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.5)",
-                position: "relative",
-                whiteSpace: "nowrap",
-                minWidth: 52,
+                background:   online ? "rgba(22,163,74,0.85)" : "rgba(220,38,38,0.85)",
+                color:        "#fff",
+                borderRadius: 5,
+                padding:      "1px 5px",
+                fontSize:     9.5,
+                fontWeight:   800,
+                whiteSpace:   "nowrap",
+                lineHeight:   1.4,
+                textAlign:    "center",
+                border:       `1px solid ${online ? "rgba(22,163,74,0.6)" : "rgba(220,38,38,0.6)"}`,
+                boxShadow:    "0 1px 4px rgba(0,0,0,0.5)",
               }}>
-                <div>{t.userName}</div>
-                <div style={{ fontSize: 9, fontWeight: 500, opacity: 0.9 }}>{t.area ?? "—"}</div>
-                {/* triangle pointer */}
-                <div style={{
-                  position: "absolute", bottom: -6, left: "50%", transform: "translateX(-50%)",
-                  width: 0, height: 0,
-                  borderLeft: "5px solid transparent",
-                  borderRight: "5px solid transparent",
-                  borderTop: "6px solid #16a34a",
-                }} />
+                {label}
+                <span style={{ opacity: 0.8, marginLeft: 3, fontSize: 8.5 }}>
+                  {mins}m
+                </span>
               </div>
+
+              {/* Pin pointer */}
+              <div style={{
+                width: 0, height: 0,
+                borderLeft:  "4px solid transparent",
+                borderRight: "4px solid transparent",
+                borderTop:   `5px solid ${online ? "rgba(22,163,74,0.85)" : "rgba(220,38,38,0.85)"}`,
+                marginTop:   -1,
+              }} />
             </div>
           </OverlayView>
         );
