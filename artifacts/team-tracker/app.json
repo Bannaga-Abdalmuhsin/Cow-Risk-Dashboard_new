@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.acesmsd.fieldtracker",
-      "buildNumber": "3",
+      "buildNumber": "4",
       "icon": "./assets/images/app-icon.png",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours.",

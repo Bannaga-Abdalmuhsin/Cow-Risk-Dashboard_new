@@ -159,6 +159,11 @@ overrides:
   micromatch>picomatch: ^4.0.4
   yaml: ^2.8.3
 
+patchedDependencies:
+  expo-task-manager@55.0.16:
+    hash: 970eb5b02c1569c71075a7586f2cb7d50ee0b07a15390ed80d8286286020601f
+    path: patches/expo-task-manager@55.0.16.patch
+
 importers:
 
   .:
@@ -505,7 +510,7 @@ importers:
         version: 0.32.17(expo@54.0.34)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
       expo-task-manager:
         specifier: ^55.0.16
-        version: 55.0.16(expo@54.0.34)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))
+        version: 55.0.16(patch_hash=970eb5b02c1569c71075a7586f2cb7d50ee0b07a15390ed80d8286286020601f)(expo@54.0.34)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))
       react-native-maps:
         specifier: 1.18.0
         version: 1.18.0(react-native-web@0.21.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
@@ -10524,7 +10529,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  expo-task-manager@55.0.16(expo@54.0.34)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0)):
+  expo-task-manager@55.0.16(patch_hash=970eb5b02c1569c71075a7586f2cb7d50ee0b07a15390ed80d8286286020601f)(expo@54.0.34)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0)):
     dependencies:
       expo: 54.0.34(@babel/core@7.29.0)(@expo/metro-runtime@6.1.2)(expo-router@6.0.23)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
       react-native: 0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0)

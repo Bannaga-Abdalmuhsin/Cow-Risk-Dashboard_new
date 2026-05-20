@@ -1,0 +1,14 @@
+diff --git a/ios/TaskManagerModule.swift b/ios/TaskManagerModule.swift
+index 6322978baef5784d4ea185ed670a610895a2aa2c..34be62eaa9edf172f0a816f5ae51cbb3f1c4a922 100644
+--- a/ios/TaskManagerModule.swift
++++ b/ios/TaskManagerModule.swift
+@@ -105,7 +105,7 @@ public final class TaskManagerModule: Module, EXTaskManagerInterface {
+     return appContext?.constants?.constants()["isHeadless"] as? Bool ?? false
+   }
+ 
+-  private func findAppUrl() -> String? {
+-    return appContext?.constants?.constants()["experienceUrl"] as? String
++  private func findAppUrl() -> String {
++    return appContext?.constants?.constants()["experienceUrl"] as? String ?? ""
+   }
+ }
