@@ -34,7 +34,28 @@ async function registerPushToken(authToken: string): Promise<void> {
       : (await Notifications.requestPermissionsAsync()).status;
     if (finalStatus !== "granted") return;
 
-    const { data: pushToken } = await Notifications.getExpoPushTokenAsync();
+    let pushToken: string | undefined;
+
+    if (Platform.OS === "android") {
+      // On Android, prefer a raw FCM device token so the server can send
+      // via FCM directly (no Expo push service dependency).
+      // Falls back to Expo push token if FCM is not yet configured.
+      try {
+        const { data } = await Notifications.getDevicePushTokenAsync();
+        pushToken = typeof data === "string" ? data : undefined;
+      } catch {
+        try {
+          const { data } = await Notifications.getExpoPushTokenAsync();
+          pushToken = data;
+        } catch {}
+      }
+    } else {
+      try {
+        const { data } = await Notifications.getExpoPushTokenAsync();
+        pushToken = data;
+      } catch {}
+    }
+
     if (!pushToken) return;
 
     await fetch(`${getBaseUrl()}/api/team/push-token`, {

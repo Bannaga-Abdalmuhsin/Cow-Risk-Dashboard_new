@@ -9,13 +9,32 @@ const router = Router();
 /* ─── push helper ─────────────────────────────────────────────────────────── */
 
 async function sendPush(to: string | null | undefined, title: string, body: string): Promise<void> {
-  if (!to || !to.startsWith("ExponentPushToken")) return;
+  if (!to) return;
   try {
-    await fetch("https://exp.host/--/api/v2/push/send", {
-      method:  "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body:    JSON.stringify({ to, title, body, sound: "default", priority: "high" }),
-    });
+    if (to.startsWith("ExponentPushToken")) {
+      // Expo push service (works for Expo-managed tokens)
+      await fetch("https://exp.host/--/api/v2/push/send", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body:    JSON.stringify({ to, title, body, sound: "default", priority: "high" }),
+      });
+    } else {
+      // Raw FCM device token — send directly via FCM Legacy HTTP API
+      const fcmKey = process.env.FCM_SERVER_KEY;
+      if (!fcmKey) return;
+      await fetch("https://fcm.googleapis.com/fcm/send", {
+        method:  "POST",
+        headers: {
+          "Content-Type":  "application/json",
+          "Authorization": `key=${fcmKey}`,
+        },
+        body: JSON.stringify({
+          to,
+          notification: { title, body, sound: "default" },
+          android:      { priority: "high" },
+        }),
+      });
+    }
   } catch {}
 }
 
