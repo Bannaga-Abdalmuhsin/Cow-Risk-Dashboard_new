@@ -3,8 +3,8 @@ import {
   GoogleMap,
   OverlayView,
   Polyline,
-  useJsApiLoader,
 } from "@react-google-maps/api";
+import { useGoogleMaps } from "../lib/GoogleMapsProvider";
 
 /* ─── types ────────────────────────────────────────────────────────────────── */
 
@@ -87,11 +87,7 @@ function FaultMap({
   selected: ActiveFault | null;
   onSelect: (f: ActiveFault) => void;
 }) {
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string;
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: apiKey,
-    id: "fault-google-map",
-  });
+  const { isLoaded, loadError } = useGoogleMaps();
   const mapRef = useRef<google.maps.Map | null>(null);
   const onLoad = useCallback((m: google.maps.Map) => { mapRef.current = m; }, []);
   const onUnmount = useCallback(() => { mapRef.current = null; }, []);

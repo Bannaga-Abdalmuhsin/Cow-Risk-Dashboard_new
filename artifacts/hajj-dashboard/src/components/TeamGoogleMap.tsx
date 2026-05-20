@@ -2,8 +2,8 @@ import { useCallback, useMemo, useRef } from "react";
 import {
   GoogleMap,
   OverlayView,
-  useJsApiLoader,
 } from "@react-google-maps/api";
+import { useGoogleMaps } from "../lib/GoogleMapsProvider";
 import type { SiteAnalysis } from "../lib/calculations";
 import type { LiveTechLocation } from "./LeafletMap";
 
@@ -36,12 +36,7 @@ interface Props {
 }
 
 export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelectSite }: Props) {
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string;
-
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: apiKey,
-    id: "team-google-map",
-  });
+  const { isLoaded, loadError } = useGoogleMaps();
 
   const mapRef = useRef<google.maps.Map | null>(null);
   const onLoad = useCallback((map: google.maps.Map) => { mapRef.current = map; }, []);
