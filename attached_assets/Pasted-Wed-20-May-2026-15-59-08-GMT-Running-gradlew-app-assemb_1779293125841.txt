@@ -1,0 +1,2749 @@
+Wed, 20 May 2026 15:59:08 GMT
+
+Running 'gradlew :app:assembleRelease' in /home/expo/workingdir/build/artifacts/team-tracker/android
+Wed, 20 May 2026 15:59:08 GMT
+
+Downloading https://services.gradle.org/distributions/gradle-8.14.3-bin.zip
+Wed, 20 May 2026 15:59:09 GMT
+
+10%.
+Wed, 20 May 2026 15:59:10 GMT
+
+20%.
+Wed, 20 May 2026 15:59:10 GMT
+
+30%
+Wed, 20 May 2026 15:59:10 GMT
+
+40%.
+Wed, 20 May 2026 15:59:10 GMT
+
+50%.
+Wed, 20 May 2026 15:59:10 GMT
+
+60%
+Wed, 20 May 2026 15:59:10 GMT
+
+70
+Wed, 20 May 2026 15:59:10 GMT
+
+%.
+Wed, 20 May 2026 15:59:10 GMT
+
+80%.
+Wed, 20 May 2026 15:59:10 GMT
+
+90%.
+Wed, 20 May 2026 15:59:10 GMT
+
+100%
+Wed, 20 May 2026 15:59:11 GMT
+
+Welcome to Gradle 8.14.3!
+Wed, 20 May 2026 15:59:11 GMT
+
+Here are the highlights of this release:
+Wed, 20 May 2026 15:59:11 GMT
+
+ - Java 24 support
+Wed, 20 May 2026 15:59:11 GMT
+
+ - GraalVM Native Image toolchain selection
+Wed, 20 May 2026 15:59:11 GMT
+
+ - Enhancements to test reporting
+Wed, 20 May 2026 15:59:11 GMT
+
+ - Build Authoring improvements
+Wed, 20 May 2026 15:59:11 GMT
+
+For more details see https://docs.gradle.org/8.14.3/release-notes.html
+Wed, 20 May 2026 15:59:11 GMT
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Wed, 20 May 2026 15:59:12 GMT
+
+Daemon will be stopped at the end of the build
+Wed, 20 May 2026 15:59:48 GMT
+
+> Configure project :expo-gradle-plugin:expo-autolinking-plugin
+Wed, 20 May 2026 15:59:48 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-autolinking@3.0.25/node_modules/expo-modules-autolinking/android/expo-gradle-plugin/expo-autolinking-plugin/build.gradle.kts:25:3: 'kotlinOptions(KotlinJvmOptionsDeprecated /* = KotlinJvmOptions */.() -> Unit): Unit' is deprecated. Please migrate to the compilerOptions DSL. More details are here: https://kotl.in/u1r8ln
+Wed, 20 May 2026 15:59:50 GMT
+
+> Configure project :expo-gradle-plugin:expo-autolinking-settings-plugin
+Wed, 20 May 2026 15:59:50 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-autolinking@3.0.25/node_modules/expo-modules-autolinking/android/expo-gradle-plugin/expo-autolinking-settings-plugin/build.gradle.kts:30:3: 'kotlinOptions(KotlinJvmOptionsDeprecated /* = KotlinJvmOptions */.() -> Unit): Unit' is deprecated. Please migrate to the compilerOptions DSL. More details are here: https://kotl.in/u1r8ln
+Wed, 20 May 2026 15:59:50 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 15:59:50 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 15:59:50 GMT
+
+> Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 15:59:50 GMT
+
+> Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 15:59:50 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:pluginDescriptors
+Wed, 20 May 2026 15:59:50 GMT
+
+> Task :gradle-plugin:settings-plugin:pluginDescriptors
+Wed, 20 May 2026 15:59:50 GMT
+
+> Task :gradle-plugin:settings-plugin:processResources
+Wed, 20 May 2026 15:59:50 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:processResources
+Wed, 20 May 2026 15:59:55 GMT
+
+> Task :gradle-plugin:shared:processResources NO-SOURCE
+Wed, 20 May 2026 15:59:55 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:processResources NO-SOURCE
+Wed, 20 May 2026 16:00:01 GMT
+
+> Task :gradle-plugin:shared:compileKotlin
+Wed, 20 May 2026 16:00:01 GMT
+
+> Task :gradle-plugin:shared:compileJava NO-SOURCE
+Wed, 20 May 2026 16:00:01 GMT
+
+> Task :gradle-plugin:shared:classes UP-TO-DATE
+Wed, 20 May 2026 16:00:01 GMT
+
+> Task :gradle-plugin:shared:jar
+Wed, 20 May 2026 16:00:02 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileKotlin
+Wed, 20 May 2026 16:00:02 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileJava NO-SOURCE
+Wed, 20 May 2026 16:00:02 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:classes UP-TO-DATE
+Wed, 20 May 2026 16:00:02 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:jar
+Wed, 20 May 2026 16:00:10 GMT
+
+> Task :gradle-plugin:settings-plugin:compileKotlin
+Wed, 20 May 2026 16:00:10 GMT
+
+> Task :gradle-plugin:settings-plugin:compileJava NO-SOURCE
+Wed, 20 May 2026 16:00:10 GMT
+
+> Task :gradle-plugin:settings-plugin:classes
+Wed, 20 May 2026 16:00:10 GMT
+
+> Task :gradle-plugin:settings-plugin:jar
+Wed, 20 May 2026 16:00:11 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileKotlin
+Wed, 20 May 2026 16:00:11 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileJava NO-SOURCE
+Wed, 20 May 2026 16:00:11 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:classes
+Wed, 20 May 2026 16:00:11 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:jar
+Wed, 20 May 2026 16:00:14 GMT
+
+> Configure project :expo-module-gradle-plugin
+Wed, 20 May 2026 16:00:14 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/expo-module-gradle-plugin/build.gradle.kts:58:3: 'kotlinOptions(KotlinJvmOptionsDeprecated /* = KotlinJvmOptions */.() -> Unit): Unit' is deprecated. Please migrate to the compilerOptions DSL. More details are here: https://kotl.in/u1r8ln
+Wed, 20 May 2026 16:00:15 GMT
+
+> Task :gradle-plugin:react-native-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:00:15 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:00:15 GMT
+
+> Task :expo-module-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:00:15 GMT
+
+> Task :expo-module-gradle-plugin:pluginDescriptors
+Wed, 20 May 2026 16:00:15 GMT
+
+> Task :expo-module-gradle-plugin:processResources
+Wed, 20 May 2026 16:00:15 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin:pluginDescriptors
+Wed, 20 May 2026 16:00:15 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin:processResources
+Wed, 20 May 2026 16:00:18 GMT
+
+> Task :gradle-plugin:react-native-gradle-plugin:pluginDescriptors
+Wed, 20 May 2026 16:00:18 GMT
+
+> Task :gradle-plugin:react-native-gradle-plugin:processResources
+Wed, 20 May 2026 16:00:19 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileKotlin
+Wed, 20 May 2026 16:00:19 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileJava NO-SOURCE
+Wed, 20 May 2026 16:00:19 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin:classes
+Wed, 20 May 2026 16:00:19 GMT
+
+> Task :expo-gradle-plugin:expo-autolinking-plugin:jar
+Wed, 20 May 2026 16:00:23 GMT
+
+> Task :gradle-plugin:react-native-gradle-plugin:compileKotlin
+Wed, 20 May 2026 16:00:23 GMT
+
+> Task :gradle-plugin:react-native-gradle-plugin:compileJava NO-SOURCE
+Wed, 20 May 2026 16:00:23 GMT
+
+> Task :gradle-plugin:react-native-gradle-plugin:classes
+Wed, 20 May 2026 16:00:23 GMT
+
+> Task :gradle-plugin:react-native-gradle-plugin:jar
+Wed, 20 May 2026 16:00:25 GMT
+
+> Task :expo-module-gradle-plugin:compileKotlin
+Wed, 20 May 2026 16:00:25 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/expo-module-gradle-plugin/src/main/kotlin/expo/modules/plugin/android/AndroidLibraryExtension.kt:9:24 'var targetSdk: Int?' is deprecated. Will be removed from library DSL in v9.0. Use testOptions.targetSdk or/and lint.targetSdk instead.
+Wed, 20 May 2026 16:00:25 GMT
+
+> Task :expo-module-gradle-plugin:compileJava NO-SOURCE
+Wed, 20 May 2026 16:00:25 GMT
+
+> Task :expo-module-gradle-plugin:classes
+Wed, 20 May 2026 16:00:25 GMT
+
+> Task :expo-module-gradle-plugin:jar
+Wed, 20 May 2026 16:00:32 GMT
+
+> Configure project :
+Wed, 20 May 2026 16:00:32 GMT
+
+[ExpoRootProject] Using the following versions:
+Wed, 20 May 2026 16:00:32 GMT
+
+- buildTools:  36.0.0
+Wed, 20 May 2026 16:00:32 GMT
+
+  - minSdk:      24
+Wed, 20 May 2026 16:00:32 GMT
+
+  - compileSdk:  36
+Wed, 20 May 2026 16:00:32 GMT
+
+  - targetSdk:   36
+Wed, 20 May 2026 16:00:32 GMT
+
+  - ndk:         27.1.12297006
+Wed, 20 May 2026 16:00:32 GMT
+
+  - kotlin:      2.1.20
+Wed, 20 May 2026 16:00:32 GMT
+
+  - ksp:         2.1.20-2.0.1
+Wed, 20 May 2026 16:00:37 GMT
+
+> Configure project :expo
+Wed, 20 May 2026 16:00:37 GMT
+
+Using expo modules
+Wed, 20 May 2026 16:00:37 GMT
+
+  - expo-constants (18.0.13)
+Wed, 20 May 2026 16:00:37 GMT
+
+- expo-modules-core (3.0.30)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-application (7.0.8)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-asset (12.0.13)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-blur (15.0.8)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-file-system (19.0.22)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-font (14.0.11)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-haptics (15.0.8)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-image (3.0.11)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-image-loader (6.0.0)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-image-picker (17.0.11)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-keep-awake (15.0.8)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-linear-gradient (15.0.8)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-linking (8.0.12)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-location (19.0.8)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-notifications (0.32.17)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-splash-screen (31.0.13)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-system-ui (6.0.9)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-task-manager (55.0.16)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] expo-web-browser (15.0.11)
+Wed, 20 May 2026 16:00:37 GMT
+
+  - [📦] unimodules-app-loader (55.0.5)
+Wed, 20 May 2026 16:00:55 GMT
+
+> Configure project :react-native-reanimated
+Wed, 20 May 2026 16:00:55 GMT
+
+Android gradle plugin: 8.11.0
+Wed, 20 May 2026 16:00:55 GMT
+
+Gradle: 8.14.3
+Wed, 20 May 2026 16:01:07 GMT
+
+Checking the license for package Android SDK Build-Tools 36 in /home/expo/Android/Sdk/licenses
+Wed, 20 May 2026 16:01:07 GMT
+
+License for package Android SDK Build-Tools 36 accepted.
+Wed, 20 May 2026 16:01:07 GMT
+
+Preparing "Install Android SDK Build-Tools 36 v.36.0.0".
+Wed, 20 May 2026 16:01:09 GMT
+
+"Install Android SDK Build-Tools 36 v.36.0.0" ready.
+Wed, 20 May 2026 16:01:09 GMT
+
+Installing Android SDK Build-Tools 36 in /home/expo/Android/Sdk/build-tools/36.0.0
+Wed, 20 May 2026 16:01:09 GMT
+
+"Install Android SDK Build-Tools 36 v.36.0.0" complete.
+Wed, 20 May 2026 16:01:09 GMT
+
+"Install Android SDK Build-Tools 36 v.36.0.0" finished.
+Wed, 20 May 2026 16:01:09 GMT
+
+[=========                              ] 25%
+Wed, 20 May 2026 16:01:09 GMT
+
+[=======================================] 100% Fetch remote repository...       
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :expo-modules-core:preBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-async-storage_async-storage:preBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-gesture-handler:preBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-keyboard-controller:preBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-maps:preBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-reanimated:assertMinimalReactNativeVersionTask SKIPPED
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :app:generateAutolinkingPackageList
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-reanimated:prepareReanimatedHeadersForPrefabs
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :app:generateReactNativeEntryPoint
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-safe-area-context:preBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-screens:preBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-svg:preBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :expo-modules-core:preReleaseBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-reanimated:prepareWorkletsHeadersForPrefabs
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-reanimated:preBuild
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-async-storage_async-storage:preReleaseBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-async-storage_async-storage:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-async-storage_async-storage:mergeReleaseNativeLibs NO-SOURCE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-async-storage_async-storage:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-gesture-handler:preReleaseBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-gesture-handler:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-gesture-handler:mergeReleaseNativeLibs NO-SOURCE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-gesture-handler:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-keyboard-controller:preReleaseBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-keyboard-controller:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-keyboard-controller:mergeReleaseNativeLibs NO-SOURCE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-keyboard-controller:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-maps:preReleaseBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-maps:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-maps:mergeReleaseNativeLibs NO-SOURCE
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-maps:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:01:10 GMT
+
+> Task :react-native-reanimated:preReleaseBuild
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo-constants:createExpoConfig
+Wed, 20 May 2026 16:01:11 GMT
+
+[stderr] 
+
+The NODE_ENV environment variable is required but was not specified. Ensure the project is bundled with Expo CLI or NODE_ENV is set. Using only .env.local and .env
+Wed, 20 May 2026 16:01:11 GMT
+
+env: load .env.local .env
+Wed, 20 May 2026 16:01:11 GMT
+
+env: export EXPO_PUBLIC_DOMAIN EXPO_PUBLIC_REPL_ID
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo-constants:preBuild
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo-constants:preReleaseBuild
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo-constants:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo-constants:mergeReleaseNativeLibs NO-SOURCE
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo-constants:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-safe-area-context:preReleaseBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-safe-area-context:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-safe-area-context:mergeReleaseNativeLibs NO-SOURCE
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-safe-area-context:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-screens:preReleaseBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo:generatePackagesList
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo:preBuild
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :app:preBuild
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :app:preReleaseBuild
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :app:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo:preReleaseBuild
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo:mergeReleaseNativeLibs NO-SOURCE
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :expo:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-svg:preReleaseBuild UP-TO-DATE
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-svg:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-svg:mergeReleaseNativeLibs NO-SOURCE
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-svg:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-gesture-handler:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-gesture-handler:generateReleaseBuildConfig
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-gesture-handler:generateReleaseResValues
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-gesture-handler:generateReleaseResources
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-gesture-handler:packageReleaseResources
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-gesture-handler:parseReleaseLocalResources
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-gesture-handler:generateReleaseRFile
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-svg:generateReleaseBuildConfig
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-svg:generateReleaseResValues
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-svg:generateReleaseResources
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-svg:packageReleaseResources
+Wed, 20 May 2026 16:01:11 GMT
+
+> Task :react-native-svg:parseReleaseLocalResources
+Wed, 20 May 2026 16:01:12 GMT
+
+> Task :expo-modules-core:configureCMakeRelWithDebInfo[arm64-v8a]
+Wed, 20 May 2026 16:01:12 GMT
+
+Checking the license for package CMake 3.22.1 in /home/expo/Android/Sdk/licenses
+Wed, 20 May 2026 16:01:12 GMT
+
+License for package CMake 3.22.1 accepted.
+Wed, 20 May 2026 16:01:12 GMT
+
+Preparing "Install CMake 3.22.1 v.3.22.1".
+Wed, 20 May 2026 16:01:12 GMT
+
+"Install CMake 3.22.1 v.3.22.1" ready.
+Wed, 20 May 2026 16:01:12 GMT
+
+Installing CMake 3.22.1 in /home/expo/Android/Sdk/cmake/3.22.1
+Wed, 20 May 2026 16:01:12 GMT
+
+"Install CMake 3.22.1 v.3.22.1" complete.
+Wed, 20 May 2026 16:01:12 GMT
+
+"Install CMake 3.22.1 v.3.22.1" finished.
+Wed, 20 May 2026 16:01:16 GMT
+
+> Task :react-native-svg:generateReleaseRFile
+Wed, 20 May 2026 16:01:16 GMT
+
+> Task :react-native-svg:javaPreCompileRelease
+Wed, 20 May 2026 16:01:21 GMT
+
+> Task :react-native-screens:configureCMakeRelWithDebInfo[arm64-v8a]
+Wed, 20 May 2026 16:01:21 GMT
+
+> Task :react-native-reanimated:configureCMakeRelWithDebInfo[arm64-v8a]
+Wed, 20 May 2026 16:01:23 GMT
+
+> Task :react-native-svg:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:01:23 GMT
+
+[stderr] 
+
+Note: Some input files use or override a deprecated API.
+Wed, 20 May 2026 16:01:23 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:deprecation for details.
+Wed, 20 May 2026 16:01:23 GMT
+
+[stderr] 
+
+Note: Some input files use unchecked or unsafe operations.
+Wed, 20 May 2026 16:01:23 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:unchecked for details.
+Wed, 20 May 2026 16:01:26 GMT
+
+> Task :react-native-screens:buildCMakeRelWithDebInfo[arm64-v8a]
+Wed, 20 May 2026 16:01:28 GMT
+
+> Task :react-native-screens:configureCMakeRelWithDebInfo[armeabi-v7a]
+Wed, 20 May 2026 16:01:34 GMT
+
+> Task :react-native-screens:buildCMakeRelWithDebInfo[armeabi-v7a]
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-screens:configureCMakeRelWithDebInfo[x86]
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-svg:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-gesture-handler:javaPreCompileRelease
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-keyboard-controller:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-keyboard-controller:generateReleaseBuildConfig
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-keyboard-controller:generateReleaseResValues
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-keyboard-controller:generateReleaseResources
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-keyboard-controller:packageReleaseResources
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-keyboard-controller:parseReleaseLocalResources
+Wed, 20 May 2026 16:01:37 GMT
+
+> Task :react-native-keyboard-controller:generateReleaseRFile
+Wed, 20 May 2026 16:01:43 GMT
+
+> Task :react-native-screens:buildCMakeRelWithDebInfo[x86]
+Wed, 20 May 2026 16:01:47 GMT
+
+> Task :react-native-screens:configureCMakeRelWithDebInfo[x86_64]
+Wed, 20 May 2026 16:01:51 GMT
+
+> Task :react-native-reanimated:buildCMakeRelWithDebInfo[arm64-v8a][reanimated,worklets]
+Wed, 20 May 2026 16:01:51 GMT
+
+> Task :expo-modules-core:buildCMakeRelWithDebInfo[arm64-v8a]
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-screens:buildCMakeRelWithDebInfo[x86_64]
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-screens:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-screens:mergeReleaseNativeLibs
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-screens:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-keyboard-controller:javaPreCompileRelease
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-safe-area-context:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-safe-area-context:generateReleaseBuildConfig
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-safe-area-context:generateReleaseResValues
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-safe-area-context:generateReleaseResources
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-safe-area-context:packageReleaseResources
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-safe-area-context:parseReleaseLocalResources
+Wed, 20 May 2026 16:01:54 GMT
+
+> Task :react-native-safe-area-context:generateReleaseRFile
+Wed, 20 May 2026 16:02:05 GMT
+
+> Task :react-native-safe-area-context:compileReleaseKotlin
+Wed, 20 May 2026 16:02:05 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-safe-area-context@5.6.2_react-native@0.81.5_@babel+core@7.29.0_@types+reac_db7e84308fa9a28cdc0cc9a7b78f5e93/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaView.kt:59:23 'val uiImplementation: UIImplementation!' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:05 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-safe-area-context@5.6.2_react-native@0.81.5_@babel+core@7.29.0_@types+reac_db7e84308fa9a28cdc0cc9a7b78f5e93/node_modules/react-native-safe-area-context/android/src/paper/java/com/th3rdwave/safeareacontext/InsetsChangeEvent.kt:19:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+Wed, 20 May 2026 16:02:05 GMT
+
+> Task :react-native-safe-area-context:javaPreCompileRelease
+Wed, 20 May 2026 16:02:06 GMT
+
+> Task :react-native-safe-area-context:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:02:06 GMT
+
+[stderr] 
+
+Note: /home/expo/workingdir/build/node_modules/.pnpm/react-native-safe-area-context@5.6.2_react-native@0.81.5_@babel+core@7.29.0_@types+reac_db7e84308fa9a28cdc0cc9a7b78f5e93/node_modules/react-native-safe-area-context/android/src/paper/java/com/th3rdwave/safeareacontext/NativeSafeAreaContextSpec.java uses or overrides a deprecated API.
+Wed, 20 May 2026 16:02:06 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:deprecation for details.
+Wed, 20 May 2026 16:02:06 GMT
+
+> Task :react-native-safe-area-context:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:02:07 GMT
+
+> Task :react-native-keyboard-controller:compileReleaseKotlin
+Wed, 20 May 2026 16:02:09 GMT
+
+> Task :expo-modules-core:configureCMakeRelWithDebInfo[armeabi-v7a]
+Wed, 20 May 2026 16:02:09 GMT
+
+> Task :react-native-keyboard-controller:compileReleaseKotlin
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/extensions/EditText.kt:69:42 Unchecked cast of 'ArrayList<*>' to 'ArrayList<TextWatcher>'.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/interactive/KeyboardAnimationController.kt:89:16 'static fun getWindowInsetsController(p0: View): WindowInsetsControllerCompat?' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/managers/KeyboardControllerViewManagerImpl.kt:3:8 'object MapBuilder : Any' is deprecated. Use Kotlin's built-in collections extensions.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/managers/KeyboardControllerViewManagerImpl.kt:62:7 'object MapBuilder : Any' is deprecated. Use Kotlin's built-in collections extensions.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/managers/KeyboardControllerViewManagerImpl.kt:64:9 'object MapBuilder : Any' is deprecated. Use Kotlin's built-in collections extensions.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/managers/KeyboardControllerViewManagerImpl.kt:66:9 'object MapBuilder : Any' is deprecated. Use Kotlin's built-in collections extensions.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/managers/KeyboardControllerViewManagerImpl.kt:68:9 'object MapBuilder : Any' is deprecated. Use Kotlin's built-in collections extensions.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/managers/KeyboardControllerViewManagerImpl.kt:70:9 'object MapBuilder : Any' is deprecated. Use Kotlin's built-in collections extensions.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/managers/KeyboardControllerViewManagerImpl.kt:72:9 'object MapBuilder : Any' is deprecated. Use Kotlin's built-in collections extensions.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/managers/KeyboardControllerViewManagerImpl.kt:74:9 'object MapBuilder : Any' is deprecated. Use Kotlin's built-in collections extensions.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/managers/KeyboardControllerViewManagerImpl.kt:76:9 'object MapBuilder : Any' is deprecated. Use Kotlin's built-in collections extensions.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/modal/ModalAttachedWatcher.kt:29:111 'val DEFAULT: Int' is deprecated. UIManagerType.DEFAULT will be deleted in the next release of React Native. Use [LEGACY] instead.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/modules/statusbar/StatusBarManagerCompatModuleImpl.kt:62:36 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/modules/statusbar/StatusBarManagerCompatModuleImpl.kt:65:18 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/modules/statusbar/StatusBarManagerCompatModuleImpl.kt:70:16 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/EdgeToEdgeReactViewGroup.kt:134:23 'fun replaceSystemWindowInsets(p0: Int, p1: Int, p2: Int, p3: Int): WindowInsetsCompat' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/EdgeToEdgeReactViewGroup.kt:135:25 'val systemWindowInsetLeft: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/EdgeToEdgeReactViewGroup.kt:136:65 'val systemWindowInsetTop: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/EdgeToEdgeReactViewGroup.kt:137:25 'val systemWindowInsetRight: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/EdgeToEdgeReactViewGroup.kt:138:25 'val systemWindowInsetBottom: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:13:8 'object ReactFeatureFlags : Any' is deprecated. Use com.facebook.react.internal.featureflags.ReactNativeFeatureFlags instead.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:79:5 The corresponding parameter in the supertype 'ReactViewGroup' is named 'left'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:80:5 The corresponding parameter in the supertype 'ReactViewGroup' is named 'top'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:81:5 The corresponding parameter in the supertype 'ReactViewGroup' is named 'right'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:82:5 The corresponding parameter in the supertype 'ReactViewGroup' is named 'bottom'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:132:9 'object ReactFeatureFlags : Any' is deprecated. Use com.facebook.react.internal.featureflags.ReactNativeFeatureFlags instead.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:152:5 The corresponding parameter in the supertype 'ReactViewGroup' is named 'w'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:153:5 The corresponding parameter in the supertype 'ReactViewGroup' is named 'h'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:154:5 The corresponding parameter in the supertype 'ReactViewGroup' is named 'oldw'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/java/com/reactnativekeyboardcontroller/views/overlay/OverKeyboardViewGroup.kt:155:5 The corresponding parameter in the supertype 'ReactViewGroup' is named 'oldh'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/paper/java/com/reactnativekeyboardcontroller/KeyboardBackgroundViewManager.kt:13:35 The corresponding parameter in the supertype 'ReactViewManager' is named 'context'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:09 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/paper/java/com/reactnativekeyboardcontroller/KeyboardGestureAreaViewManager.kt:14:35 The corresponding parameter in the supertype 'ReactViewManager' is named 'context'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:10 GMT
+
+> Task :react-native-keyboard-controller:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:02:10 GMT
+
+> Task :react-native-keyboard-controller:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:02:12 GMT
+
+> Task :react-native-screens:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:02:12 GMT
+
+> Task :react-native-screens:generateReleaseBuildConfig
+Wed, 20 May 2026 16:02:12 GMT
+
+> Task :react-native-screens:generateReleaseResValues
+Wed, 20 May 2026 16:02:12 GMT
+
+> Task :react-native-screens:generateReleaseResources
+Wed, 20 May 2026 16:02:12 GMT
+
+> Task :react-native-screens:packageReleaseResources
+Wed, 20 May 2026 16:02:12 GMT
+
+> Task :react-native-screens:parseReleaseLocalResources
+Wed, 20 May 2026 16:02:12 GMT
+
+> Task :react-native-screens:generateReleaseRFile
+Wed, 20 May 2026 16:02:13 GMT
+
+> Task :react-native-maps:generateReleaseBuildConfig
+Wed, 20 May 2026 16:02:13 GMT
+
+> Task :react-native-maps:generateReleaseResValues
+Wed, 20 May 2026 16:02:13 GMT
+
+> Task :react-native-maps:generateReleaseResources
+Wed, 20 May 2026 16:02:13 GMT
+
+> Task :react-native-maps:packageReleaseResources
+Wed, 20 May 2026 16:02:13 GMT
+
+> Task :react-native-maps:parseReleaseLocalResources
+Wed, 20 May 2026 16:02:13 GMT
+
+> Task :react-native-maps:generateReleaseRFile
+Wed, 20 May 2026 16:02:13 GMT
+
+> Task :react-native-maps:javaPreCompileRelease
+Wed, 20 May 2026 16:02:17 GMT
+
+> Task :react-native-maps:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:02:17 GMT
+
+[stderr] 
+
+Note: Some input files use or override a deprecated API.
+Wed, 20 May 2026 16:02:17 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:deprecation for details.
+Wed, 20 May 2026 16:02:17 GMT
+
+[stderr] 
+
+Note: Some input files use unchecked or unsafe operations.
+Wed, 20 May 2026 16:02:17 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:unchecked for details.
+Wed, 20 May 2026 16:02:19 GMT
+
+> Task :react-native-screens:javaPreCompileRelease
+Wed, 20 May 2026 16:02:19 GMT
+
+> Task :react-native-maps:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo:generateReleaseBuildConfig
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo:generateReleaseResValues
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo:generateReleaseResources
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo:packageReleaseResources
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo:parseReleaseLocalResources
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo:generateReleaseRFile
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo-constants:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo-constants:generateReleaseBuildConfig
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo-constants:generateReleaseResValues
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo-constants:generateReleaseResources
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo-constants:packageReleaseResources
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo-constants:parseReleaseLocalResources
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo-constants:generateReleaseRFile
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo-constants:javaPreCompileRelease
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :expo:javaPreCompileRelease
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :react-native-async-storage_async-storage:generateReleaseBuildConfig
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :react-native-async-storage_async-storage:generateReleaseResValues
+Wed, 20 May 2026 16:02:23 GMT
+
+> Task :react-native-async-storage_async-storage:generateReleaseResources
+Wed, 20 May 2026 16:02:24 GMT
+
+> Task :react-native-async-storage_async-storage:packageReleaseResources
+Wed, 20 May 2026 16:02:24 GMT
+
+> Task :react-native-async-storage_async-storage:parseReleaseLocalResources
+Wed, 20 May 2026 16:02:25 GMT
+
+> Task :react-native-async-storage_async-storage:generateReleaseRFile
+Wed, 20 May 2026 16:02:25 GMT
+
+> Task :react-native-async-storage_async-storage:javaPreCompileRelease
+Wed, 20 May 2026 16:02:26 GMT
+
+> Task :react-native-async-storage_async-storage:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:02:26 GMT
+
+> Task :react-native-async-storage_async-storage:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:02:26 GMT
+
+[stderr] 
+
+Note: Some input files use or override a deprecated API.
+Wed, 20 May 2026 16:02:26 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:deprecation for details.
+Wed, 20 May 2026 16:02:26 GMT
+
+[stderr] 
+
+Note: /home/expo/workingdir/build/node_modules/.pnpm/@react-native-async-storage+async-storage@2.2.0_react-native@0.81.5_@babel+core@7.29.0__088e8303e028f6e6ca5c16cc3d46621a/node_modules/@react-native-async-storage/async-storage/android/src/javaPackage/java/com/reactnativecommunity/asyncstorage/AsyncStoragePackage.java uses unchecked or unsafe operations.
+Wed, 20 May 2026 16:02:26 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:unchecked for details.
+Wed, 20 May 2026 16:02:27 GMT
+
+> Task :react-native-svg:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:02:27 GMT
+
+> Task :react-native-reanimated:configureCMakeRelWithDebInfo[armeabi-v7a]
+Wed, 20 May 2026 16:02:39 GMT
+
+> Task :expo-modules-core:buildCMakeRelWithDebInfo[armeabi-v7a]
+Wed, 20 May 2026 16:02:42 GMT
+
+> Task :react-native-screens:compileReleaseKotlin
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :app:checkReleaseDuplicateClasses
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :app:buildKotlinToolingMetadata
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :app:generateReleaseBuildConfig
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :expo:writeReleaseAarMetadata
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :expo-constants:writeReleaseAarMetadata
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :react-native-async-storage_async-storage:writeReleaseAarMetadata
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :react-native-gesture-handler:writeReleaseAarMetadata
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :react-native-keyboard-controller:writeReleaseAarMetadata
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :react-native-maps:writeReleaseAarMetadata
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :react-native-safe-area-context:writeReleaseAarMetadata
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :react-native-screens:writeReleaseAarMetadata
+Wed, 20 May 2026 16:02:47 GMT
+
+> Task :react-native-svg:writeReleaseAarMetadata
+Wed, 20 May 2026 16:02:49 GMT
+
+> Task :app:createBundleReleaseJsAndAssets
+Wed, 20 May 2026 16:02:49 GMT
+
+env: load .env.local .env
+Wed, 20 May 2026 16:02:49 GMT
+
+env: export EXPO_PUBLIC_DOMAIN EXPO_PUBLIC_REPL_ID
+Wed, 20 May 2026 16:02:50 GMT
+
+> Task :expo-modules-core:configureCMakeRelWithDebInfo[x86]
+Wed, 20 May 2026 16:02:52 GMT
+
+> Task :app:createBundleReleaseJsAndAssets
+Wed, 20 May 2026 16:02:52 GMT
+
+Starting Metro Bundler
+Wed, 20 May 2026 16:02:57 GMT
+
+> Task :react-native-screens:compileReleaseKotlin
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/RNScreensPackage.kt:56:9 The corresponding parameter in the supertype 'BaseReactPackage' is named 'name'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/RNScreensPackage.kt:57:9 The corresponding parameter in the supertype 'BaseReactPackage' is named 'reactContext'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/RNScreensPackage.kt:70:17 'constructor(name: String, className: String, canOverrideExistingModule: Boolean, needsEagerInit: Boolean, hasConstants: Boolean, isCxxModule: Boolean, isTurboModule: Boolean): ReactModuleInfo' is deprecated. This constructor is deprecated and will be removed in the future. Use ReactModuleInfo(String, String, boolean, boolean, boolean, boolean)].
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:48:77 Unchecked cast of '(CoordinatorLayout.Behavior<View!>?..CoordinatorLayout.Behavior<*>?)' to 'BottomSheetBehavior<Screen>'.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:383:36 'fun setTranslucent(screen: Screen, activity: Activity?, context: ReactContext?): Unit' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:402:36 'fun setColor(screen: Screen, activity: Activity?, context: ReactContext?): Unit' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:420:36 'fun setNavigationBarColor(screen: Screen, activity: Activity?): Unit' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:437:36 'fun setNavigationBarTranslucent(screen: Screen, activity: Activity?): Unit' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:217:31 'var targetElevation: Float' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:220:13 'fun setHasOptionsMenu(p0: Boolean): Unit' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:397:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:404:22 'fun onPrepareOptionsMenu(p0: Menu): Unit' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:407:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:412:22 'fun onCreateOptionsMenu(p0: Menu, p1: MenuInflater): Unit' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackHeaderConfig.kt:435:18 'val reactNativeHost: ReactNativeHost' is deprecated. You should not use ReactNativeHost directly in the New Architecture. Use ReactHost instead.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenViewManager.kt:203:14 'var statusBarColor: Int?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenViewManager.kt:220:14 'var isStatusBarTranslucent: Boolean?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenViewManager.kt:237:14 'var navigationBarColor: Int?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenViewManager.kt:246:14 'var isNavigationBarTranslucent: Boolean?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:55:42 'fun replaceSystemWindowInsets(p0: Int, p1: Int, p2: Int, p3: Int): WindowInsetsCompat' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:56:39 'val systemWindowInsetLeft: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:58:39 'val systemWindowInsetRight: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:59:39 'val systemWindowInsetBottom: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:102:53 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:106:37 'var statusBarColor: Int?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:113:48 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:116:32 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:162:49 'var isStatusBarTranslucent: Boolean?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:218:43 'var navigationBarColor: Int?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:218:72 'var navigationBarColor: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:224:16 'var navigationBarColor: Int' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:241:55 'var isNavigationBarTranslucent: Boolean?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:283:13 'fun setColor(screen: Screen, activity: Activity?, context: ReactContext?): Unit' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:285:13 'fun setTranslucent(screen: Screen, activity: Activity?, context: ReactContext?): Unit' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:289:13 'fun setNavigationBarColor(screen: Screen, activity: Activity?): Unit' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:290:13 'fun setNavigationBarTranslucent(screen: Screen, activity: Activity?): Unit' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:354:42 'var statusBarColor: Int?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:356:48 'var isStatusBarTranslucent: Boolean?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:359:57 'var navigationBarColor: Int?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:360:63 'var isNavigationBarTranslucent: Boolean?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:7:8 'object ReactFeatureFlags : Any' is deprecated. Use com.facebook.react.internal.featureflags.ReactNativeFeatureFlags instead.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:25:13 'object ReactFeatureFlags : Any' is deprecated. Use com.facebook.react.internal.featureflags.ReactNativeFeatureFlags instead.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:32:9 The corresponding parameter in the supertype 'ReactViewGroup' is named 'left'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:33:9 The corresponding parameter in the supertype 'ReactViewGroup' is named 'top'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:34:9 The corresponding parameter in the supertype 'ReactViewGroup' is named 'right'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:35:9 The corresponding parameter in the supertype 'ReactViewGroup' is named 'bottom'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:71:9 The corresponding parameter in the supertype 'RootView' is named 'childView'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:72:9 The corresponding parameter in the supertype 'RootView' is named 'ev'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:79:46 The corresponding parameter in the supertype 'RootView' is named 'ev'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:83:9 The corresponding parameter in the supertype 'RootView' is named 'childView'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:84:9 The corresponding parameter in the supertype 'RootView' is named 'ev'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:95:34 The corresponding parameter in the supertype 'RootView' is named 't'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/DimmingView.kt:63:9 The corresponding parameter in the supertype 'ReactCompoundView' is named 'touchX'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/DimmingView.kt:64:9 The corresponding parameter in the supertype 'ReactCompoundView' is named 'touchY'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/DimmingView.kt:68:9 The corresponding parameter in the supertype 'ReactCompoundViewGroup' is named 'touchX'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/DimmingView.kt:69:9 The corresponding parameter in the supertype 'ReactCompoundViewGroup' is named 'touchY'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/TabsHostViewManager.kt:37:9 The corresponding parameter in the supertype 'TabsHostViewManager' is named 'view'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:02:57 GMT
+
+> Task :react-native-reanimated:buildCMakeRelWithDebInfo[armeabi-v7a][reanimated,worklets]
+Wed, 20 May 2026 16:03:03 GMT
+
+> Task :react-native-screens:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:03:03 GMT
+
+> Task :app:createBundleReleaseJsAndAssets
+Wed, 20 May 2026 16:03:03 GMT
+
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__e169f174f2ad53b00f8e124cc5a3fd90/node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Wed, 20 May 2026 16:03:03 GMT
+
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__e169f174f2ad53b00f8e124cc5a3fd90/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓░░░░░░░ 56.9% ( 911/1208)
+Wed, 20 May 2026 16:03:03 GMT
+
+> Task :react-native-screens:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:03:06 GMT
+
+> Task :app:createBundleReleaseJsAndAssets
+Wed, 20 May 2026 16:03:06 GMT
+
+Android node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__e169f174f2ad53b00f8e124cc5a3fd90/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1606/1606)
+Wed, 20 May 2026 16:03:06 GMT
+
+Android Bundled 8226ms node_modules/.pnpm/expo-router@6.0.23_@types+react-dom@19.1.11_@types+react@19.1.17__@types+react@19.1.17__e169f174f2ad53b00f8e124cc5a3fd90/node_modules/expo-router/entry.js (1606 modules)
+Wed, 20 May 2026 16:03:06 GMT
+
+Writing bundle output to: /home/expo/workingdir/build/artifacts/team-tracker/android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle
+Wed, 20 May 2026 16:03:06 GMT
+
+Writing sourcemap output to: /home/expo/workingdir/build/artifacts/team-tracker/android/app/build/intermediates/sourcemaps/react/release/index.android.bundle.packager.map
+Wed, 20 May 2026 16:03:06 GMT
+
+Copying 64 asset files
+Wed, 20 May 2026 16:03:07 GMT
+
+Done writing bundle output
+Wed, 20 May 2026 16:03:07 GMT
+
+Done writing sourcemap output
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :expo:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :expo:processReleaseManifest
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :expo-constants:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :expo-constants:processReleaseManifest
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-async-storage_async-storage:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-async-storage_async-storage:processReleaseManifest
+Wed, 20 May 2026 16:03:11 GMT
+
+package="com.reactnativecommunity.asyncstorage" found in source AndroidManifest.xml: /home/expo/workingdir/build/node_modules/.pnpm/@react-native-async-storage+async-storage@2.2.0_react-native@0.81.5_@babel+core@7.29.0__088e8303e028f6e6ca5c16cc3d46621a/node_modules/@react-native-async-storage/async-storage/android/src/main/AndroidManifest.xml.
+Wed, 20 May 2026 16:03:11 GMT
+
+Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+Wed, 20 May 2026 16:03:11 GMT
+
+Recommendation: remove package="com.reactnativecommunity.asyncstorage" from the source AndroidManifest.xml: /home/expo/workingdir/build/node_modules/.pnpm/@react-native-async-storage+async-storage@2.2.0_react-native@0.81.5_@babel+core@7.29.0__088e8303e028f6e6ca5c16cc3d46621a/node_modules/@react-native-async-storage/async-storage/android/src/main/AndroidManifest.xml.
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-gesture-handler:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-gesture-handler:processReleaseManifest
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-keyboard-controller:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-keyboard-controller:processReleaseManifest
+Wed, 20 May 2026 16:03:11 GMT
+
+package="com.reactnativekeyboardcontroller" found in source AndroidManifest.xml: /home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/AndroidManifest.xml.
+Wed, 20 May 2026 16:03:11 GMT
+
+Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+Wed, 20 May 2026 16:03:11 GMT
+
+Recommendation: remove package="com.reactnativekeyboardcontroller" from the source AndroidManifest.xml: /home/expo/workingdir/build/node_modules/.pnpm/react-native-keyboard-controller@1.18.5_react-native-reanimated@3.19.5_@babel+core@7.29_f6bf3833eed602c396ba2ef3c8a3277e/node_modules/react-native-keyboard-controller/android/src/main/AndroidManifest.xml.
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-maps:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-maps:processReleaseManifest
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-safe-area-context:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-safe-area-context:processReleaseManifest
+Wed, 20 May 2026 16:03:11 GMT
+
+package="com.th3rdwave.safeareacontext" found in source AndroidManifest.xml: /home/expo/workingdir/build/node_modules/.pnpm/react-native-safe-area-context@5.6.2_react-native@0.81.5_@babel+core@7.29.0_@types+reac_db7e84308fa9a28cdc0cc9a7b78f5e93/node_modules/react-native-safe-area-context/android/src/main/AndroidManifest.xml.
+Wed, 20 May 2026 16:03:11 GMT
+
+Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+Wed, 20 May 2026 16:03:11 GMT
+
+Recommendation: remove package="com.th3rdwave.safeareacontext" from the source AndroidManifest.xml: /home/expo/workingdir/build/node_modules/.pnpm/react-native-safe-area-context@5.6.2_react-native@0.81.5_@babel+core@7.29.0_@types+reac_db7e84308fa9a28cdc0cc9a7b78f5e93/node_modules/react-native-safe-area-context/android/src/main/AndroidManifest.xml.
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-screens:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-screens:processReleaseManifest
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-svg:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:11 GMT
+
+> Task :react-native-svg:processReleaseManifest
+Wed, 20 May 2026 16:03:12 GMT
+
+> Task :expo:compileReleaseLibraryResources
+Wed, 20 May 2026 16:03:12 GMT
+
+> Task :expo-constants:compileReleaseLibraryResources
+Wed, 20 May 2026 16:03:12 GMT
+
+> Task :react-native-async-storage_async-storage:compileReleaseLibraryResources
+Wed, 20 May 2026 16:03:12 GMT
+
+> Task :react-native-gesture-handler:compileReleaseLibraryResources
+Wed, 20 May 2026 16:03:12 GMT
+
+> Task :react-native-keyboard-controller:compileReleaseLibraryResources
+Wed, 20 May 2026 16:03:12 GMT
+
+> Task :react-native-maps:compileReleaseLibraryResources
+Wed, 20 May 2026 16:03:12 GMT
+
+> Task :react-native-safe-area-context:compileReleaseLibraryResources
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-screens:compileReleaseLibraryResources
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-svg:compileReleaseLibraryResources
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-async-storage_async-storage:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-keyboard-controller:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-maps:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-safe-area-context:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-screens:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :expo:prepareReleaseArtProfile
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :expo-constants:prepareReleaseArtProfile
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-async-storage_async-storage:prepareReleaseArtProfile
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-gesture-handler:prepareReleaseArtProfile
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-keyboard-controller:prepareReleaseArtProfile
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-maps:prepareReleaseArtProfile
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-safe-area-context:prepareReleaseArtProfile
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-screens:prepareReleaseArtProfile
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-svg:prepareReleaseArtProfile
+Wed, 20 May 2026 16:03:13 GMT
+
+> Task :react-native-keyboard-controller:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:03:15 GMT
+
+> Task :react-native-safe-area-context:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:03:16 GMT
+
+> Task :react-native-screens:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:03:20 GMT
+
+> Task :react-native-maps:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:03:20 GMT
+
+> Task :expo-modules-core:buildCMakeRelWithDebInfo[x86]
+Wed, 20 May 2026 16:03:22 GMT
+
+> Task :react-native-async-storage_async-storage:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:03:23 GMT
+
+> Task :react-native-svg:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo:mergeReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo:mergeReleaseAssets
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo-constants:mergeReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo-constants:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo-constants:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo-constants:mergeReleaseAssets
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-async-storage_async-storage:mergeReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-async-storage_async-storage:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-async-storage_async-storage:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-async-storage_async-storage:mergeReleaseAssets
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-gesture-handler:mergeReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-gesture-handler:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-gesture-handler:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-gesture-handler:mergeReleaseAssets
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-keyboard-controller:mergeReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-keyboard-controller:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-keyboard-controller:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-keyboard-controller:mergeReleaseAssets
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-maps:mergeReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-maps:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-maps:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-maps:mergeReleaseAssets
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-safe-area-context:mergeReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-safe-area-context:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-safe-area-context:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-safe-area-context:mergeReleaseAssets
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-screens:mergeReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-screens:compileReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-screens:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-screens:mergeReleaseAssets
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-svg:mergeReleaseShaders
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-svg:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-svg:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-svg:mergeReleaseAssets
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo:extractProguardFiles
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo-constants:extractProguardFiles
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo-constants:prepareLintJarForPublish
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :expo:prepareLintJarForPublish
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-async-storage_async-storage:processReleaseJavaRes NO-SOURCE
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-async-storage_async-storage:createFullJarRelease
+Wed, 20 May 2026 16:03:26 GMT
+
+> Task :react-native-async-storage_async-storage:extractProguardFiles
+Wed, 20 May 2026 16:03:28 GMT
+
+> Task :expo-modules-core:configureCMakeRelWithDebInfo[x86_64]
+Wed, 20 May 2026 16:03:28 GMT
+
+> Task :app:generateReleaseResValues
+Wed, 20 May 2026 16:03:28 GMT
+
+> Task :app:generateReleaseResources
+Wed, 20 May 2026 16:03:29 GMT
+
+> Task :app:packageReleaseResources
+Wed, 20 May 2026 16:03:29 GMT
+
+> Task :app:parseReleaseLocalResources
+Wed, 20 May 2026 16:03:29 GMT
+
+> Task :app:createReleaseCompatibleScreenManifests
+Wed, 20 May 2026 16:03:29 GMT
+
+> Task :app:extractDeepLinksRelease
+Wed, 20 May 2026 16:03:29 GMT
+
+> Task :app:javaPreCompileRelease
+Wed, 20 May 2026 16:03:29 GMT
+
+> Task :app:desugarReleaseFileDependencies
+Wed, 20 May 2026 16:03:29 GMT
+
+> Task :app:mergeReleaseStartupProfile
+Wed, 20 May 2026 16:03:29 GMT
+
+> Task :react-native-reanimated:configureCMakeRelWithDebInfo[x86]
+Wed, 20 May 2026 16:03:56 GMT
+
+> Task :react-native-async-storage_async-storage:generateReleaseLintModel
+Wed, 20 May 2026 16:03:58 GMT
+
+> Task :expo-modules-core:buildCMakeRelWithDebInfo[x86_64]
+Wed, 20 May 2026 16:03:59 GMT
+
+> Task :app:mergeExtDexRelease
+Wed, 20 May 2026 16:03:59 GMT
+
+> Task :react-native-reanimated:buildCMakeRelWithDebInfo[x86][reanimated,worklets]
+Wed, 20 May 2026 16:04:09 GMT
+
+> Task :expo-modules-core:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:04:24 GMT
+
+> Task :react-native-reanimated:configureCMakeRelWithDebInfo[x86_64]
+Wed, 20 May 2026 16:04:39 GMT
+
+> Task :expo-modules-core:mergeReleaseNativeLibs
+Wed, 20 May 2026 16:04:54 GMT
+
+> Task :react-native-reanimated:buildCMakeRelWithDebInfo[x86_64][reanimated,worklets]
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :expo-modules-core:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :expo-modules-core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :expo-modules-core:generateReleaseBuildConfig
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :expo-modules-core:generateReleaseResValues
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :expo-modules-core:generateReleaseResources
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :expo-modules-core:packageReleaseResources
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :expo-modules-core:parseReleaseLocalResources
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :expo-modules-core:generateReleaseRFile
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :react-native-async-storage_async-storage:prepareLintJarForPublish
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :react-native-gesture-handler:extractProguardFiles
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :react-native-svg:processReleaseJavaRes NO-SOURCE
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :react-native-svg:createFullJarRelease
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :app:mergeReleaseShaders
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :app:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:04:58 GMT
+
+> Task :app:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :app:extractReleaseVersionControlInfo
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :app:extractProguardFiles
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-svg:extractProguardFiles
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-svg:generateReleaseLintModel
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-svg:prepareLintJarForPublish
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-gesture-handler:prepareLintJarForPublish
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-keyboard-controller:processReleaseJavaRes
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-keyboard-controller:createFullJarRelease
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-keyboard-controller:extractProguardFiles
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-keyboard-controller:generateReleaseLintModel
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-keyboard-controller:prepareLintJarForPublish
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-maps:processReleaseJavaRes NO-SOURCE
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-maps:createFullJarRelease
+Wed, 20 May 2026 16:04:59 GMT
+
+> Task :react-native-maps:extractProguardFiles
+Wed, 20 May 2026 16:05:00 GMT
+
+> Task :react-native-maps:generateReleaseLintModel
+Wed, 20 May 2026 16:05:00 GMT
+
+> Task :expo-modules-core:javaPreCompileRelease
+Wed, 20 May 2026 16:05:00 GMT
+
+> Task :expo-modules-core:writeReleaseAarMetadata
+Wed, 20 May 2026 16:05:00 GMT
+
+> Task :expo-modules-core:extractDeepLinksRelease
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :expo-modules-core:processReleaseManifest
+Wed, 20 May 2026 16:05:01 GMT
+
+/home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/AndroidManifest.xml:8:9-11:45 Warning:
+Wed, 20 May 2026 16:05:01 GMT
+
+	meta-data#com.facebook.soloader.enabled@android:value was tagged at AndroidManifest.xml:8 to replace other declarations but no other declaration present
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :expo-modules-core:compileReleaseLibraryResources
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :expo-modules-core:prepareReleaseArtProfile
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :expo-modules-core:mergeReleaseShaders
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :expo-modules-core:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :expo-modules-core:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :expo-modules-core:mergeReleaseAssets
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :expo-modules-core:extractProguardFiles
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :expo-modules-core:prepareLintJarForPublish
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :react-native-maps:prepareLintJarForPublish
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :react-native-safe-area-context:processReleaseJavaRes
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :react-native-safe-area-context:createFullJarRelease
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :react-native-safe-area-context:extractProguardFiles
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :react-native-safe-area-context:generateReleaseLintModel
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :react-native-safe-area-context:prepareLintJarForPublish
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :react-native-screens:processReleaseJavaRes
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :react-native-screens:createFullJarRelease
+Wed, 20 May 2026 16:05:01 GMT
+
+> Task :react-native-screens:extractProguardFiles
+Wed, 20 May 2026 16:05:02 GMT
+
+> Task :react-native-screens:generateReleaseLintModel
+Wed, 20 May 2026 16:05:02 GMT
+
+> Task :react-native-screens:prepareLintJarForPublish
+Wed, 20 May 2026 16:05:02 GMT
+
+> Task :react-native-gesture-handler:stripReleaseDebugSymbols NO-SOURCE
+Wed, 20 May 2026 16:05:02 GMT
+
+> Task :react-native-gesture-handler:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:02 GMT
+
+> Task :react-native-gesture-handler:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:02 GMT
+
+> Task :react-native-keyboard-controller:stripReleaseDebugSymbols NO-SOURCE
+Wed, 20 May 2026 16:05:02 GMT
+
+> Task :react-native-keyboard-controller:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:02 GMT
+
+> Task :react-native-keyboard-controller:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:10 GMT
+
+> Task :react-native-safe-area-context:stripReleaseDebugSymbols NO-SOURCE
+Wed, 20 May 2026 16:05:10 GMT
+
+> Task :react-native-safe-area-context:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:10 GMT
+
+> Task :react-native-safe-area-context:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-keyboard-controller:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-keyboard-controller:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-safe-area-context:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-safe-area-context:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-keyboard-controller:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-safe-area-context:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-keyboard-controller:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-safe-area-context:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-safe-area-context:syncReleaseLibJars
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-safe-area-context:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-keyboard-controller:syncReleaseLibJars
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-keyboard-controller:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-screens:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-screens:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-screens:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-screens:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-screens:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-screens:stripReleaseDebugSymbols
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-maps:stripReleaseDebugSymbols NO-SOURCE
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-maps:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-maps:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-maps:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-screens:syncReleaseLibJars
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-maps:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-maps:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-screens:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-maps:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-screens:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-maps:syncReleaseLibJars
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-maps:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :expo:stripReleaseDebugSymbols NO-SOURCE
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-async-storage_async-storage:stripReleaseDebugSymbols NO-SOURCE
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-async-storage_async-storage:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-async-storage_async-storage:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-async-storage_async-storage:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-async-storage_async-storage:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-async-storage_async-storage:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-async-storage_async-storage:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-async-storage_async-storage:syncReleaseLibJars
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-async-storage_async-storage:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:11 GMT
+
+> Task :react-native-svg:stripReleaseDebugSymbols NO-SOURCE
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:packageNdkLibs NO-SOURCE
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :expo:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-svg:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :expo:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-svg:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:mergeReleaseJniLibFolders
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-svg:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:generateReleaseBuildConfig
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:generateReleaseResValues
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:generateReleaseResources
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:packageReleaseResources
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:parseReleaseLocalResources
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :expo-modules-core:stripReleaseDebugSymbols
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:javaPreCompileRelease
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:generateReleaseRFile
+Wed, 20 May 2026 16:05:12 GMT
+
+> Task :react-native-reanimated:writeReleaseAarMetadata
+Wed, 20 May 2026 16:05:13 GMT
+
+> Task :react-native-reanimated:mergeReleaseNativeLibs
+Wed, 20 May 2026 16:05:13 GMT
+
+> Task :react-native-svg:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:13 GMT
+
+> Task :react-native-svg:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:13 GMT
+
+> Task :react-native-svg:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:13 GMT
+
+> Task :app:mapReleaseSourceSetPaths
+Wed, 20 May 2026 16:05:13 GMT
+
+> Task :react-native-svg:syncReleaseLibJars
+Wed, 20 May 2026 16:05:13 GMT
+
+> Task :react-native-svg:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:14 GMT
+
+> Task :expo-modules-core:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:14 GMT
+
+> Task :expo-modules-core:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:14 GMT
+
+> Task :expo-constants:stripReleaseDebugSymbols NO-SOURCE
+Wed, 20 May 2026 16:05:14 GMT
+
+> Task :app:checkReleaseAarMetadata
+Wed, 20 May 2026 16:05:14 GMT
+
+> Task :expo-constants:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:14 GMT
+
+> Task :expo-constants:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:14 GMT
+
+> Task :expo-constants:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:05:14 GMT
+
+> Task :expo-modules-core:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:05:14 GMT
+
+> Task :expo:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:05:15 GMT
+
+> Task :react-native-reanimated:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:05:15 GMT
+
+[stderr] 
+
+Note: Some input files use or override a deprecated API.
+Wed, 20 May 2026 16:05:15 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:deprecation for details.
+Wed, 20 May 2026 16:05:15 GMT
+
+[stderr] 
+
+Note: Some input files use unchecked or unsafe operations.
+Wed, 20 May 2026 16:05:15 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:unchecked for details.
+Wed, 20 May 2026 16:05:15 GMT
+
+> Task :react-native-reanimated:copyReleaseJniLibsProjectOnly
+Wed, 20 May 2026 16:05:15 GMT
+
+> Task :react-native-reanimated:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:05:27 GMT
+
+> Task :react-native-gesture-handler:compileReleaseKotlin
+Wed, 20 May 2026 16:05:27 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/react-native-gesture-handler@2.28.0_react-native@0.81.5_@babel+core@7.29.0_@types+react_18db092138149f473db19e5f912d822a/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerRootView.kt:41:43 The corresponding parameter in the supertype 'ReactViewGroup' is named 'ev'. This may cause problems when calling this function with named arguments.
+Wed, 20 May 2026 16:05:28 GMT
+
+> Task :expo-modules-core:compileReleaseKotlin
+Wed, 20 May 2026 16:05:29 GMT
+
+> Task :app:mergeReleaseNativeLibs
+Wed, 20 May 2026 16:05:31 GMT
+
+> Task :app:mergeReleaseResources
+Wed, 20 May 2026 16:05:31 GMT
+
+> Task :app:stripReleaseDebugSymbols
+Wed, 20 May 2026 16:05:32 GMT
+
+> Task :app:extractReleaseNativeSymbolTables
+Wed, 20 May 2026 16:05:32 GMT
+
+> Task :react-native-gesture-handler:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:05:32 GMT
+
+[stderr] 
+
+Note: /home/expo/workingdir/build/node_modules/.pnpm/react-native-gesture-handler@2.28.0_react-native@0.81.5_@babel+core@7.29.0_@types+react_18db092138149f473db19e5f912d822a/node_modules/react-native-gesture-handler/android/paper/src/main/java/com/swmansion/gesturehandler/NativeRNGestureHandlerModuleSpec.java uses or overrides a deprecated API.
+Wed, 20 May 2026 16:05:32 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:deprecation for details.
+Wed, 20 May 2026 16:05:32 GMT
+
+> Task :react-native-gesture-handler:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:05:33 GMT
+
+> Task :app:mergeReleaseNativeDebugMetadata
+Wed, 20 May 2026 16:05:33 GMT
+
+> Task :react-native-reanimated:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:05:34 GMT
+
+> Task :react-native-reanimated:extractDeepLinksRelease
+Wed, 20 May 2026 16:05:34 GMT
+
+> Task :react-native-reanimated:processReleaseManifest
+Wed, 20 May 2026 16:05:34 GMT
+
+> Task :react-native-gesture-handler:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:05:34 GMT
+
+> Task :react-native-reanimated:compileReleaseLibraryResources
+Wed, 20 May 2026 16:05:34 GMT
+
+> Task :react-native-reanimated:prepareReleaseArtProfile
+Wed, 20 May 2026 16:05:35 GMT
+
+> Task :react-native-gesture-handler:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:05:36 GMT
+
+> Task :app:processReleaseMainManifest
+Wed, 20 May 2026 16:05:36 GMT
+
+/home/expo/workingdir/build/artifacts/team-tracker/android/app/src/main/AndroidManifest.xml Warning:
+Wed, 20 May 2026 16:05:36 GMT
+
+	provider#expo.modules.filesystem.FileSystemFileProvider@android:authorities was tagged at AndroidManifest.xml:0 to replace other declarations but no other declaration present
+Wed, 20 May 2026 16:05:36 GMT
+
+/home/expo/workingdir/build/artifacts/team-tracker/android/app/src/main/AndroidManifest.xml Warning:
+Wed, 20 May 2026 16:05:36 GMT
+
+	activity#expo.modules.imagepicker.ExpoCropImageActivity@android:exported was tagged at AndroidManifest.xml:0 to replace other declarations but no other declaration present
+Wed, 20 May 2026 16:05:36 GMT
+
+> Task :app:processReleaseManifest
+Wed, 20 May 2026 16:05:36 GMT
+
+> Task :app:processReleaseManifestForPackage
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-async-storage_async-storage:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-reanimated:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-gesture-handler:processReleaseJavaRes
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-gesture-handler:createFullJarRelease
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-gesture-handler:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-gesture-handler:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-gesture-handler:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-gesture-handler:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-reanimated:mergeReleaseShaders
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-gesture-handler:syncReleaseLibJars
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-reanimated:compileReleaseShaders NO-SOURCE
+Wed, 20 May 2026 16:05:38 GMT
+
+> Task :react-native-reanimated:generateReleaseAssets UP-TO-DATE
+Wed, 20 May 2026 16:05:39 GMT
+
+> Task :expo-modules-core:compileReleaseKotlin
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/apploader/RNHeadlessAppLoader.kt:48:87 'val reactNativeHost: ReactNativeHost' is deprecated. You should not use ReactNativeHost directly in the New Architecture. Use ReactHost instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/apploader/RNHeadlessAppLoader.kt:91:85 'val reactNativeHost: ReactNativeHost' is deprecated. You should not use ReactNativeHost directly in the New Architecture. Use ReactHost instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/apploader/RNHeadlessAppLoader.kt:120:83 'val reactNativeHost: ReactNativeHost' is deprecated. You should not use ReactNativeHost directly in the New Architecture. Use ReactHost instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/apploader/AppLoaderProvider.kt:34:52 Unchecked cast of 'Class<*>!' to 'Class<out HeadlessAppLoader>'.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/AppContext.kt:30:8 'typealias ErrorManagerModule = JSLoggerModule' is deprecated. Use JSLoggerModule instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/AppContext.kt:253:21 'typealias ErrorManagerModule = JSLoggerModule' is deprecated. Use JSLoggerModule instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/AppContext.kt:343:21 'val DEFAULT: Int' is deprecated. UIManagerType.DEFAULT will be deleted in the next release of React Native. Use [LEGACY] instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/defaultmodules/NativeModulesProxyModule.kt:16:5 'fun Constants(legacyConstantsProvider: () -> Map<String, Any?>): Unit' is deprecated. Use `Constant` or `Property` instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/jni/PromiseImpl.kt:65:51 'val errorManager: JSLoggerModule?' is deprecated. Use AppContext.jsLogger instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/jni/PromiseImpl.kt:69:22 'fun reportExceptionToLogBox(codedException: CodedException): Unit' is deprecated. Use appContext.jsLogger.error(...) instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/views/ViewDefinitionBuilder.kt:464:16 'val errorManager: JSLoggerModule?' is deprecated. Use AppContext.jsLogger instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/views/ViewDefinitionBuilder.kt:464:30 'fun reportExceptionToLogBox(codedException: CodedException): Unit' is deprecated. Use appContext.jsLogger.error(...) instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/views/ViewManagerDefinition.kt:41:16 'val errorManager: JSLoggerModule?' is deprecated. Use AppContext.jsLogger instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-modules-core@3.0.30_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/views/ViewManagerDefinition.kt:41:30 'fun reportExceptionToLogBox(codedException: CodedException): Unit' is deprecated. Use appContext.jsLogger.error(...) instead.
+Wed, 20 May 2026 16:05:39 GMT
+
+> Task :react-native-reanimated:mergeReleaseAssets
+Wed, 20 May 2026 16:05:39 GMT
+
+> Task :react-native-reanimated:processReleaseJavaRes NO-SOURCE
+Wed, 20 May 2026 16:05:39 GMT
+
+> Task :react-native-gesture-handler:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:39 GMT
+
+> Task :react-native-async-storage_async-storage:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:05:39 GMT
+
+> Task :react-native-reanimated:createFullJarRelease
+Wed, 20 May 2026 16:05:39 GMT
+
+> Task :react-native-svg:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:05:39 GMT
+
+> Task :react-native-reanimated:extractProguardFiles
+Wed, 20 May 2026 16:05:39 GMT
+
+> Task :react-native-gesture-handler:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:05:40 GMT
+
+> Task :app:mergeReleaseArtProfile
+Wed, 20 May 2026 16:05:41 GMT
+
+> Task :react-native-reanimated:generateReleaseLintModel
+Wed, 20 May 2026 16:05:41 GMT
+
+> Task :app:mergeReleaseAssets
+Wed, 20 May 2026 16:05:41 GMT
+
+> Task :react-native-reanimated:prepareLintJarForPublish
+Wed, 20 May 2026 16:05:41 GMT
+
+> Task :expo-modules-core:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:05:41 GMT
+
+[stderr] 
+
+Note: Some input files use or override a deprecated API.
+Wed, 20 May 2026 16:05:41 GMT
+
+[stderr] 
+
+Note: Recompile with -Xlint:deprecation for details.
+Wed, 20 May 2026 16:05:41 GMT
+
+> Task :app:compressReleaseAssets
+Wed, 20 May 2026 16:05:41 GMT
+
+> Task :react-native-gesture-handler:generateReleaseLintModel
+Wed, 20 May 2026 16:05:41 GMT
+
+> Task :react-native-reanimated:extractDeepLinksForAarRelease
+Wed, 20 May 2026 16:05:41 GMT
+
+> Task :react-native-reanimated:stripReleaseDebugSymbols
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :expo-modules-core:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :expo-modules-core:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :expo-modules-core:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :app:processReleaseResources
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :expo-modules-core:processReleaseJavaRes
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :expo-modules-core:createFullJarRelease
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :expo-modules-core:generateReleaseLintModel
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :react-native-reanimated:copyReleaseJniLibsProjectAndLocalJars
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :react-native-reanimated:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :react-native-reanimated:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:42 GMT
+
+> Task :react-native-reanimated:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:43 GMT
+
+> Task :expo-constants:compileReleaseKotlin
+Wed, 20 May 2026 16:05:43 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo-constants@18.0.13_expo@54.0.34_react-native@0.81.5_@babel+core@7.29.0_@types+react@19.1.17_react@19.1.0_/node_modules/expo-constants/android/src/main/java/expo/modules/constants/ConstantsModule.kt:12:5 'fun Constants(legacyConstantsProvider: () -> Map<String, Any?>): Unit' is deprecated. Use `Constant` or `Property` instead.
+Wed, 20 May 2026 16:05:43 GMT
+
+> Task :expo-constants:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:05:45 GMT
+
+> Task :react-native-reanimated:externalNativeBuildRelease
+Wed, 20 May 2026 16:05:45 GMT
+
+> Task :react-native-reanimated:generateJsonModelRelease
+Wed, 20 May 2026 16:05:45 GMT
+
+> Task :expo-constants:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:05:45 GMT
+
+> Task :react-native-reanimated:prefabReleaseConfigurePackage
+Wed, 20 May 2026 16:05:45 GMT
+
+> Task :expo-constants:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:05:45 GMT
+
+> Task :expo-constants:processReleaseJavaRes
+Wed, 20 May 2026 16:05:45 GMT
+
+> Task :expo-constants:generateReleaseLintModel
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :react-native-reanimated:prefabReleasePackage
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :react-native-reanimated:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :expo-constants:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :react-native-reanimated:syncReleaseLibJars
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :expo-constants:createFullJarRelease
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :expo-modules-core:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :expo-modules-core:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :expo-modules-core:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :react-native-reanimated:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:46 GMT
+
+> Task :expo-modules-core:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:47 GMT
+
+> Task :expo-modules-core:syncReleaseLibJars
+Wed, 20 May 2026 16:05:47 GMT
+
+> Task :expo-constants:extractReleaseAnnotations
+Wed, 20 May 2026 16:05:47 GMT
+
+> Task :expo-constants:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:05:47 GMT
+
+> Task :expo-constants:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:05:47 GMT
+
+> Task :expo-constants:mergeReleaseJavaResource
+Wed, 20 May 2026 16:05:47 GMT
+
+> Task :expo-modules-core:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:47 GMT
+
+> Task :expo-constants:syncReleaseLibJars
+Wed, 20 May 2026 16:05:47 GMT
+
+> Task :expo-constants:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:05:47 GMT
+
+> Task :react-native-reanimated:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:05:49 GMT
+
+> Task :expo:compileReleaseKotlin
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ExpoModulesPackage.kt:34:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ExpoReactHostFactory.kt:8:8 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ExpoReactHostFactory.kt:80:22 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:24:8 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:58:33 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:105:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:105:38 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:113:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:114:21 'val reactInstanceManager: ReactInstanceManager' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:168:36 'constructor(activity: Activity, reactNativeHost: ReactNativeHost?, appKey: String?, launchOptions: Bundle?, fabricEnabled: Boolean): ReactDelegate' is deprecated. Deprecated since 0.81.0, use one of the other constructors instead.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:279:77 'val reactInstanceManager: ReactInstanceManager' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:282:22 'val reactInstanceManager: ReactInstanceManager' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:286:54 'val reactInstanceManager: ReactInstanceManager' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapper.kt:6:8 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapper.kt:15:9 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapper.kt:47:60 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapperBase.kt:7:8 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapperBase.kt:16:23 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapperBase.kt:89:16 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapperBase.kt:101:38 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/fetch/ExpoFetchModule.kt:30:39 'constructor(reactContext: ReactContext): ForwardingCookieHandler' is deprecated. Use the default constructor.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/fetch/NativeResponse.kt:42:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+Wed, 20 May 2026 16:05:49 GMT
+
+w: file:///home/expo/workingdir/build/node_modules/.pnpm/expo@54.0.34_@babel+core@7.29.0_@expo+metro-runtime@6.1.2_expo-router@6.0.23_react-nati_3cc7b2874fa1147af8a667959c900031/node_modules/expo/android/src/main/java/expo/modules/fetch/NativeResponse.kt:44:11 'fun deallocate(): Unit' is deprecated. Use sharedObjectDidRelease() instead.
+Wed, 20 May 2026 16:05:51 GMT
+
+> Task :expo:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:05:51 GMT
+
+> Task :expo:bundleLibRuntimeToDirRelease
+Wed, 20 May 2026 16:05:51 GMT
+
+> Task :expo:bundleLibCompileToJarRelease
+Wed, 20 May 2026 16:05:54 GMT
+
+> Task :app:compileReleaseKotlin
+Wed, 20 May 2026 16:05:54 GMT
+
+w: file:///home/expo/workingdir/build/artifacts/team-tracker/android/app/src/main/java/com/acesmsd/fieldtracker/MainApplication.kt:10:8 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:54 GMT
+
+w: file:///home/expo/workingdir/build/artifacts/team-tracker/android/app/src/main/java/com/acesmsd/fieldtracker/MainApplication.kt:22:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+Wed, 20 May 2026 16:05:54 GMT
+
+w: file:///home/expo/workingdir/build/artifacts/team-tracker/android/app/src/main/java/com/acesmsd/fieldtracker/MainApplication.kt:22:33 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+Wed, 20 May 2026 16:05:55 GMT
+
+> Task :app:compileReleaseJavaWithJavac
+Wed, 20 May 2026 16:05:56 GMT
+
+> Task :app:dexBuilderRelease
+Wed, 20 May 2026 16:05:58 GMT
+
+> Task :expo-constants:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:03 GMT
+
+> Task :expo:bundleLibRuntimeToJarRelease
+Wed, 20 May 2026 16:06:03 GMT
+
+> Task :app:mergeDexRelease
+Wed, 20 May 2026 16:06:03 GMT
+
+> Task :expo:processReleaseJavaRes
+Wed, 20 May 2026 16:06:03 GMT
+
+> Task :expo:createFullJarRelease
+Wed, 20 May 2026 16:06:04 GMT
+
+> Task :app:mergeReleaseGlobalSynthetics
+Wed, 20 May 2026 16:06:04 GMT
+
+> Task :expo:generateReleaseLintModel
+Wed, 20 May 2026 16:06:05 GMT
+
+> Task :app:generateReleaseLintVitalReportModel
+Wed, 20 May 2026 16:06:05 GMT
+
+> Task :expo:extractReleaseAnnotations
+Wed, 20 May 2026 16:06:05 GMT
+
+> Task :expo:mergeReleaseGeneratedProguardFiles
+Wed, 20 May 2026 16:06:05 GMT
+
+> Task :expo:mergeReleaseConsumerProguardFiles
+Wed, 20 May 2026 16:06:05 GMT
+
+> Task :expo:mergeReleaseJavaResource
+Wed, 20 May 2026 16:06:05 GMT
+
+> Task :expo:syncReleaseLibJars
+Wed, 20 May 2026 16:06:05 GMT
+
+> Task :expo:bundleReleaseLocalLintAar
+Wed, 20 May 2026 16:06:05 GMT
+
+> Task :app:compileReleaseArtProfile
+Wed, 20 May 2026 16:06:16 GMT
+
+> Task :expo:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:16 GMT
+
+> Task :react-native-keyboard-controller:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:06:17 GMT
+
+> Task :expo-modules-core:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:17 GMT
+
+> Task :react-native-gesture-handler:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:19 GMT
+
+> Task :react-native-maps:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:06:19 GMT
+
+> Task :react-native-keyboard-controller:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:21 GMT
+
+> Task :react-native-maps:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:21 GMT
+
+> Task :react-native-safe-area-context:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:06:24 GMT
+
+> Task :react-native-safe-area-context:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:24 GMT
+
+> Task :react-native-screens:writeReleaseLintModelMetadata
+Wed, 20 May 2026 16:06:26 GMT
+
+> Task :react-native-reanimated:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:26 GMT
+
+> Task :expo:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :expo-constants:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :expo-modules-core:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :react-native-async-storage_async-storage:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :react-native-gesture-handler:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :react-native-keyboard-controller:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :react-native-maps:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :react-native-reanimated:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :react-native-safe-area-context:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :react-native-screens:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :react-native-svg:generateReleaseLintVitalModel
+Wed, 20 May 2026 16:06:27 GMT
+
+> Task :app:processReleaseJavaRes
+Wed, 20 May 2026 16:06:31 GMT
+
+> Task :app:mergeReleaseJavaResource
+Wed, 20 May 2026 16:06:31 GMT
+
+> Task :react-native-svg:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:31 GMT
+
+> Task :app:collectReleaseDependencies
+Wed, 20 May 2026 16:06:31 GMT
+
+> Task :app:sdkReleaseDependencyData
+Wed, 20 May 2026 16:06:31 GMT
+
+> Task :app:validateSigningRelease
+Wed, 20 May 2026 16:06:31 GMT
+
+> Task :app:writeReleaseAppMetadata
+Wed, 20 May 2026 16:06:32 GMT
+
+> Task :app:writeReleaseSigningConfigVersions
+Wed, 20 May 2026 16:06:32 GMT
+
+> Task :app:optimizeReleaseResources
+Wed, 20 May 2026 16:06:40 GMT
+
+> Task :react-native-screens:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:43 GMT
+
+> Task :app:lintVitalAnalyzeRelease
+Wed, 20 May 2026 16:06:43 GMT
+
+> Task :app:lintVitalReportRelease
+Wed, 20 May 2026 16:06:43 GMT
+
+> Task :app:lintVitalRelease
+Wed, 20 May 2026 16:06:44 GMT
+
+> Task :app:packageRelease
+Wed, 20 May 2026 16:06:44 GMT
+
+> Task :app:createReleaseApkListingFileRedirect
+Wed, 20 May 2026 16:06:44 GMT
+
+> Task :app:assembleRelease
+Wed, 20 May 2026 16:06:44 GMT
+
+[Incubating] Problems report is available at: file:///home/expo/workingdir/build/artifacts/team-tracker/android/build/reports/problems/problems-report.html
+Wed, 20 May 2026 16:06:44 GMT
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+Wed, 20 May 2026 16:06:44 GMT
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+Wed, 20 May 2026 16:06:44 GMT
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+Wed, 20 May 2026 16:06:44 GMT
+
+BUILD SUCCESSFUL in 7m 35s
+Wed, 20 May 2026 16:06:44 GMT
+
+514 actionable tasks: 514 executed
+Wed, 20 May 2026 16:06:44 GMT
+
+See the profiling report at: file:///home/expo/workingdir/build/artifacts/team-tracker/android/build/reports/profile/profile-2026-05-20-16-00-12.html
+Wed, 20 May 2026 16:06:44 GMT
+
+A fine-grained performance profile is available: use the
+Wed, 20 May 2026 16:06:44 GMT
+
+--scan
+Wed, 20 May 2026 16:06:44 GMT
+
+option.
