@@ -14,30 +14,35 @@ import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import * as Notifications from "expo-notifications";
-
+import Constants from "expo-constants";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/context/AuthContext";
 
 SplashScreen.preventAutoHideAsync();
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowBanner: true,
-    shouldShowList:   true,
-    shouldPlaySound:  true,
-    shouldSetBadge:   true,
-  }),
-});
+const isExpoGo = Constants.appOwnership === "expo";
 
-if (Platform.OS === "android") {
-  Notifications.setNotificationChannelAsync("aces-tasks", {
-    name:              "ACES Task Notifications",
-    importance:        Notifications.AndroidImportance.MAX,
-    vibrationPattern:  [0, 250, 250, 250],
-    sound:             "default",
-    lightColor:        "#1A4FBA",
-  }).catch(() => {});
+if (!isExpoGo) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const Notifications = require("expo-notifications");
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowBanner: true,
+      shouldShowList:   true,
+      shouldPlaySound:  true,
+      shouldSetBadge:   true,
+    }),
+  });
+
+  if (Platform.OS === "android") {
+    Notifications.setNotificationChannelAsync("aces-tasks", {
+      name:             "ACES Task Notifications",
+      importance:       Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      sound:            "default",
+      lightColor:       "#1A4FBA",
+    }).catch(() => {});
+  }
 }
 
 const queryClient = new QueryClient();
