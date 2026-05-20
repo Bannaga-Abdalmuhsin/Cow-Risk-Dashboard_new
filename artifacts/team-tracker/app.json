@@ -30,7 +30,7 @@
     },
     "android": {
       "package": "com.acesmsd.fieldtracker",
-      "versionCode": 8,
+      "versionCode": 9,
       "icon": "./assets/images/app-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/app-icon.png",

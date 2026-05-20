@@ -8,34 +8,8 @@ import { useColors } from "@/hooks/useColors";
 
 const isIOS = Platform.OS === "ios";
 
-const isLiquidGlassAvailable: () => boolean = isIOS
-  ? () => require("expo-glass-effect").isLiquidGlassAvailable()
-  : () => false;
-
-const SymbolView: React.ComponentType<any> = isIOS
-  ? require("expo-symbols").SymbolView
-  : () => null;
-
-const NativeTabs: any = isIOS ? require("expo-router/unstable-native-tabs").NativeTabs : null;
-const Icon: any       = isIOS ? require("expo-router/unstable-native-tabs").Icon       : null;
-const Label: any      = isIOS ? require("expo-router/unstable-native-tabs").Label      : null;
-
-function NativeTabLayout() {
-  return (
-    <NativeTabs>
-      <NativeTabs.Trigger name="index">
-        <Icon sf={{ default: "location.circle", selected: "location.circle.fill" }} />
-        <Label>Duty</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="assignment">
-        <Icon sf={{ default: "bell", selected: "bell.fill" }} />
-        <Label>Task</Label>
-      </NativeTabs.Trigger>
-    </NativeTabs>
-  );
-}
-
-function ClassicTabLayout() {
+export default function TechnicianLayout() {
+  const { user, loading } = useAuth();
   const colors = useColors();
   const isWeb  = Platform.OS === "web";
 
@@ -59,6 +33,9 @@ function ClassicTabLayout() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [colors.primary, colors.mutedForeground, colors.card, colors.border, isWeb]);
 
+  if (!loading && !user) return <Redirect href="/" />;
+  if (!loading && user?.role !== "technician") return <Redirect href="/(manager)/map" />;
+
   return (
     <Tabs screenOptions={screenOptions}>
       <Tabs.Screen
@@ -66,9 +43,7 @@ function ClassicTabLayout() {
         options={{
           title: "Duty",
           tabBarIcon: ({ color }) =>
-            isIOS
-              ? <SymbolView name="location.circle.fill" tintColor={color} size={22} />
-              : <MaterialCommunityIcons name="map-marker-radius" size={22} color={color} />,
+            <MaterialCommunityIcons name="map-marker-radius" size={22} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -76,18 +51,9 @@ function ClassicTabLayout() {
         options={{
           title: "Task",
           tabBarIcon: ({ color }) =>
-            isIOS
-              ? <SymbolView name="bell.fill" tintColor={color} size={22} />
-              : <MaterialCommunityIcons name="bell-outline" size={22} color={color} />,
+            <MaterialCommunityIcons name="bell-outline" size={22} color={color} />,
         }}
       />
     </Tabs>
   );
-}
-
-export default function TechnicianLayout() {
-  const { user, loading } = useAuth();
-  if (!loading && !user) return <Redirect href="/" />;
-  if (!loading && user?.role !== "technician") return <Redirect href="/(manager)/map" />;
-  return (isIOS && isLiquidGlassAvailable()) ? <NativeTabLayout /> : <ClassicTabLayout />;
 }
