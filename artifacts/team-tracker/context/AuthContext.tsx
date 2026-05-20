@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Platform } from "react-native";
-import * as Notifications from "expo-notifications";
 import { getBaseUrl } from "@/lib/api";
 
 export interface AuthUser {
@@ -28,6 +27,7 @@ const STORAGE_KEY = "aces_team_auth";
 async function registerPushToken(authToken: string): Promise<void> {
   if (Platform.OS === "web") return;
   try {
+    const Notifications = await import("expo-notifications");
     const { status: existing } = await Notifications.getPermissionsAsync();
     const finalStatus = existing === "granted"
       ? existing
