@@ -132,4 +132,3 @@ overrides:
   yaml: ^2.8.3
 
 patchedDependencies:
-  expo-task-manager@55.0.16: patches/expo-task-manager@55.0.16.patch

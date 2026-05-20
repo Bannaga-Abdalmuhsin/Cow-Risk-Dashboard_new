@@ -52,6 +52,6 @@
   },
   "dependencies": {
     "expo-notifications": "~0.32.17",
-    "expo-task-manager": "^55.0.16"
+    "expo-task-manager": "~14.0.9"
   }
 }
