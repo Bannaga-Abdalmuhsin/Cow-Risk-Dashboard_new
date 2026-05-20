@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from "express";
 import { eq, and, isNull, sql } from "drizzle-orm";
-import { db, teamUsersTable, techLocationsTable, faultsTable } from "@workspace/db";
+import { db, teamUsersTable, techLocationsTable, faultsTable, assignmentsTable } from "@workspace/db";
 
 const router = Router();
 
@@ -288,9 +288,7 @@ async function assignTech(
 
   await sendPush(tech?.pushToken, "NEW TT ASSIGNED", msg);
 
-  await db.insert(
-    (await import("@workspace/db")).assignmentsTable
-  ).values({
+  await db.insert(assignmentsTable).values({
     techId,
     managerId: 1,
     message: msg,

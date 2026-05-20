@@ -85,3 +85,8 @@ build = ["pnpm", "--filter", "@workspace/hajj-dashboard", "run", "build"]
 
 [agent]
 expertMode = true
+
+[userenv]
+
+[userenv.shared]
+FAULT_API_KEY = "87111651-41c9-4642-bfc2-4e1c35640af7"
