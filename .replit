@@ -90,4 +90,4 @@ expertMode = true
 
 [userenv.shared]
 FAULT_API_KEY = "87111651-41c9-4642-bfc2-4e1c35640af7"
-FIREBASE_PROJECT_ID = "aces-msd-team-alert-app"
+FIREBASE_PROJECT_ID = "aces-field-team-tracker"
