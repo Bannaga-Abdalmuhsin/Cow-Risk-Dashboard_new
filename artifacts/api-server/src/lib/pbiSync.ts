@@ -71,6 +71,7 @@ export interface SyncResult {
 }
 
 let lastSyncResult: SyncResult | null = null;
+let syncInProgress   = false;
 
 export function getLastSyncResult(): SyncResult | null {
   return lastSyncResult;
@@ -297,6 +298,15 @@ export async function probeColumns(): Promise<{
 // ── Main sync ─────────────────────────────────────────────────────────────────
 
 export async function syncPbiToDb(): Promise<SyncResult> {
+  // Prevent two concurrent syncs — if one is already running, return its last result.
+  if (syncInProgress) {
+    return lastSyncResult ?? {
+      syncedAt: new Date().toISOString(), pbiCount: 0, powerCount: 0,
+      sirCount: 0, upserted: 0, closed: 0, errors: ["Sync already in progress"], ok: false,
+    };
+  }
+  syncInProgress = true;
+
   const errors: string[] = [];
   let upserted    = 0;
   let closed      = 0;
@@ -339,7 +349,13 @@ export async function syncPbiToDb(): Promise<SyncResult> {
         upserted++;
         logger.info({ ttId: ticket.ttId, cowId: ticket.cowId, source: ticket.source }, "PBI: new ticket inserted");
       } catch (err) {
-        errors.push(`insert ${ticket.ttId}: ${String(err)}`);
+        // Unique-constraint violation means another concurrent sync already inserted it — silently skip.
+        const msg = String(err);
+        if (msg.includes("unique") || msg.includes("duplicate") || msg.includes("23505")) {
+          logger.info({ ttId: ticket.ttId }, "PBI: skipping duplicate insert (already exists)");
+        } else {
+          errors.push(`insert ${ticket.ttId}: ${msg}`);
+        }
       }
     }
 
@@ -361,6 +377,8 @@ export async function syncPbiToDb(): Promise<SyncResult> {
   } catch (err) {
     errors.push(String(err));
     logger.warn({ err }, "PBI sync error");
+  } finally {
+    syncInProgress = false;
   }
 
   const syncResult: SyncResult = {

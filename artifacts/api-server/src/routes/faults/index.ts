@@ -64,6 +64,17 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
     return;
   }
 
+  // Idempotency: if an active fault with the same ttId already exists, return it.
+  const [existing] = await db
+    .select()
+    .from(faultsTable)
+    .where(and(eq(faultsTable.ttId, ttId), isNull(faultsTable.resolvedAt)));
+
+  if (existing) {
+    res.status(200).json(existing);
+    return;
+  }
+
   const [fault] = await db
     .insert(faultsTable)
     .values({

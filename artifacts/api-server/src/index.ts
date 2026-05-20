@@ -27,6 +27,14 @@ async function runMigrations() {
       api_key         TEXT
     )
   `);
+  // Prevent duplicate active tickets for the same TT number.
+  // A resolved fault (resolved_at IS NOT NULL) is excluded so the same TT
+  // can be re-opened later without violating this constraint.
+  await pool.query(`
+    CREATE UNIQUE INDEX IF NOT EXISTS faults_active_ttid_idx
+    ON faults(tt_id)
+    WHERE resolved_at IS NULL
+  `);
   logger.info("Migrations complete");
 }
 
