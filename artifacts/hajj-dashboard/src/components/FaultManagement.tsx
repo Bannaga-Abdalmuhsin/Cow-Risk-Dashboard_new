@@ -370,23 +370,6 @@ export function FaultManagement() {
             <div className="flex flex-col items-center justify-center flex-1 text-center text-muted-foreground gap-3">
               <div className="text-4xl opacity-30">✅</div>
               <p className="text-sm">No active faults</p>
-              <p className="text-xs">Post a ticket to <code className="bg-muted px-1 rounded">POST /api/faults</code></p>
-              <div className="mt-2 text-left w-full bg-muted/40 rounded-lg p-3 text-[10px] font-mono text-muted-foreground leading-relaxed border border-border">
-                <div className="text-purple-400 mb-1 font-bold text-[9px]">CONNECT YOUR HAJJ MONITOR →</div>
-                POST https://acesmsd.live/api/faults<br/>
-                x-api-key: {"<"}FAULT_API_KEY{">"}<br/>
-                {`{`}<br/>
-                &nbsp;&nbsp;"ttId": "TT-001",<br/>
-                &nbsp;&nbsp;"cowId": "CWN960",<br/>
-                &nbsp;&nbsp;"alarmName": "Generator Failure",<br/>
-                &nbsp;&nbsp;"severity": "critical",<br/>
-                &nbsp;&nbsp;"siteLat": 21.347135,<br/>
-                &nbsp;&nbsp;"siteLng": 39.992573,<br/>
-                &nbsp;&nbsp;"powerSource": "Battery",<br/>
-                &nbsp;&nbsp;"backupTime": "02:15",<br/>
-                &nbsp;&nbsp;"autoDispatch": true<br/>
-                {`}`}
-              </div>
             </div>
           )}
 
