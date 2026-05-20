@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1018528152515",
+    "project_id": "aces-field-team-tracker",
+    "storage_bucket": "aces-field-team-tracker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018528152515:android:071a4174e5f79ed0efdb76",
+        "android_client_info": {
+          "package_name": "com.acesmsd.fieldtracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCTu0e8rXy-94gG_i5wYFA7pBG_OR9drI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

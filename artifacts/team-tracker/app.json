@@ -30,7 +30,7 @@
     },
     "android": {
       "package": "com.acesmsd.fieldtracker",
-      "versionCode": 5,
+      "versionCode": 6,
       "icon": "./assets/images/app-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/app-icon.png",
@@ -38,7 +38,7 @@
       },
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyA_H-gfWMCT2m7K0ncaqlMVAj0bR4FP8IA"
+          "apiKey": "AIzaSyDCTu0e8rXy-94gG_i5wYFA7pBG_OR9drI"
         }
       },
       "permissions": [
