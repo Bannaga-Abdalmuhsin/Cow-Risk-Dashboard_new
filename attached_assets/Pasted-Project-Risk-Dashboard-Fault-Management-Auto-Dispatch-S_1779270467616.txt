@@ -1,0 +1,160 @@
+Project: Risk Dashboard – Fault Management Auto Dispatch System
+
+Objective:
+Create a new live card/module inside the existing Risk Dashboard called:
+
+FAULT MANAGEMENT
+
+Purpose:
+The Fault Management card must automatically receive network alarms/tickets and auto-dispatch the correct field team through the connected mobile app.
+
+System Flow:
+
+1. Fault/ticket is generated from Hajj Monitor Dashboard or backend API
+2. Risk Dashboard receives the live ticket
+3. System checks Team Roster database
+4. Match alarm category with responsible team
+5. Automatically dispatch assigned team through Mobile App
+6. Draw live route from team location to COW site
+7. Calculate live ETA
+8. Reflect dispatch status on dashboard map
+
+Required Features:
+
+1. New Dashboard Card
+   Create a new dashboard section/card:
+
+* Name: Fault Management
+* Real-time live updates
+* Auto-refresh every 5–10 seconds
+* Support multiple simultaneous faults
+
+2. Fault Data Structure
+   Each ticket must include:
+
+* TT ID
+* COW ID
+* Alarm Name
+* Severity
+* Received Time
+* Power Source
+* Backup Time Remaining
+* Site Coordinates
+* Assigned Team
+* Dispatch Status
+* ETA
+* Route Status
+
+3. Team Roster Logic
+   Read from Team Roster database:
+   Fields:
+
+* Team ID
+* Team Name
+* Skill Type
+* Coverage Area
+* Current GPS Location
+* Availability Status
+* Mobile App User ID
+
+Dispatch Logic:
+
+* If ticket category contains “Tech01” → dispatch Tech01 team
+* If Power alarm → dispatch Power team
+* If Transmission alarm → dispatch Transmission team
+* Auto-select nearest available team if multiple exist
+
+4. Mobile App Integration
+   After dispatch:
+   Automatically push notification/message to assigned team mobile app containing:
+
+* COW ID
+* Alarm
+* Received Time
+* Power Source
+* Backup Time
+* Expected ETA
+* Navigation Button
+
+Message must appear as:
+NEW TT ASSIGNED
+
+Example:
+COW ID: COW-114
+Alarm: Generator Failure
+Received Time: 14:22
+Power Source: Battery
+Backup Time: 02:15 Remaining
+ETA Required: 18 Minutes
+
+5. Live Route Tracking
+   Requirements:
+
+* Read live GPS location from mobile app
+* Draw route from team current location to site
+* Continuously update ETA
+* Route updates every 15 seconds
+* Use Google Maps API
+
+Map Requirements:
+
+* Team moving marker
+* Site marker
+* Polyline route
+* ETA label
+* Arrival status
+
+6. Dashboard UI
+   Fault Management page must contain:
+   LEFT SIDE:
+
+* Live map
+* Team route
+* COW locations
+* Team live movement
+
+RIGHT SIDE:
+
+* Fault list
+* Assigned team
+* ETA
+* Severity color
+* Dispatch timer
+* Acknowledge status
+
+7. Status Workflow
+   Statuses:
+
+* New Fault
+* Team Assigned
+* En Route
+* On Site
+* Resolved
+* Closed
+
+8. APIs Required
+   Prepare backend API support for:
+
+* POST /faults/new
+* GET /teams/live
+* POST /dispatch/team
+* GET /eta/live
+* POST /mobile/push
+* GET /faults/active
+
+9. Required Technologies
+   Preferred:
+
+* React + Tailwind
+* Node.js backend
+* Socket.IO for real-time updates
+* Google Maps API
+* Firebase or Supabase realtime
+* PostgreSQL
+
+10. Additional Requirement
+    If backup time becomes critical:
+
+* Highlight ticket RED
+* Flash map marker
+* Escalate notification to NOC
