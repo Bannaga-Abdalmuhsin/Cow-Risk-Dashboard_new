@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { BlurView } from "expo-blur";
 import { Redirect, Tabs } from "expo-router";
@@ -39,28 +39,28 @@ function ClassicTabLayout() {
   const colors = useColors();
   const isWeb  = Platform.OS === "web";
 
+  const screenOptions = useMemo(() => ({
+    headerShown: false,
+    tabBarActiveTintColor:   colors.primary,
+    tabBarInactiveTintColor: colors.mutedForeground,
+    tabBarStyle: {
+      position:        "absolute" as const,
+      backgroundColor: isIOS ? "transparent" : colors.card,
+      borderTopWidth:  1,
+      borderTopColor:  colors.border,
+      elevation:       0,
+      ...(isWeb ? { height: 84 } : {}),
+    },
+    tabBarBackground: isIOS
+      ? () => <BlurView intensity={60} tint="light" style={StyleSheet.absoluteFill} />
+      : isWeb
+        ? () => <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.card }]} />
+        : undefined,
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [colors.primary, colors.mutedForeground, colors.card, colors.border, isWeb]);
+
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor:   colors.primary,
-        tabBarInactiveTintColor: colors.mutedForeground,
-        tabBarStyle: {
-          position:        "absolute",
-          backgroundColor: isIOS ? "transparent" : colors.card,
-          borderTopWidth:  1,
-          borderTopColor:  colors.border,
-          elevation:       0,
-          ...(isWeb ? { height: 84 } : {}),
-        },
-        tabBarBackground: () =>
-          isIOS ? (
-            <BlurView intensity={60} tint="light" style={StyleSheet.absoluteFill} />
-          ) : isWeb ? (
-            <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.card }]} />
-          ) : null,
-      }}
-    >
+    <Tabs screenOptions={screenOptions}>
       <Tabs.Screen
         name="index"
         options={{
