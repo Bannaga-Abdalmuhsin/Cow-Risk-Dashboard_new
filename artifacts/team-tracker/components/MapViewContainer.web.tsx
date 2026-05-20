@@ -31,22 +31,23 @@ export default function MapViewContainer({ locations, onDutyColor, offDutyColor,
         <Text style={styles.noticeText}>Open on your phone to see the live map</Text>
       </View>
       {locations.map(loc => {
-        const mins   = minutesAgo(loc.updatedAt);
-        const online = loc.isOnDuty && mins < 3;
+        const mins  = minutesAgo(loc.updatedAt);
+        const fresh = mins < 10;
+        const color = fresh ? "#16a34a" : "#dc2626";
         return (
           <TouchableOpacity
             key={loc.userId}
-            style={[styles.row, { borderLeftColor: online ? onDutyColor : offDutyColor }]}
+            style={[styles.row, { borderLeftColor: color }]}
             onPress={() => onMarkerPress(loc)}
             activeOpacity={0.8}
           >
-            <View style={[styles.dot, { backgroundColor: online ? onDutyColor : offDutyColor }]} />
+            <View style={[styles.dot, { backgroundColor: color }]} />
             <View style={styles.info}>
               <Text style={styles.name}>{loc.userName}</Text>
               <Text style={styles.area}>{loc.area ?? "Unknown area"}</Text>
             </View>
-            <Text style={[styles.status, { color: online ? onDutyColor : "#6B7280" }]}>
-              {online ? "LIVE" : `${mins}m ago`}
+            <Text style={[styles.status, { color }]}>
+              {fresh ? `${mins}m ago` : `${mins}m ago`}
             </Text>
           </TouchableOpacity>
         );

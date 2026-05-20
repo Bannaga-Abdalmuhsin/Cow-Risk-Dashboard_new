@@ -26,27 +26,27 @@ export default function MapViewContainer({ locations, onDutyColor, offDutyColor,
       userInterfaceStyle="dark"
     >
       {locations.map(loc => {
-        const mins   = minutesAgo(loc.updatedAt);
-        const online = loc.isOnDuty && mins < 3;
+        const mins  = minutesAgo(loc.updatedAt);
+        const fresh = mins < 10;
+        const color = fresh ? "#16a34a" : "#dc2626";
         return (
           <Marker
             key={loc.userId}
             coordinate={{ latitude: loc.lat, longitude: loc.lng }}
             onPress={() => onMarkerPress(loc)}
           >
-            <View style={[
-              styles.marker,
-              { backgroundColor: online ? onDutyColor : offDutyColor },
-            ]}>
+            <View style={[styles.marker, { backgroundColor: color }]}>
               <Text style={styles.markerName} numberOfLines={1}>{loc.userName}</Text>
               <Text style={styles.markerArea} numberOfLines={1}>{loc.area ?? "—"}</Text>
-              {online && <View style={styles.liveRing} />}
+              {fresh && <View style={styles.liveRing} />}
             </View>
             <Callout>
               <View style={styles.callout}>
                 <Text style={styles.calloutName}>{loc.userName}</Text>
                 <Text style={styles.calloutSub}>{loc.area ?? "Unknown area"}</Text>
-                <Text style={styles.calloutTime}>{online ? "Online" : `${mins}m ago`}</Text>
+                <Text style={[styles.calloutTime, { color }]}>
+                  {fresh ? `Active · ${mins}m ago` : `Stale · ${mins}m ago`}
+                </Text>
               </View>
             </Callout>
           </Marker>
