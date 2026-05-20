@@ -2,6 +2,7 @@ import { Router, type Request, type Response } from "express";
 import { eq, and, isNull, sql } from "drizzle-orm";
 import { db, teamUsersTable, techLocationsTable, faultsTable, assignmentsTable } from "@workspace/db";
 import { getDirectionsRoute } from "./directions.js";
+import { syncPbiToDb, getLastSyncResult } from "../../lib/pbiSync.js";
 
 const router = Router();
 
@@ -141,6 +142,24 @@ router.get("/active", async (_req: Request, res: Response): Promise<void> => {
   }));
 
   res.json(enriched);
+});
+
+/* ─── GET /api/faults/pbi-status ────────────────────────────────────────── */
+
+router.get("/pbi-status", (_req: Request, res: Response): void => {
+  const result = getLastSyncResult();
+  if (!result) {
+    res.json({ ok: false, syncedAt: null, pbiCount: 0, upserted: 0, closed: 0, errors: ["No sync has run yet"] });
+    return;
+  }
+  res.json(result);
+});
+
+/* ─── POST /api/faults/pbi-sync  (manual trigger) ───────────────────────── */
+
+router.post("/pbi-sync", async (_req: Request, res: Response): Promise<void> => {
+  const result = await syncPbiToDb();
+  res.json(result);
 });
 
 /* ─── POST /api/faults/:id/dispatch  (manual or re-dispatch) ────────────── */

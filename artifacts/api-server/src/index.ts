@@ -42,4 +42,18 @@ app.listen(PORT, "0.0.0.0", async () => {
   } catch (err) {
     logger.error({ err }, "Seed failed — continuing anyway");
   }
+
+  // ── PBI background sync ──────────────────────────────────────────────────
+  // Runs once on startup, then every 60 s.
+  // Skipped silently if PBI env vars are not set.
+  if (process.env.PBI_TENANT_ID && process.env.PBI_CLIENT_ID && process.env.PBI_DATASET_ID) {
+    const { syncPbiToDb } = await import("./lib/pbiSync.js");
+    const runSync = () =>
+      syncPbiToDb().catch((err: unknown) => logger.warn({ err }, "PBI sync failed"));
+    runSync();
+    setInterval(runSync, 60_000);
+    logger.info("PBI auto-sync started (60 s interval)");
+  } else {
+    logger.warn("PBI env vars not set — auto-sync disabled");
+  }
 });

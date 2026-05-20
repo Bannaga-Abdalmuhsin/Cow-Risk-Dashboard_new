@@ -249,6 +249,17 @@ function FaultMap({
   );
 }
 
+/* ─── PBI sync status type ─────────────────────────────────────────────────── */
+
+interface PbiStatus {
+  ok:       boolean;
+  syncedAt: string | null;
+  pbiCount: number;
+  upserted: number;
+  closed:   number;
+  errors:   string[];
+}
+
 /* ─── main component ───────────────────────────────────────────────────────── */
 
 export function FaultManagement() {
@@ -258,6 +269,9 @@ export function FaultManagement() {
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
   const [statusFilter, setStatusFilter] = useState<string>("active");
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const [pbiStatus, setPbiStatus]   = useState<PbiStatus | null>(null);
+  const [pbiSyncing, setPbiSyncing] = useState(false);
 
   const fetchFaults = useCallback(async () => {
     try {
@@ -281,6 +295,35 @@ export function FaultManagement() {
     pollRef.current = setInterval(fetchFaults, 8000);
     return () => { if (pollRef.current) clearInterval(pollRef.current); };
   }, [fetchFaults]);
+
+  // ── PBI sync status polling (every 30 s) ──
+  const fetchPbiStatus = useCallback(async () => {
+    try {
+      const r = await fetch("/api/faults/pbi-status");
+      if (!r.ok) return;
+      const data: PbiStatus = await r.json();
+      setPbiStatus(data);
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    fetchPbiStatus();
+    const t = setInterval(fetchPbiStatus, 30_000);
+    return () => clearInterval(t);
+  }, [fetchPbiStatus]);
+
+  const handlePbiSync = async () => {
+    setPbiSyncing(true);
+    try {
+      const r = await fetch("/api/faults/pbi-sync", { method: "POST" });
+      const data: PbiStatus = await r.json();
+      setPbiStatus(data);
+      await fetchFaults();
+    } catch {
+    } finally {
+      setPbiSyncing(false);
+    }
+  };
 
   const filtered = faults.filter(f => {
     if (statusFilter === "active") return !["resolved","closed"].includes(f.dispatchStatus);
@@ -309,6 +352,86 @@ export function FaultManagement() {
 
   return (
     <div className="flex flex-col gap-3" style={{ height: "calc(100vh - 148px)" }}>
+
+      {/* ── PBI sync status bar ──────────────────────────────────────────── */}
+      <div
+        className="flex items-center gap-2 flex-wrap rounded-lg px-3 py-1.5 shrink-0"
+        style={{
+          background:  pbiStatus?.ok === false ? "rgba(220,38,38,0.08)" : "rgba(30,58,138,0.12)",
+          border:      `1px solid ${pbiStatus?.ok === false ? "#dc262644" : "#1e3a8a55"}`,
+          fontSize:    11,
+        }}
+      >
+        {/* Power BI icon + label */}
+        <span style={{ color: "#facc15", fontWeight: 800, letterSpacing: 1 }}>⚡ Power BI</span>
+        <span style={{ color: "#94a3b8" }}>|</span>
+
+        {pbiStatus ? (
+          <>
+            {/* status dot */}
+            <span
+              className={pbiStatus.ok ? "animate-pulse" : ""}
+              style={{
+                width: 7, height: 7, borderRadius: "50%", display: "inline-block",
+                background: pbiStatus.ok ? "#22c55e" : "#f59e0b",
+              }}
+            />
+            <span style={{ color: pbiStatus.ok ? "#86efac" : "#fcd34d", fontWeight: 600 }}>
+              {pbiStatus.ok ? "Synced" : "Sync error"}
+            </span>
+
+            {/* counts */}
+            {pbiStatus.pbiCount > 0 && (
+              <span style={{ color: "#60a5fa" }}>{pbiStatus.pbiCount} open in PBI</span>
+            )}
+            {pbiStatus.upserted > 0 && (
+              <span style={{ color: "#34d399" }}>+{pbiStatus.upserted} new</span>
+            )}
+            {pbiStatus.closed > 0 && (
+              <span style={{ color: "#f87171" }}>{pbiStatus.closed} auto-closed</span>
+            )}
+
+            {/* last sync time */}
+            {pbiStatus.syncedAt && (
+              <span style={{ color: "#64748b" }}>
+                · {new Date(pbiStatus.syncedAt).toLocaleTimeString()}
+              </span>
+            )}
+
+            {/* error snippet */}
+            {pbiStatus.errors.length > 0 && (
+              <span style={{ color: "#fca5a5", maxWidth: 260, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                title={pbiStatus.errors.join(" | ")}
+              >
+                ⚠ {pbiStatus.errors[0]}
+              </span>
+            )}
+          </>
+        ) : (
+          <span style={{ color: "#64748b" }}>Waiting for first sync…</span>
+        )}
+
+        {/* Manual sync button */}
+        <button
+          onClick={handlePbiSync}
+          disabled={pbiSyncing}
+          className="ml-auto"
+          style={{
+            background:    pbiSyncing ? "rgba(30,58,138,0.3)" : "rgba(30,58,138,0.5)",
+            color:         "#93c5fd",
+            border:        "1px solid #1e3a8a99",
+            borderRadius:  6,
+            padding:       "2px 9px",
+            fontSize:      10,
+            fontWeight:    700,
+            cursor:        pbiSyncing ? "not-allowed" : "pointer",
+            letterSpacing: 0.5,
+            opacity:       pbiSyncing ? 0.7 : 1,
+          }}
+        >
+          {pbiSyncing ? "Syncing…" : "Sync Now"}
+        </button>
+      </div>
 
       {/* ── top status bar ───────────────────────────────────────────────── */}
       <div className="flex items-center gap-3 shrink-0 flex-wrap">
