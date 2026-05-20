@@ -15,7 +15,6 @@ import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/context/AuthContext";
@@ -23,28 +22,30 @@ import { AuthProvider } from "@/context/AuthContext";
 SplashScreen.preventAutoHideAsync();
 
 // expo-notifications remote push APIs were removed from Expo Go in SDK 53.
-// They still work correctly in real (EAS) builds.
+// Use a dynamic import so the module is never loaded in Expo Go.
 const isExpoGo = Constants.appOwnership === "expo";
 
 if (!isExpoGo) {
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowBanner: true,
-      shouldShowList:   true,
-      shouldPlaySound:  true,
-      shouldSetBadge:   true,
-    }),
-  });
+  import("expo-notifications").then((Notifications) => {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowBanner: true,
+        shouldShowList:   true,
+        shouldPlaySound:  true,
+        shouldSetBadge:   true,
+      }),
+    });
 
-  if (Platform.OS === "android") {
-    Notifications.setNotificationChannelAsync("aces-tasks", {
-      name:             "ACES Task Notifications",
-      importance:       Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      sound:            "default",
-      lightColor:       "#1A4FBA",
-    }).catch(() => {});
-  }
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("aces-tasks", {
+        name:             "ACES Task Notifications",
+        importance:       Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        sound:            "default",
+        lightColor:       "#1A4FBA",
+      }).catch(() => {});
+    }
+  }).catch(() => {});
 }
 
 const queryClient = new QueryClient();
