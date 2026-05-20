@@ -54,6 +54,18 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
         {site.connectedTechnology && (
           <div><span className="text-muted-foreground">Technology:</span> <span className="font-semibold">{site.connectedTechnology}</span></div>
         )}
+        {site.escalationTeam && (
+          <div>
+            <span className="text-muted-foreground">Escalation Team:</span>{" "}
+            <span className="font-semibold" style={{ color: "#4A0E8F" }}>{site.escalationTeam}</span>
+          </div>
+        )}
+        {site.hajjMC && (
+          <div>
+            <span className="text-muted-foreground">Hajj MC:</span>{" "}
+            <span className="font-semibold font-mono">{site.hajjMC}</span>
+          </div>
+        )}
       </div>
 
       <div className="px-4 py-2 border-b border-border">

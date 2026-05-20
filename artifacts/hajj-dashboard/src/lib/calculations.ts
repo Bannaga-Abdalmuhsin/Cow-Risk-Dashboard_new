@@ -71,6 +71,12 @@ export interface SiteConfig {
   // Rectifier
   rectifierCapacityKw: number;
   connectedTechnology?: string;
+
+  // Team Cluster / Hajj MC data (from real deployment roster)
+  escalationTeam?: string;   // 1st Escalation Team member name
+  hajjMC?: string;           // Hajj MC cluster / accommodation centre name
+  mcLat?: number;            // MC latitude
+  mcLng?: number;            // MC longitude
 }
 
 // ─── Result Types ─────────────────────────────────────────────────────────────

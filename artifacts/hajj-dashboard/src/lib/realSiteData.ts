@@ -3664,6 +3664,99 @@
 
   export const totalSurveyed = realSiteData.length;
 
+  // ─── Team Cluster / Hajj MC lookup (real GPS deployment roster) ──────────────
+  interface McEntry {
+    escalationTeam: string;
+    hajjMC:         string;
+    mcLat:          number;
+    mcLng:          number;
+    lat?:           number;  // corrected site latitude when DB value is wrong
+    lng?:           number;  // corrected site longitude when DB value is wrong
+  }
+
+  const MC_LOOKUP: Record<string, McEntry> = {
+    "CWN960": { escalationTeam: "Arif",          hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
+    "CWN072": { escalationTeam: "Muath",          hajjMC: "CWN072",    mcLat: 21.34196,   mcLng: 39.97602    },
+    "CWN922": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN970": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN992": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    "CWN021": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN997": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
+    "CWN008": { escalationTeam: "Arif",           hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
+    "CWN906": { escalationTeam: "Mohammed Emad",  hajjMC: "CWN073",    mcLat: 21.3738433, mcLng: 39.9865483  },
+    "CWN213": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN074": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
+    "CWN068": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    "CWN212": { escalationTeam: "Abid",           hajjMC: "CWN076",    mcLat: 21.3692,    mcLng: 39.977127   },
+    "CWN300": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
+    "CWN214": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    "CWN073": { escalationTeam: "Mohammed Emad",  hajjMC: "CWN073",    mcLat: 21.3738433, mcLng: 39.9865483  },
+    "CWN996": { escalationTeam: "Mohammed Emad",  hajjMC: "CWN073",    mcLat: 21.3738433, mcLng: 39.9865483  },
+    "CWN923": { escalationTeam: "Abid",           hajjMC: "CWN076",    mcLat: 21.3692,    mcLng: 39.977127   },
+    "CWN002": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN998": { escalationTeam: "Tasleem",        hajjMC: "Taif MC",   mcLat: 21.647214,  mcLng: 40.389186   },
+    "CWN203": { escalationTeam: "Arif",           hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
+    "CWN961": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN066": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN777": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    "CWN105": { escalationTeam: "Arif",           hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
+    "CWN984": { escalationTeam: "Arif",           hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
+    "CWN967": { escalationTeam: "Tasleem",        hajjMC: "Taif MC",   mcLat: 21.647214,  mcLng: 40.389186   },
+    "CWN020": { escalationTeam: "Arif",           hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
+    "CWN004": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
+    "CWN211": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    "CWN050": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN084": { escalationTeam: "Muath",          hajjMC: "CWN072",    mcLat: 21.34196,   mcLng: 39.97602    },
+    "CWN301": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
+    "CWN201": { escalationTeam: "Faroq",          hajjMC: "CWN978",    mcLat: 21.421776,  mcLng: 39.891894   },
+    "CWN208": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN001": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN080": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN078": { escalationTeam: "Muath",          hajjMC: "CWN072",    mcLat: 21.34196,   mcLng: 39.97602    },
+    "CWN075": { escalationTeam: "Muath",          hajjMC: "CWN072",    mcLat: 21.34196,   mcLng: 39.97602    },
+    "CWN087": { escalationTeam: "Arif",           hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
+    "CWN085": { escalationTeam: "Abid",           hajjMC: "CWN076",    mcLat: 21.3692,    mcLng: 39.977127   },
+    "CWN089": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    "CWN076": { escalationTeam: "Abid",           hajjMC: "CWN076",    mcLat: 21.3692,    mcLng: 39.977127   },
+    "CWN955": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
+    "CWN081": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN083": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN108": { escalationTeam: "Arif",           hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
+    "CWN036": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN994": { escalationTeam: "Faroq",          hajjMC: "CWN978",    mcLat: 21.421776,  mcLng: 39.891894   },
+    "CWN951": { escalationTeam: "Abid",           hajjMC: "CWN076",    mcLat: 21.3692,    mcLng: 39.977127   },
+    "CWN956": { escalationTeam: "Mohammed Emad",  hajjMC: "CWN073",    mcLat: 21.3738433, mcLng: 39.9865483  },
+    "CWN202": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    // CWN901: latitude was stored as 39.989533 in DB — corrected to 21.372652
+    "CWN901": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526,  lat: 21.372652 },
+    "CWN914": { escalationTeam: "Abid",           hajjMC: "CWN076",    mcLat: 21.3692,    mcLng: 39.977127   },
+    "CWN953": { escalationTeam: "Faroq",          hajjMC: "CWN978",    mcLat: 21.421776,  mcLng: 39.891894   },
+    "CWN976": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    "CWN980": { escalationTeam: "Mohammed Emad",  hajjMC: "CWN073",    mcLat: 21.3738433, mcLng: 39.9865483  },
+    "CWN978": { escalationTeam: "Faroq",          hajjMC: "CWN978",    mcLat: 21.421776,  mcLng: 39.891894   },
+    "CWN015": { escalationTeam: "Mohammed Emad",  hajjMC: "CWN073",    mcLat: 21.3738433, mcLng: 39.9865483  },
+    "CWN959": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN991": { escalationTeam: "Ali Nasser",     hajjMC: "CWN991",    mcLat: 21.37224,   mcLng: 39.93826    },
+    "CWN915": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN101": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN093": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN104": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    "CWN972": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN032": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN079": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN903": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
+    "CWN102": { escalationTeam: "Ali Nasser",     hajjMC: "CWN991",    mcLat: 21.37224,   mcLng: 39.93826    },
+    "CWN022": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN205": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN062": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
+    "CWN038": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN907": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN099": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN092": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN206": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+  };
+  // ─────────────────────────────────────────────────────────────────────────────
+
   const GEN_FACTOR = 0.8 * 0.87 * 0.9;
 
   export const ALL_SITES: SiteConfig[] = realSiteData.map((s) => {
@@ -3672,12 +3765,13 @@
     const isOutdoor = s.shelterType.toLowerCase() === "outdoor";
     const primeNetKw  = (isSG || isDG) ? s.primeGenNetPowerKw : s.primeSecNetPowerKw;
     const backupNetKw = s.backupGenNetPowerKw;
+    const mc = MC_LOOKUP[s.cowId];
     return {
       id:        s.cowId,
       name:      s.cowId,
       location:  s.location,
-      lat:       s.latitude,
-      lng:       s.longitude,
+      lat:       mc?.lat ?? s.latitude,
+      lng:       mc?.lng ?? s.longitude,
       siteType:  isOutdoor ? "outdoor_cabinet" : "shelter",
       // DG treated same as SB: Gen1 = prime source, Gen2 = backup source
       powerConfig: isSG ? "single_generator" : "commercial_with_backup",
@@ -3702,5 +3796,10 @@
       rawBackupGenKva: !isSG ? s.backupGenCapacityKva || undefined : undefined,
       primeGenNetPowerKw:  isDG ? s.primeGenNetPowerKw  : undefined,
       backupGenNetPowerKw: isDG ? s.backupGenNetPowerKw : undefined,
+      // Team Cluster / Hajj MC
+      escalationTeam: mc?.escalationTeam,
+      hajjMC:         mc?.hajjMC,
+      mcLat:          mc?.mcLat,
+      mcLng:          mc?.mcLng,
     };
   });

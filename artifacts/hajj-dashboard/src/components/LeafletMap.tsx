@@ -4,7 +4,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.heat";
 import type { SiteAnalysis } from "../lib/calculations";
-import { ESCALATION_TEAMS, TRANSPORT_ICON } from "../lib/escalationTeams";
+import { MC_CLUSTERS, TRANSPORT_ICON } from "../lib/escalationTeams";
 
 // Fix default leaflet icon paths broken by Vite bundling
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -142,16 +142,39 @@ const liveTechIcon = (name: string, isOnDuty: boolean) => L.divIcon({
 });
 
 export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMarkers = false, techLocations = [] }: LeafletMapProps) {
-  const [showHeatmap, setShowHeatmap] = useState(true);
-  const [showMarkers, setShowMarkers] = useState(false);
-  const [tileMode, setTileMode] = useState<TileMode>("street");
+  const [showHeatmap,    setShowHeatmap]    = useState(true);
+  const [showMarkers,    setShowMarkers]    = useState(false);
+  const [showMCClusters, setShowMCClusters] = useState(false);
+  const [tileMode,       setTileMode]       = useState<TileMode>("street");
 
-  const teamIcon = (teamName: string) => L.divIcon({
-    className: "",
-    html: `<div style="background:#4A0E8F;color:white;border:2px solid white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.4);white-space:nowrap;">${teamName.replace("Team ", "T")}</div>`,
-    iconSize: [28, 28],
-    iconAnchor: [14, 14],
-  });
+  const mcClusterIcon = (teamName: string) => {
+    const initials = teamName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
+    return L.divIcon({
+      className: "",
+      html: `<div style="
+        position:relative;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
+        <div style="
+          width:0;height:0;
+          border-left:16px solid transparent;
+          border-right:16px solid transparent;
+          border-bottom:28px solid #4A0E8F;
+          position:absolute;top:0;left:0;
+          filter:drop-shadow(0 2px 4px rgba(0,0,0,0.45));"></div>
+        <div style="
+          width:0;height:0;
+          border-left:13px solid transparent;
+          border-right:13px solid transparent;
+          border-bottom:22px solid white;
+          position:absolute;top:3px;left:3px;opacity:0.15;"></div>
+        <span style="
+          position:relative;z-index:1;color:white;
+          font-size:8px;font-weight:900;letter-spacing:-0.5px;
+          margin-top:10px;text-shadow:0 1px 2px rgba(0,0,0,0.6);">${initials}</span>
+      </div>`,
+      iconSize:   [32, 32],
+      iconAnchor: [16, 32],
+    });
+  };
 
   const center: [number, number] = [21.38, 39.93];
 
@@ -192,29 +215,37 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
           </Marker>
         ))}
 
-        {showTeamMarkers && ESCALATION_TEAMS.map(team => (
+        {(showMCClusters || showTeamMarkers) && MC_CLUSTERS.map(cluster => (
           <Marker
-            key={team.teamName}
-            position={[team.lat, team.lng]}
-            icon={teamIcon(team.teamName)}
+            key={cluster.teamName}
+            position={[cluster.mcLat, cluster.mcLng]}
+            icon={mcClusterIcon(cluster.teamName)}
           >
-            <Popup maxWidth={220} minWidth={180}>
+            <Popup maxWidth={240} minWidth={190}>
               <div className="p-1">
-                <div className="font-bold text-sm mb-0.5" style={{ color: "#4A0E8F" }}>{team.teamName}</div>
-                <div className="text-xs text-gray-500 mb-1.5">Assigned: <span className="font-semibold text-gray-700">{team.siteId}</span> · {team.location}</div>
-                <div className="flex items-center gap-1.5 mb-1 text-xs">
-                  <span>{TRANSPORT_ICON[team.transport]}</span>
-                  <span className="text-gray-600">{team.transport}</span>
+                <div className="font-bold text-sm mb-0.5" style={{ color: "#4A0E8F" }}>{cluster.teamName}</div>
+                <div className="text-[11px] text-gray-500 mb-1">
+                  Hajj MC: <span className="font-semibold text-gray-700 font-mono">{cluster.mcId}</span> · {cluster.location}
                 </div>
-                <div className="text-xs font-semibold" style={{ color: team.etaMinutes === 15 ? "#059669" : "#d97706" }}>
-                  ⏱ ETA: {team.etaMinutes} min
+                <div className="text-[11px] text-gray-500 mb-1.5">
+                  {cluster.siteIds.length} sites assigned
+                </div>
+                <div className="flex items-center gap-1.5 mb-1 text-xs">
+                  <span>{TRANSPORT_ICON[cluster.transport]}</span>
+                  <span className="text-gray-600">{cluster.transport}</span>
+                </div>
+                <div className="text-xs font-semibold mb-2" style={{ color: cluster.etaMinutes === 15 ? "#059669" : "#d97706" }}>
+                  ⏱ ETA: {cluster.etaMinutes} min
                 </div>
                 <button
-                  onClick={() => onSelectSite(team.siteId)}
-                  className="mt-2 w-full text-[11px] py-1 rounded text-white font-semibold"
+                  onClick={() => {
+                    const anchor = cluster.siteIds[0];
+                    if (anchor) onSelectSite(anchor);
+                  }}
+                  className="w-full text-[11px] py-1 rounded text-white font-semibold"
                   style={{ background: "#4A0E8F" }}
                 >
-                  View Site Analysis
+                  View MC Anchor Site
                 </button>
               </div>
             </Popup>
@@ -327,6 +358,19 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
         >
           {showMarkers ? "Hide" : "Show"} Markers
         </button>
+        {!showTeamMarkers && (
+          <button
+            onClick={() => setShowMCClusters(c => !c)}
+            className="px-3 py-1.5 text-[11px] font-semibold rounded-lg shadow-md border transition-all"
+            style={{
+              background: showMCClusters ? "#7c3aed" : "white",
+              color: showMCClusters ? "white" : "#7c3aed",
+              borderColor: "#7c3aed",
+            }}
+          >
+            {showMCClusters ? "Hide" : "Show"} MC Clusters
+          </button>
+        )}
       </div>
 
       {/* Legend */}
@@ -338,6 +382,20 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
             <span className="capitalize text-gray-600 font-medium">{r === "risk" ? "Risk" : "Safe"}</span>
           </div>
         ))}
+        {(showMCClusters || showTeamMarkers) && (
+          <div className="flex items-center gap-2 mb-1">
+            <span
+              className="inline-block"
+              style={{
+                width: 0, height: 0,
+                borderLeft: "7px solid transparent",
+                borderRight: "7px solid transparent",
+                borderBottom: "12px solid #4A0E8F",
+              }}
+            />
+            <span className="text-gray-600 font-medium">Hajj MC</span>
+          </div>
+        )}
         <div className="border-t border-gray-100 mt-1.5 pt-1.5 text-[10px] text-gray-400">
           {analyses.length} sites plotted
         </div>
