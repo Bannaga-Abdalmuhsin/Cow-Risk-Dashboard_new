@@ -3,6 +3,7 @@ import { eq, desc, ne } from "drizzle-orm";
 import { db, teamUsersTable, techLocationsTable, assignmentsTable } from "@workspace/db";
 import type { TeamUser } from "@workspace/db";
 import { randomUUID } from "crypto";
+import { sendFcmNotification } from "../../lib/firebase.js";
 
 const router = Router();
 
@@ -12,28 +13,15 @@ async function sendPush(to: string | null | undefined, title: string, body: stri
   if (!to) return;
   try {
     if (to.startsWith("ExponentPushToken")) {
-      // Expo push service (works for Expo-managed tokens)
+      // Expo push service fallback (development / non-FCM builds)
       await fetch("https://exp.host/--/api/v2/push/send", {
         method:  "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body:    JSON.stringify({ to, title, body, sound: "default", priority: "high" }),
       });
     } else {
-      // Raw FCM device token — send directly via FCM Legacy HTTP API
-      const fcmKey = process.env.FCM_SERVER_KEY;
-      if (!fcmKey) return;
-      await fetch("https://fcm.googleapis.com/fcm/send", {
-        method:  "POST",
-        headers: {
-          "Content-Type":  "application/json",
-          "Authorization": `key=${fcmKey}`,
-        },
-        body: JSON.stringify({
-          to,
-          notification: { title, body, sound: "default" },
-          android:      { priority: "high" },
-        }),
-      });
+      // Raw FCM device token — use Firebase Admin SDK (FCM v1 API)
+      await sendFcmNotification(to, title, body);
     }
   } catch {}
 }
