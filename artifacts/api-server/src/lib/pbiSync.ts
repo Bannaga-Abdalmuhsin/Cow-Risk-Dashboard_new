@@ -2,8 +2,7 @@ import { eq, isNull } from "drizzle-orm";
 import { db, faultsTable } from "@workspace/db";
 import { logger } from "./logger.js";
 
-// ── Fallback GPS lookup (used when PBI rows have no lat/lng columns) ──────────
-// Coordinates sourced from the real Hajj 1447 deployment roster TSV
+// ── Fallback GPS lookup — CWN site coords from the Hajj 1447 roster ───────────
 const SITE_COORDS: Record<string, { lat: number; lng: number }> = {
   CWN960: { lat: 21.347135,  lng: 39.992573  }, CWN072: { lat: 21.34196,   lng: 39.97602   },
   CWN922: { lat: 21.404058,  lng: 39.916064  }, CWN970: { lat: 21.409075,  lng: 39.905872  },
@@ -57,15 +56,18 @@ export interface PbiTicket {
   siteLng:     number;
   location:    string | null;
   powerSource: string | null;
+  source:      "power" | "sir";
 }
 
 export interface SyncResult {
-  syncedAt:  string;   // ISO string (JSON-safe)
-  pbiCount:  number;
-  upserted:  number;
-  closed:    number;
-  errors:    string[];
-  ok:        boolean;
+  syncedAt:   string;
+  pbiCount:   number;
+  powerCount: number;
+  sirCount:   number;
+  upserted:   number;
+  closed:     number;
+  errors:     string[];
+  ok:         boolean;
 }
 
 let lastSyncResult: SyncResult | null = null;
@@ -74,70 +76,96 @@ export function getLastSyncResult(): SyncResult | null {
   return lastSyncResult;
 }
 
-// ── Column-name resolver ───────────────────────────────────────────────────────
-// PBI returns keys like "'TableName'[ColumnName]" — normalise to bare alphanumeric
-// then match case-insensitively against candidate names.
+// ── Helpers ───────────────────────────────────────────────────────────────────
+// PBI executeQueries returns column keys like "'Table Name'[Column Name]"
+// Strip the table prefix and normalise to bare lowercase alphanum for matching.
+
+function bareKey(k: string): string {
+  return k.replace(/^[^[]*\[(.+)\]$/, "$1").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
 
 function col(row: Record<string, unknown>, ...names: string[]): unknown {
   const needles = names.map(n => n.toLowerCase().replace(/[^a-z0-9]/g, ""));
   for (const [k, v] of Object.entries(row)) {
-    const bare = k.replace(/^[^[]*\[(.+)\]$/, "$1").toLowerCase().replace(/[^a-z0-9]/g, "");
-    if (needles.includes(bare)) return v;
+    if (needles.includes(bareKey(k))) return v;
   }
   return undefined;
 }
 
-function str(v: unknown): string {
-  return v == null ? "" : String(v).trim();
-}
+function str(v: unknown): string { return v == null ? "" : String(v).trim(); }
 
-function num(v: unknown): number | null {
-  if (v == null) return null;
-  const n = parseFloat(String(v));
-  return isNaN(n) ? null : n;
-}
+// ── Row mapper — shared columns: TT Number, Site ID, Status, Alarm Description,
+//                                Created Date, foStaff, Owner
+//   Input Record extra: Subcontractor
+//   SIR extra: Area
 
-function mapRow(row: Record<string, unknown>): PbiTicket | null {
-  const ttId = str(col(row,
-    "TT ID", "TTID", "tt_id", "Ticket Number", "TicketNumber", "TicketId", "Ticket ID",
-    "FaultId", "Fault ID", "ID", "Number",
-  ));
+// Input Record columns (exact): TT Number, SITE ID, Problem Description,
+//   TT Severity, Power Source, Region, District, Status, FO Staff, SubCon, Owner (Responsible)
+// SIR columns (exact): TT Number, Site, Alarms Description,
+//   TT Severity, Power source, Area, Status, FO Staff, Subcon, Owner, Fault Type
 
-  const cowId = str(col(row,
-    "COW ID", "COWID", "cow_id", "NE Name", "NEName", "Node Name", "NodeName",
-    "NodeId", "Node ID", "Site ID", "SiteId", "Site Name", "SiteName", "NE", "Element",
-  ));
+function mapRow(row: Record<string, unknown>, source: "power" | "sir"): PbiTicket | null {
+  // ── TT Number ──
+  const ttId = str(col(row, "TT Number", "TTNumber", "TT ID", "TTID"));
+  if (!ttId) return null;
 
-  const alarmName = str(col(row,
-    "Alarm Name", "AlarmName", "alarm_name", "Fault Type", "FaultType",
-    "Alarm Type", "AlarmType", "Description", "Problem", "Alarm",
-  )) || "Unknown Alarm";
+  // ── Site ID — Input Record uses "SITE ID", SIR uses "Site" ──
+  const rawSiteId = source === "power"
+    ? str(col(row, "SITE ID", "SiteID", "Site ID", "Site"))
+    : str(col(row, "Site", "SITE ID", "Site ID"));
 
-  const severity = str(col(row,
-    "Severity", "severity", "Priority", "priority", "Impact", "Level",
-  )).toLowerCase() || "major";
+  // Extract CWN### from values like "CWN960" or "WR-HAJJ-CWN960"
+  const cwnMatch = rawSiteId.match(/CWN\d{3}/i);
+  const cowId    = (cwnMatch ? cwnMatch[0] : rawSiteId).toUpperCase();
+  if (!cowId) return null;
 
-  const location    = str(col(row, "Location", "location", "Area", "Zone", "Region", "District")) || null;
-  const powerSource = str(col(row, "Power Source", "PowerSource", "Power Type", "PowerType", "power_source")) || null;
+  // ── Alarm / problem description ──
+  const alarmName = source === "power"
+    ? str(col(row, "Problem Description", "Issue", "SUMMARY", "Alarm Description")) || "Power Fault"
+    : str(col(row, "Alarms Description", "Fault Type", "SUMMARY", "Problem Description")) || "Telecom Fault";
 
-  if (!ttId || !cowId) return null;
+  // ── Severity — "TT Severity" on both tables: High/Medium/Low/Critical ──
+  const rawSev  = str(col(row, "TT Severity", "Severity", "Priority")).toLowerCase();
+  const severity = rawSev === "high" || rawSev === "critical" ? "critical"
+                 : rawSev === "medium"                        ? "major"
+                 : rawSev === "low"                           ? "minor"
+                 : "major";
 
-  // Try lat/lng from PBI first, fall back to the site coordinate table
-  let siteLat = num(col(row, "Latitude", "latitude", "Lat", "lat", "Site Lat", "SiteLat", "Y"));
-  let siteLng = num(col(row, "Longitude", "longitude", "Long", "Lng", "lng", "Site Lng", "SiteLng", "X"));
+  // ── Location ──
+  // Input Record: District or Region; SIR: Area
+  const location = source === "power"
+    ? str(col(row, "District", "Region", "Area")) || null
+    : str(col(row, "Area", "Region", "District")) || null;
 
-  if (!siteLat || !siteLng || siteLat === 0 || siteLng === 0) {
-    const key = cowId.replace(/[-_ ]/g, "").toUpperCase();
-    const fb  = SITE_COORDS[key];
-    if (fb) { siteLat = fb.lat; siteLng = fb.lng; }
+  // ── Power source ──
+  const powerSource = str(col(row, "Power Source", "Power source", "PowerSource")) || null;
+
+  // ── GPS — look up from the site coordinate table ──
+  const tryKeys = [
+    ...rawSiteId.toUpperCase().match(/CWN\d{3}/gi) ?? [],
+    cowId.replace(/[^A-Z0-9]/g, ""),
+  ];
+  let coords: { lat: number; lng: number } | undefined;
+  for (const k of tryKeys) {
+    coords = SITE_COORDS[k];
+    if (coords) break;
   }
+  if (!coords) return null;
 
-  if (!siteLat || !siteLng) return null;
-
-  return { ttId, cowId, alarmName, severity, siteLat, siteLng, location, powerSource };
+  return {
+    ttId,
+    cowId,
+    alarmName,
+    severity,
+    siteLat:     coords.lat,
+    siteLng:     coords.lng,
+    location,
+    powerSource,
+    source,
+  };
 }
 
-// ── Azure AD OAuth (client credentials, cached) ───────────────────────────────
+// ── Azure AD OAuth (client credentials, token cached until near expiry) ────────
 
 let tokenCache: { token: string; expiresAt: number } | null = null;
 
@@ -149,7 +177,7 @@ async function getAzureToken(): Promise<string> {
   const clientSecret = process.env.PBI_CLIENT_SECRET;
 
   if (!tenantId || !clientId || !clientSecret) {
-    throw new Error("PBI_TENANT_ID, PBI_CLIENT_ID and PBI_CLIENT_SECRET must be set");
+    throw new Error("PBI_TENANT_ID, PBI_CLIENT_ID, PBI_CLIENT_SECRET must be set");
   }
 
   const resp = await fetch(
@@ -176,28 +204,21 @@ async function getAzureToken(): Promise<string> {
   return tokenCache.token;
 }
 
-// ── PBI Dataset query ─────────────────────────────────────────────────────────
-// Default DAX returns every row of the "Open TTs" table.
-// Override with PBI_DAX_QUERY env var if your table has a different name,
-// e.g.  EVALUATE FILTER('Tickets', 'Tickets'[Status] = "Open")
+// ── Single PBI table query ────────────────────────────────────────────────────
 
-async function fetchPbiTickets(): Promise<PbiTicket[]> {
-  const token       = await getAzureToken();
-  const workspaceId = process.env.PBI_WORKSPACE_ID;
-  const datasetId   = process.env.PBI_DATASET_ID;
-  const daxQuery    = process.env.PBI_DAX_QUERY ?? "EVALUATE 'Open TTs'";
-
-  if (!workspaceId || !datasetId) {
-    throw new Error("PBI_WORKSPACE_ID and PBI_DATASET_ID must be set");
-  }
-
+async function queryTable(
+  token: string,
+  workspaceId: string,
+  datasetId: string,
+  dax: string,
+): Promise<Record<string, unknown>[]> {
   const url = `https://api.powerbi.com/v1.0/myorg/groups/${workspaceId}/datasets/${datasetId}/executeQueries`;
 
   const resp = await fetch(url, {
     method:  "POST",
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body:    JSON.stringify({
-      queries:            [{ query: daxQuery }],
+      queries:            [{ query: dax }],
       serializerSettings: { includeNulls: true },
     }),
   });
@@ -209,31 +230,89 @@ async function fetchPbiTickets(): Promise<PbiTicket[]> {
 
   type PbiResp = { results?: Array<{ tables?: Array<{ rows?: Record<string, unknown>[] }> }> };
   const data = await resp.json() as PbiResp;
-  const rows = data.results?.[0]?.tables?.[0]?.rows ?? [];
+  return data.results?.[0]?.tables?.[0]?.rows ?? [];
+}
+
+// ── Fetch both tables in parallel ─────────────────────────────────────────────
+// "Input Record" = open power trouble tickets (source of truth for COW dashboard)
+// "SIR"          = open Telecom / NSA trouble tickets
+// Both filtered to non-Closed status.
+
+async function fetchPbiTickets(): Promise<{ tickets: PbiTicket[]; powerCount: number; sirCount: number }> {
+  const token       = await getAzureToken();
+  const workspaceId = process.env.PBI_WORKSPACE_ID!;
+  const datasetId   = process.env.PBI_DATASET_ID!;
+
+  // Filter to Hajj region (WR-HAJJ) + non-Closed status only.
+  // "Input Record"[Region] = "WR-HAJJ"; SIR[Region] = "WR-HAJJ"
+  const [powerRows, sirRows] = await Promise.all([
+    queryTable(
+      token, workspaceId, datasetId,
+      "EVALUATE FILTER('Input Record', 'Input Record'[Status] <> \"Closed\" && 'Input Record'[Region] = \"WR-HAJJ\")",
+    ),
+    queryTable(
+      token, workspaceId, datasetId,
+      "EVALUATE FILTER('SIR', 'SIR'[Status] <> \"Closed\" && 'SIR'[Region] = \"WR-HAJJ\")",
+    ),
+  ]);
 
   const tickets: PbiTicket[] = [];
-  for (const row of rows) {
-    const t = mapRow(row);
+
+  for (const row of powerRows) {
+    const t = mapRow(row, "power");
     if (t) tickets.push(t);
   }
-  return tickets;
+  for (const row of sirRows) {
+    const t = mapRow(row, "sir");
+    if (t) tickets.push(t);
+  }
+
+  return { tickets, powerCount: powerRows.length, sirCount: sirRows.length };
+}
+
+// ── Probe: return raw column names + first row from both tables (debug only) ──
+
+export async function probeColumns(): Promise<{
+  inputRecord: { columns: string[]; openRows: Record<string, unknown>[] };
+  sir:         { columns: string[]; openRows: Record<string, unknown>[] };
+}> {
+  const token       = await getAzureToken();
+  const workspaceId = process.env.PBI_WORKSPACE_ID!;
+  const datasetId   = process.env.PBI_DATASET_ID!;
+
+  // Fetch all open rows from both tables (no TOPN limit)
+  const [powerRows, sirRows] = await Promise.all([
+    queryTable(token, workspaceId, datasetId,
+      "EVALUATE SELECTCOLUMNS(FILTER('Input Record', 'Input Record'[Status] <> \"Closed\"), \"TT\", 'Input Record'[TT Number], \"SITEID\", 'Input Record'[SITE ID], \"Status\", 'Input Record'[Status], \"Sev\", 'Input Record'[TT Severity], \"Region\", 'Input Record'[Region])"),
+    queryTable(token, workspaceId, datasetId,
+      "EVALUATE SELECTCOLUMNS(FILTER('SIR', 'SIR'[Status] <> \"Closed\"), \"TT\", 'SIR'[TT Number], \"Site\", 'SIR'[Site], \"Status\", 'SIR'[Status], \"Sev\", 'SIR'[TT Severity], \"Region\", 'SIR'[Region])"),
+  ]);
+
+  return {
+    inputRecord: { columns: powerRows[0] ? Object.keys(powerRows[0]) : [], openRows: powerRows },
+    sir:         { columns: sirRows[0]   ? Object.keys(sirRows[0])   : [], openRows: sirRows.slice(0, 10) },
+  };
 }
 
 // ── Main sync ─────────────────────────────────────────────────────────────────
 
 export async function syncPbiToDb(): Promise<SyncResult> {
   const errors: string[] = [];
-  let upserted = 0;
-  let closed   = 0;
-  let pbiCount = 0;
+  let upserted    = 0;
+  let closed      = 0;
+  let pbiCount    = 0;
+  let powerCount  = 0;
+  let sirCount    = 0;
 
   try {
-    const pbiTickets = await fetchPbiTickets();
-    pbiCount = pbiTickets.length;
+    const result = await fetchPbiTickets();
+    pbiCount   = result.tickets.length;
+    powerCount = result.powerCount;
+    sirCount   = result.sirCount;
 
-    const pbiTtIds = new Set(pbiTickets.map(t => t.ttId));
+    const pbiTtIds = new Set(result.tickets.map(t => t.ttId));
 
-    // Open faults currently in DB
+    // Open faults currently in DB (only those that came from PBI — apiKey = "pbi-sync")
     const openFaults = await db
       .select({ id: faultsTable.id, ttId: faultsTable.ttId })
       .from(faultsTable)
@@ -241,8 +320,8 @@ export async function syncPbiToDb(): Promise<SyncResult> {
 
     const dbOpenTtIds = new Set(openFaults.map(f => f.ttId));
 
-    // 1. Insert tickets from PBI that are not yet in DB
-    for (const ticket of pbiTickets) {
+    // 1. Insert PBI tickets not yet in DB
+    for (const ticket of result.tickets) {
       if (dbOpenTtIds.has(ticket.ttId)) continue;
       try {
         await db.insert(faultsTable).values({
@@ -255,16 +334,16 @@ export async function syncPbiToDb(): Promise<SyncResult> {
           location:       ticket.location,
           powerSource:    ticket.powerSource,
           dispatchStatus: "new",
-          apiKey:         "pbi-sync",
+          apiKey:         `pbi-sync:${ticket.source}`,
         });
         upserted++;
-        logger.info({ ttId: ticket.ttId, cowId: ticket.cowId }, "PBI: new ticket inserted");
+        logger.info({ ttId: ticket.ttId, cowId: ticket.cowId, source: ticket.source }, "PBI: new ticket inserted");
       } catch (err) {
         errors.push(`insert ${ticket.ttId}: ${String(err)}`);
       }
     }
 
-    // 2. Close DB faults whose ttId no longer appears in PBI
+    // 2. Auto-close DB faults whose ttId is no longer in PBI
     for (const fault of openFaults) {
       if (pbiTtIds.has(fault.ttId)) continue;
       try {
@@ -273,7 +352,7 @@ export async function syncPbiToDb(): Promise<SyncResult> {
           .set({ dispatchStatus: "closed", resolvedAt: new Date() })
           .where(eq(faultsTable.id, fault.id));
         closed++;
-        logger.info({ ttId: fault.ttId }, "PBI: ticket auto-closed (not in PBI)");
+        logger.info({ ttId: fault.ttId }, "PBI: ticket auto-closed (absent from PBI)");
       } catch (err) {
         errors.push(`close ${fault.ttId}: ${String(err)}`);
       }
@@ -284,22 +363,24 @@ export async function syncPbiToDb(): Promise<SyncResult> {
     logger.warn({ err }, "PBI sync error");
   }
 
-  const result: SyncResult = {
-    syncedAt: new Date().toISOString(),
+  const syncResult: SyncResult = {
+    syncedAt:   new Date().toISOString(),
     pbiCount,
+    powerCount,
+    sirCount,
     upserted,
     closed,
     errors,
-    ok: errors.length === 0,
+    ok:         errors.length === 0,
   };
 
-  lastSyncResult = result;
+  lastSyncResult = syncResult;
 
   if (errors.length > 0) {
     logger.warn({ errors }, "PBI sync finished with errors");
   } else {
-    logger.info({ pbiCount, upserted, closed }, "PBI sync OK");
+    logger.info({ pbiCount, powerCount, sirCount, upserted, closed }, "PBI sync OK");
   }
 
-  return result;
+  return syncResult;
 }

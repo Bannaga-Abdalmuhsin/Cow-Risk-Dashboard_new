@@ -162,6 +162,18 @@ router.post("/pbi-sync", async (_req: Request, res: Response): Promise<void> => 
   res.json(result);
 });
 
+/* ─── GET /api/faults/pbi-probe  (show raw PBI column names for debugging) ─ */
+
+router.get("/pbi-probe", async (_req: Request, res: Response): Promise<void> => {
+  try {
+    const { probeColumns } = await import("../../lib/pbiSync.js");
+    const result = await probeColumns();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: String(err) });
+  }
+});
+
 /* ─── POST /api/faults/:id/dispatch  (manual or re-dispatch) ────────────── */
 
 router.post("/:id/dispatch", async (req: Request, res: Response): Promise<void> => {

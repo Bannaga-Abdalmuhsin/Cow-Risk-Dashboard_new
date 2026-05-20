@@ -252,12 +252,14 @@ function FaultMap({
 /* ─── PBI sync status type ─────────────────────────────────────────────────── */
 
 interface PbiStatus {
-  ok:       boolean;
-  syncedAt: string | null;
-  pbiCount: number;
-  upserted: number;
-  closed:   number;
-  errors:   string[];
+  ok:         boolean;
+  syncedAt:   string | null;
+  pbiCount:   number;
+  powerCount: number;
+  sirCount:   number;
+  upserted:   number;
+  closed:     number;
+  errors:     string[];
 }
 
 /* ─── main component ───────────────────────────────────────────────────────── */
@@ -381,11 +383,16 @@ export function FaultManagement() {
             </span>
 
             {/* counts */}
+            {(pbiStatus.powerCount > 0 || pbiStatus.sirCount > 0) && (
+              <span style={{ color: "#60a5fa" }}>
+                ⚡ {pbiStatus.powerCount ?? 0} power · 📡 {pbiStatus.sirCount ?? 0} telecom
+              </span>
+            )}
             {pbiStatus.pbiCount > 0 && (
-              <span style={{ color: "#60a5fa" }}>{pbiStatus.pbiCount} open in PBI</span>
+              <span style={{ color: "#a78bfa" }}>({pbiStatus.pbiCount} matched sites)</span>
             )}
             {pbiStatus.upserted > 0 && (
-              <span style={{ color: "#34d399" }}>+{pbiStatus.upserted} new</span>
+              <span style={{ color: "#34d399" }}>+{pbiStatus.upserted} inserted</span>
             )}
             {pbiStatus.closed > 0 && (
               <span style={{ color: "#f87171" }}>{pbiStatus.closed} auto-closed</span>
