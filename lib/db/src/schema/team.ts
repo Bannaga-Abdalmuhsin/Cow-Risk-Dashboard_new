@@ -36,6 +36,27 @@ export const assignmentsTable = pgTable("assignments", {
   repliedAt:   timestamp("replied_at"),
 });
 
+export const faultsTable = pgTable("faults", {
+  id:              serial("id").primaryKey(),
+  ttId:            text("tt_id").notNull(),
+  cowId:           text("cow_id").notNull(),
+  alarmName:       text("alarm_name").notNull(),
+  severity:        text("severity").notNull(),
+  powerSource:     text("power_source"),
+  backupTime:      text("backup_time"),
+  siteLat:         real("site_lat").notNull(),
+  siteLng:         real("site_lng").notNull(),
+  location:        text("location"),
+  assignedTechId:  integer("assigned_tech_id").references(() => teamUsersTable.id),
+  dispatchStatus:  text("dispatch_status").notNull().default("new"),
+  eta:             integer("eta"),
+  receivedAt:      timestamp("received_at").defaultNow().notNull(),
+  dispatchedAt:    timestamp("dispatched_at"),
+  resolvedAt:      timestamp("resolved_at"),
+  apiKey:          text("api_key"),
+});
+
 export type TeamUser     = typeof teamUsersTable.$inferSelect;
 export type TechLocation = typeof techLocationsTable.$inferSelect;
 export type Assignment   = typeof assignmentsTable.$inferSelect;
+export type Fault        = typeof faultsTable.$inferSelect;
