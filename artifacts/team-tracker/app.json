@@ -8,7 +8,7 @@
     "icon": "./assets/images/app-icon.png",
     "scheme": "acesft",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/app-icon.png",
       "resizeMode": "contain",
@@ -30,7 +30,7 @@
     },
     "android": {
       "package": "com.acesmsd.fieldtracker",
-      "versionCode": 6,
+      "versionCode": 7,
       "icon": "./assets/images/app-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/app-icon.png",
