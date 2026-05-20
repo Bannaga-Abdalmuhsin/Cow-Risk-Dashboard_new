@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator, Alert, Modal, Platform, ScrollView, StyleSheet,
   Text, TextInput, TouchableOpacity, View,
@@ -50,27 +50,27 @@ export default function ManagerMapScreen() {
   const [summaryOpen, setSummaryOpen] = useState(true);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const fetchLocations = async () => {
+  const fetchLocations = useCallback(async () => {
     try {
       const data = await getTeamLocations(token);
       setLocations(data);
     } catch {}
     setLoading(false);
-  };
+  }, [token]);
 
-  const fetchTotalUsers = async () => {
+  const fetchTotalUsers = useCallback(async () => {
     try {
       const users = await getTeamUsers(token);
       setTotalUsers(users.filter(u => u.role === "technician").length);
     } catch {}
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchLocations();
     fetchTotalUsers();
     intervalRef.current = setInterval(fetchLocations, 10000);
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [token]);
+  }, [fetchLocations, fetchTotalUsers]);
 
   const onMarkerPress = (loc: TechLocationWithUser) => {
     setSelected(loc);

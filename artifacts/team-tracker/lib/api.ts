@@ -40,15 +40,6 @@ export function getBaseUrl(): string {
   return "";
 }
 
-/** Debug helper — returns what getBaseUrl() resolves to (never empty in prod). */
-export function debugBaseUrl(): string {
-  const url = getBaseUrl();
-  const linking = (() => { try { return Constants.linkingUri ?? ""; } catch { return ""; } })();
-  return url
-    ? `API: ${url}`
-    : `(empty) linkingUri=${linking} API_URL=${process.env.EXPO_PUBLIC_API_URL ?? "–"} DOMAIN=${process.env.EXPO_PUBLIC_DOMAIN ?? "–"}`;
-}
-
 /** Kept for backwards-compat */
 export const BASE_URL = "";
 
