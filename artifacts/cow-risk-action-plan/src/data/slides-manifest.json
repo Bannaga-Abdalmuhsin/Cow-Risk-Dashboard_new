@@ -1,42 +1,202 @@
 [
   {
-    "id": "risk-summary-0000-4000-8000-000000000000",
+    "id": "a1b2c3d4-0001-4000-8000-000000000001",
     "position": 1,
-    "filepath": "src/pages/slides/Slide00DashboardIdea.tsx",
-    "title": "The Challenge — 79 COW Sites · 46°C · Zero Margin for Error",
-    "description": "Executive problem statement: infrastructure at stake, three key risk categories, key stats",
+    "filepath": "src/pages/slides/S01Cover.tsx",
+    "title": "Hajj 1447 Operations Intelligence — Executive Briefing",
+    "description": "Cover slide: 3-app digital framework overview, stc ACES MSD branding, dark dramatic treatment",
     "speakerNotes": ""
   },
   {
-    "id": "risk-summary-0001-4000-8000-000000000001",
+    "id": "a1b2c3d4-0002-4000-8000-000000000002",
     "position": 2,
-    "filepath": "src/pages/slides/Slide01PrimePlusBackup.tsx",
-    "title": "The Solution — Real-Time Risk Intelligence for All 79 Sites",
-    "description": "Dashboard overview: 4 risk dimensions, 9 scenarios at a glance, key platform stats",
+    "filepath": "src/pages/slides/S02TheChallenge.tsx",
+    "title": "The Challenge — 79 Sites, Zero Tolerance for Failure",
+    "description": "Problem statement: 46°C heat, 79 COW sites, no prior visibility, 9 scenarios per site",
     "speakerNotes": ""
   },
   {
-    "id": "risk-summary-0002-4000-8000-000000000002",
+    "id": "a1b2c3d4-0003-4000-8000-000000000003",
     "position": 3,
-    "filepath": "src/pages/slides/Slide02PrimeOnly.tsx",
-    "title": "Key Findings — Risk Assessment Summary Across All 9 Scenarios",
-    "description": "Executive summary: Safe vs At Risk counts per scenario group, severity ratings, key finding per group",
+    "filepath": "src/pages/slides/S03ThreeApps.tsx",
+    "title": "The Solution — 3 Integrated Applications",
+    "description": "Three-column overview of Risk Dashboard, Team Tracker, and Fault Management",
     "speakerNotes": ""
   },
   {
-    "id": "risk-summary-0003-4000-8000-000000000003",
+    "id": "a1b2c3d4-0004-4000-8000-000000000004",
     "position": 4,
-    "filepath": "src/pages/slides/Slide03ScenarioS9.tsx",
-    "title": "Recommendations — 4 Actions Required Before Hajj Peak",
-    "description": "Management action plan: 2 critical and 2 high priority actions with owners and overall status",
+    "filepath": "src/pages/slides/S04DividerDashboard.tsx",
+    "title": "Application 01 — COW Risk Dashboard",
+    "description": "Dark section divider introducing the Risk Dashboard section",
     "speakerNotes": ""
   },
   {
-    "id": "risk-summary-0004-4000-8000-000000000004",
+    "id": "a1b2c3d4-0005-4000-8000-000000000005",
     "position": 5,
-    "filepath": "src/pages/slides/Slide04DashboardSnaps.tsx",
-    "title": "Dashboard Preview — Login & Main Overview Screen",
-    "description": "Application screenshots: secure login page and main dashboard overview with live metric cards and site risk table",
+    "filepath": "src/pages/slides/S05DashboardOverview.tsx",
+    "title": "Risk Dashboard — What It Monitors",
+    "description": "Overview: 79 sites, 9 scenarios, 4 risk categories, interactive heat map",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0006-4000-8000-000000000006",
+    "position": 6,
+    "filepath": "src/pages/slides/S06EngineeringModel.tsx",
+    "title": "Engineering Model — 9 Scenarios Calculated in Real Time",
+    "description": "Prime Power S1-S4, Backup Generator S5-S8, Battery Only S9 — 46°C derating applied",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0007-4000-8000-000000000007",
+    "position": 7,
+    "filepath": "src/pages/slides/S07RiskCategories.tsx",
+    "title": "4 Risk Categories — Power, Cooling, Battery, Rectifier",
+    "description": "Each risk dimension explained with derating parameters and classification criteria",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0008-4000-8000-000000000008",
+    "position": 8,
+    "filepath": "src/pages/slides/S08GeographicZones.tsx",
+    "title": "Geographic Coverage — 7 Zones, 79 Sites",
+    "description": "Site distribution across Arafat, Mina, Muzdalifa, Makkah with Safe vs At Risk counts",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0009-4000-8000-000000000009",
+    "position": 9,
+    "filepath": "src/pages/slides/S09DashboardTabs.tsx",
+    "title": "Dashboard Navigation — Six Operational Views",
+    "description": "Overview, Heat Map, Site List, Field Ops, Teams, Fault Mgmt tabs and their purposes",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0010-4000-8000-000000000010",
+    "position": 10,
+    "filepath": "src/pages/slides/S10DividerTeamTracker.tsx",
+    "title": "Application 02 — ACES Field Team Tracker",
+    "description": "Dark teal section divider introducing the Team Tracker mobile app section",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0011-4000-8000-000000000011",
+    "position": 11,
+    "filepath": "src/pages/slides/S11TeamTrackerApp.tsx",
+    "title": "Team Tracker — iOS and Android Field App",
+    "description": "React Native Expo app: live GPS, push notifications, iOS and Android deployment",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0012-4000-8000-000000000012",
+    "position": 12,
+    "filepath": "src/pages/slides/S12MCtoSite.tsx",
+    "title": "Operations Flow — From MC Dispatch to On-Site",
+    "description": "5-step workflow: Fault Alert → MC Dispatch → En Route → On Site → Resolved",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0013-4000-8000-000000000013",
+    "position": 13,
+    "filepath": "src/pages/slides/S13LiveGPS.tsx",
+    "title": "Live GPS — Helmet Icons on Satellite Map",
+    "description": "Green under 15 min, red over 15 min, auto-removed at 60 min — 30-second auto-refresh",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0014-4000-8000-000000000014",
+    "position": 14,
+    "filepath": "src/pages/slides/S14TeamStatusCard.tsx",
+    "title": "Team Status Card — At-a-Glance Technician View",
+    "description": "Helmet grid sidebar: name, minutes since last update, zone — green/red freshness indicator",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0015-4000-8000-000000000015",
+    "position": 15,
+    "filepath": "src/pages/slides/S15ZoneCoverage.tsx",
+    "title": "Zone Coverage — 5 Zones, 16 Technicians",
+    "description": "Arafat, Mina, Muzdalifa, Makkah zone coverage with team distribution and refresh metrics",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0016-4000-8000-000000000016",
+    "position": 16,
+    "filepath": "src/pages/slides/S16DividerFaultMgmt.tsx",
+    "title": "Application 03 — Fault Management",
+    "description": "Dark red section divider introducing the Fault Management section",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0017-4000-8000-000000000017",
+    "position": 17,
+    "filepath": "src/pages/slides/S17FaultOverview.tsx",
+    "title": "Fault Management — Every Fault, One Card",
+    "description": "Live fault cards, satellite map view, status counter bar — nothing falls through",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0018-4000-8000-000000000018",
+    "position": 18,
+    "filepath": "src/pages/slides/S18PowerBI.tsx",
+    "title": "Power BI Auto-Sync — 30-Second Fault Integration",
+    "description": "stc Power BI workspace polling: power faults + SIR alarms auto-created as fault cards",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0019-4000-8000-000000000019",
+    "position": 19,
+    "filepath": "src/pages/slides/S19FaultLifecycle.tsx",
+    "title": "Fault Lifecycle — Six Status Stages, Full Audit Trail",
+    "description": "New → Assigned → En Route → On Site → Resolved → Closed with timestamps",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0020-4000-8000-000000000020",
+    "position": 20,
+    "filepath": "src/pages/slides/S20AutoDispatch.tsx",
+    "title": "Auto-Dispatch — Nearest Technician, Fastest Route",
+    "description": "Live GPS-based dispatch, Directions API road ETA, route polyline redraws as tech moves",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0021-4000-8000-000000000021",
+    "position": 21,
+    "filepath": "src/pages/slides/S21FaultMap.tsx",
+    "title": "Fault Map — COW Sites + Technicians on Satellite",
+    "description": "Google satellite map: COW markers by severity, technician position, road route polyline",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0022-4000-8000-000000000022",
+    "position": 22,
+    "filepath": "src/pages/slides/S22Architecture.tsx",
+    "title": "System Architecture — How the 3 Apps Connect",
+    "description": "Shared Express API + PostgreSQL backend, Firebase FCM, Power BI sync layer",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0023-4000-8000-000000000023",
+    "position": 23,
+    "filepath": "src/pages/slides/S23KeyMetrics.tsx",
+    "title": "Key Metrics — 79 Sites, 711 Calculations, 16 Technicians",
+    "description": "Dashboard of headline numbers: sites, calculations, technicians, apps, refresh intervals",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0024-4000-8000-000000000024",
+    "position": 24,
+    "filepath": "src/pages/slides/S24WhoBuiltIt.tsx",
+    "title": "Designed and Implemented by ACES MSD — stc",
+    "description": "ACES MSD Division: what was built for each app — concept, engineering, frontend, backend",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0025-4000-8000-000000000025",
+    "position": 25,
+    "filepath": "src/pages/slides/S25Closing.tsx",
+    "title": "3 Apps. 79 Sites. One Operational Picture.",
+    "description": "Closing slide: summary of all three apps, ACES MSD credit, acesmsd.live URL, Q&A",
     "speakerNotes": ""
   }
 ]
