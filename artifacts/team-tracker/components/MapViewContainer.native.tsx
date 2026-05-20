@@ -1,13 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import MapView, { Callout, Marker, PROVIDER_DEFAULT } from "react-native-maps";
+import { Feather } from "@expo/vector-icons";
 import { type TechLocationWithUser } from "@/lib/api";
-
-const MAKKAH = { latitude: 21.38, longitude: 39.93, latitudeDelta: 0.3, longitudeDelta: 0.3 };
-
-function minutesAgo(iso: string): number {
-  return Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
-}
 
 interface Props {
   locations: TechLocationWithUser[];
@@ -16,53 +10,40 @@ interface Props {
   onMarkerPress: (loc: TechLocationWithUser) => void;
 }
 
-export default function MapViewContainer({ locations, onDutyColor, offDutyColor, onMarkerPress }: Props) {
+export default function MapViewContainer({ locations, onDutyColor }: Props) {
+  const onCount  = locations.filter(l => l.isOnDuty).length;
+  const offCount = locations.length - onCount;
+
   return (
-    <MapView
-      provider={PROVIDER_DEFAULT}
-      style={StyleSheet.absoluteFillObject}
-      initialRegion={MAKKAH}
-      mapType="satellite"
-      userInterfaceStyle="dark"
-    >
-      {locations.map(loc => {
-        const mins  = minutesAgo(loc.updatedAt);
-        const fresh = mins < 10;
-        const color = fresh ? "#16a34a" : "#dc2626";
-        return (
-          <Marker
-            key={loc.userId}
-            coordinate={{ latitude: loc.lat, longitude: loc.lng }}
-            onPress={() => onMarkerPress(loc)}
-          >
-            <View style={[styles.marker, { backgroundColor: color }]}>
-              <Text style={styles.markerName} numberOfLines={1}>{loc.userName}</Text>
-              <Text style={styles.markerArea} numberOfLines={1}>{loc.area ?? "—"}</Text>
-              {fresh && <View style={styles.liveRing} />}
-            </View>
-            <Callout>
-              <View style={styles.callout}>
-                <Text style={styles.calloutName}>{loc.userName}</Text>
-                <Text style={styles.calloutSub}>{loc.area ?? "Unknown area"}</Text>
-                <Text style={[styles.calloutTime, { color }]}>
-                  {fresh ? `Active · ${mins}m ago` : `Stale · ${mins}m ago`}
-                </Text>
-              </View>
-            </Callout>
-          </Marker>
-        );
-      })}
-    </MapView>
+    <View style={styles.container}>
+      <View style={styles.inner}>
+        <Feather name="map" size={48} color="#475569" />
+        <Text style={styles.title}>Live Map</Text>
+        <Text style={styles.sub}>Interactive map coming in next update</Text>
+        <View style={styles.stats}>
+          <View style={[styles.badge, { backgroundColor: onDutyColor + "22", borderColor: onDutyColor + "55" }]}>
+            <View style={[styles.dot, { backgroundColor: onDutyColor }]} />
+            <Text style={[styles.badgeText, { color: onDutyColor }]}>{onCount} On Duty</Text>
+          </View>
+          <View style={[styles.badge, { backgroundColor: "#47556922", borderColor: "#47556955" }]}>
+            <View style={[styles.dot, { backgroundColor: "#475569" }]} />
+            <Text style={[styles.badgeText, { color: "#475569" }]}>{offCount} Off Duty</Text>
+          </View>
+        </View>
+        <Text style={styles.hint}>Use the Team tab to see full technician list</Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  marker:      { paddingHorizontal: 8, paddingVertical: 5, borderRadius: 10, borderWidth: 2, borderColor: "#fff", alignItems: "center", justifyContent: "center", minWidth: 56, maxWidth: 90, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.4, shadowRadius: 6, elevation: 8 },
-  markerName:  { color: "#fff", fontSize: 11, fontWeight: "800" as const, textAlign: "center" },
-  markerArea:  { color: "rgba(255,255,255,0.85)", fontSize: 9, fontWeight: "500" as const, textAlign: "center", marginTop: 1 },
-  liveRing:    { position: "absolute", top: -3, right: -3, width: 9, height: 9, borderRadius: 5, backgroundColor: "#34D399", borderWidth: 1.5, borderColor: "#fff" },
-  callout:     { padding: 8, minWidth: 120 },
-  calloutName: { fontWeight: "700" as const, fontSize: 13 },
-  calloutSub:  { fontSize: 11, color: "#666", marginTop: 2 },
-  calloutTime: { fontSize: 11, color: "#888", marginTop: 2 },
+  container: { ...StyleSheet.absoluteFillObject, backgroundColor: "#0f172a", alignItems: "center", justifyContent: "center" },
+  inner:     { alignItems: "center", gap: 12, paddingHorizontal: 32 },
+  title:     { fontSize: 22, fontWeight: "700" as const, color: "#e2e8f0", marginTop: 8 },
+  sub:       { fontSize: 14, color: "#94a3b8", textAlign: "center" },
+  stats:     { flexDirection: "row", gap: 10, marginTop: 4 },
+  badge:     { flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 14, paddingVertical: 7, borderRadius: 20, borderWidth: 1 },
+  dot:       { width: 8, height: 8, borderRadius: 4 },
+  badgeText: { fontSize: 13, fontWeight: "600" as const },
+  hint:      { fontSize: 12, color: "#64748b", textAlign: "center", marginTop: 4 },
 });

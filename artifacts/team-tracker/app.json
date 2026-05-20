@@ -30,16 +30,11 @@
     },
     "android": {
       "package": "com.acesmsd.fieldtracker",
-      "versionCode": 10,
+      "versionCode": 11,
       "icon": "./assets/images/app-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/app-icon.png",
         "backgroundColor": "#F7F2EC"
-      },
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyDCTu0e8rXy-94gG_i5wYFA7pBG_OR9drI"
-        }
       },
       "permissions": [
         "ACCESS_FINE_LOCATION",

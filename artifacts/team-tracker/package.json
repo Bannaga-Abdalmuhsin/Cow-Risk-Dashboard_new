@@ -52,7 +52,6 @@
   },
   "dependencies": {
     "expo-notifications": "~0.32.17",
-    "expo-task-manager": "^55.0.16",
-    "react-native-maps": "1.18.0"
+    "expo-task-manager": "^55.0.16"
   }
 }

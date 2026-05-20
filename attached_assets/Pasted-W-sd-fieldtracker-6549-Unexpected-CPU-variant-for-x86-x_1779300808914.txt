@@ -1,0 +1,262 @@
+W/sd.fieldtracker( 6549): Unexpected CPU variant for x86: x86_64.
+W/sd.fieldtracker( 6549): Known variants: atom, sandybridge, silvermont, kabylake, default
+D/CompatibilityChangeReporter( 6549): Compat change id reported: 171979766; UID 10172; state: ENABLED
+D/nativeloader( 6549): Configuring classloader-namespace for other apk /system/framework/org.apache.http.legacy.jar. target_sdk_version=36, uses_libraries=ALL, library_path=/data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/lib/x86_64:/data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.acesmsd.fieldtracker
+D/nativeloader( 6549): Configuring classloader-namespace for other apk /data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/lib/x86_64:/data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.acesmsd.fieldtracker
+V/GraphicsEnvironment( 6549): ANGLE Developer option for 'com.acesmsd.fieldtracker' set to: 'default'
+V/GraphicsEnvironment( 6549): ANGLE GameManagerService for com.acesmsd.fieldtracker: false
+V/GraphicsEnvironment( 6549): Neither updatable production driver nor prerelease driver is supported.
+D/NetworkSecurityConfig( 6549): No Network Security Config specified, using platform default
+D/NetworkSecurityConfig( 6549): No Network Security Config specified, using platform default
+W/FirebaseApp( 6549): Default FirebaseApp failed to initialize because no default options were found. This usually means that com.google.gms:google-services was not applied to your gradle project.
+I/FirebaseInitProvider( 6549): FirebaseApp initialization unsuccessful
+D/WM-WrkMgrInitializer( 6549): Initializing WorkManager with default configuration.
+W/SoLoader( 6549): Initializing SoLoader: 0
+W/SoLoader( 6549): Recording new base apk path: /data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/base.apk
+W/SoLoader( 6549): Previously recorded 0 base apk paths.
+I/SoLoader( 6549): Preparing SO source: DirectorySoSource[root = /vendor/lib64 flags = 2]
+I/SoLoader( 6549): Preparing SO source: DirectorySoSource[root = /system/lib64 flags = 2]
+I/SoLoader( 6549): Preparing SO source: DirectApkSoSource[root = [/data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/base.apk!/lib/x86_64]]
+I/SoLoader( 6549): Preparing SO source: ApplicationSoSource[DirectorySoSource[root = /data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/lib/x86_64 flags = 0]]
+I/SoLoader( 6549): init finish: 4 SO sources prepared
+W/SoLoader( 6549): SoLoader initialized: 8
+D/jni_lib_merge( 6549): Entering merged library JNI_OnLoad.
+D/jni_lib_merge( 6549): Preparing 12 pre-merged libs (including stub)
+D/jni_lib_merge( 6549): Preparing to register libfabricjni_so.  onload_func: 0x78e7358b2ba0
+D/jni_lib_merge( 6549): Preparing to register libreact_devsupportjni_so.  onload_func: 0x78e73598e530
+D/jni_lib_merge( 6549): Preparing to register libreact_featureflagsjni_so.  onload_func: 0x78e7359a10a0
+D/jni_lib_merge( 6549): Preparing to register libreact_newarchdefaults_so.  onload_func: 0x78e7359c7fa0
+D/jni_lib_merge( 6549): Preparing to register libreactnativeblob_so.  onload_func: 0x78e735a6fa50
+D/jni_lib_merge( 6549): Preparing to register libreactnativejni_so.  onload_func: 0x78e735a8a8c0
+D/jni_lib_merge( 6549): Preparing to register libreactnativejni_common_so.  onload_func: 0x78e735a91150
+D/jni_lib_merge( 6549): Preparing to register librninstance_so.  onload_func: 0x78e735aaf450
+D/jni_lib_merge( 6549): Preparing to register libturbomodulejsijni_so.  onload_func: 0x78e735b5ab80
+D/jni_lib_merge( 6549): Preparing to register libuimanagerjni_so.  onload_func: 0x78e735b62ab0
+D/jni_lib_merge( 6549): Preparing to register libyoga_so.  onload_func: 0x78e735b6a130
+D/jni_lib_merge( 6549): About to register 11 actual methods.
+D/jni_lib_merge( 6549): Entering merged library JNI_OnLoad.
+D/jni_lib_merge( 6549): Preparing 12 pre-merged libs (including stub)
+D/jni_lib_merge( 6549): Preparing to register libfabricjni_so.  onload_func: 0x78e7358b2ba0
+D/jni_lib_merge( 6549): Preparing to register libreact_devsupportjni_so.  onload_func: 0x78e73598e530
+D/jni_lib_merge( 6549): Preparing to register libreact_featureflagsjni_so.  onload_func: 0x78e7359a10a0
+D/jni_lib_merge( 6549): Preparing to register libreact_newarchdefaults_so.  onload_func: 0x78e7359c7fa0
+D/jni_lib_merge( 6549): Preparing to register libreactnativeblob_so.  onload_func: 0x78e735a6fa50
+D/jni_lib_merge( 6549): Preparing to register libreactnativejni_so.  onload_func: 0x78e735a8a8c0
+D/jni_lib_merge( 6549): Preparing to register libreactnativejni_common_so.  onload_func: 0x78e735a91150
+D/jni_lib_merge( 6549): Preparing to register librninstance_so.  onload_func: 0x78e735aaf450
+D/jni_lib_merge( 6549): Preparing to register libturbomodulejsijni_so.  onload_func: 0x78e735b5ab80
+D/jni_lib_merge( 6549): Preparing to register libuimanagerjni_so.  onload_func: 0x78e735b62ab0
+D/jni_lib_merge( 6549): Preparing to register libyoga_so.  onload_func: 0x78e735b6a130
+D/jni_lib_merge( 6549): About to register 11 actual methods.
+D/jni_lib_merge( 6549): Entering merged library JNI_OnLoad.
+D/jni_lib_merge( 6549): Preparing 12 pre-merged libs (including stub)
+D/jni_lib_merge( 6549): Preparing to register libfabricjni_so.  onload_func: 0x78e7358b2ba0
+D/jni_lib_merge( 6549): Preparing to register libreact_devsupportjni_so.  onload_func: 0x78e73598e530
+D/jni_lib_merge( 6549): Preparing to register libreact_featureflagsjni_so.  onload_func: 0x78e7359a10a0
+D/jni_lib_merge( 6549): Preparing to register libreact_newarchdefaults_so.  onload_func: 0x78e7359c7fa0
+D/jni_lib_merge( 6549): Preparing to register libreactnativeblob_so.  onload_func: 0x78e735a6fa50
+D/jni_lib_merge( 6549): Preparing to register libreactnativejni_so.  onload_func: 0x78e735a8a8c0
+D/jni_lib_merge( 6549): Preparing to register libreactnativejni_common_so.  onload_func: 0x78e735a91150
+D/jni_lib_merge( 6549): Preparing to register librninstance_so.  onload_func: 0x78e735aaf450
+D/jni_lib_merge( 6549): Preparing to register libturbomodulejsijni_so.  onload_func: 0x78e735b5ab80
+D/jni_lib_merge( 6549): Preparing to register libuimanagerjni_so.  onload_func: 0x78e735b62ab0
+D/jni_lib_merge( 6549): Preparing to register libyoga_so.  onload_func: 0x78e735b6a130
+D/jni_lib_merge( 6549): About to register 11 actual methods.
+D/AppCompatDelegate( 6549): Checking for metadata for AppLocalesMetadataHolderService : Service not found
+D/libEGL  ( 6549): loaded /vendor/lib64/egl/libEGL_emulation.so
+D/libEGL  ( 6549): loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+D/libEGL  ( 6549): loaded /vendor/lib64/egl/libGLESv2_emulation.so
+D/CompatibilityChangeReporter( 6549): Compat change id reported: 160794467; UID 10172; state: ENABLED
+W/unknown:BridgelessReact( 6549): ReactHost{0}.startSurface(surfaceId = 0): Schedule
+W/unknown:BridgelessReact( 6549): ReactHost{0}.attachSurface(surfaceId = 0)
+W/unknown:BridgelessReact( 6549): ReactHost{0}.getOrCreateReactInstanceTask()
+W/unknown:BridgelessReact( 6549): ReactHost{0}.getOrCreateReactInstanceTask(): Start
+W/unknown:BridgelessReact( 6549): ReactHost{0}.getJSBundleLoader()
+W/unknown:BridgelessReact( 6549): ReactHost{0}.getOrCreateReactContext(): Creating BridgelessReactContext
+W/unknown:BridgelessReact( 6549): ReactHost{0}.getOrCreateReactInstanceTask(): Creating ReactInstance
+W/unknown:BridgelessReact( 6549): ReactHost{0}.onHostResume(activity)
+W/unknown:BridgelessReact( 6549): ReactContext.onHostResume()
+D/jni_lib_merge( 6549): Entering merged library JNI_OnLoad.
+D/jni_lib_merge( 6549): Preparing 4 pre-merged libs (including stub)
+D/jni_lib_merge( 6549): Preparing to register libhermes_executor_so.  onload_func: 0x78e795520730
+D/jni_lib_merge( 6549): Preparing to register libhermesinstancejni_so.  onload_func: 0x78e795527db0
+D/jni_lib_merge( 6549): Preparing to register libjsijniprofiler_so.  onload_func: 0x78e795528540
+D/jni_lib_merge( 6549): About to register 3 actual methods.
+I/ExpoModulesCore( 6549): ✅ AppContext was initialized
+I/Choreographer( 6549): Skipped 35 frames!  The application may be doing too much work on its main thread.
+W/unknown:BridgelessReact( 6549): ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+W/unknown:BridgelessReact( 6549): ReactHost{0}.getOrCreateReactInstanceTask(): Calling DevSupportManagerBase.onNewReactContextCreated(reactContext)
+W/unknown:BridgelessReact( 6549): ReactHost{0}.startSurface(surfaceId = 0): Execute
+D/HostConnection( 6549): HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV_Cache ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_sync_buffer_data ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_multi_configs ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+W/OpenGLRenderer( 6549): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/OpenGLRenderer( 6549): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+D/EGL_emulation( 6549): eglCreateContext: 0x78e839242690: maj 3 min 0 rcv 3
+D/EGL_emulation( 6549): eglMakeCurrent: 0x78e839242690: ver 3 0 (tinfo 0x78ea692ae080) (first time)
+D/CompatibilityChangeReporter( 6549): Compat change id reported: 210923482; UID 10172; state: ENABLED
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapUrlTileManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.ScreenFooterManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.TabScreenViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.ScreenContainerViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class expo.modules.kotlin.views.GroupViewManagerWrapper
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.TabsHostViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapMarkerManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapLocalTileManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.ModalScreenViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapPolylineManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapCircleManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.ScreenViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class expo.modules.kotlin.views.SimpleViewManagerWrapper
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.ScreenStackViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapCalloutManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.SearchBarManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapGradientPolylineManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapHeatmapManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapWMSTileManager
+I/Gralloc4( 6549): mapper 4.x is not supported
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderConfigViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.ScreenContentWrapperManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapPolygonManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderSubviewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.rnmaps.maps.MapOverlayManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$DefsViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.VirtualViewManager$RenderableShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeMergeManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$LinearGradientManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeGaussianBlurManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.progressbar.ProgressBarShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.text.ReactTextShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeColorMatrixManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$ClipPathViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$SymbolManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$PatternManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeBlendManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.SvgViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchShadowNode
+W/Gralloc4( 6549): allocator 4.x is not supported
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$UseViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$CircleViewManager
+D/HostConnection( 6549): HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV_Cache ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_sync_buffer_data ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_multi_configs ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$TSpanViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FilterManager
+W/unknown:BridgelessReact( 6549): ReactContext.onHostResume()
+W/unknown:BridgelessReact( 6549): ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$MarkerManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.gesturehandler.react.RNGestureHandlerButtonViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$ForeignObjectManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$EllipseViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$LineViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.text.frescosupport.FrescoBasedReactTextInlineImageViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.text.frescosupport.FrescoBasedReactTextInlineImageShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeFloodManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$GroupViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$TextViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$ImageViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeCompositeManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$RadialGradientManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$MaskManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$RectViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$TextPathViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeOffsetManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.horcrux.svg.RenderableViewManager$PathViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.text.ReactVirtualTextViewManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.text.ReactVirtualTextShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.text.ReactRawTextManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.text.ReactRawTextShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputShadowNode
+W/unknown:ViewManagerPropertyUpdater( 6549): Could not find generated setter for class com.swmansion.gesturehandler.react.RNGestureHandlerRootViewManager
+E/ReactNativeJS( 6549): [runtime not ready]: Error: Exception in HostFunction: No virtual method getAppContext()Lexpo/modules/kotlin/AppContext; in class Lexpo/modules/core/ModuleRegistry; or its super classes (declaration of 'expo.modules.core.ModuleRegistry' appears in /data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/base.apk!classes2.dex)
+W/unknown:BridgelessReact( 6549): ReactHost{0}.handleHostException(message = "[runtime not ready]: Error: Exception in HostFunction: No virtual method getAppContext()Lexpo/modules/kotlin/AppContext; in class Lexpo/modules/core/ModuleRegistry; or its super classes (declaration of 'expo.modules.core.ModuleRegistry' appears in /data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/base.apk!classes2.dex), stack:
+W/unknown:BridgelessReact( 6549): anonymous@1:812913
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:812327
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:812199
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:812043
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:810302
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:807600
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:807100
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:806745
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:495018
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:494646
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:107142
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:54006
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): anonymous@1:107029
+W/unknown:BridgelessReact( 6549): loadModuleImplementation@1:54483
+W/unknown:BridgelessReact( 6549): guardedLoadModule@1:53962
+W/unknown:BridgelessReact( 6549): metroRequire@1:53516
+W/unknown:BridgelessReact( 6549): global@1:52961
+W/unknown:BridgelessReact( 6549): ")
+E/libc++abi( 6549): terminating due to uncaught exception of type facebook::jni::JniException: com.facebook.react.common.JavascriptException: [runtime not ready]: Error: Exception in HostFunction: No virtual method getAppContext()Lexpo/modules/kotlin/AppContext; in class Lexpo/modules/core/ModuleRegistry; or its super classes (declaration of 'expo.modules.core.ModuleRegistry' appears in /data/app/~~cmBF7GLgmPE6cDPfhkZWMg==/com.acesmsd.fieldtracker-EgnCgeYb6YMzCQwVXNm6KQ==/base.apk!classes2.dex), stack:
+E/libc++abi( 6549): anonymous@1:812913
+E/libc++abi( 6549): loadModuleImplementation@1:54483
+E/libc++abi( 6549): guardedLoadModule@1:54006
+E/libc++abi( 6549): metroRequire@1:53516
+E/libc++abi( 6549): anonymous@1:812327
+E/libc++abi( 6549): loadModuleImplementation@1:54483
+E/libc++abi( 6549): guardedLoadModule@1:54006
+E/libc++abi( 6549): metroRequire@1:53516
+E/libc++abi( 6549): anonymous@1:812199
+E/libc++abi( 6549): loadModuleImplementation@1:54483
+E/libc++abi( 6549): guardedLoadModule@1:54006
+E/libc++abi( 6549): metroRequire@1:53516
+E/libc++abi( 6549): anonymous@1:812043
+E/libc++abi( 6549): loadModuleImplementation@1:54483
+E/libc++abi( 6549): guardedLoadModule@1:54006
+E/libc++abi( 6549): metroRequire@1:53516
+E/libc++abi( 6549): anonymous@1:810302
+E/libc++abi( 6549): loadModuleImplementation@1:54483
+E/libc++abi( 6549): guardedLoadModule@1:54006
+E/libc++abi( 6549): metroRequire@1:53516
+E/libc++abi( 6549): anonymous@1:807600
+E/libc++abi( 6549): loadModuleImplementat
+F/libc    ( 6549): Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 6573 (mqt_v_js), pid 6549 (sd.fieldtracker)
