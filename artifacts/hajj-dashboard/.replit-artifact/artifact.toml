@@ -19,7 +19,12 @@ run = "pnpm --filter @workspace/hajj-dashboard run dev"
 
 [services.production]
 build = ["sh", "-c", "pnpm --filter @workspace/hajj-dashboard run build && pnpm run typecheck:libs && pnpm --filter @workspace/api-server run build"]
-run = "pnpm --filter @workspace/api-server run start"
+serve = "static"
+publicDir = "artifacts/hajj-dashboard/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
 
 [services.env]
 PORT = "21597"
