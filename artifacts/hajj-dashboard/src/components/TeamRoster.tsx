@@ -200,7 +200,7 @@ export function TeamRoster({ compact = false, techLocations = [] }: TeamRosterPr
                     {/* Name */}
                     <span
                       className="text-center font-semibold leading-tight"
-                      style={{ fontSize: 9.5, color: "#e2e8f0", maxWidth: "100%", wordBreak: "break-word" }}
+                      style={{ fontSize: 9.5, color: "#000000", maxWidth: "100%", wordBreak: "break-word" }}
                     >
                       {m.name.split(" ")[0]}
                     </span>
