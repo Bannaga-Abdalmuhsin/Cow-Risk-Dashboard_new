@@ -3,7 +3,7 @@ import type { LiveTechLocation } from "../components/LeafletMap";
 import { TeamGoogleMap } from "../components/TeamGoogleMap";
 import acesLogo from "@assets/ChatGPT_Image_Oct_14,_2025,_10_29_41_PM_1776566555155.png";
 import stcLogo from "@assets/7010.SR.D-9f4e531b_(1)_1776566577166.png";
-import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer, UsersRound, Siren } from "lucide-react";
+import { LayoutDashboard, Map, ClipboardList, HardHat, Radio, CheckCircle2, AlertCircle, Users, Thermometer, UsersRound, Siren, CalendarDays } from "lucide-react";
 import { analyzeSite } from "../lib/calculations";
 import { ALL_SITES } from "../lib/siteData";
 import { MetricCard } from "../components/MetricCard";
@@ -18,8 +18,9 @@ import { RiskByAreaCard, ActionSitesCard } from "../components/OverviewInsights"
 import { EscalationTable } from "../components/EscalationTable";
 import { TeamRoster } from "../components/TeamRoster";
 import { FaultManagement } from "../components/FaultManagement";
+import { DeploymentTimeline } from "../components/DeploymentTimeline";
 
-type Tab = "overview" | "scenarios" | "map" | "sites" | "technicians" | "teams" | "faults";
+type Tab = "overview" | "scenarios" | "map" | "sites" | "timeline" | "technicians" | "teams" | "faults";
 
 interface DashboardProps {
   onLogout?: () => void;
@@ -79,8 +80,9 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     { key: "overview",     label: "Overview",   icon: <LayoutDashboard size={14} /> },
     { key: "scenarios",    label: "Scenarios",  icon: <span className="font-bold text-sm leading-none">!</span> },
     { key: "map",          label: "Heat Map",   icon: <Map             size={14} /> },
-    { key: "sites",        label: "Site List",  icon: <ClipboardList   size={14} /> },
-    { key: "technicians",  label: "Field Ops",    icon: <HardHat         size={14} /> },
+    { key: "sites",        label: "Site List",      icon: <ClipboardList   size={14} /> },
+    { key: "timeline",     label: "Deployment",     icon: <CalendarDays    size={14} /> },
+    { key: "technicians",  label: "Field Ops",      icon: <HardHat         size={14} /> },
     { key: "teams",        label: "Teams",        icon: <UsersRound      size={14} /> },
     { key: "faults",       label: "Fault Mgmt",   icon: <Siren           size={14} /> },
   ];
@@ -277,6 +279,10 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               )}
             </div>
           </div>
+        )}
+
+        {activeTab === "timeline" && (
+          <DeploymentTimeline />
         )}
 
         {activeTab === "teams" && (
