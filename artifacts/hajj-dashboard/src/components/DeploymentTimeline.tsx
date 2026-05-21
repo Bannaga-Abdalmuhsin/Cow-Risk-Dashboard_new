@@ -13,8 +13,8 @@ interface Phase {
 const PHASES: Phase[] = [
   { day: "7",  date: "7 Dhu Alhijah",  zone: "Mina",      zoneColor: "#dc2626", pilgrims: 28,  haram: 65, entrance: 55, label: "Initial Deployment" },
   { day: "8",  date: "8 Dhu Alhijah",  zone: "Mina",      zoneColor: "#dc2626", pilgrims: 62,  haram: 35, entrance: 30, label: "Mina Coverage" },
-  { day: "9",  date: "9 Dhu Alhijah",  zone: "Arafat",    zoneColor: "#d97706", pilgrims: 100, haram: 8,  entrance: 6,  label: "Arafat Peak", peak: true },
-  { day: "9★", date: "Night of 9",     zone: "Muzdalifa", zoneColor: "#3b82f6", pilgrims: 82,  haram: 5,  entrance: 4,  label: "Muzdalifa Night" },
+  { day: "9",  date: "9 Dhu Alhijah",  zone: "Arafat",    zoneColor: "#d97706", pilgrims: 100, haram: 0,  entrance: 0,  label: "Arafat Peak", peak: true },
+  { day: "9★", date: "Night of 9",     zone: "Muzdalifa", zoneColor: "#3b82f6", pilgrims: 82,  haram: 0,  entrance: 0,  label: "Muzdalifa Night" },
   { day: "10", date: "10 Dhu Alhijah", zone: "Mina",      zoneColor: "#dc2626", pilgrims: 88,  haram: 45, entrance: 38, label: "Return Surge" },
   { day: "11", date: "11 Dhu Alhijah", zone: "Mina",      zoneColor: "#dc2626", pilgrims: 71,  haram: 30, entrance: 25, label: "Sustained Ops" },
   { day: "12", date: "12 Dhu Alhijah", zone: "Mina",      zoneColor: "#6b7280", pilgrims: 44,  haram: 52, entrance: 44, label: "Reduced Load" },
