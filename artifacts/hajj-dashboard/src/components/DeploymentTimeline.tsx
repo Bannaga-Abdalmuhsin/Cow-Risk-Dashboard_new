@@ -1,330 +1,196 @@
-import { CalendarDays, MapPin, Users, Zap, Shield, Navigation } from "lucide-react";
-
 interface Phase {
-  num: string;
+  day: string;
   date: string;
-  sub: string;
   zone: string;
   zoneColor: string;
-  zoneBg: string;
-  focus: string[];
-  sites: string[];
-  note?: string;
-  teams?: string[];
-  highlight?: boolean;
+  pilgrims: number;
+  teams: number;
+  label: string;
+  peak?: boolean;
 }
 
 const PHASES: Phase[] = [
-  {
-    num: "7",
-    date: "7 Dhu Alhijah",
-    sub: "Initial Deployment",
-    zone: "Mina · MC Clusters",
-    zoneColor: "#dc2626",
-    zoneBg: "rgba(220,38,38,0.10)",
-    focus: [
-      "MC preparation & initial staging",
-      "COW readiness verification",
-      "GPS sync testing",
-      "Route planning activation",
-    ],
-    sites: [],
-    teams: ["Younis", "Arif", "Mohammed Emad", "Faroq", "Akhttar", "Abid", "Nasser"],
-    note: "Strategic Reserve on standby: Minhaj · Tasleem · Umair",
-  },
-  {
-    num: "8",
-    date: "8 Dhu Alhijah",
-    sub: "Mina Coverage",
-    zone: "Mina Priority",
-    zoneColor: "#dc2626",
-    zoneBg: "rgba(220,38,38,0.10)",
-    focus: [
-      "Crowd build-up & Jamarat preparation",
-      "Auto-assign majority to Mina COWs",
-      "GPS tracking every 15 seconds",
-      "Push MC assignment to mobile app",
-    ],
-    sites: ["CWN026", "CWN053", "CWN008", "CWN021", "CWN212", "CWN201"],
-    note: "Closest team handles fault · Minimum reserve maintained",
-  },
-  {
-    num: "9",
-    date: "9 Dhu Alhijah",
-    sub: "Arafat Peak Operations",
-    zone: "⚡ ARAFAT — PEAK LOAD",
-    zoneColor: "#d97706",
-    zoneBg: "rgba(217,119,6,0.10)",
-    focus: [
-      "Highest operational load of entire Hajj",
-      "Peak pilgrim density — maximum fault readiness",
-      "Priority dispatch: fault count × distance × criticality",
-      "Reserve held in strategic standby mode",
-    ],
-    sites: ["CWN961", "CWN992", "CWN906", "CWN777", "CWN997", "CWN073", "CWN994"],
-    note: "Reserve teams Minhaj · Tasleem · Umair held in standby",
-    highlight: true,
-  },
-  {
-    num: "9★",
-    date: "Night of 9",
-    sub: "Muzdalifa Migration",
-    zone: "Muzdalifa — Night",
-    zoneColor: "#3b82f6",
-    zoneBg: "rgba(59,130,246,0.10)",
-    focus: [
-      "Pilgrim migration monitoring",
-      "Overnight emergency readiness",
-      "Auto-reassign: Arafat → Muzdalifa",
-      "Battery monitoring alerts active",
-    ],
-    sites: ["CWN213", "CWN996", "CWN953", "CWN074", "CWN923", "CWN976"],
-    note: "Night dispatch mode · Auto route generation",
-  },
-  {
-    num: "10",
-    date: "10 Dhu Alhijah",
-    sub: "Mina Return",
-    zone: "Mina — Return Surge",
-    zoneColor: "#dc2626",
-    zoneBg: "rgba(220,38,38,0.10)",
-    focus: [
-      "Return crowd surge — Jamarat heavy load",
-      "Nearest available team dispatched first",
-      "Minimum Mina coverage maintained",
-      "Fatigue balancing enabled",
-    ],
-    sites: ["CWN068", "CWN203", "CWN978", "CWN300", "CWN105"],
-  },
-  {
-    num: "11",
-    date: "11 Dhu Alhijah",
-    sub: "Sustained Mina",
-    zone: "Mina — Sustained Ops",
-    zoneColor: "#dc2626",
-    zoneBg: "rgba(220,38,38,0.10)",
-    focus: [
-      "Long-duration standby operations",
-      "Dynamic fault response",
-      "Smart team rotation — reduce fatigue",
-      "Auto load redistribution",
-    ],
-    sites: ["CWN959", "CWN214", "CWN984", "CWN066"],
-  },
-  {
-    num: "12",
-    date: "12 Dhu Alhijah",
-    sub: "Reduced Load",
-    zone: "Mina — Standby",
-    zoneColor: "#6b7280",
-    zoneBg: "rgba(107,114,128,0.08)",
-    focus: [
-      "Moderate pilgrim movement",
-      "Reduced dispatch frequency",
-      "Reserve teams protected from deployment",
-    ],
-    sites: ["CWN020", "CWN004"],
-    note: "Maintain rapid response capability",
-  },
-  {
-    num: "13",
-    date: "13 Dhu Alhijah",
-    sub: "Final Phase",
-    zone: "Wrap-Up",
-    zoneColor: "#4b5563",
-    zoneBg: "rgba(75,85,99,0.08)",
-    focus: [
-      "Controlled deactivation sequence",
-      "Archive movement history",
-      "Generate operational analytics",
-      "Export deployment logs",
-    ],
-    sites: [],
-    note: "Close completed assignments · Final ops report",
-  },
+  { day: "7",   date: "7 Dhu Alhijah",  zone: "Mina",      zoneColor: "#dc2626", pilgrims: 28,  teams: 4,  label: "Initial Deployment" },
+  { day: "8",   date: "8 Dhu Alhijah",  zone: "Mina",      zoneColor: "#dc2626", pilgrims: 62,  teams: 7,  label: "Mina Coverage" },
+  { day: "9",   date: "9 Dhu Alhijah",  zone: "Arafat",    zoneColor: "#d97706", pilgrims: 100, teams: 10, label: "Arafat Peak", peak: true },
+  { day: "9★",  date: "Night of 9",     zone: "Muzdalifa", zoneColor: "#3b82f6", pilgrims: 82,  teams: 8,  label: "Muzdalifa Night" },
+  { day: "10",  date: "10 Dhu Alhijah", zone: "Mina",      zoneColor: "#dc2626", pilgrims: 88,  teams: 9,  label: "Return Surge" },
+  { day: "11",  date: "11 Dhu Alhijah", zone: "Mina",      zoneColor: "#dc2626", pilgrims: 71,  teams: 7,  label: "Sustained Ops" },
+  { day: "12",  date: "12 Dhu Alhijah", zone: "Mina",      zoneColor: "#6b7280", pilgrims: 44,  teams: 5,  label: "Reduced Load" },
+  { day: "13",  date: "13 Dhu Alhijah", zone: "Wrap-Up",   zoneColor: "#4b5563", pilgrims: 18,  teams: 3,  label: "Final Phase" },
 ];
 
-const RESERVE_TEAMS = ["Minhaj", "Tasleem", "Umair"];
+const MAX_BAR = 54; // vh units for the tallest bar (100%)
 
 export function DeploymentTimeline() {
+  const barHeight = (pct: number) => `${(pct / 100) * MAX_BAR}vh`;
+
   return (
-    <div className="space-y-4">
-
-      {/* Header card */}
-      <div className="bg-card border border-border rounded-xl p-5">
-        <div className="flex items-center justify-between flex-wrap gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "rgba(220,38,38,0.12)", border: "1px solid rgba(220,38,38,0.25)" }}>
-              <CalendarDays size={18} className="text-red-500" />
-            </div>
-            <div>
-              <h2 className="text-base font-bold text-foreground">Hajj Team Deployment Timeline</h2>
-              <p className="text-xs text-muted-foreground">7 – 13 Dhu Alhijah · 8 Operational Phases · Auto-Dispatch Active</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold" style={{ background: "rgba(220,38,38,0.10)", border: "1px solid rgba(220,38,38,0.25)", color: "#f87171" }}>
-              <MapPin size={11} /> Mina
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold" style={{ background: "rgba(217,119,6,0.10)", border: "1px solid rgba(217,119,6,0.25)", color: "#fbbf24" }}>
-              <Zap size={11} /> Arafat
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold" style={{ background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.25)", color: "#60a5fa" }}>
-              <Navigation size={11} /> Muzdalifa
-            </div>
-          </div>
+    <div
+      className="flex flex-col"
+      style={{ height: "calc(100vh - 148px)", overflow: "hidden", userSelect: "none" }}
+    >
+      {/* ── Header ── */}
+      <div className="flex items-center justify-between px-5 pt-3 pb-2 shrink-0">
+        <div>
+          <h2 className="text-sm font-bold text-foreground tracking-tight">
+            Hajj 1447 — Team Deployment Timeline
+          </h2>
+          <p className="text-[11px] text-muted-foreground">
+            7 – 13 Dhu Alhijah · Pilgrim availability % drives team dispatch
+          </p>
+        </div>
+        <div className="flex items-center gap-4 text-[11px] text-muted-foreground">
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ background: "#dc2626" }} />
+            Mina
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ background: "#d97706" }} />
+            Arafat
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ background: "#3b82f6" }} />
+            Muzdalifa
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ background: "#4b5563" }} />
+            Wind-down
+          </span>
         </div>
       </div>
 
-      {/* Strategic Reserve banner */}
-      <div className="rounded-xl p-4 flex items-center gap-4 flex-wrap" style={{ background: "rgba(59,130,246,0.07)", border: "1px solid rgba(59,130,246,0.30)", boxShadow: "0 0 16px rgba(59,130,246,0.08)" }}>
-        <div className="flex items-center gap-2">
-          <Shield size={15} className="text-blue-400" />
-          <span className="text-xs font-bold text-blue-300 uppercase tracking-wider">Strategic Reserve — Never Auto-Dispatched</span>
-        </div>
-        <div className="flex items-center gap-2">
-          {RESERVE_TEAMS.map(name => (
-            <span key={name} className="px-3 py-1 rounded-lg text-xs font-bold" style={{ background: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.35)", color: "#93c5fd" }}>
-              {name}
-            </span>
-          ))}
-        </div>
-        <div className="ml-auto text-xs text-blue-400/70 hidden md:block">
-          Manual dispatch only · Override required
-        </div>
-      </div>
-
-      {/* Phase grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
-        {PHASES.map(phase => (
+      {/* ── Chart area ── */}
+      <div className="flex-1 flex items-end px-4 pb-0 gap-0 min-h-0">
+        {PHASES.map((phase, i) => (
           <div
-            key={phase.num}
-            className="bg-card rounded-xl p-4 flex flex-col gap-3 relative overflow-hidden"
-            style={{
-              border: phase.highlight
-                ? `1px solid ${phase.zoneColor}55`
-                : "1px solid var(--card-border, rgba(255,255,255,0.08))",
-              borderTop: `3px solid ${phase.zoneColor}`,
-              boxShadow: phase.highlight ? `0 0 20px ${phase.zoneColor}18` : undefined,
-            }}
+            key={phase.day}
+            className="flex-1 flex flex-col items-center justify-end"
+            style={{ position: "relative" }}
           >
-            {/* Day number + zone */}
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <div className="font-black leading-none mb-0.5" style={{ fontSize: "2rem", color: phase.zoneColor }}>
-                  {phase.num}
-                </div>
-                <div className="text-xs font-bold text-foreground">{phase.date}</div>
-                <div className="text-[11px] text-muted-foreground mt-0.5">{phase.sub}</div>
-              </div>
-              <div className="text-right">
-                <span className="inline-block px-2 py-1 rounded-md text-[10px] font-bold leading-tight text-center" style={{ background: phase.zoneBg, border: `1px solid ${phase.zoneColor}44`, color: phase.zoneColor, maxWidth: "9rem" }}>
-                  {phase.zone}
-                </span>
-              </div>
+            {/* Connecting line between nodes (not after last) */}
+            {i < PHASES.length - 1 && (
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "calc(1.1rem + 1px)",
+                  left: "50%",
+                  width: "100%",
+                  height: "2px",
+                  background: "rgba(255,255,255,0.07)",
+                  zIndex: 0,
+                }}
+              />
+            )}
+
+            {/* Pilgrim % label above bar */}
+            <div
+              className="text-xs font-black mb-1 tabular-nums"
+              style={{ color: phase.zoneColor, opacity: phase.pilgrims > 0 ? 1 : 0.3 }}
+            >
+              {phase.pilgrims}%
             </div>
 
-            {/* Divider */}
-            <div className="h-px bg-border" />
+            {/* Bar */}
+            <div
+              className="w-full max-w-[52px] rounded-t-md relative overflow-hidden transition-all"
+              style={{
+                height: barHeight(phase.pilgrims),
+                background: `linear-gradient(180deg, ${phase.zoneColor}cc 0%, ${phase.zoneColor}44 100%)`,
+                border: phase.peak
+                  ? `1px solid ${phase.zoneColor}`
+                  : `1px solid ${phase.zoneColor}55`,
+                boxShadow: phase.peak
+                  ? `0 0 18px ${phase.zoneColor}55, 0 0 6px ${phase.zoneColor}33`
+                  : undefined,
+                minHeight: "4px",
+              }}
+            >
+              {/* Subtle shimmer for peak */}
+              {phase.peak && (
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(255,255,255,0.10) 0%, transparent 60%)",
+                  }}
+                />
+              )}
+            </div>
 
-            {/* Focus bullets */}
-            <ul className="space-y-1.5 flex-1">
-              {phase.focus.map((f, i) => (
-                <li key={i} className="flex items-start gap-2 text-[11px] text-muted-foreground leading-snug">
-                  <div className="w-1.5 h-1.5 rounded-full mt-1 shrink-0" style={{ backgroundColor: phase.zoneColor }} />
-                  {f}
-                </li>
-              ))}
-            </ul>
-
-            {/* COW site tags */}
-            {phase.sites.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                {phase.sites.map(s => (
-                  <span key={s} className="px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "var(--muted-foreground)" }}>
-                    {s}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {/* Team list (day 7 only) */}
-            {phase.teams && phase.teams.length > 0 && (
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <Users size={10} className="text-muted-foreground shrink-0" />
-                {phase.teams.map(t => (
-                  <span key={t} className="text-[10px] text-muted-foreground">{t}</span>
-                ))}
-              </div>
-            )}
-
-            {/* Note */}
-            {phase.note && (
-              <div className="text-[10px] leading-snug italic" style={{ color: phase.zoneColor, opacity: 0.85 }}>
-                {phase.note}
-              </div>
-            )}
+            {/* Timeline node + spine */}
+            <div
+              className="w-full relative flex items-center justify-center"
+              style={{ height: "1.1rem", zIndex: 1 }}
+            >
+              {/* Horizontal spine */}
+              <div
+                className="absolute inset-y-1/2 left-0 right-0 h-px"
+                style={{ background: "rgba(255,255,255,0.12)", transform: "translateY(-50%)" }}
+              />
+              {/* Node dot */}
+              <div
+                className="relative w-3 h-3 rounded-full border-2 z-10"
+                style={{
+                  borderColor: phase.zoneColor,
+                  background: phase.peak ? phase.zoneColor : "var(--background, #0a0414)",
+                  boxShadow: phase.peak ? `0 0 8px ${phase.zoneColor}` : undefined,
+                }}
+              />
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Auto-dispatch formula card */}
-      <div className="bg-card border border-border rounded-xl p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <Zap size={14} className="text-red-500" />
-          <span className="text-xs font-bold text-foreground uppercase tracking-wider">Auto-Dispatch Priority Engine</span>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <div className="text-xs text-muted-foreground mb-2">Priority Score Formula</div>
-            <div className="rounded-lg p-3 font-mono text-xs" style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.18)" }}>
-              <span className="text-red-400 font-bold">priorityScore</span>
-              <span className="text-muted-foreground"> = (</span>
-              <br />
-              <span className="text-muted-foreground ml-4">pilgrimDensity</span>
-              <span className="text-foreground"> × </span>
-              <span className="text-amber-400">0.4</span>
-              <span className="text-muted-foreground"> +</span>
-              <br />
-              <span className="text-muted-foreground ml-4">activeFaults</span>
-              <span className="text-foreground"> × </span>
-              <span className="text-amber-400">0.3</span>
-              <span className="text-muted-foreground"> +</span>
-              <br />
-              <span className="text-muted-foreground ml-4">siteCriticality</span>
-              <span className="text-foreground"> × </span>
-              <span className="text-amber-400">0.2</span>
-              <span className="text-muted-foreground"> +</span>
-              <br />
-              <span className="text-muted-foreground ml-4">distanceFactor</span>
-              <span className="text-foreground"> × </span>
-              <span className="text-amber-400">0.1</span>
-              <br />
-              <span className="text-muted-foreground">)</span>
-            </div>
+      {/* ── Bottom labels ── */}
+      <div
+        className="flex items-stretch px-4 shrink-0"
+        style={{
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          background: "rgba(255,255,255,0.02)",
+        }}
+      >
+        {PHASES.map((phase) => (
+          <div
+            key={phase.day}
+            className="flex-1 flex flex-col items-center justify-start gap-0.5 py-2.5 px-1"
+            style={{
+              borderRight: "1px solid rgba(255,255,255,0.05)",
+            }}
+          >
+            {/* Day number */}
+            <span
+              className="font-black text-base leading-none tabular-nums"
+              style={{ color: phase.zoneColor }}
+            >
+              {phase.day}
+            </span>
+            {/* Date */}
+            <span className="text-[9px] text-muted-foreground text-center leading-tight">
+              {phase.date}
+            </span>
+            {/* Zone badge */}
+            <span
+              className="text-[9px] font-bold rounded px-1.5 py-0.5 mt-0.5 text-center"
+              style={{
+                color: phase.zoneColor,
+                background: `${phase.zoneColor}18`,
+                border: `1px solid ${phase.zoneColor}30`,
+              }}
+            >
+              {phase.zone}
+            </span>
+            {/* Phase label */}
+            <span className="text-[9px] text-muted-foreground text-center leading-tight mt-0.5">
+              {phase.label}
+            </span>
+            {/* Teams deployed */}
+            <span className="text-[9px] font-semibold text-center mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>
+              {phase.teams} teams
+            </span>
           </div>
-          <div className="space-y-2">
-            <div className="text-xs text-muted-foreground mb-2">Mobile App Automation Flow</div>
-            {[
-              { step: "1", label: "Assignment triggered", detail: "Push notification sent to technician" },
-              { step: "2", label: "MC auto-assigned", detail: "Route generated via Directions API" },
-              { step: "3", label: "Status → MOVING", detail: "Live GPS tracking activated" },
-              { step: "4", label: "Arrival detected", detail: "Auto check-in · Status → ON SITE" },
-            ].map(row => (
-              <div key={row.step} className="flex items-center gap-2.5">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 text-white" style={{ background: "#dc2626" }}>
-                  {row.step}
-                </div>
-                <div>
-                  <span className="text-[11px] font-semibold text-foreground">{row.label}</span>
-                  <span className="text-[11px] text-muted-foreground"> — {row.detail}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
-
     </div>
   );
 }
