@@ -358,7 +358,7 @@ function MemberRow({ member, liveStatus, compact = false }: {
       <div className="px-3 py-2 flex items-center gap-2 hover:bg-muted/20 transition-colors">
         <div className="flex flex-col flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-xs text-foreground truncate">{member.name}</span>
+            <span className="font-semibold text-xs text-foreground truncate" style={!isManager ? { color: "#000000" } : undefined}>{member.name}</span>
             {hasLive && (
               <span
                 className={`w-1.5 h-1.5 rounded-full shrink-0 ${status === "online" ? "animate-pulse" : ""}`}
@@ -389,7 +389,7 @@ function MemberRow({ member, liveStatus, compact = false }: {
   return (
     <div className="px-4 py-3 flex flex-col gap-1.5 hover:bg-muted/20 transition-colors">
       <div className="flex items-center justify-between gap-2">
-        <span className="font-semibold text-sm text-foreground">{member.name}</span>
+        <span className="font-semibold text-sm text-foreground" style={!isManager ? { color: "#000000" } : undefined}>{member.name}</span>
         <span
           className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0"
           style={
