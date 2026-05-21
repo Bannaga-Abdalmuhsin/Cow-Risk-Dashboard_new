@@ -198,5 +198,13 @@
     "title": "3 Apps. 79 Sites. One Operational Picture.",
     "description": "Closing slide: summary of all three apps, ACES MSD credit, acesmsd.live URL, Q&A",
     "speakerNotes": ""
+  },
+  {
+    "id": "a1b2c3d4-0026-4000-8000-000000000026",
+    "position": 26,
+    "filepath": "src/pages/slides/S26DeploymentTimeline.tsx",
+    "title": "Hajj Team Deployment Timeline — 7 to 13 Dhu Alhijah",
+    "description": "8-phase operational timeline: zone assignments, COW site coverage, strategic reserve logic, auto-dispatch priority formula",
+    "speakerNotes": ""
   }
 ]

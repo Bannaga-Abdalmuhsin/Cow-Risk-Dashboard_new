@@ -1,0 +1,216 @@
+HAJJ TEAM DEPLOYMENT TIMELINE
+Based on Timeline Sheet (7–13 Dhu Alhijah)
+7 Dhu Alhijah — Initial Deployment Phase
+Operational Focus
+MC preparation
+Initial team staging
+COW readiness verification
+GPS sync testing
+Route planning activation
+Active Zones
+Mina (Primary)
+Central MC Clusters
+Team Allocation
+Strategic Reserve
+Minhaj
+Tasleem
+Umair
+Active Deployment Teams
+Younis
+Arif
+Mohammed Emad
+Faroq
+Akhttar
+Abid
+Nasser
+System Actions
+Mobile App auto check-in
+Team location verification
+Dispatch readiness enabled
+8 Dhu Alhijah — Mina Coverage Phase
+Operational Focus
+Mina crowd build-up
+Jamarat preparation
+High standby readiness
+Auto Distribution
+Mina Priority
+
+Assign majority of active teams to:
+
+CWN026
+CWN053
+CWN008
+CWN021
+CWN212
+CWN201
+Smart Logic
+Keep minimum reserve teams active
+Closest team handles fault
+GPS tracking every 15 seconds
+Mobile App Actions
+Push MC assignment
+Auto navigation enabled
+Arrival auto check-in
+9 Dhu Alhijah — Arafat Peak Operations
+Operational Focus
+Highest operational load
+Peak pilgrim density
+Maximum fault readiness
+Highest Priority Zone
+ARAFAT
+Auto Team Migration
+
+Dispatch active teams toward:
+
+CWN961
+CWN992
+CWN906
+CWN777
+CWN997
+CWN073
+CWN994
+Reserve Team Logic
+
+Keep:
+
+Minhaj
+Tasleem
+Umair
+
+in standby strategic mode.
+
+Dispatch Engine
+
+Priority based on:
+
+Fault count
+Distance
+Site criticality
+Traffic density
+Night of 9 Dhu Alhijah — Muzdalifa Migration
+Operational Focus
+Pilgrim migration monitoring
+Overnight emergency readiness
+Route congestion support
+Auto Reassignment
+
+Teams automatically move from:
+Arafat → Muzdalifa
+
+Assigned COW Coverage
+CWN213
+CWN996
+CWN953
+CWN074
+CWN923
+CWN976
+Mobile App Actions
+Auto route generation
+Night dispatch mode
+Battery monitoring alert
+Live movement tracking
+10 Dhu Alhijah — Mina Return Operations
+Operational Focus
+Return crowd surge
+Jamarat heavy load
+Rapid response readiness
+Main Deployment
+
+Return active teams to Mina:
+
+CWN068
+CWN203
+CWN978
+CWN300
+CWN105
+Dispatch Rules
+Nearest available team first
+Maintain minimum Mina coverage
+Fatigue balancing enabled
+11 Dhu Alhijah — Sustained Mina Operations
+Operational Focus
+Long duration standby
+Dynamic fault response
+Team balancing
+Active Sites
+CWN959
+CWN214
+CWN984
+CWN066
+Smart Rotation
+
+System automatically:
+
+rotates teams
+reduces fatigue
+redistributes load
+12 Dhu Alhijah — Reduced Load Operations
+Operational Focus
+Moderate pilgrim movement
+Reduced fault density
+Strategic standby
+Deployment Logic
+Reduce active dispatch frequency
+Maintain rapid response teams
+Keep reserve teams protected
+Active Coverage
+CWN020
+CWN004
+13 Dhu Alhijah — Final Coverage Phase
+Operational Focus
+Final operational readiness
+Controlled deactivation
+Team release sequence
+System Actions
+Close completed assignments
+Archive movement history
+Generate operational analytics
+Export deployment logs
+AUTO DISPATCH ENGINE LOGIC
+Team Selection Priority
+priorityScore =
+(
+  pilgrimDensity * 0.4 +
+  activeFaults * 0.3 +
+  siteCriticality * 0.2 +
+  distanceFactor * 0.1
+)
+STRATEGIC RESERVE SECTION
+
+Always visible at top of dashboard:
+
+Team	Status	Mode
+Minhaj	Standby	Manual Dispatch
+Tasleem	Standby	Manual Dispatch
+Umair	Standby	Manual Dispatch
+
+Blue glowing border.
+
+Never auto dispatch unless override enabled.
+
+MOBILE APP AUTOMATION FLOW
+When Assignment Triggered
+Push notification sent
+MC assigned automatically
+Route generated
+Team status = MOVING
+GPS tracking activated
+Upon Arrival
+Auto check-in
+Dashboard update
+Operational timer starts
+Status = ON SITE
+LIVE DASHBOARD METRICS
+
+Display:
+
+Teams Active
+Teams Moving
+Mina Coverage %
+Arafat Coverage %
+Muzdalifa Coverage %
+Critical Fault Count
+Average Response Time
+Reserved Teams Status
+
+Live refresh every few seconds.
