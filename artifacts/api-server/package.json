@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.mjs --format=esm --external:express --external:cors --external:cookie-parser --external:pino --external:pino-http --external:drizzle-orm --external:drizzle-zod --external:pg --external:zod",
+    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.mjs --format=esm --external:express --external:cors --external:cookie-parser --external:pino --external:pino-http --external:drizzle-orm --external:drizzle-zod --external:pg --external:zod --external:firebase-admin",
     "start": "node dist/index.mjs"
   },
   "dependencies": {
