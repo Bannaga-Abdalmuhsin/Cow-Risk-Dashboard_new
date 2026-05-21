@@ -1,9 +1,18 @@
 import { Router, type Request, type Response, type NextFunction } from "express";
-import { eq, desc, ne } from "drizzle-orm";
-import { db, teamUsersTable, techLocationsTable, assignmentsTable } from "@workspace/db";
+import { eq, desc, ne, and, isNull } from "drizzle-orm";
+import { db, teamUsersTable, techLocationsTable, assignmentsTable, faultsTable, faultTrackingPointsTable } from "@workspace/db";
 import type { TeamUser } from "@workspace/db";
 import { randomUUID } from "crypto";
 import { sendFcmNotification } from "../../lib/firebase.js";
+
+function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
 
 const router = Router();
 
@@ -101,8 +110,9 @@ router.post("/push-token", requireAuth, async (req: Request, res: Response): Pro
 /* ─── PUT /api/team/location ─────────────────────────────────────────────── */
 
 router.put("/location", requireAuth, async (req: Request, res: Response): Promise<void> => {
-  const { lat, lng, area, isOnDuty } = req.body as {
+  const { lat, lng, area, isOnDuty, speed, heading, accuracy } = req.body as {
     lat?: number; lng?: number; area?: string; isOnDuty?: boolean;
+    speed?: number; heading?: number; accuracy?: number;
   };
   if (lat == null || lng == null) { res.status(400).json({ error: "lat/lng required" }); return; }
 
@@ -111,11 +121,55 @@ router.put("/location", requireAuth, async (req: Request, res: Response): Promis
 
   await db
     .insert(techLocationsTable)
-    .values({ userId, lat, lng, area: area ?? null, isOnDuty: isOnDuty ?? true, updatedAt })
+    .values({
+      userId, lat, lng, area: area ?? null, isOnDuty: isOnDuty ?? true, updatedAt,
+      speed: speed ?? null, heading: heading ?? null, accuracy: accuracy ?? null,
+    })
     .onConflictDoUpdate({
       target: techLocationsTable.userId,
-      set:    { lat, lng, area: area ?? null, isOnDuty: isOnDuty ?? true, updatedAt },
+      set:    {
+        lat, lng, area: area ?? null, isOnDuty: isOnDuty ?? true, updatedAt,
+        speed: speed ?? null, heading: heading ?? null, accuracy: accuracy ?? null,
+      },
     });
+
+  // ── Store breadcrumb when this tech has an active fault ───────────────────
+  const [activeFault] = await db
+    .select({
+      id:             faultsTable.id,
+      siteLat:        faultsTable.siteLat,
+      siteLng:        faultsTable.siteLng,
+      dispatchStatus: faultsTable.dispatchStatus,
+    })
+    .from(faultsTable)
+    .where(and(
+      eq(faultsTable.assignedTechId, userId),
+      isNull(faultsTable.resolvedAt),
+    ))
+    .limit(1);
+
+  if (activeFault) {
+    await db.insert(faultTrackingPointsTable).values({
+      faultId:  activeFault.id,
+      techId:   userId,
+      lat,
+      lng,
+      speed:    speed ?? null,
+      heading:  heading ?? null,
+      accuracy: accuracy ?? null,
+    });
+
+    // ── Auto arrival: < 50 m from site + en_route → mark on_site ─────────
+    if (activeFault.dispatchStatus === "en_route") {
+      const distKm = haversineKm(lat, lng, activeFault.siteLat, activeFault.siteLng);
+      if (distKm < 0.05) {
+        await db
+          .update(faultsTable)
+          .set({ dispatchStatus: "on_site" })
+          .where(eq(faultsTable.id, activeFault.id));
+      }
+    }
+  }
 
   res.json({ ok: true });
 });

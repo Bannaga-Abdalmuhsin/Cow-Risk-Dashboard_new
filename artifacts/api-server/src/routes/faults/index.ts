@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from "express";
-import { eq, and, isNull, sql } from "drizzle-orm";
-import { db, teamUsersTable, techLocationsTable, faultsTable, assignmentsTable } from "@workspace/db";
+import { eq, and, isNull, sql, desc } from "drizzle-orm";
+import { db, teamUsersTable, techLocationsTable, faultsTable, assignmentsTable, faultTrackingPointsTable } from "@workspace/db";
 import { getDirectionsRoute } from "./directions.js";
 import { syncPbiToDb, getLastSyncResult } from "../../lib/pbiSync.js";
 
@@ -118,9 +118,12 @@ router.get("/active", async (_req: Request, res: Response): Promise<void> => {
       dispatchedAt:   faultsTable.dispatchedAt,
       assignedTechId: faultsTable.assignedTechId,
       assignedTech:   teamUsersTable.name,
-      techLat:        techLocationsTable.lat,
-      techLng:        techLocationsTable.lng,
-      techArea:       techLocationsTable.area,
+      techLat:       techLocationsTable.lat,
+      techLng:       techLocationsTable.lng,
+      techArea:      techLocationsTable.area,
+      techUpdatedAt: techLocationsTable.updatedAt,
+      techSpeed:     techLocationsTable.speed,
+      techHeading:   techLocationsTable.heading,
     })
     .from(faultsTable)
     .leftJoin(teamUsersTable,     eq(faultsTable.assignedTechId, teamUsersTable.id))
@@ -361,5 +364,27 @@ async function assignTech(
     message: msg,
   }).catch(() => {});
 }
+
+/* ─── GET /api/faults/:id/trail  (breadcrumb history for live tracking) ──── */
+
+router.get("/:id/trail", async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(req.params.id as string, 10);
+  if (isNaN(id)) { res.status(400).json({ error: "invalid id" }); return; }
+
+  const points = await db
+    .select({
+      lat:     faultTrackingPointsTable.lat,
+      lng:     faultTrackingPointsTable.lng,
+      speed:   faultTrackingPointsTable.speed,
+      heading: faultTrackingPointsTable.heading,
+      ts:      faultTrackingPointsTable.createdAt,
+    })
+    .from(faultTrackingPointsTable)
+    .where(eq(faultTrackingPointsTable.faultId, id))
+    .orderBy(faultTrackingPointsTable.createdAt)
+    .limit(300);
+
+  res.json(points);
+});
 
 export default router;

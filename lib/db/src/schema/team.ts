@@ -23,6 +23,9 @@ export const techLocationsTable = pgTable("tech_locations", {
   area:      text("area"),
   isOnDuty:  boolean("is_on_duty").default(false).notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  speed:     real("speed"),
+  heading:   real("heading"),
+  accuracy:  real("accuracy"),
 });
 
 export const assignmentsTable = pgTable("assignments", {
@@ -56,7 +59,20 @@ export const faultsTable = pgTable("faults", {
   apiKey:          text("api_key"),
 });
 
-export type TeamUser     = typeof teamUsersTable.$inferSelect;
-export type TechLocation = typeof techLocationsTable.$inferSelect;
-export type Assignment   = typeof assignmentsTable.$inferSelect;
-export type Fault        = typeof faultsTable.$inferSelect;
+export const faultTrackingPointsTable = pgTable("fault_tracking_points", {
+  id:        serial("id").primaryKey(),
+  faultId:   integer("fault_id").notNull().references(() => faultsTable.id),
+  techId:    integer("tech_id").notNull().references(() => teamUsersTable.id),
+  lat:       real("lat").notNull(),
+  lng:       real("lng").notNull(),
+  speed:     real("speed"),
+  heading:   real("heading"),
+  accuracy:  real("accuracy"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type TeamUser           = typeof teamUsersTable.$inferSelect;
+export type TechLocation       = typeof techLocationsTable.$inferSelect;
+export type Assignment         = typeof assignmentsTable.$inferSelect;
+export type Fault              = typeof faultsTable.$inferSelect;
+export type FaultTrackingPoint = typeof faultTrackingPointsTable.$inferSelect;

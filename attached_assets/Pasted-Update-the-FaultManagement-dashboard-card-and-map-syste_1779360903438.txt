@@ -1,0 +1,165 @@
+Update the FaultManagement dashboard card and map system to support real-time live field team movement tracking for HAJJ telecom operations.
+
+OBJECTIVE:
+Display live moving field teams on the map with continuous breadcrumb route drawing, live ETA countdown, heartbeat monitoring, and movement analytics.
+
+IMPLEMENT THE FOLLOWING:
+
+1. LIVE MOVEMENT TRAIL
+   Replace static routePolyline with dynamic movementTrail.
+
+NEW TYPE:
+
+movementTrail?: {
+lat: number;
+lng: number;
+ts: string;
+}[];
+
+2. REAL-TIME ROUTE DRAWING
+   Each GPS heartbeat received must append a new breadcrumb point.
+
+The map polyline must continuously grow live as the team moves.
+
+3. LIVE VEHICLE ANIMATION
+   Implement smooth marker interpolation between GPS points to prevent jumping markers.
+
+4. SOCKET.IO REAL-TIME UPDATES
+   Remove dependency on polling.
+
+Implement:
+socket.on("tech-location-update")
+
+Update dashboard instantly without refresh.
+
+5. LIVE ETA COUNTDOWN
+   Recalculate:
+
+* remaining distance
+* traffic ETA
+* estimated arrival time
+
+Update live every 30–60 seconds.
+
+Display:
+14 min remaining
+10 min remaining
+etc.
+
+6. LIVE HEARTBEAT MONITORING
+   Add heartbeat status monitoring.
+
+Rules:
+
+* heartbeat < 45 sec = ONLINE
+* heartbeat > 45 sec = OFFLINE
+
+Show visual indicators:
+
+* blue pulse = moving
+* amber = stopped
+* red blinking = offline
+
+7. MOVEMENT STATES
+   Display:
+
+* moving
+* stopped
+* offline
+* arrived
+
+8. ARRIVAL DETECTION
+   If distance to site < 50m:
+
+* automatically switch status to "on_site"
+
+9. ROUTE DEVIATION DETECTION
+   If technician deviates >200m from planned route:
+   Show:
+   ⚠ ROUTE DEVIATION
+
+10. LIVE BREADCRUMB STORAGE
+    Support historical breadcrumb playback.
+
+Backend must store:
+
+* latitude
+* longitude
+* speed
+* heading
+* timestamp
+
+11. MAP IMPROVEMENTS
+    Replace technician marker with:
+
+* telecom support vehicle icon
+* rotating heading direction
+* live pulse effect
+
+12. POLYLINE IMPROVEMENTS
+    Use directional arrows on active routes.
+
+Example:
+
+icons: [{
+icon: {
+path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+},
+repeat: "40px"
+}]
+
+13. DASHBOARD CARD ENHANCEMENTS
+    Add:
+
+* live ETA countdown
+* speed
+* heartbeat age
+* GPS accuracy
+* moving/stopped indicator
+* connection quality
+* live distance remaining
+
+14. PERFORMANCE OPTIMIZATION
+    Implement:
+
+* route point compression
+* map rendering optimization
+* throttled redraws
+* lazy route updates
+
+15. NEW BACKEND API
+    Create:
+
+POST /api/faults/live-location
+
+Store all heartbeat breadcrumb points in database.
+
+16. NEW DATABASE TABLE
+    Create:
+
+fault_tracking_points
+
+Fields:
+
+* id
+* fault_id
+* tech_id
+* latitude
+* longitude
+* speed
+* heading
+* accuracy
+* created_at
+
+17. MAP EXPERIENCE
+    The NOC operator must be able to visually see:
+
+* the team moving in real time
+* the actual driven route
+* ETA decreasing live
+* whether the team stopped
+* whether the team is delayed
+* whether the team reached the fault site
+
+18. FINAL OBJECTIVE
+    Transform the existing dashboard into a real-time telecom field-force command and control system for STC HAJJ Cell on Wheels operations.
