@@ -19,7 +19,7 @@ TaskManager.defineTask(
     const locations = (data as { locations: Location.LocationObject[] })?.locations;
     if (!locations?.length) return;
 
-    const { latitude, longitude } = locations[0].coords;
+    const { latitude, longitude, speed, heading, accuracy } = locations[0].coords;
 
     try {
       const raw = await AsyncStorage.getItem(AUTH_KEY);
@@ -34,7 +34,14 @@ TaskManager.defineTask(
           "Content-Type":  "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify({ lat: latitude, lng: longitude, isOnDuty: true }),
+        body: JSON.stringify({
+          lat:      latitude,
+          lng:      longitude,
+          isOnDuty: true,
+          speed:    speed    != null ? Math.round(speed * 3.6 * 10) / 10 : null,
+          heading:  heading  ?? null,
+          accuracy: accuracy ?? null,
+        }),
       });
     } catch {}
   },
@@ -53,7 +60,7 @@ export async function startBackgroundLocationTask(): Promise<boolean> {
       await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
         accuracy:               Location.Accuracy.Balanced,
         timeInterval:           10000,
-        distanceInterval:       0,
+        distanceInterval:       10,
         pausesUpdatesAutomatically: false,
         foregroundService: {
           notificationTitle:  "ACES Field Tracker",

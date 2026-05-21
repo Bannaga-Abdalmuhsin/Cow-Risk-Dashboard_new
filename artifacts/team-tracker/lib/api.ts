@@ -202,6 +202,39 @@ export async function deleteTeamUser(token: string, id: number): Promise<void> {
   await apiFetch(`/api/team/users/${id}`, token, { method: "DELETE" });
 }
 
+export interface ActiveFaultForTech {
+  id:             number;
+  cowId:          string;
+  alarmName:      string;
+  severity:       string;
+  siteLat:        number;
+  siteLng:        number;
+  location:       string | null;
+  dispatchStatus: string;
+  eta:            number | null;
+  dispatchedAt:   string | null;
+}
+
+export async function getMyActiveFault(token: string): Promise<ActiveFaultForTech | null> {
+  return apiFetch<ActiveFaultForTech | null>("/api/team/my-fault", token);
+}
+
+export async function updateLocationFull(
+  token:    string,
+  lat:      number,
+  lng:      number,
+  area:     string | null,
+  isOnDuty: boolean,
+  speed:    number | null,
+  heading:  number | null,
+  accuracy: number | null,
+): Promise<void> {
+  await apiFetch("/api/team/location", token, {
+    method: "PUT",
+    body:   JSON.stringify({ lat, lng, area, isOnDuty, speed, heading, accuracy }),
+  });
+}
+
 export function detectArea(lat: number, lng: number): string {
   if (lat > 21.20 && lat < 21.45 && lng > 39.80 && lng < 39.95) {
     if (lat > 21.37 && lat < 21.43 && lng > 39.86 && lng < 39.92) return "Mina";

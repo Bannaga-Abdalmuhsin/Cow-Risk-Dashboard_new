@@ -174,6 +174,35 @@ router.put("/location", requireAuth, async (req: Request, res: Response): Promis
   res.json({ ok: true });
 });
 
+/* ─── GET /api/team/my-fault  (active fault assigned to the requesting tech) */
+
+router.get("/my-fault", requireAuth, async (req: Request, res: Response): Promise<void> => {
+  const userId = req.teamUser!.id;
+
+  const [fault] = await db
+    .select({
+      id:             faultsTable.id,
+      cowId:          faultsTable.cowId,
+      alarmName:      faultsTable.alarmName,
+      severity:       faultsTable.severity,
+      siteLat:        faultsTable.siteLat,
+      siteLng:        faultsTable.siteLng,
+      location:       faultsTable.location,
+      dispatchStatus: faultsTable.dispatchStatus,
+      eta:            faultsTable.eta,
+      dispatchedAt:   faultsTable.dispatchedAt,
+    })
+    .from(faultsTable)
+    .where(and(
+      eq(faultsTable.assignedTechId, userId),
+      isNull(faultsTable.resolvedAt),
+    ))
+    .orderBy(desc(faultsTable.receivedAt))
+    .limit(1);
+
+  res.json(fault ?? null);
+});
+
 /* ─── GET /api/team/locations ────────────────────────────────────────────── */
 
 router.get("/locations", async (_req: Request, res: Response): Promise<void> => {

@@ -1,0 +1,133 @@
+Update the mobile application to support real-time HAJJ field team live tracking for STC Cell on Wheels (COW) fault management operations.
+
+OBJECTIVE:
+The mobile app must continuously send live GPS heartbeat updates while the assigned field team is moving toward a telecom fault site.
+
+IMPLEMENT THE FOLLOWING:
+
+1. LIVE GPS TRACKING
+
+* Use Expo Location API
+* Use Expo TaskManager for background tracking
+* Tracking must continue even if the app is minimized
+* Request:
+
+  * foreground location permission
+  * background location permission
+
+2. HEARTBEAT LOGIC
+   Send live location updates:
+
+* every 10 seconds
+  OR
+* every 10 meters movement
+
+Whichever happens first.
+
+3. HEARTBEAT PAYLOAD
+   POST to:
+
+/api/faults/live-location
+
+Payload:
+
+{
+faultId,
+techId,
+lat,
+lng,
+speed,
+heading,
+accuracy,
+batteryLevel,
+timestamp
+}
+
+4. TRACKING START CONDITIONS
+   Tracking starts automatically when:
+   dispatchStatus = "en_route"
+
+Tracking stops automatically when:
+dispatchStatus = "on_site"
+OR
+dispatchStatus = "resolved"
+
+5. BACKGROUND LOCATION
+   Use:
+
+* expo-location
+* expo-task-manager
+
+Implement background task:
+
+LOCATION_TRACKING_TASK
+
+6. HEARTBEAT API SERVICE
+   Create reusable service:
+
+services/liveTracking.ts
+
+Functions:
+
+* startTracking()
+* stopTracking()
+* sendHeartbeat()
+
+7. BATTERY OPTIMIZATION
+   Prevent excessive API calls by:
+
+* minimum 10 meter distance interval
+* minimum 10 second interval
+
+8. OFFLINE SUPPORT
+   If internet unavailable:
+
+* cache heartbeat locally
+* resend automatically when connection restored
+
+9. ARRIVAL DETECTION
+   If technician is within 50 meters of fault site:
+
+* automatically update status to "on_site"
+
+10. LIVE VEHICLE STATE
+    Detect:
+
+* moving
+* stopped
+* offline
+
+Rules:
+
+* speed < 3km/h for 5 minutes = stopped
+* no heartbeat for 45 seconds = offline
+
+11. MOBILE UI IMPROVEMENTS
+    Add:
+
+* LIVE TRACKING ACTIVE indicator
+* GPS accuracy indicator
+* connection status
+* remaining ETA
+* distance to site
+* moving/stopped status
+
+12. SOCKET.IO SUPPORT
+    Add Socket.IO client support to emit live technician movement instantly.
+
+Emit event:
+"tech-location-update"
+
+13. SECURITY
+    Include technician authentication token in all heartbeat requests.
+
+14. PERFORMANCE
+    Tracking must work smoothly during HAJJ operations with continuous movement and poor network coverage.
+
+15. LOGGING
+    Add logs for:
+
+* GPS updates
+* API failures
+* reconnect attempts
+* tracking start/stop
