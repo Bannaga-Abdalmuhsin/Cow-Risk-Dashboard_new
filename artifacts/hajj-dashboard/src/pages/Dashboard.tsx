@@ -66,7 +66,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         .catch(() => {});
     };
     fetchTechs();
-    pollRef.current = setInterval(fetchTechs, 10000);
+    pollRef.current = setInterval(fetchTechs, 2000);
     return () => { if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; } };
   }, [activeTab]);
 
@@ -294,7 +294,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                     <span className="text-muted-foreground">
                       {techLocations.filter(t => !t.isOnDuty).length} off duty
                     </span>
-                    <span className="text-muted-foreground">· {techLocations.length} total · refreshes every 10s</span>
+                    <span className="text-muted-foreground">· {techLocations.length} total · refreshes every 2s</span>
                   </>
                 ) : (
                   <>
@@ -356,7 +356,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                     <span className="text-emerald-400 font-semibold">
                       {techLocations.filter(t => t.isOnDuty).length} technician{techLocations.filter(t => t.isOnDuty).length !== 1 ? "s" : ""} live on map
                     </span>
-                    <span className="text-muted-foreground">· refreshes every 10s</span>
+                    <span className="text-muted-foreground">· refreshes every 2s</span>
                   </div>
                 )}
                 <LeafletMap
