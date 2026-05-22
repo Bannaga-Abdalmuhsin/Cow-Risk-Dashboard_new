@@ -286,7 +286,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         )}
 
         {activeTab === "teams" && (
-          <div className="flex flex-col gap-3 flex-1 min-h-0" style={{ height: "calc(100vh - 148px)" }}>
+          <div className="flex flex-col gap-3" style={{ height: "calc(100vh - 148px)", overflow: "hidden" }}>
             {/* Live status bar */}
             <div className="flex items-center gap-3 shrink-0">
               <div className="flex items-center gap-2 text-xs">
@@ -329,9 +329,9 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             </div>
 
             {/* Main content: map + roster */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 flex-1 min-h-0">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 min-h-0" style={{ flex: 1 }}>
               {/* Full-height Google Map */}
-              <div className="lg:col-span-3 min-h-0 flex flex-col gap-0" style={{ minHeight: 480 }}>
+              <div className="lg:col-span-3 min-h-0" style={{ height: "100%" }}>
                 <TeamGoogleMap
                   analyses={analyses}
                   techLocations={techLocations}
@@ -340,7 +340,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 />
               </div>
 
-              {/* Right sidebar: roster */}
+              {/* Right sidebar: roster — scrolls independently */}
               <div className="lg:col-span-1 flex flex-col gap-3 min-h-0 overflow-y-auto">
                 <TeamRoster compact techLocations={techLocations} />
               </div>
@@ -355,7 +355,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <div className="space-y-4">
                 <TechnicianRecommendation analyses={analyses} plannedTechs={PLANNED_TECHS} totalFleet={TOTAL_FLEET} />
               </div>
-              <div className="lg:col-span-2" style={{ minHeight: 340 }}>
+              <div className="lg:col-span-2" style={{ height: 420 }}>
                 {techLocations.length > 0 && (
                   <div className="mb-2 flex items-center gap-2 text-xs">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
@@ -365,12 +365,11 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                     <span className="text-muted-foreground">· refreshes every 2s</span>
                   </div>
                 )}
-                <LeafletMap
+                <TeamGoogleMap
                   analyses={analyses}
+                  techLocations={techLocations}
                   selectedSiteId={selectedSiteId}
                   onSelectSite={handleSelectSite}
-                  showTeamMarkers={true}
-                  techLocations={techLocations}
                 />
               </div>
             </div>
