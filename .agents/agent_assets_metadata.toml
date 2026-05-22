@@ -17,3 +17,9 @@ id = "e5W06XB6b2TieHocUNgyo"
 uri = "file://.local/outputs/Cow-Risk-Dashboard.pptx"
 type = "slides"
 title = "Cow Risk Dashboard.pptx"
+
+[[outputs]]
+id = "540QC2MhODB-RjYAWU_k0"
+uri = "file://fault-management-export.zip"
+type = "unspecified"
+title = "FaultManagement Component Export"
