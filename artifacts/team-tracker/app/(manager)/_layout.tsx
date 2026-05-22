@@ -15,23 +15,42 @@ export default function ManagerLayout() {
 
   const screenOptions = useMemo(() => ({
     headerShown: false,
-    tabBarActiveTintColor:   colors.primary,
-    tabBarInactiveTintColor: colors.mutedForeground,
+    tabBarActiveTintColor:   "#174EA6",
+    tabBarInactiveTintColor: "#3D5470",
     tabBarStyle: {
       position:        "absolute" as const,
-      backgroundColor: isIOS ? "transparent" : colors.card,
+      backgroundColor: isIOS ? "transparent" : "#0A1B34",
       borderTopWidth:  1,
-      borderTopColor:  colors.border,
+      borderTopColor:  "rgba(100, 160, 255, 0.15)",
       elevation:       0,
-      ...(isWeb ? { height: 84 } : {}),
+      height:          isWeb ? 84 : 60,
     },
     tabBarBackground: isIOS
-      ? () => <BlurView intensity={60} tint="light" style={StyleSheet.absoluteFill} />
+      ? () => (
+          <BlurView
+            intensity={90}
+            tint="dark"
+            style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(6,13,26,0.75)" }]}
+          />
+        )
       : isWeb
-        ? () => <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.card }]} />
+        ? () => (
+            <View
+              style={[
+                StyleSheet.absoluteFill,
+                { backgroundColor: "#0A1B34", borderTopWidth: 1, borderTopColor: "rgba(100,160,255,0.15)" },
+              ]}
+            />
+          )
         : undefined,
+    tabBarLabelStyle: {
+      fontSize: 10,
+      fontWeight: "700" as const,
+      letterSpacing: 0.5,
+      marginBottom: isIOS ? 0 : 4,
+    },
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [colors.primary, colors.mutedForeground, colors.card, colors.border, isWeb]);
+  }), [colors.primary, isWeb]);
 
   if (!loading && !user) return <Redirect href="/" />;
   if (!loading && user?.role !== "manager") return <Redirect href="/(technician)" />;
@@ -41,35 +60,59 @@ export default function ManagerLayout() {
       <Tabs.Screen
         name="map"
         options={{
-          title: "Live Map",
-          tabBarIcon: ({ color }) =>
-            <MaterialCommunityIcons name="map-marker-multiple" size={22} color={color} />,
+          title: "LIVE MAP",
+          tabBarIcon: ({ color, focused }) => (
+            <View style={focused ? styles.activeIconWrap : undefined}>
+              <MaterialCommunityIcons name="map-marker-multiple" size={22} color={color} />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="team"
         options={{
-          title: "Team",
-          tabBarIcon: ({ color }) =>
-            <Feather name="users" size={22} color={color} />,
+          title: "TEAM",
+          tabBarIcon: ({ color, focused }) => (
+            <View style={focused ? styles.activeIconWrap : undefined}>
+              <Feather name="users" size={20} color={color} />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="chat"
         options={{
-          title: "Chat",
-          tabBarIcon: ({ color }) =>
-            <MaterialCommunityIcons name="message-text-outline" size={22} color={color} />,
+          title: "DISPATCH",
+          tabBarIcon: ({ color, focused }) => (
+            <View style={focused ? styles.activeIconWrap : undefined}>
+              <MaterialCommunityIcons name="message-text-outline" size={22} color={color} />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="manage"
         options={{
-          title: "Manage",
-          tabBarIcon: ({ color }) =>
-            <MaterialCommunityIcons name="account-plus-outline" size={22} color={color} />,
+          title: "MANAGE",
+          tabBarIcon: ({ color, focused }) => (
+            <View style={focused ? styles.activeIconWrap : undefined}>
+              <MaterialCommunityIcons name="account-cog-outline" size={22} color={color} />
+            </View>
+          ),
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  activeIconWrap: {
+    backgroundColor: "rgba(23, 78, 166, 0.18)",
+    borderRadius: 10,
+    padding: 4,
+    shadowColor: "#174EA6",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+  },
+});

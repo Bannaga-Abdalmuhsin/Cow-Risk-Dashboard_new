@@ -79,46 +79,56 @@ export default function AssignmentScreen() {
   };
 
   return (
-    <LinearGradient colors={[colors.background, colors.backgroundEnd]} style={styles.root}>
+    <LinearGradient colors={["#060D1A", "#0A1B34"]} style={styles.root}>
+
       {/* Header */}
-      <View style={[styles.header, { paddingTop: topPad + 12, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <View style={[styles.headerAccent, { backgroundColor: colors.primary }]} />
-        <Text style={[styles.headerTitle, { color: colors.foreground }]}>My Task</Text>
+      <View style={[styles.header, { paddingTop: topPad + 14 }]}>
+        <LinearGradient
+          colors={["rgba(23,78,166,0.25)", "rgba(6,13,26,0)"]}
+          style={StyleSheet.absoluteFill}
+        />
+        <View style={styles.headerAccentBar} />
+        <Text style={styles.headerTitle}>My Task</Text>
         {isNew && (
-          <View style={[styles.badge, { backgroundColor: colors.primary }]}>
-            <Text style={styles.badgeText}>NEW</Text>
+          <View style={styles.newBadge}>
+            <View style={styles.newDot} />
+            <Text style={styles.newBadgeText}>NEW</Text>
           </View>
         )}
       </View>
 
       <ScrollView
-        contentContainerStyle={{ padding: 20, paddingBottom: bottomPad, flexGrow: 1 }}
+        contentContainerStyle={{ padding: 18, paddingBottom: bottomPad, flexGrow: 1 }}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); fetchAssignment(); }} tintColor={colors.primary} />
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => { setRefreshing(true); fetchAssignment(); }}
+            tintColor="#174EA6"
+          />
         }
         keyboardShouldPersistTaps="handled"
       >
         {loading ? (
           <View style={styles.center}>
-            <ActivityIndicator color={colors.primary} size="large" />
+            <ActivityIndicator color="#174EA6" size="large" />
           </View>
         ) : !assignment ? (
           <View style={styles.emptyBlock}>
-            <View style={[styles.emptyIconWrap, { backgroundColor: colors.muted }]}>
-              <MaterialCommunityIcons name="bell-sleep-outline" size={40} color={colors.mutedForeground} />
+            <View style={styles.emptyIconWrap}>
+              <MaterialCommunityIcons name="bell-sleep-outline" size={40} color="#3D5470" />
             </View>
-            <Text style={[styles.emptyTitle, { color: colors.foreground }]}>No tasks yet</Text>
-            <Text style={[styles.emptySub, { color: colors.mutedForeground }]}>
-              Your manager will send you deployment instructions here.
+            <Text style={styles.emptyTitle}>No tasks assigned</Text>
+            <Text style={styles.emptySub}>
+              Your manager will send deployment instructions here.
             </Text>
           </View>
         ) : (
           <View style={styles.assignBlock}>
 
             {/* From section */}
-            <View style={[styles.fromBadge, { backgroundColor: colors.accent + "12", borderColor: colors.accent + "30" }]}>
-              <View style={[styles.fromDot, { backgroundColor: colors.accent }]} />
-              <Text style={[styles.fromText, { color: colors.accent }]}>
+            <View style={styles.fromBadge}>
+              <View style={[styles.fromDot, { backgroundColor: "#174EA6" }]} />
+              <Text style={styles.fromText}>
                 From <Text style={styles.fromName}>{assignment.managerName}</Text>
                 {"  ·  "}{timeAgo(assignment.sentAt)}
               </Text>
@@ -127,71 +137,74 @@ export default function AssignmentScreen() {
             {/* Message card */}
             <View style={[
               styles.msgCard,
-              {
-                backgroundColor: colors.card,
-                borderColor:     isNew ? colors.primary : colors.border,
-                borderLeftColor: isNew ? colors.primary : colors.accent,
-                borderLeftWidth: 4,
-              },
+              { borderLeftColor: isNew ? "#174EA6" : "#D62828" },
             ]}>
-              <Text style={[styles.msgText, { color: colors.foreground }]}>{assignment.message}</Text>
+              <LinearGradient
+                colors={["rgba(255,255,255,0.08)", "rgba(255,255,255,0.04)"]}
+                style={styles.msgCardGrad}
+              >
+                <Text style={styles.msgText}>{assignment.message}</Text>
+              </LinearGradient>
             </View>
 
             {/* Acknowledge / read status */}
             {assignment.readAt ? (
-              <View style={[styles.readRow, { backgroundColor: colors.onDuty + "12", borderRadius: 10, padding: 10 }]}>
-                <MaterialCommunityIcons name="check-circle" size={16} color={colors.onDuty} />
-                <Text style={[styles.readText, { color: colors.onDuty }]}>
-                  Acknowledged · {timeAgo(assignment.readAt)}
-                </Text>
+              <View style={styles.readRow}>
+                <MaterialCommunityIcons name="check-circle" size={16} color="#00B894" />
+                <Text style={styles.readText}>Acknowledged · {timeAgo(assignment.readAt)}</Text>
               </View>
             ) : (
               <TouchableOpacity
-                style={[styles.ackBtn, { backgroundColor: colors.primary, opacity: marking ? 0.7 : 1 }]}
+                style={[styles.ackBtn, { opacity: marking ? 0.7 : 1 }]}
                 onPress={handleMarkRead}
                 disabled={marking}
               >
-                {marking
-                  ? <ActivityIndicator color="#fff" size="small" />
-                  : <>
-                      <MaterialCommunityIcons name="check-circle-outline" size={18} color="#fff" />
-                      <Text style={styles.ackText}>Acknowledge Task</Text>
-                    </>
-                }
+                <LinearGradient
+                  colors={["#174EA6", "#0E3A8C"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={styles.ackBtnGrad}
+                >
+                  {marking
+                    ? <ActivityIndicator color="#fff" size="small" />
+                    : <>
+                        <MaterialCommunityIcons name="check-circle-outline" size={18} color="#fff" />
+                        <Text style={styles.ackText}>Acknowledge Task</Text>
+                      </>
+                  }
+                </LinearGradient>
               </TouchableOpacity>
             )}
 
             {/* Divider */}
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={styles.divider} />
 
             {/* Reply section */}
             {assignment.reply ? (
               <View style={styles.replySection}>
                 <View style={styles.replyHeader}>
-                  <Feather name="corner-up-right" size={14} color={colors.accent} />
-                  <Text style={[styles.replyLabel, { color: colors.accent }]}>Your reply</Text>
+                  <Feather name="corner-up-right" size={14} color="#174EA6" />
+                  <Text style={styles.replyLabel}>Your reply</Text>
                   {assignment.repliedAt && (
-                    <Text style={[styles.replyTime, { color: colors.mutedForeground }]}>
-                      · {timeAgo(assignment.repliedAt)}
-                    </Text>
+                    <Text style={styles.replyTime}>· {timeAgo(assignment.repliedAt)}</Text>
                   )}
                 </View>
-                <View style={[styles.replyCard, { backgroundColor: colors.accent + "10", borderColor: colors.accent + "35" }]}>
-                  <Text style={[styles.replyCardText, { color: colors.foreground }]}>{assignment.reply}</Text>
+                <View style={styles.replyCard}>
+                  <Text style={styles.replyCardText}>{assignment.reply}</Text>
                 </View>
               </View>
             ) : (
               <View style={styles.replySection}>
                 <View style={styles.replyHeader}>
-                  <Feather name="corner-up-right" size={14} color={colors.mutedForeground} />
-                  <Text style={[styles.replyLabel, { color: colors.mutedForeground }]}>Reply to manager</Text>
+                  <Feather name="corner-up-right" size={14} color="#6B8DB8" />
+                  <Text style={[styles.replyLabel, { color: "#6B8DB8" }]}>Reply to manager</Text>
                 </View>
-                <View style={[styles.composeRow, { borderColor: colors.border, backgroundColor: colors.card }]}>
+                <View style={styles.composeRow}>
                   <TextInput
                     ref={inputRef}
-                    style={[styles.composeInput, { color: colors.foreground }]}
+                    style={styles.composeInput}
                     placeholder="Type your reply..."
-                    placeholderTextColor={colors.mutedForeground}
+                    placeholderTextColor="rgba(107,141,184,0.6)"
                     value={replyText}
                     onChangeText={setReplyText}
                     multiline
@@ -199,17 +212,19 @@ export default function AssignmentScreen() {
                     returnKeyType="send"
                   />
                   <TouchableOpacity
-                    style={[styles.sendBtn, {
-                      backgroundColor: colors.accent,
-                      opacity: (!replyText.trim() || sendingReply) ? 0.4 : 1,
-                    }]}
+                    style={[styles.sendBtn, { opacity: (!replyText.trim() || sendingReply) ? 0.4 : 1 }]}
                     onPress={handleSendReply}
                     disabled={!replyText.trim() || sendingReply}
                   >
-                    {sendingReply
-                      ? <ActivityIndicator color="#fff" size="small" />
-                      : <Feather name="send" size={16} color="#fff" />
-                    }
+                    <LinearGradient
+                      colors={["#D62828", "#9B1E1E"]}
+                      style={styles.sendBtnGrad}
+                    >
+                      {sendingReply
+                        ? <ActivityIndicator color="#fff" size="small" />
+                        : <Feather name="send" size={16} color="#fff" />
+                      }
+                    </LinearGradient>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -223,50 +238,94 @@ export default function AssignmentScreen() {
 
 const styles = StyleSheet.create({
   root:          { flex: 1 },
+
   header:        {
-    paddingHorizontal: 20, paddingBottom: 12, borderBottomWidth: 1,
-    flexDirection: "row", alignItems: "flex-end", gap: 10,
-    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.06, shadowRadius: 8, elevation: 4,
+    paddingHorizontal: 20, paddingBottom: 14,
+    flexDirection: "row", alignItems: "center", gap: 12,
+    borderBottomWidth: 1, borderBottomColor: "rgba(100,160,255,0.12)",
+    overflow: "hidden",
   },
-  headerAccent:  { position: "absolute", left: 0, top: 0, bottom: 0, width: 4 },
-  headerTitle:   { fontSize: 22, fontWeight: "700" as const },
-  badge:         { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
-  badgeText:     { color: "#fff", fontSize: 10, fontWeight: "800" as const, letterSpacing: 1 },
+  headerAccentBar: { width: 3, height: 28, borderRadius: 2, backgroundColor: "#174EA6" },
+  headerTitle:   { fontSize: 22, fontWeight: "700" as const, color: "#E2EFFF", flex: 1 },
+  newBadge:      {
+    flexDirection: "row", alignItems: "center", gap: 5,
+    backgroundColor: "rgba(23,78,166,0.20)", borderWidth: 1,
+    borderColor: "rgba(23,78,166,0.40)",
+    borderRadius: 12, paddingHorizontal: 10, paddingVertical: 4,
+  },
+  newDot:        { width: 5, height: 5, borderRadius: 3, backgroundColor: "#174EA6" },
+  newBadgeText:  { color: "#93B8EE", fontSize: 10, fontWeight: "800" as const, letterSpacing: 1 },
+
   center:        { flex: 1, alignItems: "center", justifyContent: "center" },
   emptyBlock:    { flex: 1, alignItems: "center", justifyContent: "center", gap: 14, paddingTop: 60 },
-  emptyIconWrap: { width: 80, height: 80, borderRadius: 40, alignItems: "center", justifyContent: "center" },
-  emptyTitle:    { fontSize: 18, fontWeight: "700" as const },
-  emptySub:      { fontSize: 14, textAlign: "center", lineHeight: 20 },
+  emptyIconWrap: {
+    width: 80, height: 80, borderRadius: 40,
+    backgroundColor: "rgba(255,255,255,0.05)",
+    borderWidth: 1, borderColor: "rgba(100,160,255,0.15)",
+    alignItems: "center", justifyContent: "center",
+  },
+  emptyTitle:    { fontSize: 18, fontWeight: "700" as const, color: "#E2EFFF" },
+  emptySub:      { fontSize: 13, color: "#6B8DB8", textAlign: "center", lineHeight: 20 },
+
   assignBlock:   { gap: 14 },
   fromBadge:     {
     flexDirection: "row", alignItems: "center", gap: 8,
-    borderWidth: 1, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 8,
+    backgroundColor: "rgba(23,78,166,0.12)",
+    borderWidth: 1, borderColor: "rgba(23,78,166,0.25)",
+    borderRadius: 12, paddingHorizontal: 14, paddingVertical: 8,
   },
   fromDot:       { width: 7, height: 7, borderRadius: 4 },
-  fromText:      { fontSize: 13 },
-  fromName:      { fontWeight: "700" as const },
+  fromText:      { fontSize: 13, color: "#93B8EE" },
+  fromName:      { fontWeight: "700" as const, color: "#E2EFFF" },
+
   msgCard:       {
-    borderRadius: 16, borderWidth: 1, padding: 18,
-    shadowColor: "#0F1E3A", shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05, shadowRadius: 8, elevation: 3,
+    borderRadius: 16, borderWidth: 1,
+    borderColor: "rgba(100,160,255,0.20)",
+    borderLeftWidth: 4,
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3, shadowRadius: 12, elevation: 6,
   },
-  msgText:       { fontSize: 16, lineHeight: 24 },
-  readRow:       { flexDirection: "row", alignItems: "center", gap: 8 },
-  readText:      { fontSize: 13, fontWeight: "600" as const },
-  ackBtn:        { borderRadius: 12, paddingVertical: 14, alignItems: "center", flexDirection: "row", justifyContent: "center", gap: 8 },
+  msgCardGrad:   { padding: 18 },
+  msgText:       { fontSize: 15, lineHeight: 24, color: "#E2EFFF" },
+
+  readRow:       {
+    flexDirection: "row", alignItems: "center", gap: 8,
+    backgroundColor: "rgba(0,184,148,0.10)",
+    borderRadius: 12, borderWidth: 1,
+    borderColor: "rgba(0,184,148,0.25)", padding: 12,
+  },
+  readText:      { fontSize: 13, fontWeight: "600" as const, color: "#00B894" },
+
+  ackBtn:        { borderRadius: 14, overflow: "hidden" },
+  ackBtnGrad:    {
+    paddingVertical: 14, alignItems: "center",
+    flexDirection: "row", justifyContent: "center", gap: 8,
+  },
   ackText:       { color: "#fff", fontWeight: "700" as const, fontSize: 15 },
-  divider:       { height: 1 },
+
+  divider:       { height: 1, backgroundColor: "rgba(100,160,255,0.12)" },
+
   replySection:  { gap: 10 },
   replyHeader:   { flexDirection: "row", alignItems: "center", gap: 6 },
-  replyLabel:    { fontSize: 13, fontWeight: "600" as const },
-  replyTime:     { fontSize: 12 },
-  replyCard:     { borderRadius: 14, borderWidth: 1, padding: 14 },
-  replyCardText: { fontSize: 15, lineHeight: 22 },
+  replyLabel:    { fontSize: 13, fontWeight: "600" as const, color: "#174EA6" },
+  replyTime:     { fontSize: 12, color: "#6B8DB8" },
+  replyCard:     {
+    borderRadius: 14, borderWidth: 1,
+    borderColor: "rgba(23,78,166,0.30)",
+    backgroundColor: "rgba(23,78,166,0.10)",
+    padding: 14,
+  },
+  replyCardText: { fontSize: 14, lineHeight: 22, color: "#E2EFFF" },
+
   composeRow:    {
     flexDirection: "row", alignItems: "flex-end", gap: 10,
-    borderWidth: 1, borderRadius: 14, paddingHorizontal: 14, paddingVertical: 10,
+    borderWidth: 1, borderColor: "rgba(100,160,255,0.20)",
+    backgroundColor: "rgba(255,255,255,0.06)",
+    borderRadius: 14, paddingHorizontal: 14, paddingVertical: 10,
   },
-  composeInput:  { flex: 1, fontSize: 15, maxHeight: 100, lineHeight: 22 },
-  sendBtn:       { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" },
+  composeInput:  { flex: 1, fontSize: 15, maxHeight: 100, lineHeight: 22, color: "#E2EFFF" },
+  sendBtn:       { overflow: "hidden", borderRadius: 10 },
+  sendBtnGrad:   { width: 38, height: 38, alignItems: "center", justifyContent: "center" },
 });
