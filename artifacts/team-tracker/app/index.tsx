@@ -150,8 +150,7 @@ export default function LoginScreen() {
                 <View style={styles.cardHeaderLeft}>
                   <View style={[styles.cardAccentBar, { backgroundColor: "#174EA6" }]} />
                   <View>
-                    <Text style={styles.cardTitle}>Operator Sign In</Text>
-                    <Text style={styles.cardSub}>stc COW Network Operations Center</Text>
+                    <Text style={styles.cardTitle}>Field Team Sign In</Text>
                   </View>
                 </View>
                 <View style={styles.liveChip}>
@@ -162,7 +161,7 @@ export default function LoginScreen() {
 
               <View style={styles.cardDivider} />
 
-              <Text style={styles.label}>OPERATOR NAME</Text>
+              <Text style={styles.label}>TEAM NAME</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Your name"
