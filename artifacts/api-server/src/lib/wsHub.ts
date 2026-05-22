@@ -23,6 +23,7 @@ import type { Duplex } from "node:stream";
 import { db, teamUsersTable, techLocationsTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
 import { logger } from "./logger.js";
+import { runGeofenceChecks } from "./geofence.js";
 
 /* ── types ──────────────────────────────────────────────────────────────────── */
 
@@ -165,6 +166,11 @@ wss.on("connection", (rawWs: WebSocket) => {
 
       const updatedAt = new Date();
       try {
+        const [dbUser] = await db
+          .select({ mcLat: teamUsersTable.mcLat, mcLng: teamUsersTable.mcLng })
+          .from(teamUsersTable)
+          .where(eq(teamUsersTable.id, ws.userId));
+
         await db
           .insert(techLocationsTable)
           .values({
@@ -203,6 +209,13 @@ wss.on("connection", (rawWs: WebSocket) => {
           isOnDuty: isOnDuty ?? true,
           updatedAt: updatedAt.toISOString(),
         });
+
+        /* ── Geofence: MC departure (50 m) + site arrival (100 m) ────────── */
+        await runGeofenceChecks(
+          ws.userId, lat, lng,
+          speed ?? null, heading ?? null, accuracy ?? null,
+          dbUser?.mcLat ?? null, dbUser?.mcLng ?? null,
+        );
 
         ws.send(JSON.stringify({ type: "ack" }));
       } catch (err) {

@@ -26,6 +26,8 @@ export interface ActiveFault {
   routePolyline: { lat: number; lng: number }[] | null;
   receivedAt: string;
   dispatchedAt: string | null;
+  movementTriggeredAt: string | null;
+  arrivedAt: string | null;
   assignedTechId: number | null;
   assignedTech: string | null;
   techLat: number | null;
@@ -65,10 +67,12 @@ const STATUS_LABELS: Record<string, string> = {
   new:      "New Fault",
   assigned: "Team Assigned",
   en_route: "En Route",
-  on_site:  "On Site",
+  on_site:  "✅ Reached",
   resolved: "Resolved",
   closed:   "Closed",
 };
+
+const SLA_MS = 15 * 60 * 1000; // 15-minute SLA
 
 const STATUS_COLORS: Record<string, string> = {
   new:      "#dc2626",
@@ -635,14 +639,14 @@ export function FaultManagement() {
             const state        = movementStates[f.id] ?? "offline";
             const stateBorder  = MOVE_BORDER[state];
 
-            // Live countdown — counts down between server refreshes
-            const etaSecsTotal = Math.max(
-              0,
-              ((etaMins ?? 0) * 60) - Math.floor((tickMs - lastRefresh.getTime()) / 1000),
-            );
-            const etaMinsLive = Math.floor(etaSecsTotal / 60);
-            const etaSecsLive = etaSecsTotal % 60;
-            const isUrgent    = etaSecsTotal > 0 && etaSecsTotal < 300;
+            // 15-min SLA countdown from the moment team left MC (movementTriggeredAt)
+            const slaRemainingMs = f.movementTriggeredAt
+              ? Math.max(0, SLA_MS - (tickMs - new Date(f.movementTriggeredAt).getTime()))
+              : null;
+            const slaMinsLive  = slaRemainingMs != null ? Math.floor(slaRemainingMs / 60000) : null;
+            const slaSecsLive  = slaRemainingMs != null ? Math.floor((slaRemainingMs % 60000) / 1000) : null;
+            const slaBreached  = slaRemainingMs === 0;
+            const slaUrgent    = slaRemainingMs != null && slaRemainingMs > 0 && slaRemainingMs < 300_000;
 
             // Heartbeat age (live, updated each tick)
             const heartbeatSecs = f.techUpdatedAt
@@ -749,19 +753,49 @@ export function FaultManagement() {
                   </div>
                 )}
 
-                {/* Row 6: live ETA countdown (en_route with ETA) */}
-                {f.dispatchStatus === "en_route" && etaMins != null && (
-                  <div className="flex items-center gap-1.5 mt-1.5">
-                    <span className="text-[9px] text-amber-400 animate-pulse">⏱</span>
-                    <span
-                      className="text-sm font-black tabular-nums"
-                      style={{ color: isUrgent ? "#ef4444" : "#f59e0b" }}
-                    >
-                      {etaMinsLive}m {String(etaSecsLive).padStart(2, "0")}s
+                {/* Row 6: 15-min SLA countdown (en_route, triggered from MC departure) */}
+                {f.dispatchStatus === "en_route" && slaRemainingMs != null && (
+                  <div
+                    className="flex items-center gap-1.5 mt-1.5 rounded-lg px-2 py-1"
+                    style={{
+                      background: slaBreached ? "rgba(220,38,38,0.15)" : slaUrgent ? "rgba(245,158,11,0.12)" : "rgba(30,58,138,0.15)",
+                      border: `1px solid ${slaBreached ? "#dc262666" : slaUrgent ? "#f59e0b66" : "#3b82f633"}`,
+                    }}
+                  >
+                    <span className="text-[9px]" style={{ color: slaBreached ? "#f87171" : "#facc15" }}>
+                      {slaBreached ? "⛔" : "⏱"} 15-MIN SLA
                     </span>
-                    <span className="text-[9px] text-muted-foreground">remaining</span>
-                    {isUrgent && (
+                    {slaBreached ? (
+                      <span className="text-sm font-black text-red-400 animate-pulse">BREACHED</span>
+                    ) : (
+                      <span
+                        className="text-sm font-black tabular-nums"
+                        style={{ color: slaUrgent ? "#ef4444" : "#f59e0b" }}
+                      >
+                        {slaMinsLive}m {String(slaSecsLive).padStart(2, "0")}s
+                      </span>
+                    )}
+                    <span className="text-[9px] text-muted-foreground ml-auto">
+                      {slaBreached ? "" : "remaining"}
+                    </span>
+                    {slaUrgent && !slaBreached && (
                       <span className="text-[9px] text-red-400 font-bold animate-pulse">⚠ URGENT</span>
+                    )}
+                  </div>
+                )}
+
+                {/* Row 7: arrival timestamp (on_site / Reached) */}
+                {f.dispatchStatus === "on_site" && f.arrivedAt && (
+                  <div className="flex items-center gap-1.5 mt-1.5 rounded-lg px-2 py-1"
+                    style={{ background: "rgba(20,83,45,0.2)", border: "1px solid #16a34a44" }}>
+                    <span className="text-[9px] text-emerald-400 font-bold">✅ REACHED</span>
+                    <span className="text-[9px] text-emerald-300/80 ml-auto">
+                      {new Date(f.arrivedAt).toLocaleTimeString()}
+                    </span>
+                    {f.movementTriggeredAt && (
+                      <span className="text-[9px] text-muted-foreground">
+                        · {Math.round((new Date(f.arrivedAt).getTime() - new Date(f.movementTriggeredAt).getTime()) / 60000)}m travel
+                      </span>
                     )}
                   </div>
                 )}

@@ -5,6 +5,7 @@ import type { TeamUser } from "@workspace/db";
 import { randomUUID } from "crypto";
 import { sendFcmNotification } from "../../lib/firebase.js";
 import { broadcastLocation } from "../../lib/wsHub.js";
+import { runGeofenceChecks } from "../../lib/geofence.js";
 
 function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const R = 6371;
@@ -157,43 +158,12 @@ router.put("/location", requireAuth, async (req: Request, res: Response): Promis
     updatedAt: updatedAt.toISOString(),
   });
 
-  // ── Store breadcrumb when this tech has an active fault ───────────────────
-  const [activeFault] = await db
-    .select({
-      id:             faultsTable.id,
-      siteLat:        faultsTable.siteLat,
-      siteLng:        faultsTable.siteLng,
-      dispatchStatus: faultsTable.dispatchStatus,
-    })
-    .from(faultsTable)
-    .where(and(
-      eq(faultsTable.assignedTechId, userId),
-      isNull(faultsTable.resolvedAt),
-    ))
-    .limit(1);
-
-  if (activeFault) {
-    await db.insert(faultTrackingPointsTable).values({
-      faultId:  activeFault.id,
-      techId:   userId,
-      lat,
-      lng,
-      speed:    speed ?? null,
-      heading:  heading ?? null,
-      accuracy: accuracy ?? null,
-    });
-
-    // ── Auto arrival: < 50 m from site + en_route → mark on_site ─────────
-    if (activeFault.dispatchStatus === "en_route") {
-      const distKm = haversineKm(lat, lng, activeFault.siteLat, activeFault.siteLng);
-      if (distKm < 0.05) {
-        await db
-          .update(faultsTable)
-          .set({ dispatchStatus: "on_site" })
-          .where(eq(faultsTable.id, activeFault.id));
-      }
-    }
-  }
+  /* ── Geofence: MC departure (50 m) + site arrival (100 m) ─────────────── */
+  await runGeofenceChecks(
+    userId, lat, lng,
+    speed ?? null, heading ?? null, accuracy ?? null,
+    user.mcLat ?? null, user.mcLng ?? null,
+  );
 
   res.json({ ok: true });
 });
@@ -259,6 +229,8 @@ router.get("/users", async (_req: Request, res: Response): Promise<void> => {
       role:         teamUsersTable.role,
       defaultArea:  teamUsersTable.defaultArea,
       mcName:       teamUsersTable.mcName,
+      mcLat:        teamUsersTable.mcLat,
+      mcLng:        teamUsersTable.mcLng,
       mobileNumber: teamUsersTable.mobileNumber,
     })
     .from(teamUsersTable);
@@ -268,9 +240,9 @@ router.get("/users", async (_req: Request, res: Response): Promise<void> => {
 /* ─── POST /api/team/users ────────────────────────────────────────────────── */
 
 router.post("/users", requireManager, async (req: Request, res: Response): Promise<void> => {
-  const { name, pin, role, defaultArea, mcName, mobileNumber } = req.body as {
+  const { name, pin, role, defaultArea, mcName, mcLat, mcLng, mobileNumber } = req.body as {
     name?: string; pin?: string; role?: string; defaultArea?: string;
-    mcName?: string; mobileNumber?: string;
+    mcName?: string; mcLat?: number; mcLng?: number; mobileNumber?: string;
   };
   if (!name || !pin) { res.status(400).json({ error: "name and pin required" }); return; }
 
@@ -288,11 +260,14 @@ router.post("/users", requireManager, async (req: Request, res: Response): Promi
       role:         role ?? "technician",
       defaultArea:  defaultArea ?? null,
       mcName:       mcName ?? null,
+      mcLat:        mcLat  ?? null,
+      mcLng:        mcLng  ?? null,
       mobileNumber: mobileNumber ?? null,
     })
     .returning({
       id: teamUsersTable.id, name: teamUsersTable.name, role: teamUsersTable.role,
       defaultArea: teamUsersTable.defaultArea, mcName: teamUsersTable.mcName,
+      mcLat: teamUsersTable.mcLat, mcLng: teamUsersTable.mcLng,
       mobileNumber: teamUsersTable.mobileNumber,
     });
 
@@ -305,9 +280,9 @@ router.patch("/users/:id", requireManager, async (req: Request, res: Response): 
   const id = parseInt(req.params.id as string, 10);
   if (isNaN(id)) { res.status(400).json({ error: "invalid id" }); return; }
 
-  const { name, pin, defaultArea, mcName, mobileNumber } = req.body as {
+  const { name, pin, defaultArea, mcName, mcLat, mcLng, mobileNumber } = req.body as {
     name?: string; pin?: string; defaultArea?: string;
-    mcName?: string; mobileNumber?: string;
+    mcName?: string; mcLat?: number | null; mcLng?: number | null; mobileNumber?: string;
   };
 
   if (name) {
@@ -323,6 +298,8 @@ router.patch("/users/:id", requireManager, async (req: Request, res: Response): 
   if (pin          !== undefined) updates.pin          = pin;
   if (defaultArea  !== undefined) updates.defaultArea  = defaultArea || null;
   if (mcName       !== undefined) updates.mcName       = mcName || null;
+  if (mcLat        !== undefined) updates.mcLat        = mcLat  ?? null;
+  if (mcLng        !== undefined) updates.mcLng        = mcLng  ?? null;
   if (mobileNumber !== undefined) updates.mobileNumber = mobileNumber || null;
 
   const [user] = await db
@@ -332,6 +309,7 @@ router.patch("/users/:id", requireManager, async (req: Request, res: Response): 
     .returning({
       id: teamUsersTable.id, name: teamUsersTable.name, role: teamUsersTable.role,
       defaultArea: teamUsersTable.defaultArea, mcName: teamUsersTable.mcName,
+      mcLat: teamUsersTable.mcLat, mcLng: teamUsersTable.mcLng,
       mobileNumber: teamUsersTable.mobileNumber,
     });
 

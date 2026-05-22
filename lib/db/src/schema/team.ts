@@ -10,6 +10,8 @@ export const teamUsersTable = pgTable("team_users", {
   token:        text("token"),
   defaultArea:  text("default_area"),
   mcName:       text("mc_name"),
+  mcLat:        real("mc_lat"),
+  mcLng:        real("mc_lng"),
   mobileNumber: text("mobile_number"),
   pushToken:    text("push_token"),
   createdAt:    timestamp("created_at").defaultNow().notNull(),
@@ -52,11 +54,13 @@ export const faultsTable = pgTable("faults", {
   location:        text("location"),
   assignedTechId:  integer("assigned_tech_id").references(() => teamUsersTable.id),
   dispatchStatus:  text("dispatch_status").notNull().default("new"),
-  eta:             integer("eta"),
-  receivedAt:      timestamp("received_at").defaultNow().notNull(),
-  dispatchedAt:    timestamp("dispatched_at"),
-  resolvedAt:      timestamp("resolved_at"),
-  apiKey:          text("api_key"),
+  eta:                  integer("eta"),
+  receivedAt:           timestamp("received_at").defaultNow().notNull(),
+  dispatchedAt:         timestamp("dispatched_at"),
+  resolvedAt:           timestamp("resolved_at"),
+  movementTriggeredAt:  timestamp("movement_triggered_at"),
+  arrivedAt:            timestamp("arrived_at"),
+  apiKey:               text("api_key"),
 });
 
 export const faultTrackingPointsTable = pgTable("fault_tracking_points", {
