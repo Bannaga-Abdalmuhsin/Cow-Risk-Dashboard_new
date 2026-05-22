@@ -254,9 +254,6 @@ const styles = StyleSheet.create({
 
   logoBlock:      { alignItems: "center", gap: 12 },
   logoGlow:       {
-    backgroundColor: "#000",
-    borderRadius: 16,
-    overflow: "hidden" as const,
     shadowColor: "#D62828",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.5,
