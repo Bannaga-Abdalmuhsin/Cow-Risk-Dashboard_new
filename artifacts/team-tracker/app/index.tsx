@@ -125,7 +125,7 @@ export default function LoginScreen() {
           <View style={styles.logoBlock}>
             <View style={styles.logoGlow}>
               <Image
-                source={require("../assets/images/aces-logo.png")}
+                source={require("../assets/images/aces-logo-new.png")}
                 style={styles.logoImage}
                 resizeMode="contain"
               />
@@ -147,8 +147,8 @@ export default function LoginScreen() {
                 <View style={styles.cardHeaderLeft}>
                   <View style={[styles.cardAccentBar, { backgroundColor: "#174EA6" }]} />
                   <View>
-                    <Text style={styles.cardTitle}>Operator Sign In</Text>
-                    <Text style={styles.cardSub}>stc COW Network Operations Center</Text>
+                    <Text style={styles.cardTitle}>Team Sign In</Text>
+                    <Text style={styles.cardSub}>Managed Service Field Team</Text>
                   </View>
                 </View>
                 <View style={styles.liveChip}>
@@ -159,7 +159,7 @@ export default function LoginScreen() {
 
               <View style={styles.cardDivider} />
 
-              <Text style={styles.label}>OPERATOR NAME</Text>
+              <Text style={styles.label}>TEAM NAME</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Your name"
