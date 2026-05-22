@@ -49,13 +49,13 @@ const PHASES: Phase[] = [
 function MapPin({ color, day, peak, flip }: { color: string; day: string; peak?: boolean; flip?: boolean }) {
   return (
     <svg
-      width="56" height="66"
+      width="76" height="88"
       viewBox="0 0 52 62"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{
         transform: flip ? "scaleY(-1)" : undefined,
-        filter: peak ? `drop-shadow(0 0 10px ${color}bb)` : `drop-shadow(0 2px 4px rgba(0,0,0,0.4))`,
+        filter: peak ? `drop-shadow(0 0 12px ${color}cc)` : `drop-shadow(0 3px 6px rgba(0,0,0,0.45))`,
         flexShrink: 0,
       }}
     >
@@ -84,29 +84,32 @@ function ZoneCard({ phase }: { phase: Phase }) {
 
   return (
     <div style={{
-      background: "var(--card, rgba(255,255,255,0.04))",
-      border: `1px solid ${phase.pinColor}35`,
-      borderRadius: 12,
-      padding: "10px 10px 8px",
+      background: "var(--card, rgba(255,255,255,0.05))",
+      border: `1.5px solid ${phase.pinColor}40`,
+      borderTop: `3px solid ${phase.pinColor}`,
+      borderRadius: 14,
+      padding: "14px 12px 10px",
       width: "100%",
-      boxShadow: phase.peak ? `0 0 18px ${phase.pinColor}33` : "0 2px 8px rgba(0,0,0,0.25)",
+      boxShadow: phase.peak
+        ? `0 0 24px ${phase.pinColor}44, 0 4px 16px rgba(0,0,0,0.35)`
+        : "0 4px 16px rgba(0,0,0,0.30)",
     }}>
       {/* Phase label */}
-      <div style={{ fontSize: "11px", fontWeight: 800, color: phase.pinColor, marginBottom: 6, letterSpacing: "0.01em" }}>
+      <div style={{ fontSize: "13px", fontWeight: 800, color: phase.pinColor, marginBottom: 9, letterSpacing: "0.01em" }}>
         {phase.label}
       </div>
 
       {/* Active zones — large */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
         {activeZones.map(z => (
           <div key={z.key} style={{
-            display: "flex", alignItems: "center", gap: 6,
-            background: `${z.color}18`, border: `1px solid ${z.color}40`,
-            borderRadius: 7, padding: "5px 8px",
+            display: "flex", alignItems: "center", gap: 8,
+            background: `${z.color}1a`, border: `1px solid ${z.color}45`,
+            borderRadius: 9, padding: "7px 10px",
           }}>
-            <z.Icon size={13} color={z.color} />
-            <span style={{ fontSize: "10px", fontWeight: 700, color: z.color, flex: 1 }}>{z.label}</span>
-            <span style={{ fontSize: "14px", fontWeight: 900, color: z.color, fontVariantNumeric: "tabular-nums" }}>
+            <z.Icon size={16} color={z.color} />
+            <span style={{ fontSize: "12px", fontWeight: 700, color: z.color, flex: 1 }}>{z.label}</span>
+            <span style={{ fontSize: "18px", fontWeight: 900, color: z.color, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.5px" }}>
               {phase.zones[z.key]}%
             </span>
           </div>
@@ -115,17 +118,17 @@ function ZoneCard({ phase }: { phase: Phase }) {
 
       {/* Dim zones — compact row */}
       {dimZones.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 3, marginTop: activeZones.length > 0 ? 5 : 0 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: activeZones.length > 0 ? 8 : 0 }}>
           {dimZones.map(z => (
             <div key={z.key} style={{
               display: "flex", alignItems: "center", gap: 3,
-              padding: "2px 5px", borderRadius: 5,
+              padding: "3px 7px", borderRadius: 6,
               background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.07)",
-              opacity: 0.4,
+              border: "1px solid rgba(255,255,255,0.08)",
+              opacity: 0.38,
             }}>
-              <z.Icon size={9} color="#6b7280" />
-              <span style={{ fontSize: "9px", color: "#6b7280" }}>0%</span>
+              <z.Icon size={10} color="#6b7280" />
+              <span style={{ fontSize: "10px", color: "#6b7280" }}>0%</span>
             </div>
           ))}
         </div>
@@ -143,7 +146,7 @@ export function DeploymentTimeline() {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 8, flexShrink: 0 }}>
         <div>
           <div style={{ fontSize: "13px", fontWeight: 700, color: "var(--foreground)" }}>Hajj 1447 — Team Deployment Timeline</div>
-          <div style={{ fontSize: "11px", color: "var(--muted-foreground)", marginTop: 1 }}>Pilgrim zone availability % · 7–13 Dhu Alhijah · alternating layout</div>
+          <div style={{ fontSize: "11px", color: "var(--muted-foreground)", marginTop: 1 }}>Pilgrim zone availability % · 7–13 Dhu Alhijah</div>
         </div>
         <div style={{ display: "flex", gap: 14, fontSize: "11px", flexWrap: "wrap", justifyContent: "flex-end" }}>
           {ZONES.map(z => (
