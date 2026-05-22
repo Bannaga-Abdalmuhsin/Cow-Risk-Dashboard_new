@@ -84,15 +84,15 @@ function ZoneCard({ phase }: { phase: Phase }) {
 
   return (
     <div style={{
-      background: "var(--card, rgba(255,255,255,0.05))",
+      background: "#ffffff",
       border: `1.5px solid ${phase.pinColor}40`,
       borderTop: `3px solid ${phase.pinColor}`,
       borderRadius: 14,
       padding: "14px 12px 10px",
       width: "100%",
       boxShadow: phase.peak
-        ? `0 0 24px ${phase.pinColor}44, 0 4px 16px rgba(0,0,0,0.35)`
-        : "0 4px 16px rgba(0,0,0,0.30)",
+        ? `0 0 24px ${phase.pinColor}44, 0 4px 16px rgba(0,0,0,0.18)`
+        : "0 4px 16px rgba(0,0,0,0.12)",
     }}>
       {/* Phase label */}
       <div style={{ fontSize: "13px", fontWeight: 800, color: phase.pinColor, marginBottom: 9, letterSpacing: "0.01em" }}>
@@ -123,9 +123,9 @@ function ZoneCard({ phase }: { phase: Phase }) {
             <div key={z.key} style={{
               display: "flex", alignItems: "center", gap: 3,
               padding: "3px 7px", borderRadius: 6,
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              opacity: 0.38,
+              background: "rgba(0,0,0,0.04)",
+              border: "1px solid rgba(0,0,0,0.10)",
+              opacity: 0.45,
             }}>
               <z.Icon size={10} color="#6b7280" />
               <span style={{ fontSize: "10px", color: "#6b7280" }}>0%</span>
