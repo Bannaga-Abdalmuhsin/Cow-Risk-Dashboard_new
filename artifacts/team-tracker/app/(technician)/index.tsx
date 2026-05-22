@@ -54,7 +54,7 @@ interface FaultPanelProps {
   trackingActive:  boolean;
   accuracy:        number | null;
   speedKmh:        number | null;
-  heartbeatStatus: "ok" | "cached" | "error" | null;
+  heartbeatStatus: "ok" | "cached" | "filtered" | "error" | null;
   etaSecsLeft:     number;
 }
 
@@ -72,13 +72,15 @@ function FaultTrackingPanel({
   const isCritical = fault.severity.toLowerCase() === "critical";
   const stateConf  = MOVEMENT_CONFIG[movementState];
 
-  const connColor = heartbeatStatus === "ok"     ? "#22c55e"
-    : heartbeatStatus === "cached" ? "#f59e0b"
-    : heartbeatStatus === "error"  ? "#ef4444"
+  const connColor = heartbeatStatus === "ok"       ? "#22c55e"
+    : heartbeatStatus === "cached"   ? "#f59e0b"
+    : heartbeatStatus === "filtered" ? "#a855f7"
+    : heartbeatStatus === "error"    ? "#ef4444"
     : "#64748b";
-  const connLabel = heartbeatStatus === "ok"     ? "ONLINE"
-    : heartbeatStatus === "cached" ? "CACHED"
-    : heartbeatStatus === "error"  ? "ERROR"
+  const connLabel = heartbeatStatus === "ok"       ? "ONLINE"
+    : heartbeatStatus === "cached"   ? "CACHED"
+    : heartbeatStatus === "filtered" ? "FILTERED"
+    : heartbeatStatus === "error"    ? "ERROR"
     : "—";
 
   const etaMins = Math.floor(etaSecsLeft / 60);
@@ -195,7 +197,7 @@ export default function TechnicianDutyScreen() {
     heading: number | null; accuracy: number | null;
   } | null>(null);
   const [lastHeartbeatAt,  setLastHeartbeatAt]  = useState<Date | null>(null);
-  const [heartbeatStatus,  setHeartbeatStatus]  = useState<"ok" | "cached" | "error" | null>(null);
+  const [heartbeatStatus,  setHeartbeatStatus]  = useState<"ok" | "cached" | "filtered" | "error" | null>(null);
   const [faultFetchedAt,   setFaultFetchedAt]   = useState<Date>(new Date());
   const [tickMs,           setTickMs]           = useState(Date.now());
   const faultPollRef    = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -255,9 +257,9 @@ export default function TechnicianDutyScreen() {
 
         const sub = await Location.watchPositionAsync(
           {
-            accuracy:         Location.Accuracy.High,
+            accuracy:         Location.Accuracy.BestForNavigation,
             timeInterval:     5_000,
-            distanceInterval: 5,
+            distanceInterval: 1,
           },
           (loc) => {
             const { latitude, longitude, speed, heading, accuracy } = loc.coords;
@@ -495,9 +497,9 @@ export default function TechnicianDutyScreen() {
             borderTopColor: colors.primary, borderTopWidth: 3,
           }]}>
             <MaterialCommunityIcons
-              name={heartbeatStatus === "ok" ? "check-circle-outline" : heartbeatStatus === "cached" ? "cloud-sync-outline" : "sync"}
+              name={heartbeatStatus === "ok" ? "check-circle-outline" : heartbeatStatus === "cached" ? "cloud-sync-outline" : heartbeatStatus === "filtered" ? "filter-outline" : "sync"}
               size={18}
-              color={heartbeatStatus === "ok" ? "#22c55e" : heartbeatStatus === "cached" ? "#f59e0b" : colors.primary}
+              color={heartbeatStatus === "ok" ? "#22c55e" : heartbeatStatus === "cached" ? "#f59e0b" : heartbeatStatus === "filtered" ? "#a855f7" : colors.primary}
             />
             <Text style={[styles.cardLabel, { color: colors.mutedForeground }]}>LAST SYNC</Text>
             <Text style={[styles.cardValue, { color: colors.foreground }]}>

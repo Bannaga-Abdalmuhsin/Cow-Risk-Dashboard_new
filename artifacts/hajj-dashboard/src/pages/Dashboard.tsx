@@ -53,22 +53,112 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   const selectedAnalysis = selectedSiteId ? analyses.find(a => a.site.id === selectedSiteId) ?? null : null;
 
   const [techLocations, setTechLocations] = useState<LiveTechLocation[]>([]);
+  const wsRef   = useRef<WebSocket | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     if (activeTab !== "technicians" && activeTab !== "teams") {
+      wsRef.current?.close();
+      wsRef.current = null;
       if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
       return;
     }
-    const fetchTechs = () => {
-      fetch("/api/team/locations")
-        .then(r => r.ok ? r.json() : Promise.reject())
-        .then((data: LiveTechLocation[]) => setTechLocations(data))
-        .catch(() => {});
+
+    /* initial snapshot via REST */
+    fetch("/api/team/locations")
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then((data: LiveTechLocation[]) => setTechLocations(data))
+      .catch(() => {});
+
+    /* WebSocket real-time subscribe */
+    let dead = false;
+    const wsUrl = window.location.origin.replace(/^http/, "ws") + "/api/team/ws";
+
+    const connect = () => {
+      if (dead) return;
+      const ws = new WebSocket(wsUrl);
+      wsRef.current = ws;
+
+      ws.onopen  = () => ws.send(JSON.stringify({ type: "subscribe" }));
+
+      ws.onmessage = (e) => {
+        try {
+          const msg = JSON.parse(e.data) as Record<string, unknown>;
+          if (msg.type === "locations_snapshot") {
+            const locs = (msg.locations as Array<{
+              userId: number; userName: string; lat: number; lng: number;
+              area: string | null; isOnDuty: boolean; updatedAt: string;
+            }>).map(l => ({
+              userId:    l.userId,
+              userName:  l.userName,
+              lat:       l.lat,
+              lng:       l.lng,
+              area:      l.area,
+              isOnDuty:  l.isOnDuty,
+              updatedAt: l.updatedAt,
+            }));
+            setTechLocations(locs);
+          } else if (msg.type === "location") {
+            const loc = msg as {
+              userId: number; userName: string; lat: number; lng: number;
+              area: string | null; isOnDuty: boolean; updatedAt: string;
+            };
+            setTechLocations(prev => {
+              const next = prev.filter(t => t.userId !== loc.userId);
+              next.push({
+                userId:    loc.userId,
+                userName:  loc.userName,
+                lat:       loc.lat,
+                lng:       loc.lng,
+                area:      loc.area,
+                isOnDuty:  loc.isOnDuty,
+                updatedAt: loc.updatedAt,
+              });
+              return next;
+            });
+          } else if (msg.type === "pong") {
+            /* keepalive ok */
+          }
+        } catch {}
+      };
+
+      ws.onclose = () => {
+        wsRef.current = null;
+        if (!dead) {
+          /* fallback poll at 5 s while WS reconnects */
+          if (!pollRef.current) {
+            const fetchTechs = () => {
+              fetch("/api/team/locations")
+                .then(r => r.ok ? r.json() : Promise.reject())
+                .then((data: LiveTechLocation[]) => setTechLocations(data))
+                .catch(() => {});
+            };
+            pollRef.current = setInterval(fetchTechs, 5_000);
+          }
+          /* try to reconnect in 3 s */
+          setTimeout(connect, 3_000);
+        }
+      };
+
+      ws.onerror = () => ws.close();
     };
-    fetchTechs();
-    pollRef.current = setInterval(fetchTechs, 2000);
-    return () => { if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; } };
+
+    connect();
+
+    /* keepalive ping every 20 s */
+    const pingInterval = setInterval(() => {
+      if (wsRef.current?.readyState === WebSocket.OPEN) {
+        wsRef.current.send(JSON.stringify({ type: "ping" }));
+      }
+    }, 20_000);
+
+    return () => {
+      dead = true;
+      wsRef.current?.close();
+      wsRef.current = null;
+      clearInterval(pingInterval);
+      if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+    };
   }, [activeTab]);
 
   const handleSelectSite = (id: string) => {

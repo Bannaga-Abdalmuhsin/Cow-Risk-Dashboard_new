@@ -21,6 +21,9 @@ TaskManager.defineTask(
 
     const { latitude, longitude, speed, heading, accuracy } = locations[0].coords;
 
+    /* ── 25 m accuracy filter ── discard low-quality readings ── */
+    if (accuracy != null && accuracy > 25) return;
+
     try {
       const raw = await AsyncStorage.getItem(AUTH_KEY);
       if (!raw) return;
@@ -58,14 +61,15 @@ export async function startBackgroundLocationTask(): Promise<boolean> {
     const alreadyRunning = await Location.hasStartedLocationUpdatesAsync(LOCATION_TASK_NAME);
     if (!alreadyRunning) {
       await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-        accuracy:               Location.Accuracy.Balanced,
-        timeInterval:           10000,
-        distanceInterval:       10,
+        accuracy:                   Location.Accuracy.BestForNavigation,
+        timeInterval:               10_000,
+        distanceInterval:           1,           // 1 m minimum displacement
         pausesUpdatesAutomatically: false,
+        activityType:               Location.ActivityType.OtherNavigation,
         foregroundService: {
-          notificationTitle:  "ACES Field Tracker",
-          notificationBody:   "Sharing location during duty hours",
-          notificationColor:  "#8B1A1A",
+          notificationTitle: "ACES Field Tracker",
+          notificationBody:  "Sharing location during duty hours",
+          notificationColor: "#8B1A1A",
         },
         showsBackgroundLocationIndicator: true,
       });

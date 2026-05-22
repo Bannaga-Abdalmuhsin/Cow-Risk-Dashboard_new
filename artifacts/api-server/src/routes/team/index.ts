@@ -1,9 +1,10 @@
 import { Router, type Request, type Response, type NextFunction } from "express";
-import { eq, desc, ne, and, isNull } from "drizzle-orm";
+import { eq, desc, and, isNull } from "drizzle-orm";
 import { db, teamUsersTable, techLocationsTable, assignmentsTable, faultsTable, faultTrackingPointsTable } from "@workspace/db";
 import type { TeamUser } from "@workspace/db";
 import { randomUUID } from "crypto";
 import { sendFcmNotification } from "../../lib/firebase.js";
+import { broadcastLocation } from "../../lib/wsHub.js";
 
 function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const R = 6371;
@@ -116,7 +117,14 @@ router.put("/location", requireAuth, async (req: Request, res: Response): Promis
   };
   if (lat == null || lng == null) { res.status(400).json({ error: "lat/lng required" }); return; }
 
-  const userId    = req.teamUser!.id;
+  /* ── 25 m accuracy filter — silently accept but skip DB write for noisy readings ── */
+  if (accuracy != null && accuracy > 25) {
+    res.json({ ok: true, filtered: true });
+    return;
+  }
+
+  const user      = req.teamUser!;
+  const userId    = user.id;
   const updatedAt = new Date();
 
   await db
@@ -132,6 +140,22 @@ router.put("/location", requireAuth, async (req: Request, res: Response): Promis
         speed: speed ?? null, heading: heading ?? null, accuracy: accuracy ?? null,
       },
     });
+
+  /* ── push real-time update to all WS subscribers ── */
+  broadcastLocation({
+    id:          userId,
+    userId,
+    userName:    user.name,
+    role:        user.role,
+    defaultArea: user.defaultArea ?? null,
+    lat, lng,
+    accuracy: accuracy ?? null,
+    speed:    speed    ?? null,
+    heading:  heading  ?? null,
+    area:     area     ?? null,
+    isOnDuty: isOnDuty ?? true,
+    updatedAt: updatedAt.toISOString(),
+  });
 
   // ── Store breadcrumb when this tech has an active fault ───────────────────
   const [activeFault] = await db

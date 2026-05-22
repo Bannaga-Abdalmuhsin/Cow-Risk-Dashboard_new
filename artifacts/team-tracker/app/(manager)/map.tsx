@@ -48,7 +48,9 @@ export default function ManagerMapScreen() {
   const [message,     setMessage]     = useState("");
   const [sending,     setSending]     = useState(false);
   const [summaryOpen, setSummaryOpen] = useState(true);
+  const wsRef       = useRef<WebSocket | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const wsLiveRef   = useRef(false);
 
   const fetchLocations = useCallback(async () => {
     try {
@@ -68,9 +70,92 @@ export default function ManagerMapScreen() {
   useEffect(() => {
     fetchLocations();
     fetchTotalUsers();
-    intervalRef.current = setInterval(fetchLocations, 10000);
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [fetchLocations, fetchTotalUsers]);
+
+    /* ── WebSocket real-time subscribe ── */
+    const apiBase = (process.env.EXPO_PUBLIC_API_URL ?? "").replace(/\/$/, "") ||
+      "https://4a3b2adb-54bb-4c8a-a7b7-fee922024ba6-00-25arfy9uinng9.picard.replit.dev";
+    const wsUrl = apiBase.replace(/^https?/, s => s === "https" ? "wss" : "ws") + "/api/team/ws";
+
+    let ws: WebSocket;
+    let dead = false;
+
+    const connect = () => {
+      if (dead) return;
+      try {
+        ws = new WebSocket(wsUrl);
+        wsRef.current = ws;
+
+        ws.onopen = () => {
+          if (token) ws.send(JSON.stringify({ type: "auth", token }));
+        };
+
+        ws.onmessage = (e) => {
+          try {
+            const msg = JSON.parse(typeof e.data === "string" ? e.data : "") as Record<string, unknown>;
+
+            if (msg.type === "auth_ok") {
+              wsLiveRef.current = true;
+              setLoading(false);
+              if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+              return;
+            }
+
+            if (msg.type === "location" && wsLiveRef.current) {
+              const loc = msg as {
+                userId: number; userName: string; lat: number; lng: number;
+                area: string | null; isOnDuty: boolean; updatedAt: string;
+                role: string; defaultArea: string | null;
+              };
+              setLocations(prev => {
+                const next = prev.filter(l => l.userId !== loc.userId);
+                next.push({
+                  id:          loc.userId,
+                  userId:      loc.userId,
+                  userName:    loc.userName,
+                  role:        loc.role ?? "technician",
+                  defaultArea: loc.defaultArea ?? null,
+                  lat:         loc.lat,
+                  lng:         loc.lng,
+                  area:        loc.area,
+                  isOnDuty:    loc.isOnDuty,
+                  updatedAt:   loc.updatedAt,
+                });
+                return next;
+              });
+            }
+          } catch {}
+        };
+
+        ws.onclose = () => {
+          wsRef.current   = null;
+          wsLiveRef.current = false;
+          if (!dead) {
+            /* fallback polling every 10 s while WS is down */
+            if (!intervalRef.current) {
+              intervalRef.current = setInterval(fetchLocations, 10_000);
+            }
+          }
+        };
+
+        ws.onerror = () => { ws.close(); };
+      } catch {
+        if (!intervalRef.current) {
+          intervalRef.current = setInterval(fetchLocations, 10_000);
+        }
+      }
+    };
+
+    connect();
+
+    return () => {
+      dead = true;
+      wsRef.current?.close();
+      wsRef.current = null;
+      wsLiveRef.current = false;
+      if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   const onMarkerPress = (loc: TechLocationWithUser) => {
     setSelected(loc);
@@ -104,7 +189,7 @@ export default function ManagerMapScreen() {
         <View>
           <Text style={[styles.headerTitle, { color: colors.foreground }]}>Live Map</Text>
           <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>
-            {totalOn} online · {totalUsers} deployed · refreshes every 10s
+            {totalOn} online · {totalUsers} deployed · live
           </Text>
         </View>
         <TouchableOpacity onPress={logout} style={[styles.iconBtn, { backgroundColor: colors.secondary }]}>

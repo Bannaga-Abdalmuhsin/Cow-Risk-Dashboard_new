@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   GoogleMap,
   OverlayView,
@@ -33,23 +33,10 @@ function HelmetMarker({ color, pulse }: { color: string; pulse: boolean }) {
   return (
     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"
       style={{ filter: `drop-shadow(0 2px 4px rgba(0,0,0,0.6))` }}>
-      {/* dome */}
-      <path
-        d="M5 20 C5 9 10 5 15 5 C20 5 25 9 25 20 Z"
-        fill={color}
-      />
-      {/* brim */}
+      <path d="M5 20 C5 9 10 5 15 5 C20 5 25 9 25 20 Z" fill={color} />
       <rect x="2" y="19" width="26" height="5" rx="2.5" fill={color} />
-      {/* visor strip */}
       <rect x="5" y="19.5" width="20" height="1.5" rx="0.75" fill="rgba(0,0,0,0.2)" />
-      {/* highlight */}
-      <path
-        d="M9 13 Q11 7 15 7"
-        stroke="rgba(255,255,255,0.45)"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      {/* pulse ring when online */}
+      <path d="M9 13 Q11 7 15 7" stroke="rgba(255,255,255,0.45)" strokeWidth="1.8" strokeLinecap="round" />
       {pulse && (
         <circle cx="15" cy="14" r="13" fill="none" stroke={color} strokeWidth="1.5" opacity="0.4">
           <animate attributeName="r" from="12" to="16" dur="1.5s" repeatCount="indefinite" />
@@ -61,41 +48,103 @@ function HelmetMarker({ color, pulse }: { color: string; pulse: boolean }) {
 }
 
 interface Props {
-  analyses: SiteAnalysis[];
-  techLocations: LiveTechLocation[];
+  analyses:       SiteAnalysis[];
+  techLocations:  LiveTechLocation[];
   selectedSiteId: string | null;
-  onSelectSite: (id: string) => void;
+  onSelectSite:   (id: string) => void;
+}
+
+/** ease-in-out quadratic */
+function easeInOut(t: number): number {
+  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 }
 
 export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelectSite }: Props) {
   const { isLoaded, loadError } = useGoogleMaps();
 
-  /* Re-evaluate freshness every 30 s so stale markers turn red / disappear */
+  /* Re-evaluate freshness every 30 s so stale markers turn red */
   const [, setTick] = useState(0);
   useEffect(() => {
     const t = setInterval(() => setTick(n => n + 1), 30_000);
     return () => clearInterval(t);
   }, []);
 
-  const mapRef = useRef<google.maps.Map | null>(null);
+  const mapRef    = useRef<google.maps.Map | null>(null);
   const onLoad    = useCallback((map: google.maps.Map) => { mapRef.current = map; }, []);
   const onUnmount = useCallback(() => { mapRef.current = null; }, []);
 
   const riskSites = useMemo(() => analyses.filter(a => a.overallRisk === "risk"), [analyses]);
   const safeSites = useMemo(() => analyses.filter(a => a.overallRisk === "safe"), [analyses]);
 
-  /*
-   * Visibility rules:
-   *  < 60 min → show on map
-   *  < 15 min → green helmet  (online)
-   * >= 15 min → red helmet    (stale / offline)
-   * >= 60 min → hidden        (removed)
-   */
   const visibleTechs = useMemo(
     () => techLocations.filter(t => minutesAgo(t.updatedAt) < 60),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [techLocations, /* tick dependency handled by state update above */],
+    [techLocations],
   );
+
+  /* ── smooth marker interpolation ────────────────────────────────────────── */
+  const animPositionsRef = useRef(new Map<number, { lat: number; lng: number }>());
+  const animFramesRef    = useRef(new Map<number, number>());
+  const [displayPositions, setDisplayPositions] = useState(
+    new Map<number, { lat: number; lng: number }>(),
+  );
+
+  useEffect(() => {
+    techLocations.forEach(tech => {
+      const target  = { lat: tech.lat, lng: tech.lng };
+      const current = animPositionsRef.current.get(tech.userId);
+
+      if (!current) {
+        /* first appearance — snap into place, no animation */
+        animPositionsRef.current.set(tech.userId, target);
+        setDisplayPositions(new Map(animPositionsRef.current));
+        return;
+      }
+
+      const dLat = Math.abs(current.lat - target.lat);
+      const dLng = Math.abs(current.lng - target.lng);
+      if (dLat < 1e-7 && dLng < 1e-7) return;
+
+      const startLat = current.lat, startLng = current.lng;
+      const t0 = performance.now(), DURATION = 1000;
+      const userId = tech.userId;
+
+      const existing = animFramesRef.current.get(userId);
+      if (existing) cancelAnimationFrame(existing);
+
+      const step = (now: number) => {
+        const t   = Math.min((now - t0) / DURATION, 1);
+        const pos = {
+          lat: startLat + (target.lat - startLat) * easeInOut(t),
+          lng: startLng + (target.lng - startLng) * easeInOut(t),
+        };
+        animPositionsRef.current.set(userId, pos);
+        setDisplayPositions(new Map(animPositionsRef.current));
+        if (t < 1) {
+          animFramesRef.current.set(userId, requestAnimationFrame(step));
+        } else {
+          animFramesRef.current.delete(userId);
+        }
+      };
+      animFramesRef.current.set(userId, requestAnimationFrame(step));
+    });
+
+    /* cleanup removed techs */
+    const techIds = new Set(techLocations.map(t => t.userId));
+    for (const userId of animPositionsRef.current.keys()) {
+      if (!techIds.has(userId)) {
+        animPositionsRef.current.delete(userId);
+        const frame = animFramesRef.current.get(userId);
+        if (frame) cancelAnimationFrame(frame);
+        animFramesRef.current.delete(userId);
+      }
+    }
+  }, [techLocations]);
+
+  /* cleanup rAF on unmount */
+  useEffect(() => () => {
+    for (const frame of animFramesRef.current.values()) cancelAnimationFrame(frame);
+  }, []);
 
   if (loadError) {
     return (
@@ -173,17 +222,19 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
         </OverlayView>
       ))}
 
-      {/* ── Technician helmet markers ──────────────────────────────────── */}
+      {/* ── Technician helmet markers — smoothly interpolated ─────────── */}
       {visibleTechs.map(t => {
-        const mins    = minutesAgo(t.updatedAt);
-        const online  = mins < 15;
-        const color   = online ? "#16a34a" : "#dc2626";
-        const label   = t.userName.split(" ")[0];
+        const mins   = minutesAgo(t.updatedAt);
+        const online = mins < 15;
+        const color  = online ? "#16a34a" : "#dc2626";
+        const label  = t.userName.split(" ")[0];
+        /* use animated position if available, else raw */
+        const pos    = displayPositions.get(t.userId) ?? { lat: t.lat, lng: t.lng };
 
         return (
           <OverlayView
             key={`tech-${t.userId}`}
-            position={{ lat: t.lat, lng: t.lng }}
+            position={pos}
             mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
           >
             <div
@@ -198,10 +249,7 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
                 gap: 1,
               }}
             >
-              {/* Helmet icon */}
               <HelmetMarker color={color} pulse={online} />
-
-              {/* Name tag */}
               <div style={{
                 background:   online ? "rgba(22,163,74,0.85)" : "rgba(220,38,38,0.85)",
                 color:        "#fff",
@@ -220,8 +268,6 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
                   {mins}m
                 </span>
               </div>
-
-              {/* Pin pointer */}
               <div style={{
                 width: 0, height: 0,
                 borderLeft:  "4px solid transparent",

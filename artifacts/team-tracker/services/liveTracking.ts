@@ -1,11 +1,12 @@
 /**
  * ACES Live Fault Tracking Service
  * Handles background GPS heartbeats during COW fault response.
- * - Sends every 10s OR 10m of movement (whichever first)
+ * - Sends every 10s OR 1m of movement (whichever first)
+ * - PRIORITY_HIGH_ACCURACY / kCLLocationAccuracyBest
+ * - 25 m accuracy filter — discards low-quality readings
  * - Full speed/heading/accuracy payload stored as breadcrumbs server-side
  * - Offline cache with automatic retry when connection restored
  * - Auto-arrival detection (<50 m from site)
- * - Logs all key events for diagnostics
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from "expo-location";
@@ -101,6 +102,13 @@ TaskManager.defineTask(
     if (!locs?.length) return;
 
     const { latitude, longitude, speed, heading, accuracy } = locs[0].coords;
+
+    /* ── 25 m accuracy filter ── discard GPS noise ── */
+    if (accuracy != null && accuracy > 25) {
+      console.log(`[LiveTracking] BG skipped: accuracy=${accuracy?.toFixed(0)}m > 25m`);
+      return;
+    }
+
     const speedKmh = speed != null ? Math.round(speed * 3.6 * 10) / 10 : null;
 
     try {
@@ -135,11 +143,10 @@ TaskManager.defineTask(
           ` speed=${speedKmh ?? "—"} km/h acc=${accuracy?.toFixed(0) ?? "—"}m`,
         );
 
-        // Auto-arrival: stop tracking when within 50 m of site
         const ctxRaw = await AsyncStorage.getItem(FAULT_CONTEXT_KEY);
         if (ctxRaw) {
-          const ctx    = JSON.parse(ctxRaw) as FaultContext;
-          const distM  = haversineMeters(latitude, longitude, ctx.siteLat, ctx.siteLng);
+          const ctx   = JSON.parse(ctxRaw) as FaultContext;
+          const distM = haversineMeters(latitude, longitude, ctx.siteLat, ctx.siteLng);
           if (distM < 50) {
             console.log("[LiveTracking] Within 50 m of site — auto-stopping tracking");
             await stopFaultTracking();
@@ -179,10 +186,11 @@ export async function startFaultTracking(ctx: FaultContext): Promise<boolean> {
     const already = await Location.hasStartedLocationUpdatesAsync(LOCATION_TRACKING_TASK);
     if (!already) {
       await Location.startLocationUpdatesAsync(LOCATION_TRACKING_TASK, {
-        accuracy:                  Location.Accuracy.BestForNavigation,
-        timeInterval:              10_000,  // 10 seconds
-        distanceInterval:          10,      // OR 10 metres
+        accuracy:                   Location.Accuracy.BestForNavigation,
+        timeInterval:               10_000,
+        distanceInterval:           1,          // 1 m minimum displacement
         pausesUpdatesAutomatically: false,
+        activityType:               Location.ActivityType.OtherNavigation,
         foregroundService: {
           notificationTitle: "🛡 ACES — COW Fault Active",
           notificationBody:  "Sending live position to dispatch centre",
@@ -215,15 +223,25 @@ export async function isFaultTrackingActive(): Promise<boolean> {
   catch { return false; }
 }
 
-/** Send a single heartbeat from the foreground. Returns connection status. */
+/**
+ * Send a single heartbeat from the foreground via HTTP PUT.
+ * Accuracy readings > 25 m are filtered to avoid GPS noise.
+ * Returns connection status.
+ */
 export async function sendHeartbeatNow(
   token:    string,
   lat:      number,
   lng:      number,
-  speed:    number | null,   // m/s from Location
+  speed:    number | null,
   heading:  number | null,
   accuracy: number | null,
-): Promise<"ok" | "cached" | "error"> {
+): Promise<"ok" | "cached" | "filtered" | "error"> {
+  /* 25 m accuracy filter */
+  if (accuracy != null && accuracy > 25) {
+    console.log(`[LiveTracking] FG skipped: accuracy=${accuracy.toFixed(0)}m > 25m`);
+    return "filtered";
+  }
+
   try {
     const base    = getApiBase();
     const payload = {
@@ -241,11 +259,11 @@ export async function sendHeartbeatNow(
     });
     if (res.ok) {
       await flushCache(token, base);
-      console.log(`[LiveTracking] Foreground heartbeat OK: ${lat.toFixed(5)},${lng.toFixed(5)}`);
+      console.log(`[LiveTracking] FG heartbeat OK: ${lat.toFixed(5)},${lng.toFixed(5)}`);
       return "ok";
     }
     await cachePayload({ ...payload, timestamp: new Date().toISOString() });
-    console.log("[LiveTracking] Foreground heartbeat failed — cached");
+    console.log("[LiveTracking] FG heartbeat failed — cached");
     return "cached";
   } catch (err) {
     console.log("[LiveTracking] sendHeartbeatNow error:", String(err));
@@ -261,6 +279,6 @@ export function getMovementState(
   if (!lastUpdate) return "offline";
   const secsAgo = (Date.now() - lastUpdate.getTime()) / 1000;
   if (secsAgo > 45) return "offline";
-  if (speedMs != null && speedMs > 0.8) return "moving";  // > ~3 km/h
+  if (speedMs != null && speedMs > 0.8) return "moving";
   return "stopped";
 }

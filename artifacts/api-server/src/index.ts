@@ -2,6 +2,7 @@ import app from "./app.js";
 import { logger } from "./lib/logger.js";
 import { seedTeam } from "./seed.js";
 import { pool } from "@workspace/db";
+import { handleUpgrade } from "./lib/wsHub.js";
 
 const PORT = Number(process.env.PORT ?? 8080);
 
@@ -38,7 +39,7 @@ async function runMigrations() {
   logger.info("Migrations complete");
 }
 
-app.listen(PORT, "0.0.0.0", async () => {
+const server = app.listen(PORT, "0.0.0.0", async () => {
   logger.info({ port: PORT }, "API server started");
   try {
     await runMigrations();
@@ -50,6 +51,15 @@ app.listen(PORT, "0.0.0.0", async () => {
   } catch (err) {
     logger.error({ err }, "Seed failed — continuing anyway");
   }
+
+  // ── WebSocket upgrade ─────────────────────────────────────────────────────
+  server.on("upgrade", (req, socket, head) => {
+    if (req.url === "/api/team/ws") {
+      handleUpgrade(req, socket, head as Buffer);
+    } else {
+      socket.destroy();
+    }
+  });
 
   // ── PBI background sync ──────────────────────────────────────────────────
   // Runs once on startup, then every 60 s.

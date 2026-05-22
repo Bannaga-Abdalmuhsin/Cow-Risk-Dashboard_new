@@ -17,11 +17,13 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.acesmsd.fieldtracker",
-      "buildNumber": "4",
+      "buildNumber": "5",
       "icon": "./assets/images/app-icon.png",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "ACES Field Tracker shares your location with the operations manager during duty hours.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "ACES Field Tracker needs Always-On location access to keep sharing your position when you switch to another app during duty hours.",
+        "NSLocationAlwaysUsageDescription": "ACES Field Tracker needs Always-On location access to keep sharing your position when you switch to another app during duty hours.",
+        "UIBackgroundModes": ["location"],
         "ITSAppUsesNonExemptEncryption": false
       },
       "config": {
@@ -30,7 +32,7 @@
     },
     "android": {
       "package": "com.acesmsd.fieldtracker",
-      "versionCode": 13,
+      "versionCode": 14,
       "icon": "./assets/images/app-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/app-icon.png",

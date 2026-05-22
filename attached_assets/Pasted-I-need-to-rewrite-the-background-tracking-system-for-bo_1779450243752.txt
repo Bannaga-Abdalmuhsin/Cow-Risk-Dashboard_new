@@ -1,0 +1,27 @@
+I need to rewrite the background tracking system for both the Android and iOS apps to eliminate the location delay and ensure highly precise, real-time tracking (similar to WhatsApp live location sharing). 
+
+Please update the code to implement the following architecture, persistence, and precision rules:
+
+1. ARCHITECTURE & STREAMING:
+- Switch the location reporting mechanism from standard HTTP polling to a real-time streaming connection (such as WebSockets or a persistent lightweight background connection).
+- On the Google Maps manager view, implement smooth marker interpolation (animation) to glide the technician's marker smoothly from its old coordinate to the new coordinate over a 1000ms duration, instead of letting it snap or jump rigidly.
+
+2. ANDROID BACKGROUND PERSISTENCE:
+- Convert the background location tracking logic into an official Android Foreground Service with the type set to 'foregroundServiceType="location"'.
+- Implement a persistent status bar notification so the operating system recognizes the app is actively working and does not throttle or freeze the 10-second background timer when the phone is locked or the app is minimized.
+
+3. IOS BACKGROUND PERSISTENCE:
+- Update the iOS CLLocationManager configuration to prevent Apple from suspending the app.
+- Explicitly set 'allowsBackgroundLocationUpdates = true'.
+- Explicitly set 'pausesLocationUpdatesAutomatically = false'.
+- Set the 'activityType' to 'CLActivityTypeAutomotiveNavigation' or 'CLActivityTypeOtherNavigation' to maintain continuous streaming while the technician moves.
+
+4. HIGH-PRECISION GPS CONFIGURATION:
+- Android: Force the FusedLocationProviderClient to use 'Priority.PRIORITY_HIGH_ACCURACY' to guarantee pure satellite GPS usage over low-power cell/Wi-Fi triangulation. Set the minimum update distance to 1 meter.
+- iOS: Set 'desiredAccuracy' to 'kCLLocationAccuracyBest' and ensure 'accuracyAuthorization' is verified for '.fullAccuracy' (iOS 14+).
+
+5. ACCURACY DATA FILTERING:
+- On both Android and iOS, implement a data filter before sending coordinates to the backend. 
+- Check the horizontal accuracy radius (in meters) of every captured location. If the accuracy reading is greater than 25 meters, discard that specific coordinate update. This ensures bad or bounced GPS data (from indoor spaces or tall buildings) does not cause the marker to jump inaccurately on the map.
+
+Please generate the updated native code blocks, update the respective permissions configuration files (AndroidManifest.xml / Info.plist), and connect them to the real-time map tracking view.
