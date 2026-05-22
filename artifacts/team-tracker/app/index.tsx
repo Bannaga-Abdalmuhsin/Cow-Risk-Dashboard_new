@@ -29,8 +29,8 @@ function RadarRing({ delay, size }: { delay: number; size: number }) {
   }, []);
 
   const style = useAnimatedStyle(() => ({
-    transform: [{ scale: 0.3 + anim.value * 1.4 }],
-    opacity:   0.55 * (1 - anim.value),
+    transform: [{ scale: 0.1 + anim.value * 1.8 }],
+    opacity:   0.75 * (1 - anim.value),
   }));
 
   return (
@@ -125,8 +125,11 @@ export default function LoginScreen() {
           <View style={styles.logoBlock}>
             <View style={styles.logoGlow}>
               <Image
-                source={require("../assets/images/aces-logo.png")}
-                style={styles.logoImage}
+                source={require("../assets/images/aces-logo-clean.png")}
+                style={[
+                  styles.logoImage,
+                  Platform.OS === "web" && ({ mixBlendMode: "screen" } as object),
+                ]}
                 resizeMode="contain"
               />
             </View>
@@ -241,8 +244,8 @@ const styles = StyleSheet.create({
   },
   radarRing:      {
     position: "absolute",
-    borderWidth: 1.5,
-    borderColor: "#174EA6",
+    borderWidth: 2,
+    borderColor: "#2B6FE8",
   },
   gridOverlay:    {
     position: "absolute", inset: 0,
@@ -258,9 +261,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
     shadowRadius: 30,
-    elevation: 10,
   },
-  logoImage:      { width: 320, height: 124, tintColor: "#E8F4FF" },
+  logoImage:      { width: 320, height: 124 },
   missionBadge:   {
     flexDirection: "row", alignItems: "center", gap: 6,
     backgroundColor: "rgba(255,255,255,0.06)",
