@@ -254,13 +254,16 @@ const styles = StyleSheet.create({
 
   logoBlock:      { alignItems: "center", gap: 12 },
   logoGlow:       {
-    shadowColor: "#174EA6",
+    backgroundColor: "#000",
+    borderRadius: 16,
+    overflow: "hidden" as const,
+    shadowColor: "#D62828",
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 30,
-    elevation: 10,
+    shadowOpacity: 0.5,
+    shadowRadius: 28,
+    elevation: 12,
   },
-  logoImage:      { width: 320, height: 124, tintColor: "#E8F4FF" },
+  logoImage:      { width: 320, height: 160 },
   missionBadge:   {
     flexDirection: "row", alignItems: "center", gap: 6,
     backgroundColor: "rgba(255,255,255,0.06)",
