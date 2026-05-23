@@ -3751,7 +3751,7 @@
     "CWN062": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
     "CWN038": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526,   lat: 21.3332,   lng: 39.9755  },
     "CWN907": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
-    "CWN099": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815,    lat: 20.9965,   lng: 39.5882  },
+    "CWN099": { escalationTeam: "Umair",          hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885,    lat: 21.3795,   lng: 39.9013  },
     "CWN092": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
     "CWN206": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632,  lat: 21.3906,   lng: 39.9242  },
   };
