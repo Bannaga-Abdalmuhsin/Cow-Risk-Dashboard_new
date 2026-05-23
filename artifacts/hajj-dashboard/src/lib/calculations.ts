@@ -164,7 +164,6 @@ function riskFromMargin(
 
 // ─── Scenario Engine ──────────────────────────────────────────────────────────
 export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
-  if (site.placeholderSafe) return [];
 
   // Pre-computed per-site values
   const primePowerKw  = calcGeneratorNetPower(site.generatorKva, site.generatorAge);
