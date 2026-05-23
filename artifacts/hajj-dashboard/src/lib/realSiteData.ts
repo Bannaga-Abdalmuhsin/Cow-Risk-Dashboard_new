@@ -3802,12 +3802,18 @@
     const primeNetKw  = (isSG || isDG) ? s.primeGenNetPowerKw : s.primeSecNetPowerKw;
     const backupNetKw = s.backupGenNetPowerKw;
     const mc = MC_LOOKUP[s.cowId];
+    // Saudi Arabia latitudes are ~19–24. Any site whose raw latitude is >30
+    // has a corrupted value (longitude was copied into the latitude field).
+    // Fall back to the MC cluster lat/lng for those sites.
+    const hasCorruptLat = s.latitude > 30;
+    const siteLat = hasCorruptLat ? (mc?.mcLat ?? s.latitude) : s.latitude;
+    const siteLng = hasCorruptLat ? (mc?.mcLng ?? s.longitude) : s.longitude;
     return {
       id:        s.cowId,
       name:      s.cowId,
       location:  s.location,
-      lat:       mc?.lat ?? s.latitude,
-      lng:       mc?.lng ?? s.longitude,
+      lat:       siteLat,
+      lng:       siteLng,
       siteType:  isOutdoor ? "outdoor_cabinet" : "shelter",
       // DG treated same as SB: Gen1 = prime source, Gen2 = backup source
       powerConfig: isSG ? "single_generator" : "commercial_with_backup",
