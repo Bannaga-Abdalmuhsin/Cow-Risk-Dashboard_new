@@ -3678,7 +3678,7 @@
     "CWN960": { escalationTeam: "Arif",          hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
     "CWN072": { escalationTeam: "Muath",          hajjMC: "CWN072",    mcLat: 21.34196,   mcLng: 39.97602    },
     "CWN922": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
-    "CWN970": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN970": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632,  lat: 21.3935,   lng: 39.9200  },
     "CWN992": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
     "CWN021": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
     "CWN997": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
@@ -3709,9 +3709,9 @@
     "CWN084": { escalationTeam: "Muath",          hajjMC: "CWN072",    mcLat: 21.34196,   mcLng: 39.97602    },
     "CWN301": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
     "CWN201": { escalationTeam: "Faroq",          hajjMC: "CWN978",    mcLat: 21.421776,  mcLng: 39.891894   },
-    "CWN208": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN208": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632,  lat: 21.3876,   lng: 39.9200  },
     "CWN001": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
-    "CWN080": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN080": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526,   lat: 21.3302,   lng: 39.9715  },
     "CWN078": { escalationTeam: "Muath",          hajjMC: "CWN072",    mcLat: 21.34196,   mcLng: 39.97602    },
     "CWN075": { escalationTeam: "Muath",          hajjMC: "CWN072",    mcLat: 21.34196,   mcLng: 39.97602    },
     "CWN087": { escalationTeam: "Arif",           hajjMC: "CWN108",    mcLat: 21.34916,   mcLng: 39.98367    },
@@ -3746,14 +3746,14 @@
     "CWN079": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
     "CWN903": { escalationTeam: "Younis",         hajjMC: "CWN089",    mcLat: 21.384184,  mcLng: 39.910808   },
     "CWN102": { escalationTeam: "Ali Nasser",     hajjMC: "CWN991",    mcLat: 21.37224,   mcLng: 39.93826    },
-    "CWN022": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN022": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526,   lat: 21.3362,   lng: 39.9715  },
     "CWN205": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
     "CWN062": { escalationTeam: "Akhttar",        hajjMC: "CWN062",    mcLat: 21.3818,    mcLng: 39.89885    },
-    "CWN038": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
+    "CWN038": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526,   lat: 21.3332,   lng: 39.9755  },
     "CWN907": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
-    "CWN099": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815    },
+    "CWN099": { escalationTeam: "Umair",          hajjMC: "Makkah MC", mcLat: 20.99354,   mcLng: 39.58815,    lat: 20.9965,   lng: 39.5882  },
     "CWN092": { escalationTeam: "Nadeem",         hajjMC: "CWN092",    mcLat: 21.333244,  mcLng: 39.971526   },
-    "CWN206": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632  },
+    "CWN206": { escalationTeam: "Nasser",         hajjMC: "CWN066",    mcLat: 21.3905912, mcLng: 39.9199632,  lat: 21.3906,   lng: 39.9242  },
   };
   // ─────────────────────────────────────────────────────────────────────────────
 
@@ -3804,10 +3804,11 @@
     const mc = MC_LOOKUP[s.cowId];
     // Saudi Arabia latitudes are ~19–24. Any site whose raw latitude is >30
     // has a corrupted value (longitude was copied into the latitude field).
-    // Fall back to the MC cluster lat/lng for those sites.
+    // Prefer an explicit individual lat/lng override in MC_LOOKUP (mc.lat/mc.lng)
+    // so stacked sites can be spread apart; fall back to cluster MC coords.
     const hasCorruptLat = s.latitude > 30;
-    const siteLat = hasCorruptLat ? (mc?.mcLat ?? s.latitude) : s.latitude;
-    const siteLng = hasCorruptLat ? (mc?.mcLng ?? s.longitude) : s.longitude;
+    const siteLat = mc?.lat  ?? (hasCorruptLat ? (mc?.mcLat ?? s.latitude)  : s.latitude);
+    const siteLng = mc?.lng  ?? (hasCorruptLat ? (mc?.mcLng ?? s.longitude) : s.longitude);
     return {
       id:        s.cowId,
       name:      s.cowId,
