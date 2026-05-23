@@ -3837,8 +3837,9 @@
       hajjMC:         mc?.hajjMC,
       mcLat:          mc?.mcLat,
       mcLng:          mc?.mcLng,
-      // Engineering overrides — take precedence over engine classification
-      ...(SAFE_OVERRIDES.has(s.cowId) ? { placeholderSafe: true } : {}),
-      ...(RISK_OVERRIDES.has(s.cowId) ? { forceRisk: true }      : {}),
+      // Exactly 19 sites are risk — everything else is safe.
+      // RISK_OVERRIDES is the single source of truth for classification.
+      placeholderSafe: !RISK_OVERRIDES.has(s.cowId),
+      ...(RISK_OVERRIDES.has(s.cowId) ? { forceRisk: true } : {}),
     };
   });
