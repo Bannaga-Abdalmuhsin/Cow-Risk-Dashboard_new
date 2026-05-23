@@ -121,14 +121,13 @@ function ZoneCard({ phase }: { phase: Phase }) {
         <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: activeZones.length > 0 ? 8 : 0 }}>
           {dimZones.map(z => (
             <div key={z.key} style={{
-              display: "flex", alignItems: "center", gap: 3,
-              padding: "3px 7px", borderRadius: 6,
-              background: "rgba(0,0,0,0.04)",
-              border: "1px solid rgba(0,0,0,0.10)",
-              opacity: 0.45,
+              display: "flex", alignItems: "center", gap: 4,
+              padding: "4px 8px", borderRadius: 6,
+              background: "rgba(0,0,0,0.06)",
+              border: "1px solid rgba(0,0,0,0.15)",
             }}>
-              <z.Icon size={10} color="#6b7280" />
-              <span style={{ fontSize: "10px", color: "#6b7280" }}>0%</span>
+              <z.Icon size={13} color="#111827" />
+              <span style={{ fontSize: "12px", fontWeight: 600, color: "#111827" }}>0%</span>
             </div>
           ))}
         </div>
