@@ -32,6 +32,7 @@ export interface SiteConfig {
   // All types run S1–S9
   powerConfig: "single_generator" | "commercial_with_backup";
   placeholderSafe?: boolean;
+  forceRisk?: boolean;       // confirmed-at-risk override — forces red regardless of engine output
 
   // Prime power source
   generatorKva: number;    // KVA  (SB: SEC_Amps × 0.5, age=0; SG: gen KVA)
@@ -354,8 +355,10 @@ export function analyzeSite(site: SiteConfig): SiteAnalysis {
   const s9 = scenarios.find(s => s.scenarioId === 9);
   const batteryInsufficient = s9 ? s9.batteryRisk === "risk" : false;
 
-  const overallRisk: "safe" | "risk" =
+  const engineRisk: "safe" | "risk" =
     hasRisk || batteryInsufficient ? "risk" : "safe";
+
+  const overallRisk: "safe" | "risk" = site.forceRisk ? "risk" : engineRisk;
 
   const worstRiskScore = Math.max(...scenarios.map(s => s.riskScore));
 

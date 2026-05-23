@@ -3769,6 +3769,32 @@
     "CWN074", // Muzdalifah SB — battery 0.833 h, confirmed safe
   ]);
 
+  /**
+   * Sites confirmed at-risk by field engineering assessment.
+   * These are forced red in the heatmap and site list regardless of engine output.
+   */
+  const RISK_OVERRIDES = new Set([
+    "CWN076",
+    "CWN083",
+    "CWN050",
+    "CWN777",
+    "CWN101",
+    "CWN998",
+    "CWN967",
+    "CWN994",
+    "CWN081",
+    "CWN970",
+    "CWN208",
+    "CWN022",
+    "CWN099",
+    "CWN996",
+    "CWN092",
+    "CWN062",
+    "CWN080",
+    "CWN038",
+    "CWN206",
+  ]);
+
   export const ALL_SITES: SiteConfig[] = realSiteData.map((s) => {
     const isSG = s.powerSource === "SG";
     const isDG = s.powerSource === "DG";
@@ -3811,7 +3837,8 @@
       hajjMC:         mc?.hajjMC,
       mcLat:          mc?.mcLat,
       mcLng:          mc?.mcLng,
-      // Engineering safe override — suppresses computed risk classification
+      // Engineering overrides — take precedence over engine classification
       ...(SAFE_OVERRIDES.has(s.cowId) ? { placeholderSafe: true } : {}),
+      ...(RISK_OVERRIDES.has(s.cowId) ? { forceRisk: true }      : {}),
     };
   });
