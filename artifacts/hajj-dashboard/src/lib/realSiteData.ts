@@ -3759,6 +3759,16 @@
 
   const GEN_FACTOR = 0.8 * 0.87 * 0.9;
 
+  /**
+   * Sites confirmed safe by field engineering assessment despite the engine
+   * flagging them (e.g. battery backup marginally under 1 h threshold).
+   * Add/remove cowIds here to override the computed risk classification.
+   */
+  const SAFE_OVERRIDES = new Set([
+    "CWN002", // Mina SB — battery 0.95 h, confirmed safe
+    "CWN074", // Muzdalifah SB — battery 0.833 h, confirmed safe
+  ]);
+
   export const ALL_SITES: SiteConfig[] = realSiteData.map((s) => {
     const isSG = s.powerSource === "SG";
     const isDG = s.powerSource === "DG";
@@ -3801,5 +3811,7 @@
       hajjMC:         mc?.hajjMC,
       mcLat:          mc?.mcLat,
       mcLng:          mc?.mcLng,
+      // Engineering safe override — suppresses computed risk classification
+      ...(SAFE_OVERRIDES.has(s.cowId) ? { placeholderSafe: true } : {}),
     };
   });
