@@ -153,7 +153,7 @@ export function DeploymentTimeline() {
       }}>
         <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: "50%", background: "#22c55e", flexShrink: 0, boxShadow: "0 0 8px #22c55e" }} />
         <span style={{ fontSize: "18px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.01em", textAlign: "center", lineHeight: 1.25 }}>
-          Auto Dispatched Triggered by Mobile App as per Pilgrims Availability
+          Auto Dispatch Triggered by Mobile App as per Pilgrims Availability
         </span>
         <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: "50%", background: "#22c55e", flexShrink: 0, boxShadow: "0 0 8px #22c55e" }} />
       </div>
