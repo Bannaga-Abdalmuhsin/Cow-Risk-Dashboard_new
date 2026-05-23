@@ -38,7 +38,7 @@ const PHASES: Phase[] = [
   { day: "10", date: "10 Dhu Alhijah", label: "Return Surge",       pinColor: "#ef4444", above: false,
     zones: { mina: 88, arafat: 0, muzdalifa: 0, haram: 30, entrance: 0 } },
   { day: "11", date: "11 Dhu Alhijah", label: "Sustained Ops",      pinColor: "#ef4444", above: true,
-    zones: { mina: 71, arafat: 0, muzdalifa: 0, haram: 0, entrance: 0 } },
+    zones: { mina: 71, arafat: 0, muzdalifa: 0, haram: 30, entrance: 0 } },
   { day: "12", date: "12 Dhu Alhijah", label: "Reduced Load",       pinColor: "#9ca3af", above: false,
     zones: { mina: 44, arafat: 0, muzdalifa: 0, haram: 52, entrance: 44 } },
   { day: "13", date: "13 Dhu Alhijah", label: "Final Phase",        pinColor: "#6b7280", above: true,
@@ -143,6 +143,19 @@ export function DeploymentTimeline() {
     <div style={{ height: "calc(100vh - 148px)", overflow: "hidden", display: "flex", flexDirection: "column", padding: "8px 12px 0" }}>
 
       {/* Header */}
+      <div style={{ marginBottom: 6, flexShrink: 0 }}>
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 6,
+          background: "linear-gradient(135deg, #4a0e8f18 0%, #6b21c818 100%)",
+          border: "1px solid #7c3aed40",
+          borderRadius: 8, padding: "4px 10px",
+          fontSize: "10px", fontWeight: 600, color: "#6b21c8",
+          letterSpacing: "0.01em",
+        }}>
+          <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#22c55e", flexShrink: 0 }} />
+          Team will be automatically updated as per Pilgrims availability via Mobile App
+        </div>
+      </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 8, flexShrink: 0 }}>
         <div>
           <div style={{ fontSize: "13px", fontWeight: 700, color: "var(--foreground)" }}>Hajj 1447 — Team Deployment Timeline</div>
