@@ -142,19 +142,20 @@ export function DeploymentTimeline() {
   return (
     <div style={{ height: "calc(100vh - 148px)", overflow: "hidden", display: "flex", flexDirection: "column", padding: "8px 12px 0" }}>
 
-      {/* Header */}
-      <div style={{ marginBottom: 6, flexShrink: 0 }}>
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 6,
-          background: "linear-gradient(135deg, #4a0e8f18 0%, #6b21c818 100%)",
-          border: "1px solid #7c3aed40",
-          borderRadius: 8, padding: "4px 10px",
-          fontSize: "10px", fontWeight: 600, color: "#6b21c8",
-          letterSpacing: "0.01em",
-        }}>
-          <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#22c55e", flexShrink: 0 }} />
-          Team will be automatically updated as per Pilgrims availability via Mobile App
-        </div>
+      {/* Top title card */}
+      <div style={{
+        flexShrink: 0, marginBottom: 8,
+        background: "linear-gradient(135deg, #4a0e8f 0%, #6b21c8 100%)",
+        borderRadius: 12,
+        padding: "14px 20px",
+        display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+        boxShadow: "0 4px 16px rgba(74,14,143,0.30)",
+      }}>
+        <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: "50%", background: "#22c55e", flexShrink: 0, boxShadow: "0 0 8px #22c55e" }} />
+        <span style={{ fontSize: "18px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.01em", textAlign: "center", lineHeight: 1.25 }}>
+          Auto Dispatched Triggered by Mobile App as per Pilgrims Availability
+        </span>
+        <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: "50%", background: "#22c55e", flexShrink: 0, boxShadow: "0 0 8px #22c55e" }} />
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 8, flexShrink: 0 }}>
         <div>
