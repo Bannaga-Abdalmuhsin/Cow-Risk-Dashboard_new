@@ -145,14 +145,14 @@ export function DeploymentTimeline() {
       <div style={{
         position: "absolute",
         top: "50%", left: "50%",
-        width: "60%",
+        width: "30%",
         aspectRatio: "1",
         backgroundImage: "url('/aces-app-icon.png')",
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         opacity: 0.06,
-        transform: "translate(-50%, -50%) rotate(-18deg)",
+        transform: "translate(-50%, -50%) rotate(0deg)",
         pointerEvents: "none",
         zIndex: 0,
       }} />
