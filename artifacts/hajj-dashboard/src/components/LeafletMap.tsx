@@ -252,19 +252,22 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
           </Marker>
         ))}
 
-        {showMarkers && analyses.map(a => {
+        {analyses.map(a => {
+          // Risk sites are always shown as distinct markers so all 19 are visible.
+          // Safe sites only appear as markers when the "Show Markers" toggle is on.
+          if (a.overallRisk !== "risk" && !showMarkers) return null;
           const isSelected = a.site.id === selectedSiteId;
           const color = RISK_COLORS[a.overallRisk];
           return (
             <CircleMarker
               key={a.site.id}
               center={[a.site.lat, a.site.lng]}
-              radius={isSelected ? 11 : 7}
+              radius={isSelected ? 11 : a.overallRisk === "risk" ? 8 : 7}
               pathOptions={{
                 color: isSelected ? "#4A0E8F" : color,
                 fillColor: color,
                 fillOpacity: RISK_FILL_OPACITY[a.overallRisk],
-                weight: isSelected ? 3 : 1.5,
+                weight: isSelected ? 3 : a.overallRisk === "risk" ? 2 : 1.5,
               }}
               eventHandlers={{
                 click: () => onSelectSite(a.site.id),
