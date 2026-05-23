@@ -150,8 +150,19 @@ export function DeploymentTimeline() {
         padding: "14px 20px",
         display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
         boxShadow: "0 4px 16px rgba(74,14,143,0.30)",
+        position: "relative",
+        overflow: "hidden",
       }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, width: "100%" }}>
+        {/* Background app icon image */}
+        <div style={{
+          position: "absolute", inset: 0,
+          backgroundImage: "url('/aces-app-icon.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.12,
+          borderRadius: 12,
+        }} />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, width: "100%", position: "relative", zIndex: 1 }}>
           <div style={{ flexShrink: 0, background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Smartphone size={26} color="#ffffff" />
           </div>
