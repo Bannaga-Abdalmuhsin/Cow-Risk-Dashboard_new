@@ -153,14 +153,19 @@ export function DeploymentTimeline() {
         position: "relative",
         overflow: "hidden",
       }}>
-        {/* Background app icon image */}
+        {/* Background app icon image — tilted */}
         <div style={{
-          position: "absolute", inset: 0,
+          position: "absolute",
+          top: "-20%", left: "30%",
+          width: "55%", height: "160%",
           backgroundImage: "url('/aces-app-icon.png')",
-          backgroundSize: "cover",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          opacity: 0.12,
-          borderRadius: 12,
+          opacity: 0.15,
+          transform: "rotate(-18deg)",
+          transformOrigin: "center center",
+          borderRadius: 24,
         }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, width: "100%", position: "relative", zIndex: 1 }}>
           <div style={{ flexShrink: 0, background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
