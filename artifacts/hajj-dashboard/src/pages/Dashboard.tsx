@@ -36,8 +36,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
   const analyses = useMemo(() => ALL_SITES.map(analyzeSite), []);
 
-  const safeCount    = 60;
-  const riskCount    = 19;
+  const riskCount = useMemo(() => analyses.filter(a => a.overallRisk === "risk").length, [analyses]);
+  const safeCount = useMemo(() => analyses.filter(a => a.overallRisk === "safe").length, [analyses]);
   const surveyedCount = Math.min(analyses.length, TOTAL_FLEET);
   const pendingCount  = Math.max(0, TOTAL_FLEET - analyses.length);
   const totalRiskFlags = analyses.reduce((sum, a) =>
