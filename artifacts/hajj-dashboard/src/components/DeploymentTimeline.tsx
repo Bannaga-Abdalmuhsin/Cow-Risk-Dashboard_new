@@ -140,7 +140,22 @@ function ZoneCard({ phase }: { phase: Phase }) {
 /* ── Main ── */
 export function DeploymentTimeline() {
   return (
-    <div style={{ height: "calc(100vh - 148px)", overflow: "hidden", display: "flex", flexDirection: "column", padding: "8px 12px 0" }}>
+    <div style={{ height: "calc(100vh - 148px)", overflow: "hidden", display: "flex", flexDirection: "column", padding: "8px 12px 0", position: "relative" }}>
+      {/* Tilted app icon watermark — behind everything */}
+      <div style={{
+        position: "absolute",
+        top: "50%", left: "50%",
+        width: "60%",
+        aspectRatio: "1",
+        backgroundImage: "url('/aces-app-icon.png')",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        opacity: 0.06,
+        transform: "translate(-50%, -50%) rotate(-18deg)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
 
       {/* Top title card */}
       <div style={{
@@ -153,20 +168,6 @@ export function DeploymentTimeline() {
         position: "relative",
         overflow: "hidden",
       }}>
-        {/* Background app icon image — tilted */}
-        <div style={{
-          position: "absolute",
-          top: "-20%", left: "30%",
-          width: "55%", height: "160%",
-          backgroundImage: "url('/aces-app-icon.png')",
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          opacity: 0.15,
-          transform: "rotate(-18deg)",
-          transformOrigin: "center center",
-          borderRadius: 24,
-        }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, width: "100%", position: "relative", zIndex: 1 }}>
           <div style={{ flexShrink: 0, background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Smartphone size={26} color="#ffffff" />
