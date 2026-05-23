@@ -34,7 +34,7 @@ const PHASES: Phase[] = [
   { day: "9",  date: "9 Dhu Alhijah",  label: "Arafat Peak",        pinColor: "#f59e0b", above: false, peak: true,
     zones: { mina: 0, arafat: 100, muzdalifa: 0, haram: 0, entrance: 0 } },
   { day: "9★", date: "Night of 9",     label: "Muzdalifa Night",    pinColor: "#60a5fa", above: true,
-    zones: { mina: 0, arafat: 0, muzdalifa: 82, haram: 0, entrance: 0 } },
+    zones: { mina: 0, arafat: 0, muzdalifa: 100, haram: 0, entrance: 0 } },
   { day: "10", date: "10 Dhu Alhijah", label: "Return Surge",       pinColor: "#ef4444", above: false,
     zones: { mina: 88, arafat: 0, muzdalifa: 0, haram: 30, entrance: 0 } },
   { day: "11", date: "11 Dhu Alhijah", label: "Sustained Ops",      pinColor: "#ef4444", above: true,
