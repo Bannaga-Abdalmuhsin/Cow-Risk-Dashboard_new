@@ -333,16 +333,8 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
 
 // ─── Site-level Analysis ──────────────────────────────────────────────────────
 export function analyzeSite(site: SiteConfig): SiteAnalysis {
-  if (site.placeholderSafe) {
-    return {
-      site,
-      scenarios: [],
-      overallRisk: "safe",
-      worstRiskScore: 0,
-      technicianNeeded: false,
-    };
-  }
-
+  // Always run full scenario engine for all sites so per-scenario counts
+  // (e.g. scenario 9 battery failure across all 79 sites) remain accurate.
   const scenarios = analyzeScenarios(site);
 
   // Overall risk: any non-outage scenario with a risk dimension flagged → "risk"
@@ -358,7 +350,12 @@ export function analyzeSite(site: SiteConfig): SiteAnalysis {
   const engineRisk: "safe" | "risk" =
     hasRisk || batteryInsufficient ? "risk" : "safe";
 
-  const overallRisk: "safe" | "risk" = site.forceRisk ? "risk" : engineRisk;
+  // forceRisk (RISK_OVERRIDES) wins first; placeholderSafe forces green on
+  // the heat map for all confirmed-safe sites regardless of engine output.
+  const overallRisk: "safe" | "risk" =
+    site.forceRisk    ? "risk" :
+    site.placeholderSafe ? "safe" :
+    engineRisk;
 
   const worstRiskScore = Math.max(...scenarios.map(s => s.riskScore));
 
