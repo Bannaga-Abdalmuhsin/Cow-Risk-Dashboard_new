@@ -1,4 +1,4 @@
-import { Tent, Mountain, Moon, Building2, DoorOpen } from "lucide-react";
+import { Tent, Mountain, Moon, Building2, DoorOpen, Smartphone } from "lucide-react";
 import type { ComponentType } from "react";
 
 interface Zone {
@@ -151,11 +151,18 @@ export function DeploymentTimeline() {
         display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
         boxShadow: "0 4px 16px rgba(74,14,143,0.30)",
       }}>
-        <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: "50%", background: "#22c55e", flexShrink: 0, boxShadow: "0 0 8px #22c55e" }} />
-        <span style={{ fontSize: "18px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.01em", textAlign: "center", lineHeight: 1.25 }}>
-          Auto Dispatch Triggered by Mobile App as per Pilgrims Availability
-        </span>
-        <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: "50%", background: "#22c55e", flexShrink: 0, boxShadow: "0 0 8px #22c55e" }} />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, width: "100%" }}>
+          <div style={{ flexShrink: 0, background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Smartphone size={26} color="#ffffff" />
+          </div>
+          <span style={{ fontSize: "18px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.01em", textAlign: "center", lineHeight: 1.25 }}>
+            Auto Dispatch Triggered by Mobile App as per Pilgrims Availability
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+            <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 8px #22c55e" }} />
+            <span style={{ fontSize: "10px", fontWeight: 600, color: "#86efac" }}>LIVE</span>
+          </span>
+        </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 8, flexShrink: 0 }}>
         <div>
