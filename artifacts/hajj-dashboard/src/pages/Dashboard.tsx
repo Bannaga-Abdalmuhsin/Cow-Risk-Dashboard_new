@@ -415,22 +415,6 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                   )}
                 </div>
                 {/* Zone breakdown pills */}
-                {techLocations.length > 0 && (
-                  <div className="flex gap-1.5 flex-wrap ml-auto">
-                    {["Arafat","Mina","Muzdalifa","Makkah","Makkah Remote"].map(zone => {
-                      const inZone = techLocations.filter(t => t.area?.toLowerCase().includes(zone.toLowerCase()));
-                      const on = inZone.filter(t => t.isOnDuty).length;
-                      const off = inZone.filter(t => !t.isOnDuty).length;
-                      if (inZone.length === 0) return null;
-                      return (
-                        <span key={zone} className="text-[10px] px-2 py-0.5 rounded-full border font-medium"
-                          style={{ background: "rgba(147,51,234,0.10)", borderColor: "rgba(147,51,234,0.25)", color: "#c4b5fd" }}>
-                          {zone}: <span style={{ color: "#34d399" }}>{on}✓</span>{off > 0 && <span style={{ color: "#9ca3af" }}> {off}✗</span>}
-                        </span>
-                      );
-                    })}
-                  </div>
-                )}
               </div>
             </div>
 

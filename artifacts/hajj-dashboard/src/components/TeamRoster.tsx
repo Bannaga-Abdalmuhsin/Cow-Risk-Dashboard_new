@@ -89,7 +89,7 @@ export function TeamRoster({ compact = false, techLocations = [] }: TeamRosterPr
         <div className="bg-card border border-card-border rounded-xl p-3">
           <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
-            Live Status · 15 min window
+            Live Status
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="text-center p-2 rounded-lg" style={{ background: "rgba(22,163,74,0.10)", border: "1px solid rgba(22,163,74,0.25)" }}>
