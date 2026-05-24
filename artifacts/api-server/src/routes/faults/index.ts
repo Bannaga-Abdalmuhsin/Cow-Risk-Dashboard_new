@@ -345,7 +345,7 @@ async function assignTech(
     dispatchStatus: "assigned",
     dispatchedAt:   new Date(),
     eta,
-  }).where(eq(faultsTable.id, techId === techId ? faultId : faultId));
+  }).where(eq(faultsTable.id, faultId));
 
   const [tech] = await db
     .select({ pushToken: teamUsersTable.pushToken, name: teamUsersTable.name })

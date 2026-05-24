@@ -206,61 +206,60 @@ function FaultMap({
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      {/* ── Live breadcrumb trail for selected fault ── */}
+      {/* ── Faint remaining route (current tech position → site destination) ── */}
+      {faults.filter(f => f.techLat && f.techLng).map(f => {
+        const isSelected  = selected?.id === f.id;
+        const hasRealRoute = !!(f.routePolyline && f.routePolyline.length > 1);
+        const path = hasRealRoute
+          ? f.routePolyline!
+          : [{ lat: f.techLat!, lng: f.techLng! }, { lat: f.siteLat, lng: f.siteLng }];
+        return (
+          <Polyline
+            key={`route-${f.id}`}
+            path={path}
+            options={{
+              strokeColor:   "#a78bfa",
+              strokeOpacity: isSelected ? 0.30 : 0.18,
+              strokeWeight:  isSelected ? 2 : 1.5,
+              geodesic:      !hasRealRoute,
+              icons: isSelected ? [{
+                icon: {
+                  path:          google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                  strokeOpacity: 0.45,
+                  scale:         2,
+                  strokeColor:   "#a78bfa",
+                },
+                offset: "50%",
+                repeat: "80px",
+              }] : [],
+            }}
+          />
+        );
+      })}
+
+      {/* ── Actual path traveled — primary sky-blue trail (selected fault) ── */}
       {selected && trail.length > 1 && (
         <Polyline
           path={trail.map(p => ({ lat: p.lat, lng: p.lng }))}
           options={{
             strokeColor:   "#38bdf8",
-            strokeWeight:  3,
-            strokeOpacity: 0.9,
+            strokeWeight:  4,
+            strokeOpacity: 1,
             geodesic:      true,
             icons: [{
               icon: {
                 path:          google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
                 strokeColor:   "#7dd3fc",
                 strokeOpacity: 1,
-                scale:         2.5,
+                scale:         3,
                 fillColor:     "#38bdf8",
-                fillOpacity:   0.9,
+                fillOpacity:   1,
               },
               repeat: "40px",
             }],
           }}
         />
       )}
-
-      {/* ── Planned route lines (tech → site) with direction arrows ── */}
-      {faults.filter(f => f.techLat && f.techLng).map(f => {
-        const isSelected   = selected?.id === f.id;
-        const path = f.routePolyline && f.routePolyline.length > 1
-          ? f.routePolyline
-          : [{ lat: f.techLat!, lng: f.techLng! }, { lat: f.siteLat, lng: f.siteLng }];
-        const hasRealRoute = !!(f.routePolyline && f.routePolyline.length > 1);
-
-        return (
-          <Polyline
-            key={`route-${f.id}`}
-            path={path}
-            options={{
-              strokeColor:   isSelected ? "#a78bfa" : "#6366f1",
-              strokeOpacity: isSelected ? 0.7 : 0.35,
-              strokeWeight:  isSelected ? 3 : 2,
-              geodesic:      !hasRealRoute,
-              icons: [{
-                icon: {
-                  path:          google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                  strokeOpacity: 1,
-                  scale:         2,
-                  strokeColor:   "#a78bfa",
-                },
-                offset: "50%",
-                repeat: "60px",
-              }],
-            }}
-          />
-        );
-      })}
 
       {/* ── All-sites status circles (green = OK, red = active fault) ── */}
       {(() => {
@@ -794,36 +793,73 @@ export function FaultManagement() {
                   </div>
                 )}
 
-                {/* Row 6: 15-min SLA countdown (en_route, triggered from MC departure) */}
-                {f.dispatchStatus === "en_route" && slaRemainingMs != null && (
-                  <div
-                    className="flex items-center gap-1.5 mt-1.5 rounded-lg px-2 py-1"
-                    style={{
-                      background: slaBreached ? "rgba(220,38,38,0.15)" : slaUrgent ? "rgba(245,158,11,0.12)" : "rgba(30,58,138,0.15)",
-                      border: `1px solid ${slaBreached ? "#dc262666" : slaUrgent ? "#f59e0b66" : "#3b82f633"}`,
-                    }}
-                  >
-                    <span className="text-[9px]" style={{ color: slaBreached ? "#f87171" : "#facc15" }}>
-                      {slaBreached ? "⛔" : "⏱"} 15-MIN SLA
-                    </span>
-                    {slaBreached ? (
-                      <span className="text-sm font-black text-red-400 animate-pulse">BREACHED</span>
-                    ) : (
-                      <span
-                        className="text-sm font-black tabular-nums"
-                        style={{ color: slaUrgent ? "#ef4444" : "#f59e0b" }}
-                      >
-                        {slaMinsLive}m {String(slaSecsLive).padStart(2, "0")}s
-                      </span>
-                    )}
-                    <span className="text-[9px] text-muted-foreground ml-auto">
-                      {slaBreached ? "" : "remaining"}
-                    </span>
-                    {slaUrgent && !slaBreached && (
-                      <span className="text-[9px] text-red-400 font-bold animate-pulse">⚠ URGENT</span>
-                    )}
-                  </div>
-                )}
+                {/* Row 6: 15-min SLA — pending / live countdown / breached / completed */}
+                {(() => {
+                  // Pre-trigger: team assigned but not yet moving
+                  if (f.dispatchStatus === "assigned" && !f.movementTriggeredAt) {
+                    return (
+                      <div className="flex items-center gap-1.5 mt-1.5 rounded-lg px-2 py-1"
+                        style={{ background: "rgba(30,58,138,0.10)", border: "1px solid #3b82f622" }}>
+                        <span className="text-[9px] text-slate-400">⏳ 15-MIN SLA</span>
+                        <span className="text-[10px] text-slate-500 font-semibold ml-1">Awaiting movement…</span>
+                      </div>
+                    );
+                  }
+                  // Active countdown: en_route with movementTriggeredAt
+                  if (f.dispatchStatus === "en_route" && slaRemainingMs != null) {
+                    return (
+                      <div className="flex items-center gap-1.5 mt-1.5 rounded-lg px-2 py-1"
+                        style={{
+                          background: slaBreached ? "rgba(220,38,38,0.18)" : slaUrgent ? "rgba(245,158,11,0.14)" : "rgba(30,58,138,0.18)",
+                          border: `1px solid ${slaBreached ? "#dc262666" : slaUrgent ? "#f59e0b66" : "#3b82f644"}`,
+                        }}>
+                        <span className="text-[9px]" style={{ color: slaBreached ? "#f87171" : "#facc15" }}>
+                          {slaBreached ? "⛔" : "⏱"} 15-MIN SLA
+                        </span>
+                        {slaBreached ? (
+                          <span className="text-sm font-black text-red-400 animate-pulse ml-1">BREACHED</span>
+                        ) : (
+                          <span className="text-sm font-black tabular-nums ml-1"
+                            style={{ color: slaUrgent ? "#ef4444" : "#f59e0b" }}>
+                            {slaMinsLive}m {String(slaSecsLive).padStart(2, "0")}s
+                          </span>
+                        )}
+                        <span className="text-[9px] text-muted-foreground ml-auto">
+                          {slaBreached ? "" : "remaining"}
+                        </span>
+                        {slaUrgent && !slaBreached && (
+                          <span className="text-[9px] text-red-400 font-bold animate-pulse">⚠ URGENT</span>
+                        )}
+                      </div>
+                    );
+                  }
+                  // On site: show whether arrived within SLA
+                  if (f.dispatchStatus === "on_site" && f.movementTriggeredAt && f.arrivedAt) {
+                    const travelMs = new Date(f.arrivedAt).getTime() - new Date(f.movementTriggeredAt).getTime();
+                    const withinSla = travelMs <= SLA_MS;
+                    const travelMins = Math.floor(travelMs / 60000);
+                    const travelSecs = Math.floor((travelMs % 60000) / 1000);
+                    return (
+                      <div className="flex items-center gap-1.5 mt-1.5 rounded-lg px-2 py-1"
+                        style={{
+                          background: withinSla ? "rgba(20,83,45,0.18)" : "rgba(220,38,38,0.15)",
+                          border: `1px solid ${withinSla ? "#16a34a55" : "#dc262655"}`,
+                        }}>
+                        <span className="text-[9px]" style={{ color: withinSla ? "#4ade80" : "#f87171" }}>
+                          {withinSla ? "✅" : "⛔"} 15-MIN SLA
+                        </span>
+                        <span className="text-[10px] font-black ml-1"
+                          style={{ color: withinSla ? "#4ade80" : "#f87171" }}>
+                          {withinSla ? "MET" : "BREACHED"}
+                        </span>
+                        <span className="text-[9px] text-muted-foreground ml-auto">
+                          {travelMins}m {String(travelSecs).padStart(2, "0")}s travel
+                        </span>
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
 
                 {/* Row 7: arrival timestamp (on_site / Reached) */}
                 {f.dispatchStatus === "on_site" && f.arrivedAt && (
