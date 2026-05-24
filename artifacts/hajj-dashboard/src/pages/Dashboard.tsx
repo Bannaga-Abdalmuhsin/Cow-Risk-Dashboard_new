@@ -377,45 +377,61 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
         {activeTab === "teams" && (
           <div className="flex flex-col gap-3" style={{ height: "calc(100vh - 148px)", overflow: "hidden" }}>
-            {/* Live status bar */}
-            <div className="flex items-center gap-3 shrink-0">
-              <div className="flex items-center gap-2 text-xs">
-                {techLocations.length > 0 ? (
-                  <>
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
-                    <span className="text-emerald-400 font-semibold">
-                      {techLocations.filter(t => t.isOnDuty).length} on duty
-                    </span>
-                    <span className="text-muted-foreground">·</span>
-                    <span className="text-muted-foreground">
-                      {techLocations.filter(t => !t.isOnDuty).length} off duty
-                    </span>
-                    <span className="text-muted-foreground">· {techLocations.length} total · refreshes every 2s</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="w-2 h-2 rounded-full bg-muted inline-block" />
+            {/* Branded header + live status bar */}
+            <div className="flex flex-col gap-2 shrink-0 rounded-xl px-4 py-3"
+              style={{ background: "linear-gradient(135deg, rgba(74,14,143,0.18) 0%, rgba(0,191,179,0.10) 100%)", border: "1px solid rgba(147,51,234,0.22)" }}>
+              {/* Title row */}
+              <div className="flex items-center gap-3">
+                <img src="/aces-logo-nobg.png" alt="ACES MSD" style={{ height: 36, width: "auto", filter: "drop-shadow(0 2px 6px rgba(74,14,143,0.4))" }} />
+                <div>
+                  <div className="text-base font-black tracking-tight leading-tight" style={{ color: "#c4b5fd" }}>
+                    HAJJ ACES MSD Team Coverage
+                  </div>
+                  <div className="text-[11px] text-muted-foreground font-medium">Hajj 1447 · Live Field Operations · Nokia COW Deployment</div>
+                </div>
+                {/* Live pulse badge */}
+                <div className="ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded-full"
+                  style={{ background: "rgba(52,211,153,0.12)", border: "1px solid rgba(52,211,153,0.35)" }}>
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                  <span className="text-[11px] font-bold text-emerald-400">LIVE</span>
+                </div>
+              </div>
+              {/* Stats row */}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 text-xs">
+                  {techLocations.length > 0 ? (
+                    <>
+                      <span className="text-emerald-400 font-semibold">
+                        {techLocations.filter(t => t.isOnDuty).length} on duty
+                      </span>
+                      <span className="text-muted-foreground">·</span>
+                      <span className="text-muted-foreground">
+                        {techLocations.filter(t => !t.isOnDuty).length} off duty
+                      </span>
+                      <span className="text-muted-foreground">· {techLocations.length} total · refreshes every 2s</span>
+                    </>
+                  ) : (
                     <span className="text-muted-foreground">No live locations yet — waiting for field check-ins</span>
-                  </>
+                  )}
+                </div>
+                {/* Zone breakdown pills */}
+                {techLocations.length > 0 && (
+                  <div className="flex gap-1.5 flex-wrap ml-auto">
+                    {["Arafat","Mina","Muzdalifa","Makkah","Makkah Remote"].map(zone => {
+                      const inZone = techLocations.filter(t => t.area?.toLowerCase().includes(zone.toLowerCase()));
+                      const on = inZone.filter(t => t.isOnDuty).length;
+                      const off = inZone.filter(t => !t.isOnDuty).length;
+                      if (inZone.length === 0) return null;
+                      return (
+                        <span key={zone} className="text-[10px] px-2 py-0.5 rounded-full border font-medium"
+                          style={{ background: "rgba(147,51,234,0.10)", borderColor: "rgba(147,51,234,0.25)", color: "#c4b5fd" }}>
+                          {zone}: <span style={{ color: "#34d399" }}>{on}✓</span>{off > 0 && <span style={{ color: "#9ca3af" }}> {off}✗</span>}
+                        </span>
+                      );
+                    })}
+                  </div>
                 )}
               </div>
-              {/* Zone breakdown pills */}
-              {techLocations.length > 0 && (
-                <div className="flex gap-1.5 flex-wrap ml-auto">
-                  {["Arafat","Mina","Muzdalifa","Makkah","Makkah Remote"].map(zone => {
-                    const inZone = techLocations.filter(t => t.area?.toLowerCase().includes(zone.toLowerCase()));
-                    const on = inZone.filter(t => t.isOnDuty).length;
-                    const off = inZone.filter(t => !t.isOnDuty).length;
-                    if (inZone.length === 0) return null;
-                    return (
-                      <span key={zone} className="text-[10px] px-2 py-0.5 rounded-full border font-medium"
-                        style={{ background: "rgba(147,51,234,0.10)", borderColor: "rgba(147,51,234,0.25)", color: "#c4b5fd" }}>
-                        {zone}: <span style={{ color: "#34d399" }}>{on}✓</span>{off > 0 && <span style={{ color: "#9ca3af" }}> {off}✗</span>}
-                      </span>
-                    );
-                  })}
-                </div>
-              )}
             </div>
 
             {/* Main content: map + roster */}

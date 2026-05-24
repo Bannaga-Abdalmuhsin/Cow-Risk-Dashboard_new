@@ -317,10 +317,10 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
       {/* Legend */}
       <div className="absolute bottom-8 right-3 z-[1000] bg-white/95 backdrop-blur rounded-xl px-3 py-2.5 text-xs shadow-lg border border-gray-200">
         <div className="font-bold text-gray-700 mb-1.5 uppercase tracking-wide text-[10px]">Risk Level</div>
-        {(["safe", "risk"] as const).map(r => (
-          <div key={r} className="flex items-center gap-2 mb-1">
-            <span className="w-3 h-3 rounded-full inline-block border border-white shadow-sm" style={{ background: RISK_COLORS[r] }} />
-            <span className="capitalize text-gray-600 font-medium">{r === "risk" ? "Risk" : "Safe"}</span>
+        {([["safe","safe"],["backup","backup risk"],["outage","outage risk"]] as [string,string][]).map(([tier, label]) => (
+          <div key={tier} className="flex items-center gap-2 mb-1">
+            <span className="w-3 h-3 rounded-full inline-block border border-white shadow-sm" style={{ background: tierColor(tier as "safe"|"backup"|"outage") }} />
+            <span className="capitalize text-gray-600 font-medium">{label}</span>
           </div>
         ))}
         <div className="border-t border-gray-100 mt-1.5 pt-1.5 text-[10px] text-gray-400">
@@ -334,7 +334,7 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
           <div className="font-bold text-gray-700 mb-1.5 uppercase tracking-wide text-[10px]">Risk Intensity</div>
           <div
             className="w-28 h-2.5 rounded-full mb-1"
-            style={{ background: "linear-gradient(to right, #00D4C4, #00BFB3, rgba(220,40,90,0.6), rgba(160,0,50,0.75))" }}
+            style={{ background: "linear-gradient(to right, #00D4C4, #00BFB3, rgba(234,88,12,0.6), rgba(160,0,50,0.75))" }}
           />
           <div className="flex justify-between text-[9px] text-gray-400">
             <span>Low</span>
@@ -342,6 +342,24 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
           </div>
         </div>
       )}
+
+      {/* ACES MSD watermark logo — centred, non-interactive */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{ zIndex: 999 }}
+      >
+        <img
+          src="/aces-logo-nobg.png"
+          alt="ACES MSD"
+          style={{
+            width: 320,
+            opacity: 0.10,
+            filter: "grayscale(30%) drop-shadow(0 2px 8px rgba(0,0,0,0.15))",
+            userSelect: "none",
+            mixBlendMode: "multiply",
+          }}
+        />
+      </div>
     </div>
   );
 }
