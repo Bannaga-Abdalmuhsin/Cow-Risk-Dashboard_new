@@ -284,8 +284,8 @@ function FaultMap({
                   }} />
                 )}
                 <div style={{
-                  width:        10,
-                  height:       10,
+                  width:        16,
+                  height:       16,
                   borderRadius: "50%",
                   background:   hasFault ? "#ef4444" : "#22c55e",
                   border:       `1.5px solid ${hasFault ? "#fca5a5" : "#86efac"}`,
