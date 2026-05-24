@@ -384,7 +384,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <div className="flex items-center gap-3">
                 <img src="/aces-logo-nobg.png" alt="ACES MSD" style={{ height: 36, width: "auto", filter: "drop-shadow(0 2px 6px rgba(74,14,143,0.4))" }} />
                 <div>
-                  <div className="text-base font-black tracking-tight leading-tight" style={{ color: "#c4b5fd" }}>
+                  <div className="text-base font-black tracking-tight leading-tight" style={{ color: "#000000" }}>
                     HAJJ ACES MSD Team Coverage
                   </div>
                   <div className="text-[11px] text-muted-foreground font-medium">Hajj 1447 · Live Field Operations · Nokia COW Deployment</div>
