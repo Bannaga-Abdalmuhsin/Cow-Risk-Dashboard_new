@@ -116,6 +116,8 @@ export interface SiteAnalysis {
   site: SiteConfig;
   scenarios: ScenarioResult[];
   overallRisk: "safe" | "risk";
+  /** "backup" = risk from S5–S8 only (orange); "outage" = S9 risk (red) */
+  riskTier: "safe" | "backup" | "outage";
   worstRiskScore: number;
   technicianNeeded: boolean;
 }
@@ -356,12 +358,30 @@ export function analyzeSite(site: SiteConfig): SiteAnalysis {
     site.placeholderSafe ? "safe" :
     engineRisk;
 
+  // riskTier: which scenario group drives the risk
+  // "outage" = S9 has any risk dimension flagged (full power outage — most critical)
+  // "backup" = S5–S8 backup scenarios have risk but S9 does not
+  const s9HasRisk = s9
+    ? s9.powerRisk === "risk" || s9.rectifierRisk === "risk" ||
+      s9.batteryRisk === "risk" || s9.coolingRisk === "risk"
+    : false;
+  const s5to8HasRisk = scenarios
+    .filter(s => s.scenarioId >= 5 && s.scenarioId <= 8)
+    .some(s => s.powerRisk === "risk" || s.rectifierRisk === "risk" ||
+               s.batteryRisk === "risk" || s.coolingRisk === "risk");
+  const riskTier: "safe" | "backup" | "outage" =
+    overallRisk === "safe" ? "safe" :
+    s9HasRisk              ? "outage" :
+    s5to8HasRisk           ? "backup" :
+    "outage"; // S1–S4 prime power failure also treated as outage-level
+
   const worstRiskScore = Math.max(...scenarios.map(s => s.riskScore));
 
   return {
     site,
     scenarios,
     overallRisk,
+    riskTier,
     worstRiskScore,
     technicianNeeded: overallRisk !== "safe",
   };

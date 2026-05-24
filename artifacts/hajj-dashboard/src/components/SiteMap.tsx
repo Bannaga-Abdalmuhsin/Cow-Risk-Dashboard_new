@@ -28,10 +28,10 @@ function latLngToXY(lat: number, lng: number): { x: number; y: number } {
 export function SiteMap({ analyses, selectedSiteId, onSelectSite }: SiteMapProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  const riskColor = (r: "safe" | "warning" | "critical") =>
-    r === "safe" ? "#00BFB3" : r === "warning" ? "#FF9AAD" : "#E8175D";
-  const riskStroke = (r: "safe" | "warning" | "critical") =>
-    r === "safe" ? "#00968c" : r === "warning" ? "#c0506a" : "#b01040";
+  const riskColor = (tier: "safe" | "backup" | "outage") =>
+    tier === "safe" ? "#00BFB3" : tier === "backup" ? "#f97316" : "#E8175D";
+  const riskStroke = (tier: "safe" | "backup" | "outage") =>
+    tier === "safe" ? "#00968c" : tier === "backup" ? "#c2440e" : "#b01040";
 
   return (
     <div className="relative bg-gradient-to-br from-amber-50 via-stone-100 to-amber-50 rounded-xl overflow-hidden border border-border" style={{ height: 420 }}>
@@ -66,15 +66,15 @@ export function SiteMap({ analyses, selectedSiteId, onSelectSite }: SiteMapProps
 
         {analyses.map(a => {
           const { x, y } = latLngToXY(a.site.lat, a.site.lng);
-          const color = riskColor(a.overallRisk);
-          const stroke = riskStroke(a.overallRisk);
+          const color = riskColor(a.riskTier);
+          const stroke = riskStroke(a.riskTier);
           const isSelected = a.site.id === selectedSiteId;
           const isHovered = a.site.id === hoveredId;
           const r = isSelected ? 2.2 : isHovered ? 2 : 1.5;
 
           return (
             <g key={a.site.id}>
-              {a.overallRisk === "critical" && (
+              {a.riskTier === "outage" && (
                 <circle cx={x} cy={y} r={r * 2} fill={color} opacity="0.2">
                   <animate attributeName="r" values={`${r * 1.5};${r * 3}`} dur="1.5s" repeatCount="indefinite" />
                   <animate attributeName="opacity" values="0.3;0" dur="1.5s" repeatCount="indefinite" />

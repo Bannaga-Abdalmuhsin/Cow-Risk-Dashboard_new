@@ -147,6 +147,7 @@
 .risk-critical { color: #e8175d; }
 
 .risk-badge-safe { background: #d0f5f3; color: #00736b; border: 1px solid #00BFB3; }
+.risk-badge-backup { background: #fff3e0; color: #c2440e; border: 1px solid #f97316; }
 .risk-badge-warning { background: #ffe0e8; color: #a03050; border: 1px solid #FF9AAD; }
 .risk-badge-critical { background: #fce4ed; color: #b01040; border: 1px solid #E8175D; }
 

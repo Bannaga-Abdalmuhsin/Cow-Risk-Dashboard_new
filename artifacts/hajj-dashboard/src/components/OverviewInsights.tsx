@@ -38,7 +38,7 @@ export function RiskByAreaCard({ analyses }: Props) {
                 <div className="flex items-center gap-1.5">
                   {risk > 0 && (
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded"
-                      style={{ background: "#fce4ed", color: "#b01040" }}>
+                      style={{ background: "#fff3e0", color: "#c2440e" }}>
                       {risk} risk
                     </span>
                   )}
@@ -46,7 +46,7 @@ export function RiskByAreaCard({ analyses }: Props) {
                 </div>
               </div>
               <div className="h-2.5 bg-muted rounded-full overflow-hidden flex">
-                <div className="h-full transition-all" style={{ width: `${pct}%`, background: "#E8175D" }} />
+                <div className="h-full transition-all" style={{ width: `${pct}%`, background: "#f97316" }} />
                 <div className="h-full transition-all" style={{ width: `${safePct}%`, background: "#00BFB3" }} />
               </div>
             </div>
@@ -55,7 +55,7 @@ export function RiskByAreaCard({ analyses }: Props) {
       </div>
 
       <div className="flex gap-3 pt-1 text-[10px] text-muted-foreground">
-        <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: "#E8175D" }} /> At Risk</span>
+        <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: "#f97316" }} /> At Risk</span>
         <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: "#00BFB3" }} /> Safe</span>
       </div>
     </div>

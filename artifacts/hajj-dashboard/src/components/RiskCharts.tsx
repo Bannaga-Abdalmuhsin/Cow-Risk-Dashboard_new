@@ -6,7 +6,7 @@ import type { SiteAnalysis } from "../lib/calculations";
 
 interface RiskChartsProps { analyses: SiteAnalysis[] }
 
-const COLORS = { safe: "#00BFB3", risk: "#E8175D" };
+const COLORS = { safe: "#00BFB3", risk: "#f97316" };
 
 function ChartFrame({ title, icon, accent = "#9333ea", children }: {
   title: string; icon: string; accent?: string; children: ReactNode;

@@ -13,15 +13,13 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-const RISK_COLORS = {
-  safe: "#00BFB3",
-  risk: "#E8175D",
-};
+function tierColor(tier: "safe" | "backup" | "outage"): string {
+  return tier === "safe" ? "#00BFB3" : tier === "backup" ? "#f97316" : "#E8175D";
+}
 
-const RISK_FILL_OPACITY = {
-  safe: 0.75,
-  risk: 0.9,
-};
+function tierFillOpacity(tier: "safe" | "backup" | "outage"): number {
+  return tier === "safe" ? 0.75 : 0.9;
+}
 
 interface HeatmapLayerProps {
   analyses: SiteAnalysis[];
@@ -29,19 +27,25 @@ interface HeatmapLayerProps {
 
 function HeatmapLayer({ analyses }: HeatmapLayerProps) {
   const map = useMap();
-  const safeRef = useRef<L.Layer | null>(null);
-  const riskRef = useRef<L.Layer | null>(null);
+  const safeRef   = useRef<L.Layer | null>(null);
+  const backupRef = useRef<L.Layer | null>(null);
+  const outageRef = useRef<L.Layer | null>(null);
 
   useEffect(() => {
-    if (safeRef.current) { map.removeLayer(safeRef.current); safeRef.current = null; }
-    if (riskRef.current) { map.removeLayer(riskRef.current); riskRef.current = null; }
+    if (safeRef.current)   { map.removeLayer(safeRef.current);   safeRef.current   = null; }
+    if (backupRef.current) { map.removeLayer(backupRef.current); backupRef.current = null; }
+    if (outageRef.current) { map.removeLayer(outageRef.current); outageRef.current = null; }
 
     const safePoints = analyses
-      .filter(a => a.overallRisk === "safe")
+      .filter(a => a.riskTier === "safe")
       .map(a => [a.site.lat, a.site.lng, 1.0]) as [number, number, number][];
 
-    const riskPoints = analyses
-      .filter(a => a.overallRisk === "risk")
+    const backupPoints = analyses
+      .filter(a => a.riskTier === "backup")
+      .map(a => [a.site.lat, a.site.lng, 1.0]) as [number, number, number][];
+
+    const outagePoints = analyses
+      .filter(a => a.riskTier === "outage")
       .map(a => [a.site.lat, a.site.lng, 1.0]) as [number, number, number][];
 
     // Large radius → safe sites merge into a wide vivid green cloud
@@ -57,9 +61,21 @@ function HeatmapLayer({ analyses }: HeatmapLayerProps) {
       },
     });
 
-    // Smaller opacity → risk sites visible but less intense/aggressive
+    // S5–S8 backup risk — orange heat spots
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const heatRisk = (L as any).heatLayer(riskPoints, {
+    const heatBackup = (L as any).heatLayer(backupPoints, {
+      radius: 36, blur: 30, maxZoom: 17, minOpacity: 0.25, max: 1.0,
+      gradient: {
+        0.0:  "rgba(249,115,22,0)",
+        0.30: "rgba(253,186,116,0.55)",
+        0.65: "rgba(234,88,12,0.78)",
+        1.0:  "rgba(154,52,18,0.88)",
+      },
+    });
+
+    // S9 outage risk — red heat spots
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const heatOutage = (L as any).heatLayer(outagePoints, {
       radius: 36, blur: 30, maxZoom: 17, minOpacity: 0.25, max: 1.0,
       gradient: {
         0.0:  "rgba(232,23,93,0)",
@@ -70,13 +86,16 @@ function HeatmapLayer({ analyses }: HeatmapLayerProps) {
     });
 
     heatSafe.addTo(map);
-    heatRisk.addTo(map);
-    safeRef.current = heatSafe;
-    riskRef.current = heatRisk;
+    heatBackup.addTo(map);
+    heatOutage.addTo(map);
+    safeRef.current   = heatSafe;
+    backupRef.current = heatBackup;
+    outageRef.current = heatOutage;
 
     return () => {
-      if (safeRef.current) { map.removeLayer(safeRef.current); safeRef.current = null; }
-      if (riskRef.current) { map.removeLayer(riskRef.current); riskRef.current = null; }
+      if (safeRef.current)   { map.removeLayer(safeRef.current);   safeRef.current   = null; }
+      if (backupRef.current) { map.removeLayer(backupRef.current); backupRef.current = null; }
+      if (outageRef.current) { map.removeLayer(outageRef.current); outageRef.current = null; }
     };
   }, [map, analyses]);
 
@@ -189,7 +208,7 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
           // Safe sites only appear as markers when the "Show Markers" toggle is on.
           if (a.overallRisk !== "risk" && !showMarkers) return null;
           const isSelected = a.site.id === selectedSiteId;
-          const color = RISK_COLORS[a.overallRisk];
+          const color = tierColor(a.riskTier);
           return (
             <CircleMarker
               key={a.site.id}
@@ -198,7 +217,7 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
               pathOptions={{
                 color: isSelected ? "#4A0E8F" : color,
                 fillColor: color,
-                fillOpacity: RISK_FILL_OPACITY[a.overallRisk],
+                fillOpacity: tierFillOpacity(a.riskTier),
                 weight: isSelected ? 3 : a.overallRisk === "risk" ? 2 : 1.5,
               }}
               eventHandlers={{
@@ -213,9 +232,9 @@ export function LeafletMap({ analyses, selectedSiteId, onSelectSite, showTeamMar
                     <span
                       className="text-[10px] px-2 py-0.5 rounded font-bold uppercase"
                       style={{
-                        background: a.overallRisk === "safe" ? "#d0f5f3" : "#fce4ed",
-                        color: a.overallRisk === "safe" ? "#00736b" : "#b01040",
-                        border: `1px solid ${RISK_COLORS[a.overallRisk]}`,
+                        background: a.riskTier === "safe" ? "#d0f5f3" : a.riskTier === "backup" ? "#fff3e0" : "#fce4ed",
+                        color: a.riskTier === "safe" ? "#00736b" : a.riskTier === "backup" ? "#c2440e" : "#b01040",
+                        border: `1px solid ${tierColor(a.riskTier)}`,
                       }}
                     >
                       {a.overallRisk}

@@ -5,7 +5,7 @@ interface MetricCardProps {
   value: string | number;
   subtitle?: string;
   icon?: ReactNode;
-  color?: "green" | "yellow" | "red" | "blue" | "purple" | "default";
+  color?: "green" | "yellow" | "red" | "orange" | "blue" | "purple" | "default";
   large?: boolean;
 }
 
@@ -13,6 +13,7 @@ const colorMap = {
   green:   { grad: "from-emerald-500 to-green-600",   glow: "rgba(16,185,129,0.35)",  bar: "linear-gradient(90deg,#065f46,#10b981,#6ee7b7,#34d399,#059669)" },
   yellow:  { grad: "from-amber-400 to-orange-500",    glow: "rgba(245,158,11,0.35)",   bar: "linear-gradient(90deg,#92400e,#f59e0b,#fde68a,#fbbf24,#d97706)" },
   red:     { grad: "from-red-500 to-rose-600",        glow: "rgba(239,68,68,0.35)",    bar: "linear-gradient(90deg,#7f1d1d,#ef4444,#fca5a5,#f87171,#dc2626)" },
+  orange:  { grad: "from-orange-400 to-orange-600",   glow: "rgba(249,115,22,0.40)",   bar: "linear-gradient(90deg,#7c2d12,#f97316,#fed7aa,#fb923c,#ea580c)" },
   blue:    { grad: "from-sky-500 to-blue-600",        glow: "rgba(14,165,233,0.35)",   bar: "linear-gradient(90deg,#0c4a6e,#0ea5e9,#bae6fd,#38bdf8,#0284c7)" },
   purple:  { grad: "from-purple-600 to-violet-700",   glow: "rgba(147,51,234,0.45)",   bar: "linear-gradient(90deg,#4c1d95,#7c3aed,#c084fc,#a855f7,#6d28d9)" },
   default: { grad: "from-slate-500 to-slate-600",     glow: "rgba(100,116,139,0.25)",  bar: "linear-gradient(90deg,#1e293b,#64748b,#cbd5e1,#94a3b8,#475569)" },

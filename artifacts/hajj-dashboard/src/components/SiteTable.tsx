@@ -53,7 +53,7 @@ export function SiteTable({ analyses, selectedSiteId, onSelectSite }: SiteTableP
               className={`px-2.5 py-1 text-xs rounded font-medium capitalize transition-colors ${
                 filter === f
                   ? f === "safe" ? "bg-[#00BFB3] text-white" :
-                    f === "risk" ? "bg-[#E8175D] text-white" :
+                    f === "risk" ? "bg-[#f97316] text-white" :
                     "bg-primary text-primary-foreground"
                   : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
@@ -106,13 +106,16 @@ export function SiteTable({ analyses, selectedSiteId, onSelectSite }: SiteTableP
                   </td>
                   <td className="px-3 py-2">
                     <div className="flex gap-0.5">
-                      {Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className={`w-2 h-2 rounded-sm ${i < a.worstRiskScore ? "bg-red-400" : "bg-muted"}`} />
-                      ))}
+                      {Array.from({ length: 4 }).map((_, i) => {
+                        const dotColor = i < a.worstRiskScore
+                          ? (a.riskTier === "outage" ? "bg-red-500" : "bg-orange-400")
+                          : "bg-muted";
+                        return <div key={i} className={`w-2 h-2 rounded-sm ${dotColor}`} />;
+                      })}
                     </div>
                   </td>
                   <td className="px-3 py-2">
-                    <RiskBadge risk={a.overallRisk} size="sm" />
+                    <RiskBadge risk={a.overallRisk} tier={a.riskTier} size="sm" />
                   </td>
                 </tr>
               );
