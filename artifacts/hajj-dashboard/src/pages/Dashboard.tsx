@@ -387,7 +387,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                   <div className="text-base font-black tracking-tight leading-tight" style={{ color: "#000000" }}>
                     HAJJ ACES MSD Team Coverage
                   </div>
-                  <div className="text-[11px] text-muted-foreground font-medium">Hajj 1447 · Live Field Operations · Nokia COW Deployment</div>
+                  <div className="text-[11px] text-muted-foreground font-medium">Hajj 1447 · Live Field Operations · stc COW Project</div>
                 </div>
                 {/* Live pulse badge */}
                 <div className="ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded-full"
