@@ -5,6 +5,7 @@ import {
   Polyline,
 } from "@react-google-maps/api";
 import { useGoogleMaps } from "../lib/GoogleMapsProvider";
+import { ALL_SITES } from "../lib/realSiteData";
 
 /* ─── types ────────────────────────────────────────────────────────────────── */
 
@@ -159,12 +160,14 @@ function FaultMap({
   onSelect,
   trail,
   movementStates,
+  allSites,
 }: {
   faults: ActiveFault[];
   selected: ActiveFault | null;
   onSelect: (f: ActiveFault) => void;
   trail: TrailPoint[];
   movementStates: Record<number, MovementState>;
+  allSites: { id: string; lat: number; lng: number }[];
 }) {
   const { isLoaded, loadError } = useGoogleMaps();
   const mapRef    = useRef<google.maps.Map | null>(null);
@@ -259,7 +262,45 @@ function FaultMap({
         );
       })}
 
-      {/* ── COW site markers ── */}
+      {/* ── All-sites status circles (green = OK, red = active fault) ── */}
+      {(() => {
+        const faultedIds = new Set(faults.map(f => f.cowId));
+        return allSites.map(site => {
+          const hasFault = faultedIds.has(site.id);
+          return (
+            <OverlayView
+              key={`dot-${site.id}`}
+              position={{ lat: site.lat, lng: site.lng }}
+              mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+            >
+              <div style={{ transform: "translate(-50%,-50%)", pointerEvents: "none" }}>
+                {hasFault && (
+                  <div style={{
+                    position:  "absolute",
+                    inset:     -5,
+                    borderRadius: "50%",
+                    background: "rgba(220,38,38,0.25)",
+                    animation:  "outerPulse 1.5s ease-out infinite",
+                  }} />
+                )}
+                <div style={{
+                  width:        10,
+                  height:       10,
+                  borderRadius: "50%",
+                  background:   hasFault ? "#ef4444" : "#22c55e",
+                  border:       `1.5px solid ${hasFault ? "#fca5a5" : "#86efac"}`,
+                  boxShadow:    hasFault
+                    ? "0 0 6px #ef4444"
+                    : "0 0 4px rgba(34,197,94,0.6)",
+                  position: "relative",
+                }} />
+              </div>
+            </OverlayView>
+          );
+        });
+      })()}
+
+      {/* ── COW site markers (fault badge — renders on top of circles) ── */}
       {faults.map(f => {
         const isSelected = selected?.id === f.id;
         const sColor     = severityColor(f.severity);
@@ -609,6 +650,7 @@ export function FaultManagement() {
             onSelect={setSelected}
             trail={trail}
             movementStates={movementStates}
+            allSites={ALL_SITES}
           />
         </div>
 
