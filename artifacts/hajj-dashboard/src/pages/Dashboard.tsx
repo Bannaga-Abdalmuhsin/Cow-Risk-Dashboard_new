@@ -408,7 +408,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                       <span className="text-muted-foreground">
                         {techLocations.filter(t => !t.isOnDuty).length} off duty
                       </span>
-                      <span className="text-muted-foreground">· {techLocations.length} total · refreshes every 2s</span>
+                      <span className="text-muted-foreground">· {techLocations.length} total</span>
                     </>
                   ) : (
                     <span className="text-muted-foreground">No live locations yet — waiting for field check-ins</span>
