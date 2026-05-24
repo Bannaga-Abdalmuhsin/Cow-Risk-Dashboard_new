@@ -104,7 +104,7 @@ export function RiskDistributionPie({ analyses: _analyses }: RiskChartsProps) {
 export function PowerSourceDonut({ analyses: _analyses }: RiskChartsProps) {
   // DG sites share powerConfig="commercial_with_backup" (Gen1=prime, Gen2=backup)
   // Distinguished from SB by presence of primeGenNetPowerKw
-  const sb = 54;
+  const sb = 58;
   const dg = 9;
   const sg = 12;
   const total = 79;
