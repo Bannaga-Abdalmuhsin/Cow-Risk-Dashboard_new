@@ -501,9 +501,6 @@ export function FaultManagement() {
           fontSize:   11,
         }}
       >
-        <span style={{ color: "#facc15", fontWeight: 800, letterSpacing: 1 }}>⚡ Power BI</span>
-        <span style={{ color: "#94a3b8" }}>|</span>
-
         {pbiStatus ? (
           <>
             <span
