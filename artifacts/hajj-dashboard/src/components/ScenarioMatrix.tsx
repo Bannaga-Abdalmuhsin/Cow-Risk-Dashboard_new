@@ -14,21 +14,21 @@ const SCENARIO_DESCRIPTIONS: Record<number, string[]> = {
 
 type RiskLevel = "safe" | "risk";
 
-const DOT_COLOR: Record<RiskLevel, string> = {
-  safe: "#00BFB3",
-  risk: "#E8175D",
-};
+function dotColor(level: RiskLevel, scenarioId: number): string {
+  if (level === "safe") return "#00BFB3";
+  return scenarioId === 9 ? "#E8175D" : "#f97316";
+}
 
 function worstRisk(levels: RiskLevel[]): RiskLevel {
   if (levels.includes("risk")) return "risk";
   return "safe";
 }
 
-function RiskDot({ level }: { level: RiskLevel }) {
+function RiskDot({ level, scenarioId }: { level: RiskLevel; scenarioId: number }) {
   return (
     <span
       className="inline-block w-4 h-4 rounded-full border-2 border-white shadow-sm"
-      style={{ background: DOT_COLOR[level] }}
+      style={{ background: dotColor(level, scenarioId) }}
       title={level}
     />
   );
@@ -124,15 +124,15 @@ export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario 
                       {SCENARIO_DESCRIPTIONS[row.sId].slice(1).join(" · ")}
                     </div>
                   </td>
-                  <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstPower} /></div></td>
-                  <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstRect} /></div></td>
-                  <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstBatt} /></div></td>
-                  <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstCool} /></div></td>
+                  <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstPower} scenarioId={row.sId} /></div></td>
+                  <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstRect} scenarioId={row.sId} /></div></td>
+                  <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstBatt} scenarioId={row.sId} /></div></td>
+                  <td className="px-3 py-4 text-center"><div className="flex justify-center"><RiskDot level={row.worstCool} scenarioId={row.sId} /></div></td>
                   <td className="px-3 py-4 text-center">
                     <div className="flex flex-col items-center gap-1">
                       <span
                         className="inline-flex items-center justify-center text-white font-bold text-sm rounded-lg px-3 py-1 min-w-[48px]"
-                        style={{ background: row.atRiskCount === 0 ? "#00BFB3" : "#E8175D" }}
+                        style={{ background: row.atRiskCount === 0 ? "#00BFB3" : row.sId === 9 ? "#E8175D" : "#f97316" }}
                       >
                         {row.atRiskCount}
                       </span>
@@ -148,10 +148,14 @@ export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario 
 
       <div className="px-5 py-3 border-t border-border bg-gray-50 flex items-center gap-6 flex-wrap">
         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Legend:</span>
-        {(["safe", "risk"] as RiskLevel[]).map(r => (
-          <div key={r} className="flex items-center gap-1.5">
-            <span className="w-3.5 h-3.5 rounded-full inline-block border border-white shadow-sm" style={{ background: DOT_COLOR[r] }} />
-            <span className="text-xs text-gray-600 capitalize font-medium">{r === "risk" ? "Risk" : "Safe"}</span>
+        {[
+          { color: "#00BFB3", label: "Safe" },
+          { color: "#f97316", label: "Risk (S5–S8 Backup)" },
+          { color: "#E8175D", label: "Risk (S9 Outage)" },
+        ].map(({ color, label }) => (
+          <div key={label} className="flex items-center gap-1.5">
+            <span className="w-3.5 h-3.5 rounded-full inline-block border border-white shadow-sm" style={{ background: color }} />
+            <span className="text-xs text-gray-600 font-medium">{label}</span>
           </div>
         ))}
         <span className="text-xs text-gray-400 ml-auto">Worst-case across all {analyses.length} sites per scenario</span>

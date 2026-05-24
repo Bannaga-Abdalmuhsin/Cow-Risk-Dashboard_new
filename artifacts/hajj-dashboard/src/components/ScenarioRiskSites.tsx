@@ -27,12 +27,13 @@ const DIMS: Array<{ key: RiskDim; label: string }> = [
   { key: "coolingRisk",    label: "Cooling Supply" },
 ];
 
-function RiskCell({ risk }: { risk: "safe" | "risk" }) {
+function RiskCell({ risk, scenarioId }: { risk: "safe" | "risk"; scenarioId: number }) {
+  const bg = risk === "safe" ? "#00BFB3" : scenarioId === 9 ? "#E8175D" : "#f97316";
   return (
     <td className="px-3 py-2.5 text-center">
       <span
         className="inline-flex items-center justify-center w-16 rounded text-white text-[10px] font-bold py-0.5 uppercase tracking-wide"
-        style={{ background: risk === "risk" ? "#E8175D" : "#00BFB3" }}
+        style={{ background: bg }}
       >
         {risk}
       </span>
@@ -121,7 +122,7 @@ export function ScenarioRiskSites({ analyses, scenarioId, onClose }: Props) {
                   <td className="px-4 py-2.5 text-gray-500 capitalize">{analysis.site.siteType.replace("_", " ")}</td>
                   <td className="px-4 py-2.5 text-gray-600 whitespace-nowrap">{powerLabel}</td>
                   {DIMS.map(d => (
-                    <RiskCell key={d.key} risk={scenario[d.key]} />
+                    <RiskCell key={d.key} risk={scenario[d.key]} scenarioId={scenarioId} />
                   ))}
                   <td className={`px-4 py-2.5 text-right font-mono font-semibold ${scenario.powerMarginKw < 0 ? "text-red-600" : "text-emerald-600"}`}>
                     {fmt(scenario.powerMarginKw)}

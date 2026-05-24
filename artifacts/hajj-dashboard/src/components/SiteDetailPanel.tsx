@@ -77,7 +77,9 @@ export function SiteDetailPanel({ analysis, onClose }: SiteDetailPanelProps) {
 
             const bg = worstRisk === "safe"
               ? "bg-[#d0f5f3] border-[#00BFB3] text-[#00736b]"
-              : "bg-[#fce4ed] border-[#E8175D] text-[#b01040]";
+              : s.scenarioId === 9
+                ? "bg-[#fce4ed] border-[#E8175D] text-[#b01040]"
+                : "bg-[#fff3e0] border-[#f97316] text-[#c2440e]";
             const activeCls = activeScenario === i ? "ring-2 ring-primary ring-offset-1 font-bold" : "";
 
             return (
