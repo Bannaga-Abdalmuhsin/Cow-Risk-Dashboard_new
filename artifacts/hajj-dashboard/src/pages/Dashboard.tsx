@@ -382,7 +382,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               style={{ background: "linear-gradient(135deg, rgba(74,14,143,0.18) 0%, rgba(0,191,179,0.10) 100%)", border: "1px solid rgba(147,51,234,0.22)" }}>
               {/* Title row */}
               <div className="flex items-center gap-3">
-                <img src="/msd-logo.png" alt="ACES MSD" style={{ height: 44, width: "auto", mixBlendMode: "multiply", filter: "drop-shadow(0 2px 6px rgba(74,14,143,0.3))" }} />
+                <img src="/aces-purple-logo.png" alt="ACES MSD" style={{ height: 44, width: "auto", borderRadius: 8, filter: "drop-shadow(0 2px 6px rgba(74,14,143,0.4))" }} />
                 <div>
                   <div className="text-base font-black tracking-tight leading-tight" style={{ color: "#000000" }}>
                     HAJJ ACES MSD Team Coverage
