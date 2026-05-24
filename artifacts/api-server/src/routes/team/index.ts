@@ -128,6 +128,12 @@ router.put("/location", requireAuth, async (req: Request, res: Response): Promis
   const userId    = user.id;
   const updatedAt = new Date();
 
+  /* ── Capture previous position BEFORE overwriting it ───────────────────── */
+  const [prevLoc] = await db
+    .select({ lat: techLocationsTable.lat, lng: techLocationsTable.lng })
+    .from(techLocationsTable)
+    .where(eq(techLocationsTable.userId, userId));
+
   await db
     .insert(techLocationsTable)
     .values({
@@ -158,11 +164,12 @@ router.put("/location", requireAuth, async (req: Request, res: Response): Promis
     updatedAt: updatedAt.toISOString(),
   });
 
-  /* ── Geofence: MC departure (50 m) + site arrival (100 m) ─────────────── */
+  /* ── Dynamic movement trigger + site arrival geofence ──────────────────── */
   await runGeofenceChecks(
     userId, lat, lng,
+    prevLoc?.lat ?? null,
+    prevLoc?.lng ?? null,
     speed ?? null, heading ?? null, accuracy ?? null,
-    user.mcLat ?? null, user.mcLng ?? null,
   );
 
   res.json({ ok: true });

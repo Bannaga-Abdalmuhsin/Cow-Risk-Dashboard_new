@@ -28,6 +28,8 @@ export interface ActiveFault {
   dispatchedAt: string | null;
   movementTriggeredAt: string | null;
   arrivedAt: string | null;
+  startLat: number | null;
+  startLng: number | null;
   assignedTechId: number | null;
   assignedTech: string | null;
   techLat: number | null;

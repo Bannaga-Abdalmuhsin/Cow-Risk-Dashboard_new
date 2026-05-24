@@ -118,6 +118,8 @@ router.get("/active", async (_req: Request, res: Response): Promise<void> => {
       dispatchedAt:        faultsTable.dispatchedAt,
       movementTriggeredAt: faultsTable.movementTriggeredAt,
       arrivedAt:           faultsTable.arrivedAt,
+      startLat:            faultsTable.startLat,
+      startLng:            faultsTable.startLng,
       assignedTechId:      faultsTable.assignedTechId,
       assignedTech:        teamUsersTable.name,
       techLat:             techLocationsTable.lat,

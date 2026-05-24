@@ -60,6 +60,8 @@ export const faultsTable = pgTable("faults", {
   resolvedAt:           timestamp("resolved_at"),
   movementTriggeredAt:  timestamp("movement_triggered_at"),
   arrivedAt:            timestamp("arrived_at"),
+  startLat:             real("start_lat"),
+  startLng:             real("start_lng"),
   apiKey:               text("api_key"),
 });
 
