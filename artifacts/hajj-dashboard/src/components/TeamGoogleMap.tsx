@@ -170,6 +170,7 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
   }
 
   return (
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
     <GoogleMap
       mapContainerStyle={{ width: "100%", height: "100%", borderRadius: "12px" }}
       center={MAKKAH_CENTER}
@@ -281,5 +282,25 @@ export function TeamGoogleMap({ analyses, techLocations, selectedSiteId, onSelec
       })}
 
     </GoogleMap>
+
+    {/* MSD logo watermark — centred, non-interactive */}
+    <div style={{
+      position: "absolute", inset: 0,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      pointerEvents: "none", zIndex: 5,
+    }}>
+      <img
+        src="/msd-logo.png"
+        alt="ACES MSD"
+        style={{
+          width: 480,
+          opacity: 0.22,
+          mixBlendMode: "screen",
+          userSelect: "none",
+          filter: "drop-shadow(0 0 24px rgba(255,255,255,0.1))",
+        }}
+      />
+    </div>
+    </div>
   );
 }
