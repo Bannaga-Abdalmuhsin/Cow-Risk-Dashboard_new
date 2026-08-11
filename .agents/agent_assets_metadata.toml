@@ -23,3 +23,10 @@ id = "540QC2MhODB-RjYAWU_k0"
 uri = "file://fault-management-export.zip"
 type = "unspecified"
 title = "FaultManagement Component Export"
+
+[[outputs]]
+id = "LKEt3oPzhj3muxAbDzFX_"
+uri = "file://docs/ACES_Field_Team_Tracker_Fault_Management_Technical_Handover.docx"
+type = "word_document"
+title = "ACES Field Team Tracker & Fault Management Technical Handover"
+description = "Word document covering tools, code languages, key files, API endpoints, integrations, fault lifecycle, GPS/WebSocket behavior, and a one-slide system-flow block diagram."
