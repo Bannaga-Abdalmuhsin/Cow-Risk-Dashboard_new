@@ -30,3 +30,10 @@ uri = "file://docs/ACES_Field_Team_Tracker_Fault_Management_Technical_Handover.d
 type = "word_document"
 title = "ACES Field Team Tracker & Fault Management Technical Handover"
 description = "Word document covering tools, code languages, key files, API endpoints, integrations, fault lifecycle, GPS/WebSocket behavior, and a one-slide system-flow block diagram."
+
+[[outputs]]
+id = "G5gKyw6rQWMtZWzp5Wenx"
+uri = "file://docs/ACES_Field_Team_Tracker_Fault_Management_Technical_Handover_FULL_CODE.docx"
+type = "word_document"
+title = "ACES Field Team Tracker & Fault Management — Full Code Handover"
+description = "Complete Word handover with architecture, integrations, system flow diagram, and full readable source/configuration code grouped by TypeScript/TSX, JavaScript, CSS, JSON, SQL, Shell, and HTML."
