@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
 export default defineConfig({
-  base: "/Cow-Risk-Dashboard/",
+  base: "/Cow-Risk-Dashboard_new/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
