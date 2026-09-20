@@ -119,13 +119,26 @@ export default function Login({ onLogin }: LoginProps) {
         src={`${base}login-bg-cow-v2.png`}
         alt=""
         aria-hidden="true"
-        className="fixed inset-0 h-full w-full object-cover"
-        style={{ zIndex: 0, objectPosition: "center center" }}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 0,
+          width: "100vw",
+          height: "100vh",
+          minWidth: "100%",
+          minHeight: "100%",
+          objectFit: "cover",
+          objectPosition: "center center",
+          display: "block",
+        }}
       />
       <div
-        className="fixed inset-0"
         style={{
+          position: "fixed",
+          inset: 0,
           zIndex: 1,
+          width: "100vw",
+          height: "100vh",
           background:
             "linear-gradient(90deg, rgba(7,3,22,0.52) 0%, rgba(7,3,22,0.22) 42%, rgba(7,3,22,0.08) 72%, rgba(7,3,22,0.18) 100%)",
         }}
