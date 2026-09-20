@@ -116,7 +116,7 @@ export default function Login({ onLogin }: LoginProps) {
     >
 
       <img
-        src={`${base}login-bg-cow-v2.png`}
+        src={`${base}login-bg-cow-v3.png`}
         alt=""
         aria-hidden="true"
         style={{
@@ -140,7 +140,7 @@ export default function Login({ onLogin }: LoginProps) {
           width: "100vw",
           height: "100vh",
           background:
-            "linear-gradient(90deg, rgba(7,3,22,0.52) 0%, rgba(7,3,22,0.22) 42%, rgba(7,3,22,0.08) 72%, rgba(7,3,22,0.18) 100%)",
+            "linear-gradient(90deg, rgba(7,3,22,0.40) 0%, rgba(7,3,22,0.12) 38%, rgba(7,3,22,0.02) 68%, rgba(7,3,22,0.06) 100%)",
         }}
       />
 
