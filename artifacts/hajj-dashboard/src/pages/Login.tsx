@@ -110,51 +110,54 @@ export default function Login({ onLogin }: LoginProps) {
   }
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-start pl-16 md:pl-24">
+    <div
+      className="relative flex w-full items-center justify-center overflow-hidden px-5 sm:justify-start sm:px-12 lg:px-20"
+      style={{ minHeight: "100svh", backgroundColor: "#0b0520" }}
+    >
 
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${base}login-bg.png)` }}
+      <img
+        src={`${base}login-bg-cow-v2.png`}
+        alt=""
+        aria-hidden="true"
+        className="fixed inset-0 h-full w-full object-cover"
+        style={{ zIndex: 0, objectPosition: "center center" }}
       />
       <div
-        className="absolute inset-0"
+        className="fixed inset-0"
         style={{
+          zIndex: 1,
           background:
-            "linear-gradient(180deg, rgba(10,4,30,0.72) 0%, rgba(10,4,30,0.45) 40%, rgba(10,4,30,0.55) 70%, rgba(10,4,30,0.88) 100%)",
+            "linear-gradient(90deg, rgba(7,3,22,0.52) 0%, rgba(7,3,22,0.22) 42%, rgba(7,3,22,0.08) 72%, rgba(7,3,22,0.18) 100%)",
         }}
       />
 
       <style>{`
-        @keyframes glow-pulse {
-          0%,100% { box-shadow: 0 0 14px rgba(147,51,234,0.35); }
-          50%      { box-shadow: 0 0 32px rgba(147,51,234,0.65), 0 0 60px rgba(107,33,200,0.25); }
-        }
         @keyframes fade-in-up {
           from { opacity: 0; transform: translateY(20px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        .login-card { animation: fade-in-up 0.5s ease-out both, glow-pulse 3.2s ease-in-out infinite; }
+        .login-card { animation: fade-in-up 0.45s ease-out both; }
       `}</style>
 
       <div
-        className="login-card relative z-10 w-full max-w-sm rounded-2xl p-8 flex flex-col"
+        className="login-card relative z-10 flex w-full max-w-[340px] flex-col rounded-2xl px-6 py-6"
         style={{
-          background: "rgba(10,4,28,0.80)",
-          border: "1px solid rgba(167,139,250,0.28)",
-          backdropFilter: "blur(24px)",
-          WebkitBackdropFilter: "blur(24px)",
+          background: "rgba(12,8,27,0.86)",
+          border: "none",
+          boxShadow: "0 18px 50px rgba(0,0,0,0.38)",
+          backdropFilter: "blur(18px)",
+          WebkitBackdropFilter: "blur(18px)",
         }}
       >
-        <div className="flex justify-center mb-5">
+        <div className="mb-3 flex justify-center">
           <img
             src={`${base}aces-logo-login.png`}
             alt="ACES Managed Services"
-            className="h-24 w-auto object-contain"
-            style={{ filter: "drop-shadow(0 0 20px rgba(220,38,38,0.5))" }}
+            className="h-16 w-auto object-contain"
           />
         </div>
 
-        <div className="text-center mb-6">
+        <div className="mb-4 text-center">
           <div
             className="text-sm font-bold text-center leading-relaxed"
             style={{ color: "rgba(209,196,233,0.85)", fontFamily: "Verdana, sans-serif", letterSpacing: "0.04em" }}
@@ -176,7 +179,7 @@ export default function Login({ onLogin }: LoginProps) {
             🔒 {lockMsg}
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4" autoComplete="on">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3.5" autoComplete="on">
             <div>
               <label
                 className="block text-xs font-bold uppercase tracking-widest mb-1.5"
@@ -256,7 +259,7 @@ export default function Login({ onLogin }: LoginProps) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-lg text-sm font-bold text-white mt-1 transition-all"
+              className="mt-1 w-full rounded-lg py-2.5 text-sm font-bold text-white transition-all"
               style={{
                 background: loading
                   ? "rgba(107,33,200,0.45)"
@@ -286,8 +289,8 @@ export default function Login({ onLogin }: LoginProps) {
       </div>
 
       <div
-        className="absolute bottom-0 left-0 right-0 py-3 flex items-center justify-center gap-2"
-        style={{ background: "rgba(10,4,28,0.75)", borderTop: "1px solid rgba(107,33,200,0.2)" }}
+        className="fixed bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-2 py-2.5"
+        style={{ background: "rgba(7,3,20,0.72)" }}
       >
         <span
           className="text-sm font-black tracking-widest"
