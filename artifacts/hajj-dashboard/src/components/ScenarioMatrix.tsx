@@ -5,11 +5,6 @@ const SCENARIO_DESCRIPTIONS: Record<number, string[]> = {
   2: ["Prime Power Operational", "AC1 & AC2 Operational", "Batteries fully Charged", "Load at Full traffic", "Temp at 46°C"],
   3: ["Prime Power Operational", "AC1 Operational only", "Batteries Charging", "Load at Full traffic", "Temp at 46°C"],
   4: ["Prime Power Operational", "AC1 & AC2 Operational", "Batteries Charging", "Load at Full traffic", "Temp at 46°C"],
-  5: ["Backup Power Operational", "AC1 Operational only", "Batteries fully Charged", "Load at Full traffic", "Temp at 46°C"],
-  6: ["Backup Power Operational", "AC1 & AC2 Operational", "Batteries fully Charged", "Load at Full traffic", "Temp at 46°C"],
-  7: ["Backup Power Operational", "AC1 Operational only", "Batteries Charging", "Load at Full traffic", "Temp at 46°C"],
-  8: ["Backup Power Operational", "AC1 & AC2 Operational", "Batteries Charging", "Load at Full traffic", "Temp at 46°C"],
-  9: ["Power Outage", "Battery Discharge only", "Batteries Discharging", "Load at Full traffic", "Temp at 46°C"],
 };
 
 type RiskLevel = "safe" | "risk";
@@ -41,7 +36,7 @@ interface ScenarioMatrixProps {
 }
 
 export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario }: ScenarioMatrixProps) {
-  const scenarioRows = Array.from({ length: 9 }, (_, i) => {
+  const scenarioRows = Array.from({ length: 4 }, (_, i) => {
     const sId = i + 1;
     const scenarioResults = analyses.map(a => a.scenarios.find(s => s.scenarioId === sId)!).filter(Boolean);
 
@@ -70,7 +65,7 @@ export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario 
       <div className="px-5 py-4 border-b border-border" style={{ background: "linear-gradient(135deg, #4a0e8f 0%, #6b21c8 100%)" }}>
         <h2 className="text-white font-bold text-base">Operational Scenario Risk Matrix</h2>
         <p className="text-purple-200 text-xs mt-0.5">
-          Click any row to drill into all site details · 9 scenarios · 46°C · {analyses.length} sites
+          Click any row to drill into all site details · 4 operating scenarios · {analyses.length} sites
         </p>
       </div>
 
@@ -150,8 +145,7 @@ export function ScenarioMatrix({ analyses, selectedScenarioId, onSelectScenario 
         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Legend:</span>
         {[
           { color: "#00BFB3", label: "Safe" },
-          { color: "#f97316", label: "Risk (S5–S8 Backup)" },
-          { color: "#E8175D", label: "Risk (S9 Outage)" },
+          { color: "#f97316", label: "Operating constraint" },
         ].map(({ color, label }) => (
           <div key={label} className="flex items-center gap-1.5">
             <span className="w-3.5 h-3.5 rounded-full inline-block border border-white shadow-sm" style={{ background: color }} />

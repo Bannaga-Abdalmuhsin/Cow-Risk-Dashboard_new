@@ -159,7 +159,7 @@ export default function Login({ onLogin }: LoginProps) {
             className="text-sm font-bold text-center leading-relaxed"
             style={{ color: "rgba(209,196,233,0.85)", fontFamily: "Verdana, sans-serif", letterSpacing: "0.04em" }}
           >
-            COW Energy &amp; Environmental Risk Scenarios<br />Dashboard
+            Predictive Site Energy &amp; Environmental Performance<br />Digital Twin Tool
           </div>
         </div>
 

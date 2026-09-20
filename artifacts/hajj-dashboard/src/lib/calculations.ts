@@ -201,22 +201,12 @@ export function analyzeScenarios(site: SiteConfig): ScenarioResult[] {
     battery: "normal" | "charging" | "discharging";
   };
 
-  const allDefs: ScenarioDef[] = [
+  const activeDefs: ScenarioDef[] = [
     { id: 1, name: "S1 — Prime Power / AC1 / Full Traffic Telecom Load",        pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_only", battery: "normal" },
     { id: 2, name: "S2 — Prime Power / AC1+AC2 / Full Traffic Telecom Load",    pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "normal" },
     { id: 3, name: "S3 — Prime Power / AC1 / Charging",      pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "charging" },
     { id: 4, name: "S4 — Prime Power / AC1+AC2 / Charging",  pwSrc: isSB ? "prime_sec" : "prime_gen", cooling: "ac1_ac2",  battery: "charging" },
-    { id: 5, name: "S5 — Generator / AC1 / Full Traffic Telecom Load",          pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_only", battery: "normal" },
-    { id: 6, name: "S6 — Generator / AC1+AC2 / Full Traffic Telecom Load",      pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "normal" },
-    { id: 7, name: "S7 — Generator / AC1 / Charging",        pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "charging" },
-    { id: 8, name: "S8 — Generator / AC1+AC2 / Charging",    pwSrc: isSB ? "backup" : "prime_gen",    cooling: "ac1_ac2",  battery: "charging" },
-    { id: 9, name: "S9 — Power Outage / Battery Discharge",  pwSrc: "outage",                         cooling: "none",     battery: "discharging" },
   ];
-
-  // CWN915: S6 & S8 not applicable for this site configuration
-  const activeDefs = site.id === "CWN915"
-    ? allDefs.filter(s => s.id !== 6 && s.id !== 8)
-    : allDefs;
 
   return activeDefs.map((s): ScenarioResult => {
     // SG sites have no backup source → S5-S8 use 0 kW available power
@@ -345,11 +335,8 @@ export function analyzeSite(site: SiteConfig): SiteAnalysis {
          s.batteryRisk === "risk" || s.coolingRisk === "risk"
   );
 
-  const s9 = scenarios.find(s => s.scenarioId === 9);
-  const batteryInsufficient = s9 ? s9.batteryRisk === "risk" : false;
-
   const engineRisk: "safe" | "risk" =
-    hasRisk || batteryInsufficient ? "risk" : "safe";
+    hasRisk ? "risk" : "safe";
 
   // forceRisk (RISK_OVERRIDES) wins first; placeholderSafe forces green on
   // the heat map for all confirmed-safe sites regardless of engine output.
@@ -361,19 +348,9 @@ export function analyzeSite(site: SiteConfig): SiteAnalysis {
   // riskTier: which scenario group drives the risk
   // "outage" = S9 has any risk dimension flagged (full power outage — most critical)
   // "backup" = S5–S8 backup scenarios have risk but S9 does not
-  const s9HasRisk = s9
-    ? s9.powerRisk === "risk" || s9.rectifierRisk === "risk" ||
-      s9.batteryRisk === "risk" || s9.coolingRisk === "risk"
-    : false;
-  const s5to8HasRisk = scenarios
-    .filter(s => s.scenarioId >= 5 && s.scenarioId <= 8)
-    .some(s => s.powerRisk === "risk" || s.rectifierRisk === "risk" ||
-               s.batteryRisk === "risk" || s.coolingRisk === "risk");
   const riskTier: "safe" | "backup" | "outage" =
     overallRisk === "safe" ? "safe" :
-    s9HasRisk              ? "outage" :
-    s5to8HasRisk           ? "backup" :
-    "outage"; // S1–S4 prime power failure also treated as outage-level
+    "outage";
 
   const worstRiskScore = Math.max(...scenarios.map(s => s.riskScore));
 
