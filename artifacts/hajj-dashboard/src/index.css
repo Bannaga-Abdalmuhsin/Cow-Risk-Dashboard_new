@@ -171,3 +171,22 @@
   background: rgba(220, 38, 38, 0.4);
   animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
+
+.setting-input {
+  display: block;
+  width: 100%;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  background: hsl(var(--background));
+  padding: 0.625rem 0.75rem;
+  color: hsl(var(--foreground));
+  font-size: 0.875rem;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.setting-input:focus {
+  border-color: rgb(168 85 247);
+  box-shadow: 0 0 0 3px rgb(233 213 255 / 0.75);
+}
